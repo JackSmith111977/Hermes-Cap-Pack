@@ -144,13 +144,18 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 | STORY-1-3-1 | 基于使用反馈的迭代流程 | SPEC-1-3 | P1 | 📄 draft |
 | STORY-1-3-2 | 经验与技能的同步更新机制 | SPEC-1-3 | P2 | 📄 draft |
 | STORY-1-4-1 | 适配层接口抽象定义 | SPEC-1-4 | P1 | 📄 draft |
-| STORY-1-4-2 | Hermes 适配器实现 | SPEC-1-4 | P0 | ✅ 已完成 |
-| STORY-1-1-10 | Claude Code 适配器实现 | SPEC-1-4 | P1 | 📄 draft |
-| STORY-1-1-11 | UCA Core 适配器核心框架 | SPEC-1-4 | P0 | ✅ 已完成 |
-| STORY-1-1-12 | UCA CLI 命令行工具 | SPEC-1-4 | P0 | ✅ 已完成 |
-| STORY-1-1-13 | Hermes Agent 适配器实现 | SPEC-1-4 | P0 | ✅ 已完成 |
-| STORY-1-1-14 | Hermes 适配器回滚机制 | SPEC-1-4 | P1 | ✅ 已完成 |
-| STORY-1-1-15 | OpenCode CLI 适配器实现 | SPEC-1-4 | P1 | ✅ 已完成 |
+| STORY-1-4-2 | Hermes 适配器实现（草案） | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-4-3 | Claude Code 适配器实现 | SPEC-1-4 | P1 | 📄 draft |
+| STORY-1-4-4 | UCA Core 适配器核心框架 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-4-5 | UCA CLI 命令行工具 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-4-6 | Hermes Agent 适配器实现 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-4-7 | Hermes 适配器回滚机制 | SPEC-1-4 | P1 | ✅ 已完成 |
+| STORY-1-4-8 | OpenCode CLI 适配器实现 | SPEC-1-4 | P1 | ✅ 已完成 |
+| **STORY-1-5-1** | **HermesAdapter 安装配置完整消费** | **SPEC-1-5** | **P0** | **⬜ planned** |
+| **STORY-1-5-2** | **依赖检查与验证门禁** | **SPEC-1-5** | **P0** | **⬜ planned** |
+| **STORY-1-5-3** | **端到端集成测试** | **SPEC-1-5** | **P0** | **⬜ planned** |
+| **STORY-1-5-4** | **多 Agent 安装与自动检测** | **SPEC-1-5** | **P1** | **⬜ planned** |
+| **STORY-1-5-5** | **卸载增强与快照回滚测试** | **SPEC-1-5** | **P1** | **⬜ planned** |
 
 ---
 
