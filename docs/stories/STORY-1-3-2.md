@@ -1,10 +1,10 @@
-# Story: 经验与技能的同步更新机制
+# STORY-1-3-2: 经验与技能的同步更新机制
 
-> **story_id**: `STORY-007-exp-sync`
+> **story_id**: `STORY-1-3-2`
 > **status**: `draft`
 > **priority**: P2
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-003-iteration
+> **spec_ref**: SPEC-1-3
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -25,7 +25,7 @@
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-003: [docs/SPEC-003-iteration.md](../SPEC-003-iteration.md)
+- SPEC-1-3: [docs/SPEC-1-3.md](../SPEC-1-3.md)
 - 前序 Story: STORY-006-feedback-loop
 
 ## 不做的范围

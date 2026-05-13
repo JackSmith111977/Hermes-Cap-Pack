@@ -1,10 +1,10 @@
-# Story: 适配层接口抽象定义
+# STORY-1-4-1: 适配层接口抽象定义
 
-> **story_id**: `STORY-008-adapter-interface`
+> **story_id**: `STORY-1-4-1`
 > **status**: `draft`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-004-adaptation
+> **spec_ref**: SPEC-1-4
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -26,4 +26,4 @@
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-004: [docs/SPEC-004-adaptation.md](../SPEC-004-adaptation.md)
+- SPEC-1-4: [docs/SPEC-1-4.md](../SPEC-1-4.md)

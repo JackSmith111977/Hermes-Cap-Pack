@@ -3,7 +3,7 @@
 > **状态**: `draft` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-13
 > **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
 > **负责人**: boku (Emma/小玛) · **到期**: 2026-06-13
-> **Epic 自检清单**: [✅ CLARIFY] [✅ RESEARCH] [⬜ SPEC-005] [⬜ SPEC-006] [⬜ 测试覆盖] [⬜ 文档对齐]
+> **Epic 自检清单**: [✅ CLARIFY] [✅ RESEARCH] [⬜ SPEC-2-1] [⬜ SPEC-2-2] [⬜ 测试覆盖] [⬜ 文档对齐]
 
 ---
 
@@ -143,13 +143,13 @@ EPIC-001: 能力模块化                  EPIC-002: 层次管理与健康度
 
 | # | 交付物 | 类型 | 状态 | 对应文档 |
 |:-:|:-------|:----:|:----:|:---------|
-| 1 | `scripts/skill-tree-index.py` | 工具 | ✅ `completed` | SPEC-005 |
-| 2 | `scripts/skill-quality-score.py` | 工具 | ✅ `completed` (在 skill-creator) | SPEC-006 |
-| 3 | `scripts/skill-lifecycle-audit.py` | 工具 | ✅ `completed` (在 skill-creator) | SPEC-006 |
+| 1 | `scripts/skill-tree-index.py` | 工具 | ✅ `completed` | SPEC-2-1 |
+| 2 | `scripts/skill-quality-score.py` | 工具 | ✅ `completed` (在 skill-creator) | SPEC-2-2 |
+| 3 | `scripts/skill-lifecycle-audit.py` | 工具 | ✅ `completed` (在 skill-creator) | SPEC-2-2 |
 | 4 | `reports/skill-tree-architecture-research.html` | 报告 | ✅ `completed` | 本 EPIC |
-| 5 | 自动健康 cron 定时报告 | 自动化 | ⬜ `planned` | STORY-013 |
-| 6 | 健康趋势仪表盘 | 可视化 | ⬜ `planned` | STORY-014 |
-| 7 | 合并建议自动生成 | 功能 | ⬜ `planned` | STORY-015 |
+| 5 | 自动健康 cron 定时报告 | 自动化 | ⬜ `planned` | STORY-2-2-2 |
+| 6 | 健康趋势仪表盘 | 可视化 | ⬜ `planned` | STORY-2-2-3 |
+| 7 | 合并建议自动生成 | 功能 | ⬜ `planned` | STORY-2-2-4 |
 
 ---
 

@@ -1,10 +1,10 @@
-# Story: Claude Code 适配器实现
+# STORY-1-4-3: Claude Code 适配器实现
 
-> **story_id**: `STORY-010-claude-adapter`
+> **story_id**: `STORY-1-4-3`
 > **status**: `draft`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-004-adaptation
+> **spec_ref**: SPEC-1-4
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -26,7 +26,7 @@
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-004: [docs/SPEC-004-adaptation.md](../SPEC-004-adaptation.md)
+- SPEC-1-4: [docs/SPEC-1-4.md](../SPEC-1-4.md)
 - 前序 Story: STORY-008-adapter-interface, STORY-009-hermes-adapter
 
 ## 不做的范围

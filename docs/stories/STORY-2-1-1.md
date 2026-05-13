@@ -1,4 +1,4 @@
-# STORY-011: 树状索引工具纳入 cap-pack 项目
+# STORY-2-1-1: 树状索引工具纳入 cap-pack 项目
 
 > **状态**: `draft` · **优先级**: P1 · **Epic**: EPIC-002 · **Sprint**: 1
 > **SDD 状态**: `draft` · **创建**: 2026-05-13 · **预估**: 1 轮
@@ -9,7 +9,7 @@
 ## 用户故事
 
 **As a** 系统维护者
-**I want** `skill-tree-index.py` 纳入 cap-pack 项目的 `scripts/` 目录并关联到 SPEC-005
+**I want** `skill-tree-index.py` 纳入 cap-pack 项目的 `scripts/` 目录并关联到 SPEC-2-1
 **So that** 树状索引工具与能力包体系绑定发布，而不是孤立地在 Hermes 目录中
 
 ## 验收标准

@@ -1,10 +1,10 @@
-# Story: OpenCode CLI 适配器实现
+# STORY-1-4-8: OpenCode CLI 适配器实现
 
-> **story_id**: `STORY-022-opencode-adapter`
+> **story_id**: `STORY-1-4-8`
 > **status**: `implemented`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-004-adaptation
+> **spec_ref**: SPEC-1-4
 > **created**: 2026-05-13
 > **implemented**: 2026-05-13
 > **owner**: boku
@@ -28,7 +28,7 @@
 
 ## 引用链
 
-- SPEC-004: [docs/SPEC-004-adaptation.md](../SPEC-004-adaptation.md)
+- SPEC-1-4: [docs/SPEC-1-4.md](../SPEC-1-4.md)
 - 前序 Story: STORY-020-hermes-adapter
 - 参考: https://opencode.ai/docs/skills/
 

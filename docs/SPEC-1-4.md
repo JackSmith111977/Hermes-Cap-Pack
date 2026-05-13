@@ -1,4 +1,4 @@
-# 🔌 SPEC-004: 跨 Agent 适配层方案
+# 🔌 SPEC-1-4: 适配层方案
 
 > **状态**: `approved` · **优先级**: P2 · **创建**: 2026-05-12 · **更新**: 2026-05-12
 > **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅`
@@ -230,7 +230,7 @@ compatibility:
 
 ## 九、QA_GATE 检查清单
 
-- [x] Spec ID 格式正确（SPEC-004）
+- [x] Spec ID 格式正确（SPEC-1-4）
 - [x] 关联 Epic 引用完整
 - [x] CLARIFY 章节记录了需求澄清
 - [x] RESEARCH 章节有 5 个业界参考

@@ -1,4 +1,4 @@
-# 🔗 SPEC-007: SRA-CAP Pack 适配方案
+# 🔗 SPEC-2-3: CAP Pack SRA 适配方案
 
 > **状态**: `draft` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-13
 > **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
@@ -227,7 +227,7 @@ sra index --rebuild
 | 工作项 | 优先级 | 工作量 | 依赖 |
 |:-------|:------:|:------:|:-----|
 | ① 分类映射表 | P1 | 1 轮 | EPIC-001 分类体系 |
-| ② skill-tree-index --sra | P1 | 1 轮 | SPEC-005 树索引 |
+| ② skill-tree-index --sra | P1 | 1 轮 | SPEC-2-1 树索引 |
 | ③ SRA 适配器能力包 | P2 | 2 轮 | ①②完成 |
 | ④ SQS 质量注入 | P2 | 1 轮 | SQS 引擎稳定 |
 | ⑤ 变更通知 | P3 | 1 轮 | install-pack.py 集成 |

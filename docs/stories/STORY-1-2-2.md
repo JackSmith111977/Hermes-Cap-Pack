@@ -1,10 +1,10 @@
-# Story: 版本号与依赖管理规范
+# STORY-1-2-2: 版本号与依赖管理规范
 
-> **story_id**: `STORY-005-version-deps`
+> **story_id**: `STORY-1-2-2`
 > **status**: `draft`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-002-management
+> **spec_ref**: SPEC-1-2
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -26,4 +26,4 @@
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-002: [docs/SPEC-002-management.md](../SPEC-002-management.md)
+- SPEC-1-2: [docs/SPEC-1-2.md](../SPEC-1-2.md)

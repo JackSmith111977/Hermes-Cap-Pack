@@ -1,6 +1,6 @@
 # 🔌 第三方适配器开发指南
 
-> **文档状态**: `completed` · **关联 Spec**: SPEC-004-adaptation · **版本**: 1.0.0
+> **文档状态**: `completed` · **关联 Spec**: SPEC-1-4-adaptation · **版本**: 1.0.0
 > **目标读者**: 想为新的 Agent（Cursor / Windsurf / Continue 等）编写适配器的开发者
 
 ---
@@ -489,7 +489,7 @@ def test_my_adapter_parity_skill_count(self, real_pack):
 
 ## 十、参考文献
 
-- [SPEC-004: 跨 Agent 适配层方案](../SPEC-004-adaptation.md) — 完整设计文档
+- [SPEC-1-4: 跨 Agent 适配层方案](../SPEC-1-4.md) — 完整设计文档
 - [AgentAdapter Protocol](../uca/protocol.py) — Protocol 接口定义
 - [HermesAdapter 实现](../adapters/hermes.py) — 参考实现
 - [OpenCodeAdapter 实现](../adapters/opencode.py) — 参考实现

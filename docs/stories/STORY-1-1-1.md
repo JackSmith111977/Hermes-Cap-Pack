@@ -1,10 +1,10 @@
-# Story: 模块分割维度与粒度分析
+# STORY-1-1-1: 模块分割维度与粒度分析
 
-> **story_id**: `STORY-001-splitting-analysis`
+> **story_id**: `STORY-1-1-1`
 > **status**: `draft`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-001-splitting
+> **spec_ref**: SPEC-1-1
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -26,4 +26,4 @@
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-001: [docs/SPEC-001-splitting.md](../SPEC-001-splitting.md)
+- SPEC-1-1: [docs/SPEC-1-1.md](../SPEC-1-1.md)

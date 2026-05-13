@@ -1,10 +1,10 @@
-# Story: Capability Pack 格式定义 v1
+# STORY-1-1-3: Capability Pack 格式定义 v1
 
-> **story_id**: `STORY-003-format-v1`
+> **story_id**: `STORY-1-1-3`
 > **status**: `draft`
 > **priority**: P0
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-001-splitting
+> **spec_ref**: SPEC-1-1
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -57,7 +57,7 @@ test_data:
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-001: [docs/SPEC-001-splitting.md](../SPEC-001-splitting.md)
+- SPEC-1-1: [docs/SPEC-1-1.md](../SPEC-1-1.md)
 - 前序 Story: 无（首个实现的 Story）
 
 ## 不做的范围

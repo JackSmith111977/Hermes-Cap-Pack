@@ -1,10 +1,10 @@
-# Story: UCA CLI 命令行工具
+# STORY-1-4-5: UCA CLI 命令行工具
 
-> **story_id**: `STORY-019-uca-cli`
+> **story_id**: `STORY-1-4-5`
 > **status**: `implemented`
 > **priority**: P0
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-004-adaptation
+> **spec_ref**: SPEC-1-4
 > **created**: 2026-05-13
 > **implemented**: 2026-05-13
 > **owner**: boku
@@ -71,7 +71,7 @@ test_data:
 
 ## 引用链
 
-- SPEC-004: [docs/SPEC-004-adaptation.md](../SPEC-004-adaptation.md)
+- SPEC-1-4: [docs/SPEC-1-4.md](../SPEC-1-4.md)
 - 前序 Story: STORY-018-uca-core
 - 后序 Story: STORY-020-hermes-adapter
 

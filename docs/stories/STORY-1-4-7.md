@@ -1,10 +1,10 @@
-# Story: Hermes 适配器回滚机制
+# STORY-1-4-7: Hermes 适配器回滚机制
 
-> **story_id**: `STORY-021-hermes-rollback`
+> **story_id**: `STORY-1-4-7`
 > **status**: `implemented`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-004-adaptation
+> **spec_ref**: SPEC-1-4
 > **created**: 2026-05-13
 > **implemented**: 2026-05-13
 > **owner**: boku
@@ -26,5 +26,5 @@
 
 ## 引用链
 
-- SPEC-004: [docs/SPEC-004-adaptation.md](../SPEC-004-adaptation.md)
+- SPEC-1-4: [docs/SPEC-1-4.md](../SPEC-1-4.md)
 - 前序 Story: STORY-020-hermes-adapter

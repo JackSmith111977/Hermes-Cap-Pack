@@ -1,10 +1,10 @@
-# Story: Hermes 适配器实现
+# STORY-1-4-2: Hermes 适配器实现（草案）
 
-> **story_id**: `STORY-009-hermes-adapter`
+> **story_id**: `STORY-1-4-2`
 > **status**: `draft`
 > **priority**: P0
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-004-adaptation
+> **spec_ref**: SPEC-1-4
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -54,7 +54,7 @@ test_data:
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-004: [docs/SPEC-004-adaptation.md](../SPEC-004-adaptation.md)
+- SPEC-1-4: [docs/SPEC-1-4.md](../SPEC-1-4.md)
 - 前序 Story: STORY-003-format-v1（依赖格式定义完成）
 
 ## 不做的范围

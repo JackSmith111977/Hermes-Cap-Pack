@@ -49,7 +49,7 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 | **生命周期** | CRUD + 版本号 + 依赖管理 | 在线注册中心 |
 | **迭代机制** | 基于使用反馈的更新流程 | 自动技能进化（Phase 3+） |
 | **适配层** | Hermes + Claude Code + Codex CLI | 所有 20+ 平台适配 |
-| **文档范围** | EPIC + SPEC-001~004 | Story 实现文档（Phase 1） |
+| **文档范围** | EPIC + SPEC-1-1~004 | Story 实现文档（Phase 1） |
 
 ---
 
@@ -99,10 +99,10 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 │                   EPIC-001: 能力模块化可行性调查                    │
 │                                                                  │
 │   ┌──────────────────────────────────────────────────────────┐   │
-│   │  ① 如何分割？    → SPEC-001-splitting.md                  │   │
-│   │  ② 如何管理？    → SPEC-002-management.md                 │   │
-│   │  ③ 如何迭代？    → SPEC-003-iteration.md                 │   │
-│   │  ④ 如何适配？    → SPEC-004-adaptation.md                │   │
+│   │  ① 如何分割？    → SPEC-1-1.md                  │   │
+│   │  ② 如何管理？    → SPEC-1-2.md                 │   │
+│   │  ③ 如何迭代？    → SPEC-1-3.md                 │   │
+│   │  ④ 如何适配？    → SPEC-1-4.md                │   │
 │   └──────────────────────────────────────────────────────────┘   │
 │                                                                  │
 │   产出: HTML 全生命周期追踪报告 (reports/lifecycle.html)           │
@@ -115,7 +115,7 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 
 ### P0（必须完成）
 - [x] `EPIC-001.md` 经主人审阅 **批准**
-- [x] SPEC-001 ~ SPEC-004 均已创建并通过 QA_GATE
+- [x] SPEC-1-1 ~ SPEC-1-4 均已创建并通过 QA_GATE
 - [x] 至少一个能力包原型格式定义（YAML Schema）完成
 - [x] HTML 生命周期追踪报告可正常生成
 
@@ -136,16 +136,21 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 
 | ID | 标题 | 关联 Spec | 优先级 | 状态 |
 |:---|:-----|:---------|:------:|:----:|
-| STORY-001 | 模块分割维度与粒度分析 | SPEC-001 | P1 | 📄 draft |
-| STORY-002 | 模块边界判断标准决策树 | SPEC-001 | P1 | 📄 draft |
-| STORY-003 | Capability Pack 格式定义 v1 | SPEC-001 | P0 | ✅ 已完成 |
-| STORY-004 | 模块生命周期状态机设计 | SPEC-002 | P1 | 📄 draft |
-| STORY-005 | 版本号与依赖管理规范 | SPEC-002 | P1 | 📄 draft |
-| STORY-006 | 基于使用反馈的迭代流程 | SPEC-003 | P1 | 📄 draft |
-| STORY-007 | 经验与技能的同步更新机制 | SPEC-003 | P2 | 📄 draft |
-| STORY-008 | 适配层接口抽象定义 | SPEC-004 | P1 | 📄 draft |
-| STORY-009 | Hermes 适配器实现 | SPEC-004 | P0 | ✅ 已完成 |
-| STORY-010 | Claude Code 适配器实现 | SPEC-004 | P1 | 📄 draft |
+| STORY-1-1-1 | 模块分割维度与粒度分析 | SPEC-1-1 | P1 | 📄 draft |
+| STORY-1-1-2 | 模块边界判断标准决策树 | SPEC-1-1 | P1 | 📄 draft |
+| STORY-1-1-3 | Capability Pack 格式定义 v1 | SPEC-1-1 | P0 | ✅ 已完成 |
+| STORY-1-2-1 | 模块生命周期状态机设计 | SPEC-1-2 | P1 | 📄 draft |
+| STORY-1-2-2 | 版本号与依赖管理规范 | SPEC-1-2 | P1 | 📄 draft |
+| STORY-1-3-1 | 基于使用反馈的迭代流程 | SPEC-1-3 | P1 | 📄 draft |
+| STORY-1-3-2 | 经验与技能的同步更新机制 | SPEC-1-3 | P2 | 📄 draft |
+| STORY-1-4-1 | 适配层接口抽象定义 | SPEC-1-4 | P1 | 📄 draft |
+| STORY-1-4-2 | Hermes 适配器实现 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-1-10 | Claude Code 适配器实现 | SPEC-1-4 | P1 | 📄 draft |
+| STORY-1-1-11 | UCA Core 适配器核心框架 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-1-12 | UCA CLI 命令行工具 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-1-13 | Hermes Agent 适配器实现 | SPEC-1-4 | P0 | ✅ 已完成 |
+| STORY-1-1-14 | Hermes 适配器回滚机制 | SPEC-1-4 | P1 | ✅ 已完成 |
+| STORY-1-1-15 | OpenCode CLI 适配器实现 | SPEC-1-4 | P1 | ✅ 已完成 |
 
 ---
 
@@ -153,7 +158,7 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 
 | 阶段 | 时间 | 里程碑 | 交付物 |
 |:----|:----|:-------|:-------|
-| Phase 0: Spec 写作 | 5/12 - 5/16 | 4 个 Spec 获批 | EPIC + SPEC-001~004 |
+| Phase 0: Spec 写作 | 5/12 - 5/16 | 4 个 Spec 获批 | EPIC + SPEC-1-1~004 |
 | Phase 1: 格式设计 | 5/16 - 5/23 | Cap Pack 格式 v1 | YAML Schema + 示例 |
 | Phase 2: 分割实施 | 5/23 - 5/30 | 6+ 能力包提取 | 能力包目录 |
 | Phase 3: 适配层 | 5/30 - 6/13 | 3 个适配器上线 | Hermes/Claude/Codex 适配 |

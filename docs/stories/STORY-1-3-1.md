@@ -1,10 +1,10 @@
-# Story: 基于使用反馈的迭代流程
+# STORY-1-3-1: 基于使用反馈的迭代流程
 
-> **story_id**: `STORY-006-feedback-loop`
+> **story_id**: `STORY-1-3-1`
 > **status**: `draft`
 > **priority**: P1
 > **epic**: EPIC-001-feasibility
-> **spec_ref**: SPEC-003-iteration
+> **spec_ref**: SPEC-1-3
 > **created**: 2026-05-13
 > **owner**: boku
 
@@ -26,4 +26,4 @@
 ## 引用链
 
 - EPIC-001: [docs/EPIC-001-feasibility.md](../EPIC-001-feasibility.md)
-- SPEC-003: [docs/SPEC-003-iteration.md](../SPEC-003-iteration.md)
+- SPEC-1-3: [docs/SPEC-1-3.md](../SPEC-1-3.md)

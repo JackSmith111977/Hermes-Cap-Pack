@@ -1,4 +1,4 @@
-# 🔄 SPEC-003: 模块迭代与进化
+# 🔄 SPEC-1-3: 迭代与反馈机制
 
 > **状态**: `approved` · **优先级**: P1 · **创建**: 2026-05-12 · **更新**: 2026-05-12
 > **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅`
@@ -211,7 +211,7 @@ experience_refs:
 
 ## 九、QA_GATE 检查清单
 
-- [x] Spec ID 格式正确（SPEC-003）
+- [x] Spec ID 格式正确（SPEC-1-3）
 - [x] 关联 Epic 引用完整
 - [x] CLARIFY 章节记录了需求澄清
 - [x] RESEARCH 章节有业界参考

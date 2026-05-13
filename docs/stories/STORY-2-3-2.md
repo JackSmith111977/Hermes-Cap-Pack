@@ -1,4 +1,4 @@
-# STORY-017: SQS 质量加权 SRA 推荐
+# STORY-2-3-2: SQS 质量加权 SRA 推荐
 
 > **状态**: `draft` · **优先级**: P2 · **Epic**: EPIC-002 · **Sprint**: 3
 > **SDD 状态**: `draft` · **创建**: 2026-05-13 · **预估**: 1 轮

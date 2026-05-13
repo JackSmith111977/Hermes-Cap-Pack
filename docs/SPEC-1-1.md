@@ -1,4 +1,4 @@
-# 📦 SPEC-001: 模块分割方案
+# 📦 SPEC-1-1: 模块分割方案
 
 > **状态**: `approved` · **优先级**: P1 · **创建**: 2026-05-12 · **更新**: 2026-05-12
 > **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅`
@@ -239,7 +239,7 @@ cap-packs/knowledge-base/
 
 ## 五、QA_GATE 检查清单
 
-- [x] Spec ID 格式正确（SPEC-001）
+- [x] Spec ID 格式正确（SPEC-1-1）
 - [x] 关联 Epic 引用完整
 - [x] CLARIFY 章节记录了需求确认
 - [x] RESEARCH 章节有深度分析

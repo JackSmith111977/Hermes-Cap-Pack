@@ -1,4 +1,4 @@
-# STORY-012: SQS/审计工具嵌入 cap-pack 项目
+# STORY-2-2-1: SQS/审计工具嵌入 cap-pack 项目
 
 > **状态**: `draft` · **优先级**: P1 · **Epic**: EPIC-002 · **Sprint**: 1
 > **SDD 状态**: `draft` · **创建**: 2026-05-13 · **预估**: 1 轮

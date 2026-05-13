@@ -1,4 +1,4 @@
-# 🌳 SPEC-005: 树状 Skill 层次索引系统
+# 🌳 SPEC-2-1: 树状 Skill 层次索引系统
 
 > **状态**: `draft` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-13
 > **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
