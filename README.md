@@ -176,9 +176,9 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 |:-------|:----:|:------|
 | `schemas/cap-pack-format-v1.md` | ✅ 完成 | YAML 格式规范 v1（含完整字段定义） |
 | `schemas/cap-pack-v1.schema.json` | ✅ 完成 | JSON Schema（可验证所有 cap-pack.yaml） |
-| `packs/doc-engine/cap-pack.yaml` | ✅ 完成 | 文档生成能力包（12 技能 + 5 经验 + linked files） |
-| `packs/doc-engine/SKILLS/` | ✅ 完成 | 12 个完整技能（含 scripts/references/checklists） |
-| `packs/doc-engine/EXPERIENCES/` | ✅ 完成 | 5 个实战经验文档 |
+| `packs/doc-engine/cap-pack.yaml` | ✅ 完成 | 文档生成能力包（9 skills + 11 experiences + linked files） |
+| `packs/doc-engine/SKILLS/` | ✅ 完成 | 9 个技能（含 scripts/references/checklists） |
+| `packs/doc-engine/EXPERIENCES/` | ✅ 完成 | 11 个实战经验文档 |
 | `packs/quality-assurance/cap-pack.yaml` | ✅ 完成 | 质量保障能力包（SQS + 审计 + 树索引） |
 | `scripts/skill-tree-index.py` | ✅ 完成 | 三层树状索引生成器 + 合并潜力分析 |
 | `scripts/skill-quality-score.py` | ✅ 已纳入 | SQS 五维质量评分引擎 |
@@ -187,7 +187,12 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 | `scripts/validate-pack.py` | ✅ 完成 | 能力包完整性验证（JSON Schema + 文件检查） |
 | `scripts/install-pack.py` | ✅ 完成 | 安装能力包到 Hermes（备份还原 + hooks） |
 | `reports/skill-tree-architecture-research.html` | ✅ 完成 | 树状层次可行性研究报告（来源可点击） |
-| Hermes 适配器 | ⏳ 下一轮 | 将能力包安装到 Hermes 的适配器脚本 |
+|| `pyproject.toml` | ✅ 完成 | 项目元数据 + 版本管理（version: 0.3.0） |
+|| `scripts/bump-version.py` | ✅ 完成 | 版本号自动递增（patch/minor/major + git tag） |
+|| `.github/workflows/ci.yml` | ✅ 完成 | GitHub Actions CI（4 job 并行质量门禁） |
+|| `scripts/ci-check-yaml.py` | ✅ 完成 | YAML 语法验证 |
+|| `scripts/ci-check-cross-refs.py` | ✅ 完成 | 跨包引用完整性检查 |
+|| Hermes 适配器 | ⏳ 下一轮 | 将能力包安装到 Hermes 的适配器脚本 |
 | 更多模块提取 | ⏳ Phase 1.2 | learning-engine, developer-workflow 等 |
 
 ### 项目结构
@@ -197,6 +202,7 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 ├── README.md                         # 项目说明
 ├── CHANGELOG.md                      # 版本日志
 ├── constraints.md                    # 项目约束与边界
+├── pyproject.toml                     # 项目元数据 + 版本管理（0.3.0）
 ├── .gitignore
 ├── docs/
 │   ├── EPIC-001-feasibility.md       # Epic: 前期可行性调查
@@ -210,10 +216,24 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 │   └── cap-pack-v1.schema.json       # JSON Schema 验证
 ├── packs/
 │   └── doc-engine/                   # 第一个原型能力包
-│       ├── cap-pack.yaml             # 模块清单（12技能+5经验）
-│       ├── SKILLS/                   # 技能引用（12个）
-│       ├── EXPERIENCES/              # 实战经验（5个）
+│       ├── cap-pack.yaml             # 模块清单（9 skills + 11 experiences）
+│       ├── SKILLS/                   # 技能引用（9个）
+│       ├── EXPERIENCES/              # 实战经验（11个）
 │       └── MCP/                      # MCP 配置（当前空）
+├── .github/workflows/
+│   └── ci.yml                        # GitHub Actions CI 工作流
+├── scripts/
+│   ├── bump-version.py               # 版本号自动递增
+│   ├── ci-check-yaml.py              # YAML 语法验证（CI）
+│   ├── ci-check-cross-refs.py        # 跨包引用检查（CI）
+│   ├── validate-pack.py              # 能力包完整性验证
+│   ├── health-check.py               # 健康检查 + 量化测试
+│   ├── install-pack.py               # 安装能力包到 Hermes
+│   ├── extract-pack.py               # 从 Hermes 提取 skill 内容
+│   ├── skill-tree-index.py           # 三层树状索引生成器
+│   ├── skill-quality-score.py        # SQS 五维质量评分引擎
+│   ├── skill-lifecycle-audit.py      # 生命周期审计
+│   └── sra-discovery-test.py         # SRA 发现测试
 └── reports/
     └── lifecycle.html                # HTML 全生命周期追踪报告
 ```

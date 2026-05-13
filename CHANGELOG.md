@@ -3,6 +3,9 @@
 ## [0.3.0] — 2026-05-13
 
 ### Added
+- **自动化版本管理**: `pyproject.toml` (version: 0.3.0) + `scripts/bump-version.py`
+  - 支持 `patch`/`minor`/`major` 自动递增
+  - 自动更新 pyproject.toml + CHANGELOG + git tag
 - GitHub Actions CI pipeline (`.github/workflows/ci.yml`)
   - 4 parallel jobs: lint, validate-packs, health-gate, cross-ref-consistency
   - YAML syntax validation + Python syntax check
@@ -11,9 +14,17 @@
 - CI helper scripts: `scripts/ci-check-yaml.py`, `scripts/ci-check-cross-refs.py`
 
 ### Fixed
+- **CI 失败根因**: `cache: pip` 找不到 `pyproject.toml` → 已创建该文件
 - cap-pack.yaml manifests: added missing `type: capability-pack` and `compatibility` fields
 - Removed non-existent pack depends_on references
 - Renamed `pipeline-progress.yaml` → `.md` (was markdown content in YAML extension)
+
+### Changed
+- README 文档对齐:
+  - 项目结构: 新增 `pyproject.toml`, `.github/workflows/`, `scripts/*` 完整列表
+  - Phase 1 进度: doc-engine 技能数从 12→9, 经验从 5→11
+  - Phase 1 进度: 新增 CI + 版本管理条目
+  - 初始结构: doc-engine 计数与实际对齐
 
 ## [0.2.0] — 2026-05-13
 

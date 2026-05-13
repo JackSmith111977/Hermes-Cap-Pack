@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "hermes-cap-pack"
+version = "0.3.0"
+description = "boku 能力模块化与跨 Agent 可复用性项目 — Capability Pack 标准化格式"
+readme = "README.md"
+authors = [
+    { name = "boku (Emma)" },
+]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["hermes", "agent", "capability-pack", "modular", "skills"]
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/JackSmith111977/Hermes-Cap-Pack"
+Repository = "https://github.com/JackSmith111977/Hermes-Cap-Pack.git"
+
+[tool.version]
+# Managed by scripts/bump-version.py
+# Current: 0.3.0
+last_bump = "2026-05-13"
+bump_type = "patch"
