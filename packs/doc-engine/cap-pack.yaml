@@ -1,0 +1,152 @@
+name: doc-engine
+version: 1.0.0
+type: capability-pack
+classification: domain
+display_name: 文档生成引擎
+description: >
+  全套文档生成能力——PDF 排版、PPT 演示文稿、DOCX 报告、
+  HTML 网页、Markdown 文档、LaTeX 论文和 EPUB 电子书。
+  涵盖字体配置、中文排版、跨平台兼容性等实战经验。
+author: boku (Emma/小玛)
+created: '2026-05-13'
+updated: '2026-05-13'
+
+compatibility:
+  agent_types: [hermes, claude-code, codex-cli]
+  requires_mcp: false
+  requires_network: false
+  requires_env: []
+
+dependencies:
+  system_packages:
+    - libpango-1.0-0
+    - libpangocairo-1.0-0
+    - libgdk-pixbuf2.0-0
+  python_packages:
+    - weasyprint>=60
+    - python-pptx>=0.6
+    - python-docx>=1.0
+    - reportlab>=4.0
+    - ebooklib>=0.18
+
+skills:
+  - id: pdf-layout
+    path: SKILLS/pdf-layout.md
+    version: 1.2.0
+    description: 使用 ReportLab 和 WeasyPrint 生成 PDF
+    tags: [pdf, reportlab, weasyprint, 中文排版]
+    experience_refs: [wqy-font-fallback, reportlab-cjk-encoding]
+
+  - id: pdf-pro-design
+    path: SKILLS/pdf-pro-design.md
+    version: 1.0.0
+    description: PDF 专业排版设计系统
+    tags: [pdf, design, advanced]
+    experience_refs: [design-crap-principles, pdf-tool-decision-tree]
+
+  - id: pdf-render-comparison
+    path: SKILLS/pdf-render-comparison.md
+    version: 1.0.0
+    description: PDF 渲染工具选型决策树
+    tags: [pdf, decision, comparison]
+
+  - id: pptx-guide
+    path: SKILLS/pptx-guide.md
+    version: 1.1.0
+    description: 使用 python-pptx 创建 PPT
+    tags: [pptx, presentation, python-pptx]
+    experience_refs: [pptx-chinese-fonts]
+
+  - id: docx-guide
+    path: SKILLS/docx-guide.md
+    version: 1.0.0
+    description: 使用 python-docx 创建 DOCX
+    tags: [docx, word, python-docx]
+
+  - id: html-guide
+    path: SKILLS/html-guide.md
+    version: 1.0.0
+    description: 使用 HTML/CSS 排版网页文档
+    tags: [html, css, web]
+
+  - id: markdown-guide
+    path: SKILLS/markdown-guide.md
+    version: 1.0.0
+    description: Markdown 写作与 Pandoc 转换
+    tags: [markdown, pandoc]
+
+  - id: latex-guide
+    path: SKILLS/latex-guide.md
+    version: 1.0.0
+    description: LaTeX 学术论文排版
+    tags: [latex, academic, thesis]
+
+  - id: epub-guide
+    path: SKILLS/epub-guide.md
+    version: 1.0.0
+    description: 使用 ebooklib 生成 EPUB
+    tags: [epub, ebook, ebooklib]
+
+  - id: doc-design
+    path: SKILLS/doc-design.md
+    version: 1.0.0
+    description: 文档排版设计索引与路由
+    tags: [design, routing]
+
+  - id: vision-qc-patterns
+    path: SKILLS/vision-qc-patterns.md
+    version: 1.0.0
+    description: PDF 排版错误视觉检测模式库
+    tags: [pdf, qc, vision, patterns]
+
+  - id: readme-for-ai
+    path: SKILLS/readme-for-ai.md
+    version: 1.0.0
+    description: 模型友好型 README 编写方法论
+    tags: [readme, documentation, ai-agent]
+
+experiences:
+  - id: wqy-font-fallback
+    path: EXPERIENCES/wqy-font-fallback.md
+    type: pitfall
+    description: WQY 微米黑字体在 ReportLab 中的注册与回退
+    skill_refs: [pdf-layout, pdf-pro-design]
+
+  - id: reportlab-cjk-encoding
+    path: EXPERIENCES/reportlab-cjk-encoding.md
+    type: pitfall
+    description: ReportLab 中文字体编码问题与解决方案
+    skill_refs: [pdf-layout]
+
+  - id: pptx-chinese-fonts
+    path: EXPERIENCES/pptx-chinese-fonts.md
+    type: pitfall
+    description: python-pptx 中文字体名称映射与跨平台兼容
+    skill_refs: [pptx-guide]
+
+  - id: design-crap-principles
+    path: EXPERIENCES/design-crap-principles.md
+    type: comparison
+    description: CRAP 设计原则的排版应用
+    skill_refs: [pdf-pro-design, doc-design]
+
+  - id: pdf-tool-decision-tree
+    path: EXPERIENCES/pdf-tool-decision-tree.md
+    type: decision-tree
+    description: WeasyPrint vs ReportLab vs LaTeX 选型决策
+    skill_refs: [pdf-layout, pdf-render-comparison, latex-guide]
+
+mcp_servers: []
+
+config_defaults:
+  pdf_font: WQY-ZenHei
+  pdf_dpi: 300
+  presentation_theme: dark-minimal
+
+hooks:
+  on_activate:
+    - type: shell
+      command: pip install weasyprint python-pptx python-docx reportlab ebooklib
+  on_deactivate:
+    - type: notify
+      message: doc-engine 已卸载，相关文档生成技能将不可用

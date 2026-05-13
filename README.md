@@ -133,6 +133,46 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 | SPEC-003 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
 | SPEC-004 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P2 |
 
+## Phase 1 进展（格式设计 + 原型 — 进行中）
+
+| 产出物 | 状态 | 说明 |
+|:-------|:----:|:------|
+| `schemas/cap-pack-format-v1.md` | ✅ 完成 | YAML 格式规范 v1（含完整字段定义） |
+| `schemas/cap-pack-v1.schema.json` | ✅ 完成 | JSON Schema（可验证所有 cap-pack.yaml） |
+| `packs/doc-engine/cap-pack.yaml` | ✅ 完成 | 第一个原型能力包（12 技能 + 5 经验） |
+| `packs/doc-engine/SKILLS/` | ✅ 完成 | 12 个技能引用文件（指向 Hermes 源 Skill） |
+| `packs/doc-engine/EXPERIENCES/` | ✅ 完成 | 5 个实战经验文档 |
+| Hermes 适配器 | ⏳ 下一轮 | 将能力包安装到 Hermes 的适配器脚本 |
+| 更多模块提取 | ⏳ Phase 1.2 | learning-engine, developer-workflow 等 |
+
+### 项目结构
+
+```
+~/projects/hermes-cap-pack/
+├── README.md                         # 项目说明
+├── CHANGELOG.md                      # 版本日志
+├── constraints.md                    # 项目约束与边界
+├── .gitignore
+├── docs/
+│   ├── EPIC-001-feasibility.md       # Epic: 前期可行性调查
+│   ├── SPEC-001-splitting.md         # Spec: 模块分割方案
+│   ├── SPEC-002-management.md        # Spec: 模块生命周期管理
+│   ├── SPEC-003-iteration.md         # Spec: 模块迭代与进化
+│   ├── SPEC-004-adaptation.md        # Spec: 跨 Agent 适配层
+│   └── STORY-TEMPLATE.md             # Story 模板（SDD 标准）
+├── schemas/
+│   ├── cap-pack-format-v1.md         # 能力包格式规范 v1
+│   └── cap-pack-v1.schema.json       # JSON Schema 验证
+├── packs/
+│   └── doc-engine/                   # 第一个原型能力包
+│       ├── cap-pack.yaml             # 模块清单（12技能+5经验）
+│       ├── SKILLS/                   # 技能引用（12个）
+│       ├── EXPERIENCES/              # 实战经验（5个）
+│       └── MCP/                      # MCP 配置（当前空）
+└── reports/
+    └── lifecycle.html                # HTML 全生命周期追踪报告
+```
+
 ## 四个核心问题
 
 本项目的可行性调查围绕四个核心问题展开：
