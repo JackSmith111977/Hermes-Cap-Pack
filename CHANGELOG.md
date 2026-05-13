@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.0] — 2026-05-13
+
+### Added
+- GitHub Actions CI pipeline (`.github/workflows/ci.yml`)
+  - 4 parallel jobs: lint, validate-packs, health-gate, cross-ref-consistency
+  - YAML syntax validation + Python syntax check
+  - cap-pack.yaml manifest validation via validate-pack.py
+  - Cross-pack reference integrity checker
+- CI helper scripts: `scripts/ci-check-yaml.py`, `scripts/ci-check-cross-refs.py`
+
+### Fixed
+- cap-pack.yaml manifests: added missing `type: capability-pack` and `compatibility` fields
+- Removed non-existent pack depends_on references
+- Renamed `pipeline-progress.yaml` → `.md` (was markdown content in YAML extension)
+
 ## [0.2.0] — 2026-05-13
 
 ### Added
