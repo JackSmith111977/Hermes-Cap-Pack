@@ -1,0 +1,105 @@
+name: CI — Cap Pack Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: 🧹 Lint & Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml
+
+      - name: 🐍 Python syntax check
+        run: |
+          errors=0
+          while IFS= read -r -d '' f; do
+            python3 -m py_compile "$f" || { echo "❌ Syntax error: $f"; ((errors++)); }
+          done < <(find . -name '*.py' -not -path './.git/*' -print0)
+          if [ "$errors" -eq 0 ]; then
+            echo "✅ All Python files pass syntax check"
+          else
+            echo "❌ $errors file(s) have syntax errors"
+            exit 1
+          fi
+
+      - name: 📄 YAML syntax check
+        run: python3 scripts/ci-check-yaml.py
+
+  validate-packs:
+    name: 📦 Cap-Pack Validation
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml
+
+      - name: 🔍 Validate doc-engine pack
+        run: python3 scripts/validate-pack.py packs/doc-engine
+
+      - name: 🔍 Validate quality-assurance pack
+        run: python3 scripts/validate-pack.py packs/quality-assurance
+
+  quality:
+    name: 📊 Health Gate
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml
+
+      - name: 🏥 Run health check (non-blocking)
+        continue-on-error: true
+        run: python3 scripts/health-check.py --gate
+
+  consistency:
+    name: 🔗 Cross-Reference Integrity
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml
+
+      - name: 🔗 Check cross-pack references
+        run: python3 scripts/ci-check-cross-refs.py

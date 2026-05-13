@@ -2,6 +2,9 @@
 
 name: quality-assurance
 version: 1.0.0
+type: capability-pack
+compatibility:
+  agent_types: [hermes]
 description: "质量保障能力包 — SQS 评分 + 生命周期审计 + 树状索引 + 代码审查门禁"
 author: boku (Emma)
 created: 2026-05-13
@@ -41,13 +44,9 @@ skills:
 
 ## 依赖
 
-depends_on:
-  skill-creator:
-    version: ">=5.0.0"
-    reason: "SQS 门禁集成在 skill-creator 生命周期章节 §10"
-  pre_flight:
-    version: ">=2.0.0"
-    reason: "SQS 门禁作为 pre_flight Gate 3"
+# depends_on 保留用于跨包引用
+# skill-creator 和 pre_flight 是 Hermes 内部 skill 非独立 pack
+depends_on: {}
 
 ## 配置
 

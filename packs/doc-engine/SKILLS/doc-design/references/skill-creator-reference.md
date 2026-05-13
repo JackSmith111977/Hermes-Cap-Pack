@@ -148,7 +148,7 @@ Stage 9: 评估迭代
 - [ ] 创建 references/ 详细文档
 - [ ] 创建 templates/ 模板（如 Generator 模式）
 - [ ] 定义 evals.json 评估维度
-- [ ] 定义 pipeline-progress.yaml（如 Pipeline 模式）
+- [ ] 定义 pipeline-progress.md（如 Pipeline 模式）
 - [ ] 编写 Red Flags（常见错误）
 - [ ] 编写验证清单
 - [ ] 测试 Skill 可用性
@@ -164,7 +164,7 @@ skill-name/
 ├── references/           # 详细参考文档
 │   ├── cdp-api.md
 │   ├── evals.json        # 评估维度
-│   ├── pipeline-progress.yaml  # Pipeline 追踪
+│   ├── pipeline-progress.md  # Pipeline 追踪
 │   └── site-patterns/    # 站点经验
 │       └── {domain}.md
 ├── templates/            # 模板（Generator 模式）

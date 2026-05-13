@@ -2,6 +2,9 @@
 
 name: doc-engine
 version: 2.0.0
+type: capability-pack
+compatibility:
+  agent_types: [hermes]
 description: "文档生成能力包 — PDF/HTML/PPTX 排版 + 视觉QA + 质量门禁"
 author: boku (Emma)
 created: 2026-05-13
@@ -167,9 +170,6 @@ clusters:
 ## 依赖
 
 depends_on:
-  skill-creator:
-    version: ">=5.0.0"
-    reason: "SQS 质量门禁集成"
   quality-assurance:
     version: ">=1.0.0"
     reason: "健康检查脚本 + 质量门禁"
