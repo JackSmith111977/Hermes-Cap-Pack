@@ -1,11 +1,10 @@
 """
 CLI 命令实现 — 能力包的安装/卸载/验证/列出/检查
+使用 HermesAdapter 进行实际操作。
 """
 
 from __future__ import annotations
 
-import json
-import shutil
 import sys
 from pathlib import Path
 
@@ -14,37 +13,13 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from scripts.uca import (
-    PackParser,
-    PackParseError,
-    DependencyChecker,
-    PackVerifier,
-    CapPack,
-)
+from scripts.uca import PackParser, PackParseError
+from scripts.adapters.hermes import HermesAdapter
 
 # ── 路径常量 ──────────────────────────────────────────
 
-HERMES_SKILLS = Path.home() / ".hermes" / "skills"
-TRACK_FILE = Path.home() / ".hermes" / "installed_packs.json"
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 SCHEMA_PATH = PROJECT_ROOT / "schemas" / "cap-pack-v1.schema.json"
-
-
-# ── 跟踪文件操作 ──────────────────────────────────────
-
-
-def _load_tracked() -> dict:
-    if TRACK_FILE.exists():
-        try:
-            return json.loads(TRACK_FILE.read_text())
-        except (json.JSONDecodeError, OSError):
-            return {}
-    return {}
-
-
-def _save_tracked(tracked: dict):
-    TRACK_FILE.parent.mkdir(parents=True, exist_ok=True)
-    TRACK_FILE.write_text(json.dumps(tracked, indent=2, ensure_ascii=False) + "\n")
 
 
 # ── 工具函数 ──────────────────────────────────────────
@@ -69,7 +44,6 @@ def _print_skill_tree(skills: list, indent: str = "    "):
 def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
     """安装能力包"""
     parser = PackParser(schema_path=SCHEMA_PATH)
-    checker = DependencyChecker()
 
     _print_header(f"📦 安装能力包: {pack_dir.name}")
 
@@ -82,101 +56,53 @@ def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
     print(f"     经验:    {len(pack.experiences)}")
     print(f"     MCP:     {len(pack.mcp_configs)}")
 
-    # Step 2: 依赖检查
-    if pack.dependencies:
-        print(f"\n  🔍 检查依赖...")
-        dep_result = checker.check(pack)
-        if dep_result["missing_packages"]:
-            for pkg in dep_result["missing_packages"]:
-                print(f"     ⚠️  缺少 Python 包: {pkg}")
-            if not dry_run:
-                print("\n  ⚠️  依赖不满足，继续安装（请在安装后手动安装缺失包）")
-        else:
-            print(f"     ✅ 所有 Python 依赖已满足")
+    # Step 2: 使用 HermesAdapter 安装
+    adapter = HermesAdapter()
 
-    # Step 3: 检查已安装
-    tracked = _load_tracked()
-    if pack.name in tracked:
-        old_info = tracked[pack.name]
-        print(f"\n  🔄 已安装版本: v{old_info.get('version', '?')}")
-        print(f"     将更新到:   v{pack.version}")
+    if not adapter.is_available:
+        print(f"\n  ⚠️  Hermes 环境不可用，将执行离线安装")
+        print(f"     (仅复制 skill 文件，不注入 MCP 配置)")
 
     if dry_run:
         print(f"\n  🔍 [DRY RUN] 将安装以下 skill:")
         _print_skill_tree(pack.skills)
+        if pack.mcp_configs:
+            print(f"\n  🔌 将注入 MCP 服务:")
+            for m in pack.mcp_configs:
+                print(f"     ⚡ {m.name}")
         print(f"\n  ✅ 预览完成，未执行任何操作")
         return 0
 
-    # Step 4: 实际安装
-    print(f"\n  📂 安装 skill 文件...")
-    installed = []
-    for skill in pack.skills:
-        # 源: SKILLS/{id}/ 目录（在 pack_dir 下）
-        src = pack.pack_dir / "SKILLS" / skill.id
-        dst = HERMES_SKILLS / skill.id
+    result = adapter.install(pack)
 
-        if not src.exists():
-            print(f"     ⚠️  {skill.id}: 源目录不存在，跳过")
-            continue
-
-        # 备份已有
-        if dst.exists():
-            bak = dst.parent / f"{skill.id}.bak"
-            if bak.exists():
-                shutil.rmtree(bak)
-            shutil.copytree(dst, bak)
-            shutil.rmtree(dst)
-
-        # 安装
-        shutil.copytree(src, dst)
-        installed.append(skill.id)
-        print(f"     ✅ {skill.id}")
-
-    # Step 5: 记录跟踪
-    tracked[pack.name] = {
-        "version": pack.version,
-        "path": str(pack.pack_dir),
-        "installed_at": __import__("datetime").datetime.now().isoformat()[:19],
-        "skills": installed,
-        "skill_count": len(installed),
-        "experience_count": len(pack.experiences),
-    }
-    _save_tracked(tracked)
-
-    print(f"\n  ✅ 安装完成！共安装 {len(installed)} 个 skill")
-    return 0
+    if result.success:
+        installed = result.details.get("installed_skills", [])
+        mcp_count = result.details.get("mcp_injected", 0)
+        print(f"\n  ✅ 安装完成！共安装 {len(installed)} 个 skill")
+        if mcp_count > 0:
+            print(f"  🔌 注入 {mcp_count} 个 MCP 配置")
+        if result.warnings:
+            for w in result.warnings:
+                print(f"  ⚠️  {w}")
+        return 0
+    else:
+        for err in result.errors:
+            print(f"\n  ❌ {err}")
+        return 1
 
 
 def cmd_remove(pack_name: str) -> int:
     """卸载能力包"""
-    tracked = _load_tracked()
+    adapter = HermesAdapter()
+    result = adapter.uninstall(pack_name)
 
-    if pack_name not in tracked:
-        print(f"❌ 能力包 '{pack_name}' 未安装")
+    if not result.success:
+        print(f"❌ {result.errors[0]}")
         return 1
 
-    info = tracked[pack_name]
     _print_header(f"🗑️  卸载能力包: {pack_name}")
-    print(f"     当前版本: v{info.get('version', '?')}")
-    print(f"     安装时间: {info.get('installed_at', '?')}")
-
-    removed = 0
-    restored = 0
-    for sid in info.get("skills", []):
-        skill_dir = HERMES_SKILLS / sid
-        bak_dir = HERMES_SKILLS / f"{sid}.bak"
-
-        if skill_dir.exists():
-            shutil.rmtree(skill_dir)
-            removed += 1
-
-        if bak_dir.exists():
-            shutil.copytree(bak_dir, skill_dir)
-            shutil.rmtree(bak_dir)
-            restored += 1
-
-    del tracked[pack_name]
-    _save_tracked(tracked)
+    removed = result.details.get("removed", 0)
+    restored = result.details.get("restored_from_backup", 0)
 
     print(f"\n  ✅ 卸载完成")
     if restored > 0:
@@ -187,65 +113,40 @@ def cmd_remove(pack_name: str) -> int:
 
 def cmd_verify(pack_name: str) -> int:
     """验证已安装的能力包"""
-    tracked = _load_tracked()
+    adapter = HermesAdapter()
+    result = adapter.verify(pack_name)
 
-    if pack_name not in tracked:
-        print(f"❌ 能力包 '{pack_name}' 未安装")
+    if not result.success:
+        print(f"❌ {'; '.join(result.errors)}")
         return 1
 
-    info = tracked[pack_name]
     _print_header(f"🔍 验证能力包: {pack_name}")
+    print(f"     版本:        v{result.details.get('total_skills', 0)}")
+    print(f"     Skills 完好: {result.details.get('valid_skills', 0)}/{result.details.get('total_skills', 0)}")
 
-    print(f"     版本:     v{info.get('version', '?')}")
-    print(f"     Skills:   {info.get('skill_count', 0)} 个")
-    print(f"     经验:     {info.get('experience_count', 0)} 个")
+    if result.warnings:
+        for w in result.warnings:
+            print(f"  ⚠️  {w}")
 
-    # 使用 verifier 检查
-    skill_ids = info.get("skills", [])
-    verifier = PackVerifier(skills_base=HERMES_SKILLS)
-
-    # 构造一个轻量的 CapPack 用于验证
-    from scripts.uca.protocol import CapPack as CP, CapPackSkill as CPS
-    pack = CP(
-        name=pack_name,
-        version=info.get("version", "?"),
-        pack_dir=Path(info.get("path", ".")),
-        manifest={},
-        skills=[CPS(id=sid, path=f"SKILLS/{sid}/SKILL.md") for sid in skill_ids],
-    )
-
-    result = verifier.verify(pack, HERMES_SKILLS)
-
-    print()
-    if result.success:
-        print(f"  ✅ 验证通过！所有 {len(skill_ids)} 个 skill 文件完好")
-    else:
-        print(f"  ❌ 验证失败：")
-        for err in result.errors:
-            print(f"     {err}")
-        return 1
-
+    print(f"\n  ✅ 验证通过！")
     return 0
 
 
 def cmd_list() -> int:
     """列出已安装的能力包"""
-    tracked = _load_tracked()
+    adapter = HermesAdapter()
+    packs = adapter.list_installed()
 
-    if not tracked:
+    if not packs:
         print("📭 (无已安装的能力包)")
         return 0
 
-    _print_header(f"📋 已安装的能力包 ({len(tracked)} 个)")
+    _print_header(f"📋 已安装的能力包 ({len(packs)} 个)")
 
-    for name, info in sorted(tracked.items()):
-        version = info.get("version", "?")
-        skills = info.get("skills", [])
-        installed_at = info.get("installed_at", "")[:19]
-        print(f"\n  📦 {name}  v{version}")
-        print(f"     安装时间: {installed_at}")
-        print(f"     Skills({len(skills)}): {', '.join(skills[:5])}{'...' if len(skills) > 5 else ''}")
-
+    for p in packs:
+        print(f"\n  📦 {p['name']}  v{p['version']}")
+        print(f"     安装时间: {p.get('installed_at', '')[:19]}")
+        print(f"     Skills:   {p['skill_count']} 个")
     print()
     return 0
 

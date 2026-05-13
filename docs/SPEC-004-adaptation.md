@@ -213,7 +213,7 @@ compatibility:
 ## 七、验收标准 (AC)
 
 - [x] AgentAdapter Protocol 可被 3 个适配器实现（Phase 0: Protocol 定义完成 ✅）
-- [ ] Hermes 适配器可完整安装/卸载/更新能力包
+- [x] Hermes 适配器可完整安装/卸载/更新能力包（Phase 1: HermesAdapter 实现完成 ✅）
 - [ ] Claude Code 适配器可安装技能和 MCP 配置
 - [ ] Codex CLI 适配器可使用 rules 系统加载技能
 - [ ] 能力对等性测试可至少覆盖 Hermes 和 Codex CLI

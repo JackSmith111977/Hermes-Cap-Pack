@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.5.0] — 2026-05-13
+
+### Added
+- **HermesAdapter** (`scripts/adapters/hermes.py`): 完整的 Hermes Agent 适配器，实现 AgentAdapter Protocol
+  - `install()` — 安装 skill 文件 + MCP 配置注入 + 跟踪记录
+  - `uninstall()` — 卸载能力包（含备份恢复）
+  - `update()` — 版本更新
+  - `list_installed()` — 列出已安装
+  - `verify()` — skill 文件完整性 + MCP 配置存在性验证
+- **SnapshotManager**: 安装前快照 / 失败自动回滚机制
+  - `create()` — 快照 skills + config.yaml mcp_servers + 跟踪状态
+  - `restore()` — 从快照完整恢复
+  - `cleanup()` — 安装成功后清理
+- MCP 配置注入: 自动将能力包的 `mcp_servers` 写入 `~/.hermes/config.yaml`
+- **51 个单元测试** (新增 14 个): 覆盖 HermesAdapter install/uninstall/verify/list + SnapshotManager
+
+### Changed
+- CLI `commands.py` 全面重构: 所有命令底层使用 HermesAdapter，消除内联代码重复
+- CLI `main.py` 路径管理优化
+
 ## [0.4.0] — 2026-05-13
 
 ### Added
