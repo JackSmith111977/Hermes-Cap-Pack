@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.4.0] — 2026-05-13
+
+### Added
+- **UCA Core 框架** (`scripts/uca/`): 统一适配器核心基础设施
+  - `protocol.py` — `AgentAdapter` Protocol + `CapPack`/`AdapterResult` 数据类
+  - `parser.py` — `PackParser`，解析 cap-pack.yaml → CapPack 对象，支持 JSON Schema 验证
+  - `dependency.py` — `DependencyChecker`，检查 Python 包依赖和前置 skill
+  - `verifier.py` — `PackVerifier`，验证已安装 skill 文件完整性
+- **cap-pack CLI** (`scripts/cli/`): 命令行能力包管理工具
+  - `cap-pack install <pack-dir>` — 安装能力包（解析 + 依赖检查 + 文件复制 + 跟踪）
+  - `cap-pack remove <pack-name>` — 卸载能力包（备份恢复）
+  - `cap-pack verify <pack-name>` — 验证已安装的能力包完整性
+  - `cap-pack list` — 列出所有已安装的能力包
+  - `cap-pack inspect <pack-dir>` — 检查能力包内容（不安装）
+- **单元测试**: 37 个测试覆盖 protocol/parser/dependency/verifier 全部组件
+- **Story 文档**: STORY-018-uca-core.md, STORY-019-uca-cli.md
+
+### Changed
+- 所有 `scripts/uca/` 内部导入改为相对导入，提高可移植性
+- CLI 入口自动添加项目根目录到 sys.path，支持从任意目录运行
+
+### Fixed
+- `scripts/uca/__init__.py` 延迟导入依赖：Parser/Dependency/Verifier 按需创建
+
 ## [0.3.0] — 2026-05-13
 
 ### Added

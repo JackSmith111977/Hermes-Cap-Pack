@@ -192,7 +192,9 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 || `.github/workflows/ci.yml` | ✅ 完成 | GitHub Actions CI（4 job 并行质量门禁） |
 || `scripts/ci-check-yaml.py` | ✅ 完成 | YAML 语法验证 |
 || `scripts/ci-check-cross-refs.py` | ✅ 完成 | 跨包引用完整性检查 |
-|| Hermes 适配器 | ⏳ 下一轮 | 将能力包安装到 Hermes 的适配器脚本 |
+|| `scripts/uca/` | ✅ 完成 | UCA Core 框架（Protocol + Parser + Dependency + Verifier） |
+| `scripts/cli/main.py` | ✅ 完成 | cap-pack CLI（install/remove/verify/list/inspect） |
+| Hermes 适配器 | ⏳ 下一轮 | 将能力包安装到 Hermes 的适配器脚本（MCP 配置注入 + 完整回滚） |
 | 更多模块提取 | ⏳ Phase 1.2 | learning-engine, developer-workflow 等 |
 
 ### 项目结构
@@ -223,12 +225,26 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 ├── .github/workflows/
 │   └── ci.yml                        # GitHub Actions CI 工作流
 ├── scripts/
+│   ├── cli/
+│   │   ├── main.py                   # cap-pack CLI 入口
+│   │   └── commands.py               # install/remove/verify/list 命令实现
+│   ├── tests/
+│   │   ├── test_uca_protocol.py       # Protocol 单元测试
+│   │   ├── test_uca_parser.py         # Parser 单元测试
+│   │   ├── test_uca_dependency.py     # Dependency 单元测试
+│   │   └── test_uca_verifier.py       # Verifier 单元测试
+│   ├── uca/
+│   │   ├── __init__.py               # UCA Core 包导出
+│   │   ├── protocol.py               # AgentAdapter Protocol + 数据类
+│   │   ├── parser.py                 # cap-pack.yaml 解析器
+│   │   ├── dependency.py             # 依赖检查器
+│   │   └── verifier.py               # 安装后验证器
 │   ├── bump-version.py               # 版本号自动递增
 │   ├── ci-check-yaml.py              # YAML 语法验证（CI）
 │   ├── ci-check-cross-refs.py        # 跨包引用检查（CI）
 │   ├── validate-pack.py              # 能力包完整性验证
 │   ├── health-check.py               # 健康检查 + 量化测试
-│   ├── install-pack.py               # 安装能力包到 Hermes
+│   ├── install-pack.py               # [弃用] 由 cap-pack CLI 替代
 │   ├── extract-pack.py               # 从 Hermes 提取 skill 内容
 │   ├── skill-tree-index.py           # 三层树状索引生成器
 │   ├── skill-quality-score.py        # SQS 五维质量评分引擎
