@@ -135,6 +135,7 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 | **EPIC-002** | ⬜ draft | ✅ | ✅ | ✅ 部分 | ⬜ | ⬜ | **P1** |
 | **SPEC-005** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
 | **SPEC-006** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+| **SPEC-007** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
 
 ### EPIC-002: Skill 树状层次管理与健康度优化（新建 — P1）
 
@@ -151,6 +152,9 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 | `scripts/skill-lifecycle-audit.py` | ✅ 已纳入 | 生命周期审计与退役管理 |
 | `packs/quality-assurance/` | ✅ 已创建 | 质量保障能力包 |
 | `reports/skill-tree-architecture-research.html` | ✅ 已更新 | 研究报告（来源可点击） |
+| `docs/SPEC-007-sra-adaptation.md` | ✅ 完成 | SRA 运行时发现层适配方案 |
+| `docs/stories/STORY-016~017` | ✅ 完成 | SRA 分类映射 + SQS 质量加权 |
+| `scripts/skill-tree-index.py` | ✅ SRA 模式 | `--sra` 输出簇/包/同类技能格式 |
 
 ## Phase 1 进展（格式设计 + 原型 — 进行中）
 

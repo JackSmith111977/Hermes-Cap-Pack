@@ -20,6 +20,7 @@ skill-tree-index.py v1.0 — Hermes Skill 分层树状索引生成器
   python3 skill-tree-index.py --consolidate         # 显示合并建议
   python3 skill-tree-index.py --json               # JSON 输出
   python3 skill-tree-index.py --health             # 系统健康度速览
+  python3 skill-tree-index.py --sra                # SRA 兼容格式（含簇/包/同类技能）
 """
 
 import os, sys, json, re, yaml
@@ -463,6 +464,54 @@ def print_health_summary(all_skills, module_skills, unclassified, name_groups):
     print(f"\n{'='*65}")
 
 
+def build_sra_output(tree, all_skills):
+    """生成 SRA 兼容的技能索引格式"""
+    sra_index = {"version": "1.0", "skills": [], "clusters": []}
+    seen_clusters = set()
+    
+    for module in tree:
+        mod_id = module["module_id"]
+        mod_name = module["name"]
+        for cluster in module.get("clusters", []):
+            cluster_key = f"{mod_id}/{cluster['cluster_name']}"
+            
+            if cluster_key not in seen_clusters:
+                seen_clusters.add(cluster_key)
+                cluster_skills = []
+                for s in cluster.get("skills", []):
+                    sqs = all_skills.get(s["name"], {}).get("sqs_score", 50)
+                    cluster_skills.append({
+                        "name": s["name"],
+                        "path": s["path"],
+                        "version": s.get("version", "?"),
+                        "sqs_score": sqs,
+                        "has_refs": s.get("has_refs", False),
+                        "has_scripts": s.get("has_scripts", False),
+                        "tags": s.get("tags", []),
+                        "description": s.get("description", "")
+                    })
+                
+                sra_index["clusters"].append({
+                    "cluster": cluster["cluster_name"],
+                    "pack": mod_id,
+                    "pack_name": mod_name,
+                    "skill_count": cluster.get("count", len(cluster_skills)),
+                    "skills": [s["name"] for s in cluster_skills],
+                    "avg_sqs": round(sum(s["sqs_score"] for s in cluster_skills) / len(cluster_skills), 1) if cluster_skills else 0,
+                    "siblings": [s["name"] for s in cluster_skills],
+                })
+                
+                for s in cluster_skills:
+                    sra_index["skills"].append({
+                        **s,
+                        "pack": mod_id,
+                        "pack_name": mod_name,
+                        "cluster": cluster["cluster_name"],
+                    })
+    
+    return sra_index
+
+
 def main():
     if len(sys.argv) < 2 or sys.argv[1] in ('-h', '--help'):
         print(__doc__)
@@ -481,6 +530,10 @@ def main():
 
     if output_json:
         print(json.dumps(tree, ensure_ascii=False, indent=2))
+    elif '--sra' in sys.argv:
+        # SRA 兼容模式：输出簇/包/同类技能信息
+        sra_output = build_sra_output(tree, all_skills)
+        print(json.dumps(sra_output, ensure_ascii=False, indent=2))
     elif '--health' in sys.argv:
         print_health_summary(all_skills, module_skills, unclassified, name_groups)
     elif '--consolidate' in sys.argv:
