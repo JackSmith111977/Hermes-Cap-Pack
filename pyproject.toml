@@ -4,7 +4,7 @@ build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
 name = "hermes-cap-pack"
-version = "0.6.0"
+version = "0.7.0"
 description = "boku 能力模块化与跨 Agent 可复用性项目 — Capability Pack 标准化格式"
 readme = "README.md"
 authors = [
@@ -37,6 +37,6 @@ Repository = "https://github.com/JackSmith111977/Hermes-Cap-Pack.git"
 #   minor  ← Spec 更新
 #   major  ← Epic 完成
 #
-# Current: 0.6.0
+# Current: 0.7.0
 last_bump = "2026-05-13"
 bump_type = "minor"

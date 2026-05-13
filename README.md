@@ -194,7 +194,9 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 || `scripts/ci-check-cross-refs.py` | ✅ 完成 | 跨包引用完整性检查 |
 || `scripts/uca/` | ✅ 完成 | UCA Core 框架（Protocol + Parser + Dependency + Verifier） |
 | `scripts/cli/main.py` | ✅ 完成 | cap-pack CLI（install/remove/verify/list/inspect） |
-| `scripts/adapters/hermes.py` | ✅ 完成 | HermesAdapter（Hermes Agent 适配器，含 MCP 注入 + 快照回滚） |
+|               `scripts/adapters/hermes.py` | ✅ 完成 | HermesAdapter（Hermes Agent 适配器，含 MCP 注入 + 快照回滚） |
+| `scripts/adapters/opencode.py` | ✅ 完成 | OpenCodeAdapter（OpenCode CLI Agent 适配器） |
+| `docs/developer-guide-adapter.md` | ✅ 完成 | 第三方适配器开发指南 |
 | 更多模块提取 | ⏳ Phase 1.2 | learning-engine, developer-workflow 等 |
 
 ### 项目结构

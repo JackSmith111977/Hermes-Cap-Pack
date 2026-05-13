@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.0] — 2026-05-13
+
+### Added
+- **第三方适配器开发指南** (`docs/developer-guide-adapter.md`): 完整文档指引
+  - AgentAdapter Protocol 详解 + 参数/返回值说明
+  - 6 步实现流程（骨架→安装→CLI 注册→测试→对等性→发布）
+  - 完整 Cursor 适配器示例（可直接作为模板）
+  - 9 种 Agent 路径速查表
+  - 适配器设计决策模板 + 测试指南
+- **SPEC-004 全部 6 个 AC 完成** 🎉
+
+### Changed
+- README 新增 OpenCodeAdapter + developer-guide 条目
+
 ## [0.6.0] — 2026-05-13
 
 ### Added

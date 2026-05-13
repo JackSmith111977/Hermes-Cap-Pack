@@ -217,7 +217,7 @@ compatibility:
 - [x] Claude Code 适配器可安装技能和 MCP 配置（Phase 2: OpenCode 适配器 + Claude 兼容完成 ✅）
 - [x] Codex CLI 适配器可使用 rules 系统加载技能（Phase 2: OpenCode 适配器 + Codex 兼容完成 ✅）
 - [x] 能力对等性测试可至少覆盖 Hermes 和 OpenCode（Phase 2: parity 测试完成 ✅）
-- [ ] 第三方适配器集成文档可指引新适配器开发
+- [x] 第三方适配器集成文档可指引新适配器开发（Phase 2.5: developer-guide-adapter.md 完成 ✅）
 
 ---
 
