@@ -354,10 +354,10 @@
     <div class="cite">
       <div class="ref">📕 MoFA Framework — Microkernel + Dual-Layer Plugin</div>
       <div>"The kernel provides only the most basic abstractions. All non-core functionality is provided through plugin mechanisms. Upper layers depend on lower layers, not the reverse."</div>
-      <div class="src">— mofa.ai/mofa/concepts/microkernel.html</div>
+      <div class="src">— <a href="https://mofa.ai/mofa/concepts/microkernel.html" target="_blank">mofa.ai/mofa/concepts/microkernel.html</a></div>
     </div>
     <div class="cite">
-      <div class="ref">📕 Agent-Kernel — arxiv 2512.01610</div>
+      <div class="ref">📕 Agent-Kernel — <a href="https://arxiv.org/abs/2512.01610" target="_blank">arxiv 2512.01610</a></div>
       <div>"A society-centric modular microkernel architecture consisting of a foundational core and an extensible suite of application-specific plugins. This design effectively decouples the general-purpose infrastructure from application-specific logic."</div>
       <div class="src">— Agent-Kernel: A MicroKernel Multi-Agent System Framework, 2025</div>
     </div>
@@ -378,12 +378,12 @@
     <div class="cite">
       <div class="ref">📕 DDD for AI Agents — Sebastian Sigl</div>
       <div>"Bounded contexts are attention boundaries. They protect the model's focus. By slicing the application into vertical subdomains, each context limits the retrieval and reasoning scope. The tokens in the prompt become higher density and higher relevance."</div>
-      <div class="src">— sebastiansigl.com/blog/bounded-contexts-cognitive-boundaries-ai-humans</div>
+      <div class="src">— <a href="https://sebastiansigl.com/blog/bounded-contexts-cognitive-boundaries-ai-humans" target="_blank">sebastiansigl.com/blog/bounded-contexts-cognitive-boundaries-ai-humans</a></div>
     </div>
     <div class="cite">
       <div class="ref">📕 AI Systems Need Bounded Contexts — NILUS</div>
       <div>"Put AI capabilities inside bounded contexts, and make model ownership explicit. Each significant domain should own the AI behavior that depends on its semantics."</div>
-      <div class="src">— nilus.be/blog/ai_systems_need_bounded_contexts</div>
+      <div class="src">— <a href="https://nilus.be/blog/ai_systems_need_bounded_contexts" target="_blank">nilus.be/blog/ai_systems_need_bounded_contexts</a></div>
     </div>
   </div>
 
@@ -416,12 +416,12 @@
     <div class="cite">
       <div class="ref">📕 Colaberry AI — Skill Ontology Three-Layer Design</div>
       <div>"The top layer (Taxonomy) defines broad categorization. The middle layer (Relation Graph) instantiates specific skills and defines how they interact. The bottom layer (Collection) groups related skills into deployable units."</div>
-      <div class="src">— colaberry.ai/aixcelerator/skills/ontology (16,896 skills live in production)</div>
+      <div class="src">— <a href="https://colaberry.ai/aixcelerator/skills/ontology" target="_blank">colaberry.ai/aixcelerator/skills/ontology</a> (16,896 skills live in production)</div>
     </div>
     <div class="cite">
       <div class="ref">📕 OntoSkills — Neuro-Symbolic Skill Ontology</div>
       <div>"Skills are compiled artifacts, not interpreted documents. SKILL.md files DO NOT EXIST in the agent's context. The .ttl files are self-contained, modular, pluggable ontologies."</div>
-      <div class="src">— OntoSkills: OWL 2 + SHACL + SPARQL, ontoskills.sh</div>
+      <div class="src">— OntoSkills: OWL 2 + SHACL + SPARQL, <a href="https://ontoskills.sh" target="_blank">ontoskills.sh</a></div>
     </div>
   </div>
 
@@ -439,7 +439,7 @@
     <div class="cite">
       <div class="ref">📕 Agent Skills Open Standard — agentskills.io</div>
       <div>"Compliant implementations MUST follow the three-tier loading model. At startup, scan and load ONLY YAML frontmatter. When activated, load the full instruction body. Only when needed, load scripts, references, and assets."</div>
-      <div class="src">— agentskills.io/specification (开放标准，Anthropic/Microsoft/OpenAI 支持)</div>
+      <div class="src">— <a href="https://agentskills.io/specification" target="_blank">agentskills.io/specification</a> (开放标准，Anthropic/Microsoft/OpenAI 支持)</div>
     </div>
   </div>
 </div>
@@ -510,19 +510,19 @@
     <table>
       <tr><th>论文</th><th>年</th><th>核心发现</th><th>与我们的关系</th></tr>
       <tr>
-        <td><strong>AIOS: LLM Agent Operating System</strong><br><span style="color:var(--text-dim);font-size:13px;">arxiv 2403.16971</span></td>
+        <td><strong>AIOS: LLM Agent Operating System</strong><br><span style="color:var(--text-dim);font-size:13px;"><a href="https://arxiv.org/abs/2403.16971" target="_blank" style="color:var(--cyan);">arxiv 2403.16971</a></span></td>
         <td>2024</td>
         <td>将 Agent 资源隔离到内核层，应用层只负责业务逻辑。内核提供调度、上下文、存储、工具管理。</td>
         <td><span class="tag tag-green">直接支持</span> 我们的 L0 门禁相当于 AIOS Kernel</td>
       </tr>
       <tr>
-        <td><strong>Agent-Kernel: MicroKernel MAS</strong><br><span style="color:var(--text-dim);font-size:13px;">arxiv 2512.01610</span></td>
+        <td><strong>Agent-Kernel: MicroKernel MAS</strong><br><span style="color:var(--text-dim);font-size:13px;"><a href="https://arxiv.org/abs/2512.01610" target="_blank" style="color:var(--cyan);">arxiv 2512.01610</a></span></td>
         <td>2025</td>
         <td>模块化微内核 + 插件套件。核心系统 + 可扩展插件，Mediator + Component-Plugin 模式。</td>
         <td><span class="tag tag-green">直接支持</span> 我们的 pack = 插件，core = 门禁</td>
       </tr>
       <tr>
-        <td><strong>STEM Agent</strong><br><span style="color:var(--text-dim);font-size:13px;">arxiv 2603.22359</span></td>
+        <td><strong>STEM Agent</strong><br><span style="color:var(--text-dim);font-size:13px;"><a href="https://arxiv.org/abs/2603.22359" target="_blank" style="color:var(--cyan);">arxiv 2603.22359</a></span></td>
         <td>2025</td>
         <td>生物学启发的技能获取系统：细胞分化模型。技能经历 progenitor → committed → mature 三阶段。</td>
         <td><span class="tag tag-green">直接支持</span> 我们的生命周期状态机机制</td>
@@ -534,13 +534,13 @@
         <td><span class="tag tag-green">理论框架</span> 我们的理论基础</td>
       </tr>
       <tr>
-        <td><strong>Federation of Agents (FoA)</strong><br><span style="color:var(--text-dim);font-size:13px;">arxiv 2509.20175</span></td>
+        <td><strong>Federation of Agents (FoA)</strong><br><span style="color:var(--text-dim);font-size:13px;"><a href="https://arxiv.org/abs/2509.20175" target="_blank" style="color:var(--cyan);">arxiv 2509.20175</a></span></td>
         <td>2025</td>
         <td>能力中心编排。Versioned Capability Vectors + 层次化技能分类索引。</td>
         <td><span class="tag tag-cyan">间接支持</span> 层次分类索引设计模式</td>
       </tr>
       <tr>
-        <td><strong>Cognitive Architectures for Language Agents</strong><br><span style="color:var(--text-dim);font-size:13px;">arxiv 2309.02427</span></td>
+        <td><strong>Cognitive Architectures for Language Agents</strong><br><span style="color:var(--text-dim);font-size:13px;"><a href="https://arxiv.org/abs/2309.02427" target="_blank" style="color:var(--cyan);">arxiv 2309.02427</a></span></td>
         <td>2023</td>
         <td>模块化 Agent 架构已成为生产系统的主流范式。</td>
         <td><span class="tag tag-cyan">间接支持</span> 整体范式</td>

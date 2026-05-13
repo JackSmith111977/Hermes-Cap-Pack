@@ -1,0 +1,93 @@
+# 🏗️ 能力包清单 — quality-assurance
+
+name: quality-assurance
+version: 1.0.0
+description: "质量保障能力包 — SQS 评分 + 生命周期审计 + 树状索引 + 代码审查门禁"
+author: boku (Emma)
+created: 2026-05-13
+updated: 2026-05-13
+cap_version: 1
+
+## 包信息
+
+emoji: ✅
+category: system-insight
+domain: quality-assurance
+maintainer: boku
+
+## Skill 列表
+
+skills:
+  - id: skill-quality-score
+    name: SQS 质量评分
+    description: "五维质量评分引擎 — 结构/内容/时效/关联/可发现性"
+    source: scripts/skill-quality-score.py
+    version: 1.0.0
+    tags: [sqs, quality, scoring, audit]
+
+  - id: skill-lifecycle-audit
+    name: 生命周期审计
+    description: "Skill 生命周期审计与退役管理"
+    source: scripts/skill-lifecycle-audit.py
+    version: 1.0.0
+    tags: [lifecycle, audit, deprecate, revive]
+
+  - id: skill-tree-index
+    name: 树状索引
+    description: "18 包 → ~70 簇 → ~200 技能三层索引生成器"
+    source: scripts/skill-tree-index.py
+    version: 1.0.0
+    tags: [tree-index, hierarchy, consolidation]
+
+## 依赖
+
+depends_on:
+  skill-creator:
+    version: ">=5.0.0"
+    reason: "SQS 门禁集成在 skill-creator 生命周期章节 §10"
+  pre_flight:
+    version: ">=2.0.0"
+    reason: "SQS 门禁作为 pre_flight Gate 3"
+
+## 配置
+
+config:
+  sqs_database: "~/.hermes/data/skill-quality.db"
+  audit_schedule: "weekly"  # weekly | daily | manual
+  health_threshold:
+    good: 70
+    warning: 50
+    critical: 0
+
+## 安装
+
+install:
+  scripts:
+    - source: scripts/skill-quality-score.py
+      target: ~/.hermes/scripts/skill-quality-score.py
+    - source: scripts/skill-lifecycle-audit.py
+      target: ~/.hermes/scripts/skill-lifecycle-audit.py
+    - source: scripts/skill-tree-index.py
+      target: ~/.hermes/scripts/skill-tree-index.py
+  post_install:
+    - "chmod +x ~/.hermes/scripts/skill-quality-score.py"
+    - "chmod +x ~/.hermes/scripts/skill-lifecycle-audit.py"
+    - "chmod +x ~/.hermes/scripts/skill-tree-index.py"
+
+## 经验
+
+experiences:
+  - id: sqs-scoring-pitfalls
+    title: SQS 评分实践要点
+    content: |
+      1. 首次运行 `--audit` 会建立基准线
+      2. 后续评分基于 SQLite 历史数据比较趋势
+      3. 评分结果受 SKILL.md 格式影响，确保 YAML 头完整
+      4. `--threshold` 参数可设置不同质量门禁线
+
+  - id: tree-index-limitations
+    title: 树状索引局限
+    content: |
+      1. 自动分类依赖 skill 标签和目录名，精度 ~85%
+      2. 建议配合 `--consolidate` 手动检查分类
+      3. 新增 skill 需要至少一条标签才会被自动分类

@@ -43,7 +43,7 @@ boku 的 185 个技能按领域分为 **18 个大类 + 3 个预留扩展槽**：
 | 3 | `doc-engine` | 📄 文档生成 | ~12 | PDF/PPT/DOCX/HTML/LaTeX/EPUB/排版 |
 | 4 | `developer-workflow` | 💻 开发工作流 | ~16 | SDD/计划/TDD/调试/子代理/Spike/环境 |
 | 5 | `security-audit` | 🔒 安全审计 | ~5 | 删除安全/提交检查/秘密扫描/OSINT |
-| 6 | `quality-assurance` | ✅ 质量保障 | ~10 | QA 门禁/测试框架/代码审查/文档对齐/对抗测试 |
+| 6 | `quality-assurance` | ✅ 质量保障 | ~10 | QA 门禁/测试框架/代码审查/文档对齐/对抗测试/SQS评分/生命周期审计 |
 | 7 | `devops-monitor` | 🔧 运维监控 | ~8 | 系统健康/代理监控/Docker/进程/Webhook |
 | 8 | `network-proxy` | 🌐 网络代理 | ~5 | Clash 配置/代理发现/浏览器自动化/网络访问 |
 | 9 | `messaging` | 💬 消息平台 | ~8 | 飞书/微信/Email/短信/20+ 平台适配 |
@@ -132,6 +132,25 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 | SPEC-002 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
 | SPEC-003 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
 | SPEC-004 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P2 |
+| **EPIC-002** | ⬜ draft | ✅ | ✅ | ✅ 部分 | ⬜ | ⬜ | **P1** |
+| **SPEC-005** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+| **SPEC-006** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+
+### EPIC-002: Skill 树状层次管理与健康度优化（新建 — P1）
+
+> 将 302 个扁平 skill 组织为三层树状索引，建立 SQS 质量评分与生命周期审计体系。
+
+| 交付物 | 状态 | 说明 |
+|:-------|:----:|:------|
+| `docs/EPIC-002-tree-health.md` | ✅ 完成 | EPIC 文档 |
+| `docs/SPEC-005-tree-index.md` | ✅ 完成 | 树状索引系统规范 |
+| `docs/SPEC-006-quality-health.md` | ✅ 完成 | SQS 质量评分系统规范 |
+| `docs/stories/STORY-011~015` | ✅ 完成 | 5 个 Story 文档（draft） |
+| `scripts/skill-tree-index.py` | ✅ 完成 | 三层树状索引生成器 |
+| `scripts/skill-quality-score.py` | ✅ 已纳入 | SQS 五维评分引擎 |
+| `scripts/skill-lifecycle-audit.py` | ✅ 已纳入 | 生命周期审计与退役管理 |
+| `packs/quality-assurance/` | ✅ 已创建 | 质量保障能力包 |
+| `reports/skill-tree-architecture-research.html` | ✅ 已更新 | 研究报告（来源可点击） |
 
 ## Phase 1 进展（格式设计 + 原型 — 进行中）
 
@@ -139,9 +158,17 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 |:-------|:----:|:------|
 | `schemas/cap-pack-format-v1.md` | ✅ 完成 | YAML 格式规范 v1（含完整字段定义） |
 | `schemas/cap-pack-v1.schema.json` | ✅ 完成 | JSON Schema（可验证所有 cap-pack.yaml） |
-| `packs/doc-engine/cap-pack.yaml` | ✅ 完成 | 第一个原型能力包（12 技能 + 5 经验） |
-| `packs/doc-engine/SKILLS/` | ✅ 完成 | 12 个技能引用文件（指向 Hermes 源 Skill） |
+| `packs/doc-engine/cap-pack.yaml` | ✅ 完成 | 文档生成能力包（12 技能 + 5 经验 + linked files） |
+| `packs/doc-engine/SKILLS/` | ✅ 完成 | 12 个完整技能（含 scripts/references/checklists） |
 | `packs/doc-engine/EXPERIENCES/` | ✅ 完成 | 5 个实战经验文档 |
+| `packs/quality-assurance/cap-pack.yaml` | ✅ 完成 | 质量保障能力包（SQS + 审计 + 树索引） |
+| `scripts/skill-tree-index.py` | ✅ 完成 | 三层树状索引生成器 + 合并潜力分析 |
+| `scripts/skill-quality-score.py` | ✅ 已纳入 | SQS 五维质量评分引擎 |
+| `scripts/skill-lifecycle-audit.py` | ✅ 已纳入 | 生命周期审计 + deprecate/revive 管理 |
+| `scripts/extract-pack.py` | ✅ 完成 | 从 Hermes 提取真实 skill 内容到能力包 |
+| `scripts/validate-pack.py` | ✅ 完成 | 能力包完整性验证（JSON Schema + 文件检查） |
+| `scripts/install-pack.py` | ✅ 完成 | 安装能力包到 Hermes（备份还原 + hooks） |
+| `reports/skill-tree-architecture-research.html` | ✅ 完成 | 树状层次可行性研究报告（来源可点击） |
 | Hermes 适配器 | ⏳ 下一轮 | 将能力包安装到 Hermes 的适配器脚本 |
 | 更多模块提取 | ⏳ Phase 1.2 | learning-engine, developer-workflow 等 |
 
