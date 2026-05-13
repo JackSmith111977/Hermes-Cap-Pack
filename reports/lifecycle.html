@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>boku 能力模块化 — 全生命周期追踪报告 v2.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a2e;
+    --sidebar-bg: #0d0d17;
+    --border: #1e1e30;
+    --border-light: #2a2a44;
+    --text: #e2e2ee;
+    --text-dim: #8888aa;
+    --text-bright: #f0f0ff;
+    --pink: #ff6b9d;
+    --pink-dim: rgba(255, 107, 157, 0.12);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167, 139, 250, 0.12);
+    --cyan: #22d3ee;
+    --cyan-dim: rgba(34, 211, 238, 0.10);
+    --green: #34d399;
+    --green-dim: rgba(52, 211, 153, 0.10);
+    --orange: #fb923c;
+    --orange-dim: rgba(251, 146, 60, 0.10);
+    --red: #f87171;
+    --red-dim: rgba(248, 113, 113, 0.10);
+    --gradient: linear-gradient(135deg, #ff6b9d, #a78bfa, #22d3ee);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --sidebar-w: 280px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ═══ LAYOUT ═══ */
+  .app { display: flex; min-height: 100vh; }
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s ease;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .sidebar-header {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--sidebar-bg); z-index: 2;
+  }
+  .sidebar-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .sidebar-header .sub {
+    font-size: 11px; color: var(--text-dim); margin-top: 2px;
+  }
+
+  .sidebar-nav { padding: 8px 0; }
+
+  .nav-item {}
+  .nav-item .nav-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--text-dim);
+    transition: all 0.15s;
+    user-select: none;
+    border-left: 3px solid transparent;
+  }
+  .nav-item .nav-header:hover { background: rgba(255,255,255,0.03); color: var(--text-bright); }
+  .nav-item .nav-header .arrow {
+    transition: transform 0.2s; font-size: 10px; opacity: 0.5;
+    min-width: 14px;
+  }
+  .nav-item.open .nav-header .arrow { transform: rotate(90deg); }
+  .nav-item .nav-header .icon { font-size: 14px; }
+  .nav-item .nav-header .badge {
+    margin-left: auto; font-size: 10px; padding: 1px 8px;
+    border-radius: 100px; font-weight: 600;
+  }
+  .badge.draft { background: var(--orange-dim); color: var(--orange); }
+  .badge.done { background: var(--green-dim); color: var(--green); }
+  .badge.p0 { background: var(--red-dim); color: var(--red); }
+  .badge.p1 { background: var(--orange-dim); color: var(--orange); }
+  .badge.p2 { background: var(--purple-dim); color: var(--purple); }
+
+  .nav-children { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+  .nav-item.open > .nav-children { max-height: 2000px; }
+
+  .nav-sub {
+    display: block;
+    padding: 6px 16px 6px 44px;
+    font-size: 12px; color: var(--text-dim);
+    cursor: pointer; transition: all 0.15s;
+    text-decoration: none;
+  }
+  .nav-sub:hover { color: var(--text-bright); background: rgba(255,255,255,0.02); }
+  .nav-sub.active { color: var(--pink); border-left: 2px solid var(--pink); padding-left: 42px; }
+
+  /* ═══ TOGGLE BTN ═══ */
+  .sidebar-toggle {
+    position: fixed; left: var(--sidebar-w); top: 12px; z-index: 101;
+    width: 28px; height: 28px; border-radius: 0 6px 6px 0;
+    background: var(--sidebar-bg); border: 1px solid var(--border);
+    border-left: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); font-size: 14px;
+    transition: left 0.3s ease;
+  }
+  .sidebar-toggle:hover { color: var(--text-bright); }
+
+  .sidebar.collapsed { transform: translateX(-100%); }
+  .sidebar.collapsed + .sidebar-toggle { left: 0; }
+
+  /* ═══ MAIN ═══ */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0;
+    transition: margin-left 0.3s ease;
+    max-width: 100%;
+  }
+  .sidebar.collapsed ~ .main { margin-left: 0; }
+
+  .main-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 32px 60px;
+  }
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); width: 260px; }
+    .sidebar-toggle { left: 0; }
+    .main { margin-left: 0; }
+    .main-content { padding: 24px 16px; }
+  }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    text-align: center;
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+  }
+  .hero-meta {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    margin-top: 16px; font-size: 12px; color: var(--text-dim);
+  }
+  .hero-meta .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 12px; border-radius: 100px; font-weight: 500;
+  }
+  .tag.draft-bg { background: var(--orange-dim); color: var(--orange); }
+  .tag.done-bg { background: var(--green-dim); color: var(--green); }
+  .tag.wait-bg { background: var(--purple-dim); color: var(--purple); }
+  .tag.active-bg { background: var(--green-dim); color: var(--green); }
+  .tag.p0-bg { background: var(--red-dim); color: var(--red); }
+
+  /* ═══ STATS ═══ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px; text-align: center;
+  }
+  .stat-card .num { font-size: 2rem; font-weight: 800; line-height: 1.2; }
+  .stat-card .lbl { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .stat-card.pink .num { color: var(--pink); }
+  .stat-card.purple .num { color: var(--purple); }
+  .stat-card.cyan .num { color: var(--cyan); }
+  .stat-card.green .num { color: var(--green); }
+  .stat-card.orange .num { color: var(--orange); }
+
+  /* ═══ LAYER SECTIONS ═══ */
+  .layer-block { margin-bottom: 32px; }
+  .layer-title {
+    padding: 12px 18px; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 1rem;
+    display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-height: unset;
+  }
+  .layer-title.meta { background: var(--purple-dim); color: var(--purple); border-left: 4px solid var(--purple); }
+  .layer-title.app { background: var(--green-dim); color: var(--green); border-left: 4px solid var(--green); }
+  .layer-title.infra { background: var(--cyan-dim); color: var(--cyan); border-left: 4px solid var(--cyan); }
+  .layer-title.growth { background: var(--orange-dim); color: var(--orange); border-left: 4px solid var(--orange); }
+
+  .mod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+  }
+  .mod-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    transition: border-color 0.15s;
+    cursor: default;
+  }
+  .mod-card:hover { border-color: var(--border-light); }
+  .mod-card .name { font-weight: 600; font-size: 0.9rem; color: var(--text-bright); }
+  .mod-card .desc { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; line-height: 1.5; }
+  .mod-card .cnt { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
+
+  .growth-slot {
+    background: rgba(251,146,60,0.04);
+    border: 1px dashed rgba(251,146,60,0.2);
+    border-radius: var(--radius-sm);
+    padding: 14px; text-align: center;
+  }
+  .growth-slot h4 { font-size: 0.9rem; font-weight: 600; color: var(--orange); }
+  .growth-slot p { font-size: 0.8rem; color: var(--text-dim); margin-top: 4px; }
+
+  /* ═══ DOCUMENT CARDS ═══ */
+  .doc-section { margin-bottom: 40px; }
+  .doc-section .sec-title {
+    font-size: 1.2rem; font-weight: 700; color: var(--text-bright);
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .doc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .doc-card-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px; cursor: pointer;
+    user-select: none; transition: background 0.15s;
+  }
+  .doc-card-header:hover { background: var(--bg-card-hover); }
+  .doc-card-header .arrow {
+    transition: transform 0.2s; font-size: 12px; color: var(--text-dim);
+    min-width: 16px; text-align: center;
+  }
+  .doc-card.open .doc-card-header .arrow { transform: rotate(90deg); }
+  .doc-card-header .badge { font-size: 11px; margin-left: auto; }
+  .doc-card-header h3 { font-size: 1rem; font-weight: 600; color: var(--text-bright); }
+  .doc-card-header .meta { font-size: 11px; color: var(--text-dim); }
+
+  .doc-card-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease;
+    border-top: 1px solid transparent;
+  }
+  .doc-card.open .doc-card-body {
+    max-height: 5000px;
+    border-top-color: var(--border);
+  }
+
+  .doc-content {
+    padding: 20px;
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+  .doc-content h1 { font-size: 1.3rem; font-weight: 700; color: var(--text-bright); margin: 20px 0 10px; }
+  .doc-content h2 { font-size: 1.1rem; font-weight: 600; color: var(--text-bright); margin: 16px 0 8px; }
+  .doc-content h3 { font-size: 1rem; font-weight: 600; color: var(--text-bright); margin: 12px 0 6px; }
+  .doc-content p { margin: 6px 0; color: var(--text-dim); }
+  .doc-content ul, .doc-content ol { padding-left: 20px; margin: 6px 0; }
+  .doc-content li { margin: 3px 0; color: var(--text-dim); }
+  .doc-content strong { color: var(--text-bright); }
+  .doc-content code {
+    background: rgba(255,255,255,0.06);
+    padding: 1px 6px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; color: var(--cyan);
+  }
+  .doc-content pre {
+    background: #0d0d17; border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px; overflow-x: auto;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; line-height: 1.6;
+    color: #c4c4dd;
+  }
+  .doc-content table {
+    width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.85rem;
+  }
+  .doc-content th {
+    background: rgba(167,139,250,0.06);
+    padding: 8px 12px; text-align: left; font-weight: 600;
+    color: var(--text-bright); border-bottom: 2px solid var(--border);
+  }
+  .doc-content td {
+    padding: 7px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .doc-content hr {
+    border: none; border-top: 1px solid var(--border); margin: 16px 0;
+  }
+  .doc-content blockquote {
+    border-left: 3px solid var(--purple);
+    padding: 6px 14px; margin: 10px 0;
+    background: rgba(167,139,250,0.04);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-dim);
+  }
+  .doc-content .tag { font-size: 11px; padding: 1px 8px; border-radius: 100px; display: inline-block; margin-right: 4px; }
+
+  /* ═══ FOOTER ═══ */
+  .footer {
+    text-align: center; padding: 32px 0;
+    color: var(--text-dim); font-size: 13px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>📦 Cap Pack</h2>
+    <div class="sub">全生命周期追踪 · v2.0</div>
+  </div>
+  <nav class="sidebar-nav" id="sidebar-nav">
+
+    <!-- Overview -->
+    <div class="nav-item open">
+      <div class="nav-header" onclick="toggleNav(this)">
+        <span class="arrow">▸</span><span class="icon">📊</span> 总览 <span class="badge done">v2.0</span>
+      </div>
+      <div class="nav-children">
+        <a class="nav-sub" href="#hero" onclick="scrollToSection('hero')">📈 项目状态</a>
+        <a class="nav-sub" href="#modules" onclick="scrollToSection('modules')">📦 完整模块分类</a>
+        <a class="nav-sub" href="#timeline" onclick="scrollToSection('timeline')">🗺️ 时间线</a>
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="nav-item open">
+      <div class="nav-header" onclick="toggleNav(this)">
+        <span class="arrow">▸</span><span class="icon">📄</span> 项目文档 <span class="badge done">7 文件</span>
+      </div>
+      <div class="nav-children">
+        <a class="nav-sub" href="#doc-readme" onclick="scrollToSection('doc-readme')">📋 README.md</a>
+        <a class="nav-sub" href="#doc-constraints" onclick="scrollToSection('doc-constraints')">📐 constraints.md</a>
+        <a class="nav-sub" href="#doc-epic" onclick="scrollToSection('doc-epic')">🏗️ EPIC-001</a>
+        <a class="nav-sub" href="#doc-spec1" onclick="scrollToSection('doc-spec1')">📦 SPEC-001 分割</a>
+        <a class="nav-sub" href="#doc-spec2" onclick="scrollToSection('doc-spec2')">🔄 SPEC-002 管理</a>
+        <a class="nav-sub" href="#doc-spec3" onclick="scrollToSection('doc-spec3')">🔄 SPEC-003 迭代</a>
+        <a class="nav-sub" href="#doc-spec4" onclick="scrollToSection('doc-spec4')">🔌 SPEC-004 适配</a>
+      </div>
+    </div>
+
+    <!-- Modules Quick Links -->
+    <div class="nav-item">
+      <div class="nav-header" onclick="toggleNav(this)">
+        <span class="arrow">▸</span><span class="icon">🔖</span> 模块索引
+      </div>
+      <div class="nav-children">
+        <a class="nav-sub" style="color:var(--purple);" href="#layer-meta" onclick="scrollToSection('layer-meta')">🪞 元能力层 (5)</a>
+        <a class="nav-sub" style="color:var(--green);"  href="#layer-app" onclick="scrollToSection('layer-app')">⚡ 应用层 (9)</a>
+        <a class="nav-sub" style="color:var(--cyan);"  href="#layer-infra" onclick="scrollToSection('layer-infra')">🏗️ 基础设施层 (4)</a>
+        <a class="nav-sub" style="color:var(--orange);" href="#layer-growth" onclick="scrollToSection('layer-growth')">🟡 扩展槽 (3)</a>
+      </div>
+    </div>
+
+  </nav>
+</aside>
+
+<button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="main" id="main">
+
+<div class="main-content">
+
+<!-- ═════════ HERO ═════════ -->
+<section id="hero">
+<div class="hero">
+  <h1>📦 boku 能力模块化<br>全生命周期追踪报告</h1>
+  <p style="color:var(--text-dim);margin-top:8px;">v2.0 — 完整覆盖 185 项技能 · 18 个模块 + 3 个扩展槽</p>
+  <div class="hero-meta">
+    <span class="tag draft-bg">📅 2026-05-12</span>
+    <span class="tag active-bg">🔍 Phase 0: 可行性调查</span>
+    <span class="tag p0-bg">P0: EPIC-001</span>
+  </div>
+
+  <div class="stats" style="margin-top:24px;">
+    <div class="stat-card pink"><div class="num">1</div><div class="lbl">Epic</div></div>
+    <div class="stat-card purple"><div class="num">4</div><div class="lbl">Spec 文档</div></div>
+    <div class="stat-card cyan"><div class="num">18+3</div><div class="lbl">模块/扩展槽</div></div>
+    <div class="stat-card green"><div class="num">185</div><div class="lbl">已覆盖技能</div></div>
+    <div class="stat-card orange"><div class="num">3</div><div class="lbl">分层架构</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ═════════ MODULES ═════════ -->
+<section id="modules" style="margin-bottom:40px;">
+  <h2 style="font-size:1.3rem;font-weight:700;color:var(--text-bright);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);">
+    📦 完整能力分类体系 <span style="font-size:12px;font-weight:400;color:var(--text-dim);">18 模块 · 3 层 · 3 扩展槽</span>
+  </h2>
+
+  <!-- Meta Layer -->
+  <div class="layer-block" id="layer-meta">
+    <div class="layer-title meta">🪞 元能力层 (Meta-Capabilities) — 「关于能力的能力」</div>
+    <div class="mod-grid">
+      <div class="mod-card"><div class="name">📚 knowledge-base</div><div class="desc">三层知识体系：L1 Skills / L2 Experiences / L3 Brain。沉淀→索引→路由→维护</div><div class="cnt">🔹 ~6 技能</div></div>
+      <div class="mod-card"><div class="name">🧠 learning-engine</div><div class="desc">从零学习新主题的完整引擎。深度调研→学习循环→技能创作→夜间自习</div><div class="cnt">🔹 ~7 技能</div></div>
+      <div class="mod-card"><div class="name">🪞 metacognition</div><div class="desc">对自己的认知：自我分析、自我审查、防重复循环、记忆管理、能力地图</div><div class="cnt">🔹 ~6 技能</div></div>
+      <div class="mod-card"><div class="name">✅ quality-assurance</div><div class="desc">质量保障体系：QA 门禁、测试框架、文档对齐、对抗式 UX 测试</div><div class="cnt">🔹 ~10 技能</div></div>
+      <div class="mod-card"><div class="name">🤖 agent-orchestration</div><div class="desc">多 Agent 编排：子代理、BMAD 框架、Kanban、Advisor 模式、外部 Agent 协作</div><div class="cnt">🔹 ~12 技能</div></div>
+    </div>
+  </div>
+
+  <!-- App Layer -->
+  <div class="layer-block" id="layer-app">
+    <div class="layer-title app">⚡ 应用层 (Application Capabilities) — 「解决具体用户问题」</div>
+    <div class="mod-grid">
+      <div class="mod-card"><div class="name">📄 doc-engine</div><div class="desc">PDF/PPT/DOCX/HTML/LaTeX/EPUB 全格式文档生成 + 视觉质检</div><div class="cnt">🔹 ~12 技能</div></div>
+      <div class="mod-card"><div class="name">💻 developer-workflow</div><div class="desc">SDD/计划/TDD/调试/子代理驱动/Spike/环境管理/代码审查</div><div class="cnt">🔹 ~16 技能</div></div>
+      <div class="mod-card"><div class="name">🔒 security-audit</div><div class="desc">安全审计：删除安全、提交检查、密码管理、OSINT</div><div class="cnt">🔹 ~5 技能</div></div>
+      <div class="mod-card"><div class="name">🐙 github-ecosystem</div><div class="desc">完整 GitHub 生态：仓库/PR/代码审查/Issues/Actions/高级 Git</div><div class="cnt">🔹 ~10 技能</div></div>
+      <div class="mod-card"><div class="name">📊 financial-analysis</div><div class="desc">金融数据分析：akshare 行情、ta 指标、matplotlib 图表、AI 研报</div><div class="cnt">🔹 ~2 技能</div></div>
+      <div class="mod-card"><div class="name">🎨 creative-design</div><div class="desc">架构图/Mermaid/手绘/动画/像素画/表情包/视觉设计</div><div class="cnt">🔹 ~18 技能</div></div>
+      <div class="mod-card"><div class="name">🎵 media-processing</div><div class="desc">TTS/音乐生成/图像生成/Prompt 设计/GIF/YouTube 内容</div><div class="cnt">🔹 ~9 技能</div></div>
+      <div class="mod-card"><div class="name">📰 news-research</div><div class="desc">新闻简报/RSS 监控/AI 趋势/Arxiv 论文/搜索引擎</div><div class="cnt">🔹 ~7 技能</div></div>
+      <div class="mod-card"><div class="name">🎮 social-gaming</div><div class="desc">MC 服务器/宝可梦/健身/元宝/Bangumi 追番</div><div class="cnt">🔹 ~6 技能</div></div>
+    </div>
+  </div>
+
+  <!-- Infrastructure -->
+  <div class="layer-block" id="layer-infra">
+    <div class="layer-title infra">🏗️ 基础设施层 (Infrastructure) — 「支撑上层能力的运行环境」</div>
+    <div class="mod-grid">
+      <div class="mod-card"><div class="name">🔧 devops-monitor</div><div class="desc">系统健康/代理监控/Docker/进程管理/Webhook</div><div class="cnt">🔹 ~8 技能</div></div>
+      <div class="mod-card"><div class="name">🌐 network-proxy</div><div class="desc">Clash 配置/代理发现/浏览器自动化/网络访问入口</div><div class="cnt">🔹 ~5 技能</div></div>
+      <div class="mod-card"><div class="name">💬 messaging</div><div class="desc">飞书/微信/Email/短信/跨 20+ 平台消息适配器</div><div class="cnt">🔹 ~8 技能</div></div>
+      <div class="mod-card"><div class="name">🔌 mcp-integration</div><div class="desc">MCP 协议全栈：原生/FastMCP/MCPorter/SRA 消息注入</div><div class="cnt">🔹 ~5 技能</div></div>
+    </div>
+  </div>
+
+  <!-- Growth Slots -->
+  <div class="layer-block" id="layer-growth">
+    <div class="layer-title growth">🟡 预留扩展槽 (Growth Slots) — 「框架成长性的保障」</div>
+    <div class="mod-grid">
+      <div class="growth-slot"><h4>🆕 hermes-new-features</h4><p>Hermes 框架版本升级的新能力。满 3 技能后触发新模块创建流程</p></div>
+      <div class="growth-slot"><h4>🔌 custom-plugin</h4><p>第三方 Plugin 生态的新能力。安装后按 domain/tags 归入对应模块</p></div>
+      <div class="growth-slot"><h4>🔮 future-domain</h4><p>AI Agent 技术演进带来的全新领域，预留空间给新能力类别</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ TIMELINE ═════════ -->
+<section id="timeline" style="margin-bottom:40px;">
+  <div style="position:relative;padding-left:28px;">
+    <div style="position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:var(--border);"></div>
+
+    <div style="position:relative;margin-bottom:24px;">
+      <div style="position:absolute;left:-24px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--cyan);background:var(--cyan);"></div>
+      <div style="font-size:12px;color:var(--text-dim);">📅 2026.05.12 — 05.16 <span class="tag active-bg">当前</span></div>
+      <h4 style="font-size:0.95rem;font-weight:600;color:var(--text-bright);">Phase 0: Spec 写作 · 可行性调查</h4>
+      <p style="font-size:0.85rem;color:var(--text-dim);">v2.0 完整覆盖 185 技能，发现 10 个遗漏领域，设计 3 个扩展槽</p>
+      <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-size:11px;background:var(--bg-card);padding:2px 10px;border-radius:100px;border:1px solid var(--border);color:var(--text-dim);">✅ EPIC-001 v2</span>
+        <span style="font-size:11px;background:var(--bg-card);padding:2px 10px;border-radius:100px;border:1px solid var(--border);color:var(--text-dim);">✅ SPEC-001 v2</span>
+        <span style="font-size:11px;background:var(--bg-card);padding:2px 10px;border-radius:100px;border:1px solid var(--border);color:var(--text-dim);">✅ SPEC-002~004</span>
+        <span style="font-size:11px;background:var(--bg-card);padding:2px 10px;border-radius:100px;border:1px solid var(--border);color:var(--text-dim);">✅ HTML 报告 v2</span>
+      </div>
+    </div>
+
+    <div style="position:relative;margin-bottom:24px;">
+      <div style="position:absolute;left:-24px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--border-light);background:var(--bg);"></div>
+      <div style="font-size:12px;color:var(--text-dim);">📅 2026.05.16 — 05.23</div>
+      <h4 style="font-size:0.95rem;font-weight:600;color:var(--text-bright);">Phase 1: 格式设计 · Capability Pack v1</h4>
+      <p style="font-size:0.85rem;color:var(--text-dim);">cap-pack.yaml schema + CLI 原型 + 优先提取 3 个元能力模块</p>
+    </div>
+
+    <div style="position:relative;margin-bottom:24px;">
+      <div style="position:absolute;left:-24px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--border-light);background:var(--bg);"></div>
+      <div style="font-size:12px;color:var(--text-dim);">📅 2026.05.23 — 05.30</div>
+      <h4 style="font-size:0.95rem;font-weight:600;color:var(--text-bright);">Phase 2: 模块提取 · 18 能力包</h4>
+      <p style="font-size:0.85rem;color:var(--text-dim);">从 boku 技能库提取全部 18 个模块 + 验证扩展槽机制</p>
+    </div>
+
+    <div style="position:relative;">
+      <div style="position:absolute;left:-24px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--border-light);background:var(--bg);"></div>
+      <div style="font-size:12px;color:var(--text-dim);">📅 2026.05.30 — 06.13</div>
+      <h4 style="font-size:0.95rem;font-weight:600;color:var(--text-bright);">Phase 3: 适配层 · 3 个 Agent 适配器</h4>
+      <p style="font-size:0.85rem;color:var(--text-dim);">UCA 核心 + Hermes/Claude Code/Codex CLI 适配器</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- ═════════  DOCUMENTS  ═════════ -->
+<!-- ════════════════════════════════════════════════ -->
+
+<div class="doc-section">
+  <div class="sec-title">📄 项目文档</div>
+
+  <!-- README -->
+  <div class="doc-card open" id="doc-readme">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>📋 README.md</h3>
+      <span class="badge done">v2.0 完成</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h1>Hermes Capability Pack</h1>
+        <blockquote>boku 能力模块化与跨 Agent 可复用性项目。将全部 185 项 Agent 能力拆分为标准化「能力包」。</blockquote>
+        <h2>核心概念</h2>
+        <table>
+          <tr><th>术语</th><th>定义</th><th>示例</th></tr>
+          <tr><td><strong>能力包</strong></td><td>一组可移植的 Agent 能力单元</td><td>文档生成包、安全审计包</td></tr>
+          <tr><td><strong>技能</strong></td><td>如何完成某事的步骤化指令</td><td>pdf-layout/SKILL.md</td></tr>
+          <tr><td><strong>经验</strong></td><td>什么场景用什么、已知陷阱</td><td>WQY 字体回退经验</td></tr>
+          <tr><td><strong>MCP 配置</strong></td><td>外部工具服务的连接定义</td><td>OCR 服务、翻译 API</td></tr>
+          <tr><td><strong>知识库引用</strong></td><td>三层知识库的关联路径</td><td>L3 Brain 概念页</td></tr>
+          <tr><td><strong>适配器</strong></td><td>将能力包映射到特定 Agent 格式</td><td>Hermes / Claude Code / Codex CLI</td></tr>
+        </table>
+        <h2>扩展性三原则</h2>
+        <ul>
+          <li><strong>按领域不按工具</strong> — 按「解决什么问题」而非「用什么工具」</li>
+          <li><strong>模块内完整闭环</strong> — 含怎么做 + 何时做 + 踩过什么坑</li>
+          <li><strong>扩展优先于重构</strong> — 新能力先入槽，不完美也比丢失好</li>
+        </ul>
+        <h2>SDD 流程状态 (v2.0)</h2>
+        <table>
+          <tr><th>Spec</th><th>CLARIFY</th><th>RESEARCH</th><th>CREATE</th><th>QA_GATE</th><th>REVIEW</th><th>优先级</th></tr>
+          <tr><td>EPIC-001</td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td>P0</td></tr>
+          <tr><td>SPEC-001 (v2)</td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td>P1</td></tr>
+          <tr><td>SPEC-002</td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td>P1</td></tr>
+          <tr><td>SPEC-003</td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td>P1</td></tr>
+          <tr><td>SPEC-004</td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td><span class="tag done-bg">✅</span></td><td>P2</td></tr>
+          <tr><td>📊 HTML 对齐</td><td colspan="5">✅ 已更新 · 2026-05-12</td><td>—</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- constraints.md -->
+  <div class="doc-card" id="doc-constraints">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>📐 constraints.md — 项目约束</h3>
+      <span class="badge done">v1.0 完成</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h2>⏱️ 时间与资源</h2>
+        <table>
+          <tr><th>约束</th><th>值</th><th>说明</th></tr>
+          <tr><td>总工期</td><td>4-8 周</td><td>分四阶段，每阶段 1-2 周</td></tr>
+          <tr><td>单次投入</td><td>≤ 2 小时</td><td>避免长时间连续工作</td></tr>
+          <tr><td>并行任务</td><td>≤ 3 个</td><td>子代理并发限制</td></tr>
+        </table>
+        <h2>包含/不包含</h2>
+        <p><strong>包含 ✅</strong>: Capability Pack 格式规范、模块分割方法论、生命周期管理、迭代进化流程、跨 Agent 适配层、Hermes 适配器、doc-engine 原型、HTML 报告</p>
+        <p><strong>不包含 ❌</strong>: 所有 Agent 适配器完整实现、能力包注册中心后端、社区贡献流程、跨 Agent 记忆共享</p>
+        <h2>成功指标</h2>
+        <table>
+          <tr><th>指标</th><th>目标</th></tr>
+          <tr><td>接口稳定性</td><td>格式 v1 定稿后 ≤ 3 次 breaking change</td></tr>
+          <tr><td>适配覆盖率</td><td>≥ 3 个 Agent</td></tr>
+          <tr><td>模块可用性</td><td>≥ 6 个完整能力包</td></tr>
+          <tr><td>安装成功率</td><td>≥ 90%</td></tr>
+          <tr><td>回滚可靠性</td><td>100%</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPIC-001 -->
+  <div class="doc-card" id="doc-epic">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>🏗️ EPIC-001: 能力模块化可行性调查</h3>
+      <span class="badge" style="background:var(--green-dim);color:var(--green);border:1px solid var(--green);">✅ CLARIFY→RESEARCH→CREATE→QA_GATE·REVIEW 已批准</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h2>用户故事</h2>
+        <blockquote><strong>As a</strong> AI Agent 开发者和使用者<br><strong>I want</strong> 将 boku 的各项能力拆分为标准化的「能力包」<br><strong>So that</strong> 在建立其他 Agent 时可以通过适配器快速还原 boku 的部分能力</blockquote>
+        <h2>四个核心问题</h2>
+        <table>
+          <tr><th>问题</th><th>对应 Spec</th><th>核心内容</th></tr>
+          <tr><td>① 如何分割？</td><td>SPEC-001</td><td>按领域分割，18 模块 + 3 扩展槽</td></tr>
+          <tr><td>② 如何管理？</td><td>SPEC-002</td><td>6 阶段状态机 + 语义版本 + CRUD</td></tr>
+          <tr><td>③ 如何迭代？</td><td>SPEC-003</td><td>5 步闭环 + 经验同步机制</td></tr>
+          <tr><td>④ 如何适配？</td><td>SPEC-004</td><td>UCA 架构 + 3 Agent 适配器</td></tr>
+        </table>
+        <h2>关键数据</h2>
+        <table>
+          <tr><th>能力类别</th><th>已安装 Skills</th><th>可提取模块</th></tr>
+          <tr><td>文档排版</td><td>~12</td><td>doc-engine</td></tr>
+          <tr><td>学习体系</td><td>~7</td><td>learning-engine</td></tr>
+          <tr><td>开发流程</td><td>~16</td><td>developer-workflow</td></tr>
+          <tr><td>安全审计</td><td>~5</td><td>security-audit</td></tr>
+          <tr><td>金融分析</td><td>~2</td><td>financial-analysis</td></tr>
+          <tr><td>知识库</td><td>~6</td><td>knowledge-base</td></tr>
+          <tr><td>元认知</td><td>~6</td><td>metacognition</td></tr>
+          <tr><td>质量保障</td><td>~10</td><td>quality-assurance</td></tr>
+          <tr><td colspan="3">...共 18 个模块</td></tr>
+        </table>
+        <h2>验收标准 (P0)</h2>
+        <ul>
+          <li>✅ EPIC-001 文档经主人审阅批准</li>
+          <li>✅ 四个核心 Spec 均已创建并提交审阅</li>
+          <li>✅ HTML 生命周期追踪报告可正常生成和查看</li>
+          <li>⏳ 至少一个能力包原型完成格式定义</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC-001 -->
+  <div class="doc-card" id="doc-spec1">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>📦 SPEC-001: 模块分割方案 (v2.0)</h3>
+      <span class="badge" style="background:var(--green-dim);color:var(--green);border:1px solid var(--green);">✅ CLARIFY→RESEARCH→CREATE→QA_GATE·REVIEW 已批准</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h2>完整能力审计 — 原始遗漏分析</h2>
+        <table>
+          <tr><th>v1 遗漏了</th><th>严重性</th><th>原因</th></tr>
+          <tr><td>知识库系统</td><td>🔴 致命</td><td>只看到显式技能，忽略三层知识体系</td></tr>
+          <tr><td>元认知系统</td><td>🔴 致命</td><td>自我分析/审查是「关于能力的能力」</td></tr>
+          <tr><td>质量保障</td><td>🔴 致命</td><td>QA 门禁/测试/审查是跨领域元能力</td></tr>
+          <tr><td>消息平台</td><td>🟡 重要</td><td>飞书/微信是通信能力而非工具</td></tr>
+          <tr><td>音视频媒体</td><td>🟡 重要</td><td>TTS/图像/音乐是独立能力域</td></tr>
+          <tr><td>GitHub 生态</td><td>🟡 重要</td><td>10 个技能构成完整生态</td></tr>
+          <tr><td>网络代理</td><td>🟢 中等</td><td>Clash/代理/浏览器自动化</td></tr>
+          <tr><td>新闻研究</td><td>🟢 中等</td><td>新闻简报/Arxiv/AI 趋势</td></tr>
+          <tr><td>Agent 协作</td><td>🟢 中等</td><td>子代理/多 Agent/BMAD 编排</td></tr>
+          <tr><td>社交娱乐</td><td>🟢 中等</td><td>MC 服务器/健身/元宝</td></tr>
+          <tr><td><strong>框架成长性</strong></td><td>🔴 致命</td><td>没有考虑 Hermes 新版本带来新能力</td></tr>
+        </table>
+        <h2>扩展性设计</h2>
+        <h3>技能自动归属机制</h3>
+        <pre>每个 skill 的 tags 标签自动匹配到对应模块。
+未识别的技能 → hermes-new-features 槽暂存。
+满 3 技能后触发新模块创建流程。</pre>
+        <h3>分类决策树</h3>
+        <pre>新能力诞生 → ① 属于已有领域？→ 归入对应模块
+           → ② 多领域交叉？→ 主模块 + 交叉引用
+           → ③ 全新领域 ≥3 技能？→ 创建新模块
+           → ④ 否则暂存到 hermes-new-features 槽</pre>
+        <h2>Capability Pack 格式示例</h2>
+        <pre>name: knowledge-base
+version: 1.0.0
+type: capability-pack
+layer: meta
+capabilities:
+  skills:
+    - id: knowledge-precipitation
+    - id: knowledge-routing
+    - id: hermes-knowledge-base
+  experiences:
+    - id: knowledge-lifecycle (type: decision-tree)
+  knowledge_refs:
+    - level: L3 (ref: brain/concepts/knowledge-graph.md)
+growth_config:
+  auto_absorb_new_skills: true
+  skill_tag_mapping:
+    knowledge: knowledge-base</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC-002 -->
+  <div class="doc-card" id="doc-spec2">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>🔄 SPEC-002: 模块生命周期管理</h3>
+      <span class="badge" style="background:var(--green-dim);color:var(--green);border:1px solid var(--green);">✅ CLARIFY→RESEARCH→CREATE→QA_GATE·REVIEW 已批准</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h2>六阶段状态机</h2>
+        <pre>DRAFT → ACTIVE → MATURING → STABLE → DEPRECATED → ARCHIVED</pre>
+        <table>
+          <tr><th>转换</th><th>前置条件</th><th>操作</th></tr>
+          <tr><td>DRAFT → ACTIVE</td><td>模块清单完整、≥1 技能</td><td>cap-pack review</td></tr>
+          <tr><td>ACTIVE → MATURING</td><td>≥3 次安装反馈 / ≥1 次更新</td><td>自动判断</td></tr>
+          <tr><td>MATURING → STABLE</td><td>≥10 次安装、≤2 个已知 Issue</td><td>cap-pack stabilize</td></tr>
+          <tr><td>STABLE → DEPRECATED</td><td>有替代模块</td><td>cap-pack deprecate</td></tr>
+          <tr><td>DEPRECATED → ARCHIVED</td><td>已废弃 ≥90 天</td><td>自动归档</td></tr>
+        </table>
+        <h2>版本号规范</h2>
+        <p><strong>MAJOR.MINOR.PATCH</strong> — 遵循语义版本</p>
+        <ul>
+          <li><strong>MAJOR</strong>: 不兼容格式变更、技能移除</li>
+          <li><strong>MINOR</strong>: 新增技能、新增经验</li>
+          <li><strong>PATCH</strong>: 经验修正、文档改进</li>
+        </ul>
+        <p>预发布标签: <code>1.0.0-alpha.1</code> · <code>1.0.0-beta.2</code> · <code>1.0.0-rc.1</code></p>
+        <h2>CRUD 操作</h2>
+        <ul>
+          <li><strong>Create</strong>: <code>cap-pack install ./packs/doc-engine.yaml</code></li>
+          <li><strong>Read</strong>: <code>cap-pack list</code> / <code>cap-pack show doc-engine</code></li>
+          <li><strong>Update</strong>: <code>cap-pack update doc-engine --to 1.2.0</code></li>
+          <li><strong>Delete</strong>: <code>cap-pack remove doc-engine</code> (备份保留 7 天)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC-003 -->
+  <div class="doc-card" id="doc-spec3">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>🔄 SPEC-003: 模块迭代与进化</h3>
+      <span class="badge" style="background:var(--green-dim);color:var(--green);border:1px solid var(--green);">✅ CLARIFY→RESEARCH→CREATE→QA_GATE·REVIEW 已批准</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h2>五步闭环</h2>
+        <pre>日常使用 → ① 触发迭代信号 → ② 评估影响范围
+         → ③ 执行迭代更新 → ④ 同步通知 → ⑤ 验证回环</pre>
+        <h2>迭代触发条件</h2>
+        <table>
+          <tr><th>类型</th><th>条件</th><th>优先级</th></tr>
+          <tr><td>🔴 自动</td><td>执行报错（某技能过时）</td><td>高</td></tr>
+          <tr><td>🟡 自动</td><td>效率提升（发现更快方法）</td><td>中</td></tr>
+          <tr><td>🟡 自动</td><td>知识缺口（新场景无经验）</td><td>中</td></tr>
+          <tr><td>🔴 被动</td><td>主人反馈</td><td>高</td></tr>
+          <tr><td>🔴 被动</td><td>外部 API 变更</td><td>高</td></tr>
+          <tr><td>🟡 被动</td><td>新需求</td><td>中</td></tr>
+        </table>
+        <h2>经验的三种来源</h2>
+        <ul>
+          <li><strong>🐛 陷阱记录 (Pitfall)</strong> — 「执行步骤 X 时报错 Y，原因是 Z，解决方案是 W」</li>
+          <li><strong>🌳 决策树 (Decision Tree)</strong> — 「在场景 A 下用方案 X，场景 B 下用方案 Y」</li>
+          <li><strong>📊 对比分析 (Comparison)</strong> — 「方案 X 比方案 Y 快 3 倍，但需要额外安装 Z」</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC-004 -->
+  <div class="doc-card" id="doc-spec4">
+    <div class="doc-card-header" onclick="toggleDoc(this)">
+      <span class="arrow">▸</span>
+      <h3>🔌 SPEC-004: 跨 Agent 适配层方案</h3>
+      <span class="badge" style="background:var(--green-dim);color:var(--green);border:1px solid var(--green);">✅ CLARIFY→RESEARCH→CREATE→QA_GATE·REVIEW 已批准</span>
+    </div>
+    <div class="doc-card-body">
+      <div class="doc-content">
+        <h2>UCA 架构</h2>
+        <pre>Capability Pack → UCA Core (解析/验证/路由)
+                ├→ Hermes Adapter → SKILL.md + config.yaml + MCP
+                ├→ Claude Code Adapter → ~/.claude/skills + claude.json
+                └→ Codex CLI Adapter → .codex/rules + mcp.json</pre>
+        <h2>适配器接口 (Python Protocol)</h2>
+        <pre>class AgentAdapter:
+    name: str                  # "hermes", "claude-code"
+    is_available: bool         # 检查目标 Agent 是否可用
+    install(pack) → Result    # 安装能力包
+    uninstall(name) → Result  # 卸载能力包
+    update(pack, old_ver)     # 更新
+    list_installed() → list   # 列出已安装</pre>
+        <h2>适配优先级</h2>
+        <table>
+          <tr><th>优先级</th><th>Agent</th><th>难度</th><th>理由</th></tr>
+          <tr><td>P0</td><td>Hermes</td><td>⭐⭐</td><td>原生环境，Skills/Profile/MCP 全支持</td></tr>
+          <tr><td>P1</td><td>Claude Code</td><td>⭐⭐⭐</td><td>Skills + CLAUDE.md + MCP 三轴</td></tr>
+          <tr><td>P1</td><td>Codex CLI</td><td>⭐⭐</td><td>Rules + MCP 支持</td></tr>
+          <tr><td>P2</td><td>OpenCode / Cursor</td><td>⭐⭐⭐</td><td>易用性较好，工具链更全</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>🐾 v2.0 由 boku (艾玛/小玛) 深度自我分析后更新</p>
+  <p style="margin-top:4px;font-size:12px;">遗漏领域: 知识库 · 元认知 · 质量保障 · 消息平台 · 媒体 · GitHub · 网络 · Agent编排 · 新闻 · 社交娱乐 · 框架成长性</p>
+</div>
+
+</div>
+</main>
+
+</div><!-- /app -->
+
+<script>
+// ═══ SIDEBAR ═══
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+
+// ═══ NAV TOGGLE ═══
+function toggleNav(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+// ═══ DOC TOGGLE ═══
+function toggleDoc(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+// ═══ SCROLL TO SECTION ═══
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.add('collapsed');
+  }
+}
+
+// ═══ HIGHLIGHT ACTIVE NAV ═══
+// Use Intersection Observer to track which section is visible
+document.addEventListener('DOMContentLoaded', function() {
+  const sections = [
+    'hero', 'modules', 'timeline',
+    'doc-readme', 'doc-constraints', 'doc-epic',
+    'doc-spec1', 'doc-spec2', 'doc-spec3', 'doc-spec4'
+  ];
+  
+  const navLinks = document.querySelectorAll('.nav-sub');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-sub[href="#${entry.target.id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+});
+</script>
+
+</body>
+</html>

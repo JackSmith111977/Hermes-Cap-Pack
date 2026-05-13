@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+*.key
+*.pem
+*.cert
+
+# Temp
+tmp/
+temp/
+*.log
+
+# Large generated files
+reports/*.html  # Keep in git? No — generated from YAML data
+!reports/.gitkeep
+
+# Node
+node_modules/
