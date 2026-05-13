@@ -1,7 +1,7 @@
 # 🔧 SPEC-1-5: 能力包安装引擎
 
 > **状态**: `clarify` · **优先级**: P0 · **创建**: 2026-05-14
-> **SDD 流程**: `CLARIFY ⬜ → RESEARCH ⬜ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ⬜ → REVIEW ⬜`
 > **关联 Epic**: EPIC-001-feasibility.md
 > **审查人**: 主人
 
@@ -33,7 +33,60 @@
 
 ---
 
-## 一、架构概览
+## 一、技术调研 (RESEARCH)
+
+### 1.1 代码现状
+
+对现有安装链路的三层代码进行了逐层调研：
+
+**Layer 1: PackParser (`scripts/uca/parser.py`)**
+| 配置字段 | 当前是否解析 | 问题 |
+|:---------|:-----------:|:-----|
+| `skills[].source` | ✅ 解析为 `CapPackSkill.source` | ✅ 可用 |
+| `dependencies` | ✅ 解析为 `CapPack.dependencies` | ❌ 只解析 `python_packages`，不解析 `depends_on` |
+| `hooks.on_activate` | ✅ 解析为 `CapPack.hooks` | ❌ 安装时未使用 |
+| **`install.scripts`** | **❌ 未解析** | **完全缺失** |
+| **`install.skills`** | **❌ 未解析** | **完全缺失** |
+| **`install.references`** | **❌ 未解析** | **完全缺失** |
+| **`install.post_install`** | **❌ 未解析** | **完全缺失** |
+| **`depends_on`** | **❌ 未解析** | **完全缺失** |
+| **`config`** | **❌ 未解析** | **完全缺失** |
+
+**Layer 2: CapPack 数据类 (`scripts/uca/protocol.py`)**
+- `CapPack` 有 `manifest` 字段（原始 dict），但无专门的 `install` 属性
+- 适配器完全通过 `pack.skills` / `pack.experiences` / `pack.mcp_configs` 操作
+- `install` 指令只存在于 `manifest` 字典中，适配器不读取
+
+**Layer 3: HermesAdapter (`scripts/adapters/hermes.py`)**
+| 方法 | 当前行为 | 缺口 |
+|:-----|:---------|:-----|
+| `_install_skills()` | 从 `SKILLS/{id}/` 复制到 `~/.hermes/skills/{id}/` | 不使用 manifest install paths |
+| `_install_mcp()` | 注入 MCP 到 config.yaml | ✅ 正确 |
+| — | **缺失** `_install_scripts()` | 不将脚本链接到 `~/.hermes/scripts/` |
+| — | **缺失** `_install_references()` | 不复制引用文档 |
+| — | **缺失** `_run_post_install()` | 不执行 `chmod +x` 等命令 |
+| — | **缺失** `_check_dependencies()` | 不检查 `depends_on` |
+
+### 1.2 影响分析
+
+| 缺口 | 影响 | 严重程度 |
+|:-----|:-----|:--------:|
+| install.scripts 不处理 | 装了 skill 但脚本不可执行 | 🔴 |
+| install.post_install 不执行 | 需要 `chmod +x` 手动执行 | 🟡 |
+| depends_on 不检查 | 装了包但缺失依赖不报错 | 🟡 |
+| install.references 不处理 | 引用文档丢失 | 🟢 |
+
+### 1.3 设计决策
+
+| 决策 | 选项 | 选择 | 理由 |
+|:-----|:-----|:-----|:------|
+| 配置路径 | 新增字段 vs 用 manifest dict | **manifest 优先** | 不改 CapPack API，向前兼容 |
+| 脚本安装 | 复制 vs 符号链接 | **复制**（含备份） | 与现有 skill 安装策略一致 |
+| post_install | subprocess.run vs os.system | **subprocess.run** | 安全可控 |
+
+---
+
+## 二、架构概览
 
 ### 当前流程（有缺口）
 
@@ -72,7 +125,7 @@ cap-pack.yaml  ──→  PackParser  ──→  CapPack 对象
 
 ---
 
-## 二、验收标准 (AC)
+## 三、验收标准 (AC)
 
 ### AC-1: install 配置完整消费
 - [ ] `install.scripts` 中的文件复制到 `~/.hermes/scripts/`
@@ -106,19 +159,19 @@ cap-pack.yaml  ──→  PackParser  ──→  CapPack 对象
 
 ---
 
-## 三、初步 Story 分解
+## 四、初步 Story 分解
 
 | Story | 标题 | AC | 预估 |
 |:------|:-----|:---|:----:|
 | **STORY-1-5-1** | HermesAdapter install 配置完整消费 | AC-1 | 1 轮 |
 | **STORY-1-5-2** | 依赖检查与验证门禁 | AC-2, AC-4 | 1 轮 |
-| **STORY-1-5-3** | 端到端集成测试（learning-workflow 包） | AC-3 | 1 轮 |
+| **STORY-1-5-3** | 端到端集成测试 | AC-3 | 1 轮 |
 | **STORY-1-5-4** | 多 Agent 安装与自动检测 | AC-5 | 1 轮 |
 | **STORY-1-5-5** | 卸载增强与快照回滚测试 | AC-3（卸载部分） | 1 轮 |
 
 ---
 
-## 四、实施顺序
+## 五、实施顺序
 
 ```
 Phase 1: 核心安装引擎

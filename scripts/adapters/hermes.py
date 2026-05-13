@@ -214,11 +214,25 @@ class HermesAdapter:
             installed_skills = self._install_skills(pack, dry_run)
             result.details["installed_skills"] = installed_skills
 
-            # Step 3: 注入 MCP 配置
+            # Step 3: 安装 scripts（install.scripts → ~/.hermes/scripts/）
+            installed_scripts = self._install_scripts(pack, dry_run)
+            result.details["installed_scripts"] = installed_scripts
+
+            # Step 4: 复制 references
+            installed_refs = self._install_references(pack, dry_run)
+            result.details["installed_references"] = installed_refs
+
+            # Step 5: 注入 MCP 配置
             mcp_results = self._install_mcp(pack, dry_run)
             result.details["mcp_injected"] = mcp_results
 
-            # Step 4: 记录跟踪
+            # Step 6: 执行 post_install 脚本
+            if not dry_run:
+                post_install_ok = self._run_post_install(pack)
+                if not post_install_ok:
+                    result.warnings.append("部分 post_install 命令执行失败")
+
+            # Step 7: 记录跟踪
             if not dry_run:
                 tracked = _load_tracked()
                 tracked[pack.name] = {
@@ -227,12 +241,13 @@ class HermesAdapter:
                     "installed_at": __import__("datetime").datetime.now().isoformat()[:19],
                     "skills": installed_skills,
                     "skill_count": len(installed_skills),
+                    "script_count": len(installed_scripts),
                     "experience_count": len(pack.experiences),
                     "mcp_count": mcp_results,
                 }
                 _save_tracked(tracked)
 
-            # Step 5: 成功 → 清理快照
+            # Step 8: 成功 → 清理快照
             if not dry_run and snapshot_id:
                 SnapshotManager.cleanup(snapshot_id)
                 result.details.pop("snapshot_id", None)
@@ -310,6 +325,104 @@ class HermesAdapter:
 
         _write_yaml(HERMES_CONFIG, config)
         return injected
+
+    def _install_scripts(self, pack: CapPack, dry_run: bool) -> list[str]:
+        """安装 scripts（install.scripts → ~/.hermes/scripts/）"""
+        installed = []
+        manifest = pack.manifest
+        install_cfg = manifest.get("install", {})
+        scripts_cfg = install_cfg.get("scripts", [])
+
+        for entry in scripts_cfg:
+            src_rel = entry.get("source", "")
+            dst_abs = entry.get("target", "")
+            if not src_rel or not dst_abs:
+                continue
+
+            src_path = pack.pack_dir / src_rel
+            dst_path = Path(dst_abs).expanduser()
+
+            if not src_path.exists():
+                continue
+
+            if dry_run:
+                installed.append(src_rel)
+                continue
+
+            # 确保目标目录存在
+            dst_path.parent.mkdir(parents=True, exist_ok=True)
+
+            # 备份已有
+            if dst_path.exists():
+                bak_path = dst_path.with_suffix(dst_path.suffix + ".bak")
+                if bak_path.exists():
+                    bak_path.unlink()
+                shutil.copy2(dst_path, bak_path)
+
+            # 复制
+            shutil.copy2(src_path, dst_path)
+            installed.append(src_rel)
+
+        return installed
+
+    def _install_references(self, pack: CapPack, dry_run: bool) -> list[str]:
+        """复制 references（install.references）"""
+        installed = []
+        manifest = pack.manifest
+        install_cfg = manifest.get("install", {})
+        refs_cfg = install_cfg.get("references", [])
+
+        for entry in refs_cfg:
+            src_rel = entry.get("source", "")
+            dst_abs = entry.get("target", "")
+            if not src_rel or not dst_abs:
+                continue
+
+            src_path = pack.pack_dir / src_rel
+            dst_path = Path(dst_abs).expanduser()
+
+            if not src_path.exists():
+                continue
+
+            if dry_run:
+                installed.append(src_rel)
+                continue
+
+            # 目录 vs 文件
+            if src_path.is_dir():
+                dst_path.mkdir(parents=True, exist_ok=True)
+                for item in src_path.iterdir():
+                    if item.is_file():
+                        shutil.copy2(item, dst_path / item.name)
+            else:
+                dst_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src_path, dst_path)
+
+            installed.append(src_rel)
+
+        return installed
+
+    def _run_post_install(self, pack: CapPack) -> bool:
+        """执行 post_install 命令"""
+        manifest = pack.manifest
+        install_cfg = manifest.get("install", {})
+        post_cmds = install_cfg.get("post_install", [])
+
+        all_ok = True
+        for cmd in post_cmds:
+            try:
+                result = __import__("subprocess").run(
+                    cmd, shell=True, capture_output=True, text=True, timeout=30
+                )
+                if result.returncode != 0:
+                    print(f"  ⚠️  post_install 命令失败: {cmd}")
+                    print(f"     stderr: {result.stderr.strip()}")
+                    all_ok = False
+            except Exception as e:
+                print(f"  ⚠️  post_install 命令异常: {cmd} → {e}")
+                all_ok = False
+
+        return all_ok
 
     # ── 卸载 ──
 
