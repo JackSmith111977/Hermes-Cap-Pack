@@ -29,7 +29,7 @@
 | **消费方** | 开发者/维护者 | Agent 运行时 |
 | **项目地址** | 你现在就在看 ✨ | [Hermes-Skill-View → SRA](https://github.com/JackSmith111977/Hermes-Skill-View) |
 
-SRA 每次用户消息前自动推荐最匹配的技能，**CAP Pack 的分类体系和 SQS 质量分能让 SRA 推荐更精准**。详见 [SPEC-007: SRA-CAP Pack 适配方案](./docs/SPEC-007-sra-adaptation.md)。
+SRA 每次用户消息前自动推荐最匹配的技能，**CAP Pack 的分类体系和 SQS 质量分能让 SRA 推荐更精准**。详见 [SPEC-2-3: SRA-CAP Pack 适配方案](./docs/SPEC-2-3.md)。
 
 ## 核心概念
 
@@ -120,36 +120,19 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 
 ---
 
-## 项目结构
-
-```
-~/projects/hermes-cap-pack/
-├── README.md                         # ← 你正在看的
-├── constraints.md                    # 项目约束与边界
-├── docs/
-│   ├── EPIC-001-feasibility.md       # Epic: 前期可行性调查
-│   ├── SPEC-001-splitting.md         # Spec: 模块分割方案
-│   ├── SPEC-002-management.md        # Spec: 模块生命周期管理
-│   ├── SPEC-003-iteration.md         # Spec: 模块迭代与进化
-│   ├── SPEC-004-adaptation.md        # Spec: 跨 Agent 适配层
-│   └── STORY-TEMPLATE.md             # Story 模板（SDD 标准）
-└── reports/
-    └── lifecycle.html                # HTML 全生命周期追踪报告
-```
-
 ## SDD 流程状态（v2.0 — CLARIFY → RESEARCH → CREATE → QA_GATE → REVIEW）
 
 | Spec | SDD 进度 | CLARIFY | RESEARCH | CREATE | QA_GATE | REVIEW | 优先级 |
 |:-----|:--------:|:-------:|:--------:|:------:|:-------:|:------:|:-----:|
 | EPIC-001 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P0 |
-| SPEC-001 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
-| SPEC-002 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
-| SPEC-003 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
-| SPEC-004 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P2 |
+| SPEC-1-1 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
+| SPEC-1-2 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
+| SPEC-1-3 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
+| SPEC-1-4 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P2 |
 | **EPIC-002** | ⬜ draft | ✅ | ✅ | ✅ 部分 | ⬜ | ⬜ | **P1** |
-| **SPEC-005** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
-| **SPEC-006** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
-| **SPEC-007** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+| **SPEC-2-1** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+| **SPEC-2-2** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+| **SPEC-2-3** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
 
 ### EPIC-002: Skill 树状层次管理与健康度优化（新建 — P1）
 
@@ -158,16 +141,16 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 | 交付物 | 状态 | 说明 |
 |:-------|:----:|:------|
 | `docs/EPIC-002-tree-health.md` | ✅ 完成 | EPIC 文档 |
-| `docs/SPEC-005-tree-index.md` | ✅ 完成 | 树状索引系统规范 |
-| `docs/SPEC-006-quality-health.md` | ✅ 完成 | SQS 质量评分系统规范 |
-| `docs/stories/STORY-011~015` | ✅ 完成 | 5 个 Story 文档（draft） |
+| `docs/SPEC-2-1.md` | ✅ 完成 | 树状索引系统规范 |
+| `docs/SPEC-2-2.md` | ✅ 完成 | SQS 质量评分系统规范 |
+| `docs/stories/STORY-2-1-1~STORY-2-2-4` | ✅ 完成 | 5 个 Story 文档（draft） |
 | `scripts/skill-tree-index.py` | ✅ 完成 | 三层树状索引生成器 |
 | `scripts/skill-quality-score.py` | ✅ 已纳入 | SQS 五维评分引擎 |
 | `scripts/skill-lifecycle-audit.py` | ✅ 已纳入 | 生命周期审计与退役管理 |
 | `packs/quality-assurance/` | ✅ 已创建 | 质量保障能力包 |
 | `reports/skill-tree-architecture-research.html` | ✅ 已更新 | 研究报告（来源可点击） |
-| `docs/SPEC-007-sra-adaptation.md` | ✅ 完成 | SRA 运行时发现层适配方案 |
-| `docs/stories/STORY-016~017` | ✅ 完成 | SRA 分类映射 + SQS 质量加权 |
+| `docs/SPEC-2-3.md` | ✅ 完成 | SRA 运行时发现层适配方案 |
+| `docs/stories/STORY-2-3-1~STORY-2-3-2` | ✅ 完成 | SRA 分类映射 + SQS 质量加权 |
 | `scripts/skill-tree-index.py` | ✅ SRA 模式 | `--sra` 输出簇/包/同类技能格式 |
 
 ## Phase 1 进展（格式设计 + 原型 — 进行中）
@@ -210,31 +193,51 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 ├── .gitignore
 ├── docs/
 │   ├── EPIC-001-feasibility.md       # Epic: 前期可行性调查
-│   ├── SPEC-001-splitting.md         # Spec: 模块分割方案
-│   ├── SPEC-002-management.md        # Spec: 模块生命周期管理
-│   ├── SPEC-003-iteration.md         # Spec: 模块迭代与进化
-│   ├── SPEC-004-adaptation.md        # Spec: 跨 Agent 适配层
-│   └── STORY-TEMPLATE.md             # Story 模板（SDD 标准）
+│   ├── EPIC-002-tree-health.md       # Epic: 树状健康度管理
+│   ├── EPIC-003-module-extraction.md # Epic: 剩余模块提取
+│   ├── SPEC-1-1.md                   # Spec: 模块分割方案
+│   ├── SPEC-1-2.md                   # Spec: 模块生命周期管理
+│   ├── SPEC-1-3.md                   # Spec: 模块迭代与进化
+│   ├── SPEC-1-4.md                   # Spec: 跨 Agent 适配层
+│   ├── SPEC-2-1.md                   # Spec: 树状索引系统
+│   ├── SPEC-2-2.md                   # Spec: 质量健康度体系
+│   ├── SPEC-2-3.md                   # Spec: SRA 适配方案
+│   ├── STORY-TEMPLATE.md             # Story 模板（SDD 标准）
+│   ├── developer-guide-adapter.md    # 第三方适配器开发指南
+│   ├── stories/                      # Story 文档（22 个）
+│   └── plans/                        # 分解方案
 ├── schemas/
 │   ├── cap-pack-format-v1.md         # 能力包格式规范 v1
 │   └── cap-pack-v1.schema.json       # JSON Schema 验证
 ├── packs/
-│   └── doc-engine/                   # 第一个原型能力包
-│       ├── cap-pack.yaml             # 模块清单（9 skills + 11 experiences）
-│       ├── SKILLS/                   # 技能引用（9个）
-│       ├── EXPERIENCES/              # 实战经验（11个）
-│       └── MCP/                      # MCP 配置（当前空）
+│   ├── doc-engine/                   # 📄 文档生成能力包
+│   │   ├── cap-pack.yaml             # 模块清单（9 skills + 11 experiences）
+│   │   ├── SKILLS/                   # 技能（9个）
+│   │   ├── EXPERIENCES/              # 实战经验（11个）
+│   │   └── MCP/                      # MCP 配置
+│   ├── quality-assurance/            # ✅ 质量保障能力包
+│   │   ├── cap-pack.yaml
+│   │   ├── SKILLS/
+│   │   └── SCRIPTS/
+│   └── learning-workflow/            # 🧠 学习工作流能力包（骨架）
+│       └── SKILLS/
 ├── .github/workflows/
 │   └── ci.yml                        # GitHub Actions CI 工作流
 ├── scripts/
 │   ├── cli/
 │   │   ├── main.py                   # cap-pack CLI 入口
 │   │   └── commands.py               # install/remove/verify/list 命令实现
+│   ├── adapters/
+│   │   ├── hermes.py                 # Hermes Agent 适配器
+│   │   └── opencode.py               # OpenCode CLI 适配器
 │   ├── tests/
 │   │   ├── test_uca_protocol.py       # Protocol 单元测试
 │   │   ├── test_uca_parser.py         # Parser 单元测试
 │   │   ├── test_uca_dependency.py     # Dependency 单元测试
-│   │   └── test_uca_verifier.py       # Verifier 单元测试
+│   │   ├── test_uca_verifier.py       # Verifier 单元测试
+│   │   ├── test_hermes_adapter.py     # HermesAdapter 测试
+│   │   ├── test_opencode_adapter.py   # OpenCodeAdapter 测试
+│   │   └── test_parity.py            # 跨 Adapter 一致性测试
 │   ├── uca/
 │   │   ├── __init__.py               # UCA Core 包导出
 │   │   ├── protocol.py               # AgentAdapter Protocol + 数据类

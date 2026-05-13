@@ -9,7 +9,7 @@
   - 完整 Cursor 适配器示例（可直接作为模板）
   - 9 种 Agent 路径速查表
   - 适配器设计决策模板 + 测试指南
-- **SPEC-004 全部 6 个 AC 完成** 🎉
+- **SPEC-1-4 全部 6 个 AC 完成** 🎉
 
 ### Changed
 - README 新增 OpenCodeAdapter + developer-guide 条目
@@ -27,7 +27,7 @@
   - `cap-pack list --target opencode` — 列出 OpenCode 已安装
 - **跨 Agent 对等性测试**: `scripts/tests/test_parity.py` — 4 个测试验证 Hermes + OpenCode 适配器一致性
 - **64 个单元测试** (新增 8 个): 覆盖 OpenCodeAdapter install/uninstall/verify + 对等性测试
-- Story 文档: STORY-022-opencode-adapter.md
+- Story 文档: STORY-1-4-8-opencode-adapter.md
 
 ### Changed
 - CLI install/remove/verify/list 全部支持 `--target` 参数，可指定目标 Agent
@@ -68,7 +68,7 @@
   - `cap-pack list` — 列出所有已安装的能力包
   - `cap-pack inspect <pack-dir>` — 检查能力包内容（不安装）
 - **单元测试**: 37 个测试覆盖 protocol/parser/dependency/verifier 全部组件
-- **Story 文档**: STORY-018-uca-core.md, STORY-019-uca-cli.md
+- **Story 文档**: STORY-1-4-4-uca-core.md, STORY-1-4-5-uca-cli.md
 
 ### Changed
 - 所有 `scripts/uca/` 内部导入改为相对导入，提高可移植性
@@ -108,9 +108,9 @@
 ### Added
 - EPIC-002: Skill 树状层次管理与健康度优化系统
   - `docs/EPIC-002-tree-health.md` — EPIC 文档（含研究记录、架构决策、交付物）
-  - `docs/SPEC-005-tree-index.md` — 树状索引系统规范（三层模型 + CLI 接口）
-  - `docs/SPEC-006-quality-health.md` — SQS 质量评分系统规范（五维评分 + 生命周期状态机）
-  - `docs/stories/STORY-011~015` — 5 个 Story 文档（索引整合/SQS嵌入/cron报告/仪表盘/合并建议）
+  - `docs/SPEC-2-1.md` — 树状索引系统规范（三层模型 + CLI 接口）
+  - `docs/SPEC-2-2.md` — SQS 质量评分系统规范（五维评分 + 生命周期状态机）
+  - `docs/stories/STORY-2-1-1~STORY-2-2-4` — 5 个 Story 文档（索引整合/SQS嵌入/cron报告/仪表盘/合并建议）
 - New pack: `packs/quality-assurance/`（质量保障能力包，含 SQS 评分 + 审计 + 树索引）
 - Scripts integrated into cap-pack project:
   - `scripts/skill-tree-index.py` — 三层树状索引生成器
@@ -128,9 +128,9 @@
 ### Added
 - Initial project structure (Phase 0: Feasibility Research)
 - EPIC-001: Capability modularization feasibility study
-- SPEC-001: Module splitting (18 modules + 3 extension slots)
-- SPEC-002: Module lifecycle management
-- SPEC-003: Module iteration loop
-- SPEC-004: Cross-agent adaptation (UCA architecture)
+- SPEC-1-1: Module splitting (18 modules + 3 extension slots)
+- SPEC-1-2: Module lifecycle management
+- SPEC-1-3: Module iteration loop
+- SPEC-1-4: Cross-agent adaptation (UCA architecture)
 - Lifecycle tracking report (dark theme HTML)
 - Phase 1 kickoff: Git init, cap-pack.yaml format design
