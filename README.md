@@ -12,10 +12,24 @@
 │  每个模块 = 技能 (Skills) + 经验 (Experiences)            │
 │            + MCP 配置 + 知识库引用                        │
 │  └─ 通过统一的适配层，部署到不同的 Agent 框架               │
-│  └─ 随 boku 的进化不断迭代模块内容                         │
-│  └─ 预留扩展槽，Hermes 框架成长时自动吸纳新能力             │
+|  └─ 预留扩展槽，Hermes 框架成长时自动吸纳新能力             │
+|  └─ 随 boku 的进化不断迭代模块内容                         │
 └─────────────────────────────────────────────────────────┘
 ```
+
+## 🤝 最佳拍档：SRA (Skill Runtime Advisor)
+
+> **CAP Pack = 技能的结构管理，SRA = 技能的运行时发现。两者互补，缺一不可。**
+
+| | CAP Pack | SRA |
+|:--|:----------|:-----|
+| **解决什么问题** | 技能怎么分类、评分、合并、退役 | 用户发消息时该用什么技能 |
+| **核心能力** | 树状索引 + SQS 质量分 + 生命周期 | 语义匹配 + 上下文注入 + 场景记忆 |
+| **输出** | `cap-pack.yaml`, `skill-tree-index.py` | `POST /recommend` → rag_context |
+| **消费方** | 开发者/维护者 | Agent 运行时 |
+| **项目地址** | 你现在就在看 ✨ | [Hermes-Skill-View → SRA](https://github.com/JackSmith111977/Hermes-Skill-View) |
+
+SRA 每次用户消息前自动推荐最匹配的技能，**CAP Pack 的分类体系和 SQS 质量分能让 SRA 推荐更精准**。详见 [SPEC-007: SRA-CAP Pack 适配方案](./docs/SPEC-007-sra-adaptation.md)。
 
 ## 核心概念
 
