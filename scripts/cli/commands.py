@@ -15,6 +15,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from scripts.uca import PackParser, PackParseError
 from scripts.adapters.hermes import HermesAdapter
+from scripts.adapters.opencode import OpenCodeAdapter
 
 # ── 路径常量 ──────────────────────────────────────────
 
@@ -41,7 +42,23 @@ def _print_skill_tree(skills: list, indent: str = "    "):
 # ── 命令实现 ──────────────────────────────────────────
 
 
-def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
+def _get_adapter(target: str | None = None):
+    """获取适配器实例，auto-detect 优先 Hermes"""
+    if target == "hermes":
+        return HermesAdapter()
+    elif target == "opencode":
+        return OpenCodeAdapter()
+    # auto-detect
+    hermes = HermesAdapter()
+    if hermes.is_available:
+        return hermes
+    opencode = OpenCodeAdapter()
+    if opencode.is_available:
+        return opencode
+    return hermes  # fallback
+
+
+def cmd_install(pack_dir: Path, dry_run: bool = False, target: str | None = None) -> int:
     """安装能力包"""
     parser = PackParser(schema_path=SCHEMA_PATH)
 
@@ -50,18 +67,21 @@ def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
     # Step 1: 解析
     print(f"\n  📖 解析 cap-pack.yaml...")
     pack = parser.parse(pack_dir)
+    target_name = target or "auto"
     print(f"     名称:    {pack.name}")
     print(f"     版本:    {pack.version}")
     print(f"     Skills:  {len(pack.skills)}")
     print(f"     经验:    {len(pack.experiences)}")
     print(f"     MCP:     {len(pack.mcp_configs)}")
+    print(f"     目标:    {target_name}")
 
-    # Step 2: 使用 HermesAdapter 安装
-    adapter = HermesAdapter()
+    # Step 2: 获取适配器
+    adapter = _get_adapter(target)
+    adapter_name = adapter.name
+    print(f"     适配器:  {adapter_name}")
 
-    if not adapter.is_available:
-        print(f"\n  ⚠️  Hermes 环境不可用，将执行离线安装")
-        print(f"     (仅复制 skill 文件，不注入 MCP 配置)")
+    if not adapter.is_available and not dry_run:
+        print(f"\n  ⚠️  {adapter_name} 适配器不可用")
 
     if dry_run:
         print(f"\n  🔍 [DRY RUN] 将安装以下 skill:")
@@ -69,7 +89,7 @@ def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
         if pack.mcp_configs:
             print(f"\n  🔌 将注入 MCP 服务:")
             for m in pack.mcp_configs:
-                print(f"     ⚡ {m.name}")
+                print(f"     ⚡ {m.name} ({adapter_name})")
         print(f"\n  ✅ 预览完成，未执行任何操作")
         return 0
 
@@ -78,7 +98,7 @@ def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
     if result.success:
         installed = result.details.get("installed_skills", [])
         mcp_count = result.details.get("mcp_injected", 0)
-        print(f"\n  ✅ 安装完成！共安装 {len(installed)} 个 skill")
+        print(f"\n  ✅ 安装完成！共安装 {len(installed)} 个 skill → {adapter_name}")
         if mcp_count > 0:
             print(f"  🔌 注入 {mcp_count} 个 MCP 配置")
         if result.warnings:
@@ -91,9 +111,9 @@ def cmd_install(pack_dir: Path, dry_run: bool = False) -> int:
         return 1
 
 
-def cmd_remove(pack_name: str) -> int:
+def cmd_remove(pack_name: str, target: str | None = None) -> int:
     """卸载能力包"""
-    adapter = HermesAdapter()
+    adapter = _get_adapter(target)
     result = adapter.uninstall(pack_name)
 
     if not result.success:
@@ -111,9 +131,9 @@ def cmd_remove(pack_name: str) -> int:
     return 0
 
 
-def cmd_verify(pack_name: str) -> int:
+def cmd_verify(pack_name: str, target: str | None = None) -> int:
     """验证已安装的能力包"""
-    adapter = HermesAdapter()
+    adapter = _get_adapter(target)
     result = adapter.verify(pack_name)
 
     if not result.success:
@@ -132,9 +152,9 @@ def cmd_verify(pack_name: str) -> int:
     return 0
 
 
-def cmd_list() -> int:
+def cmd_list(target: str | None = None) -> int:
     """列出已安装的能力包"""
-    adapter = HermesAdapter()
+    adapter = _get_adapter(target)
     packs = adapter.list_installed()
 
     if not packs:

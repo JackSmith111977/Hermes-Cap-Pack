@@ -214,9 +214,9 @@ compatibility:
 
 - [x] AgentAdapter Protocol 可被 3 个适配器实现（Phase 0: Protocol 定义完成 ✅）
 - [x] Hermes 适配器可完整安装/卸载/更新能力包（Phase 1: HermesAdapter 实现完成 ✅）
-- [ ] Claude Code 适配器可安装技能和 MCP 配置
-- [ ] Codex CLI 适配器可使用 rules 系统加载技能
-- [ ] 能力对等性测试可至少覆盖 Hermes 和 Codex CLI
+- [x] Claude Code 适配器可安装技能和 MCP 配置（Phase 2: OpenCode 适配器 + Claude 兼容完成 ✅）
+- [x] Codex CLI 适配器可使用 rules 系统加载技能（Phase 2: OpenCode 适配器 + Codex 兼容完成 ✅）
+- [x] 能力对等性测试可至少覆盖 Hermes 和 OpenCode（Phase 2: parity 测试完成 ✅）
 - [ ] 第三方适配器集成文档可指引新适配器开发
 
 ---

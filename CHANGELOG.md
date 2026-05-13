@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0] — 2026-05-13
+
+### Added
+- **OpenCodeAdapter** (`scripts/adapters/opencode.py`): OpenCode CLI Agent 适配器
+  - Skill 安装到 `~/.config/opencode/skills/{id}/SKILL.md`，自动转换 frontmatter 为 OpenCode 兼容格式
+  - MCP 配置注入到 `~/.config/opencode/opencode.json` 的 `mcp` 字段
+  - 利用 OpenCode 对 `~/.claude/skills/` 的原生兼容性（自动兼容 Claude Code）
+- **CLI 多 Agent 支持**: 所有命令新增 `--target` 参数（`hermes`/`opencode`/`auto`）
+  - `cap-pack install packs/doc-engine --target opencode` — 安装到 OpenCode
+  - `cap-pack remove doc-engine --target opencode` — 从 OpenCode 卸载
+  - `cap-pack list --target opencode` — 列出 OpenCode 已安装
+- **跨 Agent 对等性测试**: `scripts/tests/test_parity.py` — 4 个测试验证 Hermes + OpenCode 适配器一致性
+- **64 个单元测试** (新增 8 个): 覆盖 OpenCodeAdapter install/uninstall/verify + 对等性测试
+- Story 文档: STORY-022-opencode-adapter.md
+
+### Changed
+- CLI install/remove/verify/list 全部支持 `--target` 参数，可指定目标 Agent
+- `_get_adapter()` 函数实现 auto-detect（优先检测 Hermes，回退 OpenCode）
+
 ## [0.5.0] — 2026-05-13
 
 ### Added

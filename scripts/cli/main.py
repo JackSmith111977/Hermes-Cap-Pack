@@ -47,20 +47,28 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", help="可用命令")
 
     # install
-    p_install = sub.add_parser("install", help="安装能力包")
+    p_install = sub.add_parser("install", help="安装能力包到 Hermes 或 OpenCode")
     p_install.add_argument("pack_dir", type=str, help="能力包目录路径")
     p_install.add_argument("--dry-run", action="store_true", help="仅预览，不实际安装")
+    p_install.add_argument("--target", choices=["hermes", "opencode", "auto"],
+                          default="auto", help="目标 Agent (默认: auto 检测)")
 
     # remove
     p_remove = sub.add_parser("remove", help="卸载能力包")
     p_remove.add_argument("pack_name", type=str, help="能力包名称")
+    p_remove.add_argument("--target", choices=["hermes", "opencode"], default=None,
+                         help="目标 Agent (默认: auto 检测)")
 
     # verify
     p_verify = sub.add_parser("verify", help="验证已安装的能力包")
     p_verify.add_argument("pack_name", type=str, help="能力包名称")
+    p_verify.add_argument("--target", choices=["hermes", "opencode"], default=None,
+                         help="目标 Agent (默认: auto 检测)")
 
     # list
-    sub.add_parser("list", help="列出已安装的能力包")
+    p_list = sub.add_parser("list", help="列出已安装的能力包")
+    p_list.add_argument("--target", choices=["hermes", "opencode"], default=None,
+                       help="目标 Agent (默认: auto 检测)")
 
     # inspect
     p_inspect = sub.add_parser("inspect", help="检查能力包内容（不安装）")
@@ -79,13 +87,13 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.command == "install":
-            return cmd_install(Path(args.pack_dir), dry_run=args.dry_run)
+            return cmd_install(Path(args.pack_dir), dry_run=args.dry_run, target=args.target)
         elif args.command == "remove":
-            return cmd_remove(args.pack_name)
+            return cmd_remove(args.pack_name, target=args.target)
         elif args.command == "verify":
-            return cmd_verify(args.pack_name)
+            return cmd_verify(args.pack_name, target=args.target)
         elif args.command == "list":
-            return cmd_list()
+            return cmd_list(target=args.target)
         elif args.command == "inspect":
             return cmd_inspect(Path(args.pack_dir))
     except Exception as e:
