@@ -66,6 +66,35 @@ cap-pack/{name}/
 | `description` | string | ✅ | 一句话说明 |
 | `tags` | array | ❌ | 标签列表 |
 | `experience_refs` | array | ❌ | 关联的经验 ID 列表 |
+| `files` | object | ❌ | 关联资源声明（见下方） |
+
+#### `files` 字段详解
+
+技能除了 SKILL.md 主文件外，通常还包含 linked files。`files` 字段声明这些资源：
+
+```yaml
+skills:
+  - id: pdf-layout
+    path: SKILLS/pdf-layout/SKILL.md
+    files:
+      references: SKILLS/pdf-layout/references/ (3 files)    # 参考文档
+      checklists: SKILLS/pdf-layout/checklists/ (1 files)    # 检查清单
+      scripts: SKILLS/pdf-layout/scripts/ (2 files)          # 自动化脚本
+      templates: SKILLS/pdf-layout/templates/ (1 files)      # 模板文件
+      assets: SKILLS/pdf-layout/assets/ (5 files)            # 静态资源
+```
+
+**支持的资源类型**:
+
+| 类型 | 说明 | 提取来源（~/.hermes/skills/{name}/） |
+|:-----|:------|:-----------------------------------|
+| `references` | 参考文档、深度解释 | `references/` 目录 |
+| `scripts` | 自动化脚本 | `scripts/` 目录 |
+| `templates` | 模板文件 | `templates/` 目录 |
+| `checklists` | 检查清单 | `checklists/` 目录 |
+| `assets` | 静态资源（图片等） | `assets/` 目录 |
+
+`files` 字段由 `extract-pack.py` 在提取时自动填充，也可手动编写。
 
 ### 2.5 `experiences` — 经验列表
 
