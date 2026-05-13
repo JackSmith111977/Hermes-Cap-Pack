@@ -215,12 +215,10 @@ Hermes 大版本升级              →   hermes-new-features 模块吸纳
 │   │   ├── SKILLS/                   # 技能（9个）
 │   │   ├── EXPERIENCES/              # 实战经验（11个）
 │   │   └── MCP/                      # MCP 配置
-│   ├── quality-assurance/            # ✅ 质量保障能力包
-│   │   ├── cap-pack.yaml
-│   │   ├── SKILLS/
-│   │   └── SCRIPTS/
-│   └── learning-workflow/            # 🧠 学习工作流能力包（骨架）
-│       └── SKILLS/
+│   └── quality-assurance/            # ✅ 质量保障能力包
+│       ├── cap-pack.yaml
+│       ├── SKILLS/
+│       └── SCRIPTS/
 ├── .github/workflows/
 │   └── ci.yml                        # GitHub Actions CI 工作流
 ├── scripts/
