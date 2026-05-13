@@ -114,10 +114,10 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 ## 四、验收标准 (Acceptance Criteria)
 
 ### P0（必须完成）
-- [ ] `EPIC-001.md` 经主人审阅 **批准**
-- [ ] SPEC-001 ~ SPEC-004 均已创建并通过 QA_GATE
-- [ ] 至少一个能力包原型格式定义（YAML Schema）完成
-- [ ] HTML 生命周期追踪报告可正常生成
+- [x] `EPIC-001.md` 经主人审阅 **批准**
+- [x] SPEC-001 ~ SPEC-004 均已创建并通过 QA_GATE
+- [x] 至少一个能力包原型格式定义（YAML Schema）完成
+- [x] HTML 生命周期追踪报告可正常生成
 
 ### P1（应该完成）
 - [ ] 每个 Spec 包含 ≥ 3 个业界参考案例（已验证来源，非 AI 臆造）
@@ -136,16 +136,16 @@ Claude Code 立即获得了与 boku 相同的文档生成能力（PDF 排版、P
 
 | ID | 标题 | 关联 Spec | 优先级 | 状态 |
 |:---|:-----|:---------|:------:|:----:|
-| STORY-001 | 模块分割维度与粒度分析 | SPEC-001 | P1 | ⏳ 待创建 |
-| STORY-002 | 模块边界判断标准决策树 | SPEC-001 | P1 | ⏳ 待创建 |
-| STORY-003 | Capability Pack 格式定义 v1 | SPEC-001 | P0 | ⏳ 待创建 |
-| STORY-004 | 模块生命周期状态机设计 | SPEC-002 | P1 | ⏳ 待创建 |
-| STORY-005 | 版本号与依赖管理规范 | SPEC-002 | P1 | ⏳ 待创建 |
-| STORY-006 | 基于使用反馈的迭代流程 | SPEC-003 | P1 | ⏳ 待创建 |
-| STORY-007 | 经验与技能的同步更新机制 | SPEC-003 | P2 | ⏳ 待创建 |
-| STORY-008 | 适配层接口抽象定义 | SPEC-004 | P1 | ⏳ 待创建 |
-| STORY-009 | Hermes 适配器实现 | SPEC-004 | P0 | ⏳ 待创建 |
-| STORY-010 | Claude Code 适配器实现 | SPEC-004 | P1 | ⏳ 待创建 |
+| STORY-001 | 模块分割维度与粒度分析 | SPEC-001 | P1 | 📄 draft |
+| STORY-002 | 模块边界判断标准决策树 | SPEC-001 | P1 | 📄 draft |
+| STORY-003 | Capability Pack 格式定义 v1 | SPEC-001 | P0 | ✅ 已完成 |
+| STORY-004 | 模块生命周期状态机设计 | SPEC-002 | P1 | 📄 draft |
+| STORY-005 | 版本号与依赖管理规范 | SPEC-002 | P1 | 📄 draft |
+| STORY-006 | 基于使用反馈的迭代流程 | SPEC-003 | P1 | 📄 draft |
+| STORY-007 | 经验与技能的同步更新机制 | SPEC-003 | P2 | 📄 draft |
+| STORY-008 | 适配层接口抽象定义 | SPEC-004 | P1 | 📄 draft |
+| STORY-009 | Hermes 适配器实现 | SPEC-004 | P0 | ✅ 已完成 |
+| STORY-010 | Claude Code 适配器实现 | SPEC-004 | P1 | 📄 draft |
 
 ---
 
