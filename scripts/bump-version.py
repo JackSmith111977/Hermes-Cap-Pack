@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-bump-version.py — Cap Pack 版本号自动管理
+bump-version.py — Cap Pack 版本号自动管理（SDD 语义版）
+
+版本映射规则:
+  patch  ← Story / Debug 更新（迭代完成一个小故事或修复）
+  minor  ← Spec 更新（完成一个完整规范）
+  major  ← Epic 完成（整条 Epic 线交付，可能含多个 Spec）
 
 用法:
-  python3 scripts/bump-version.py patch   # 0.3.0 → 0.3.1
-  python3 scripts/bump-version.py minor   # 0.3.0 → 0.4.0
-  python3 scripts/bump-version.py major   # 0.3.0 → 1.0.0
+  python3 scripts/bump-version.py patch   # 0.3.0 → 0.3.1  (story/debug)
+  python3 scripts/bump-version.py minor   # 0.3.0 → 0.4.0  (spec)
+  python3 scripts/bump-version.py major   # 0.3.0 → 1.0.0  (epic)
   python3 scripts/bump-version.py show    # 显示当前版本
 
 工作流程:
@@ -115,6 +120,12 @@ def show_current():
     print(f"当前版本: {ver}")
     print(f"项目: hermes-cap-pack")
     print(f"路径: {PYPROJECT}")
+    print(f"")
+    print(f"版本映射规则（SDD 语义版）:")
+    print(f"  python3 scripts/bump-version.py patch  ← Story / Debug")
+    print(f"  python3 scripts/bump-version.py minor  ← Spec")
+    print(f"  python3 scripts/bump-version.py major  ← Epic")
+    print(f"")
     
     # 检查 git tag
     import subprocess

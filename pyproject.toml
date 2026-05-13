@@ -31,6 +31,12 @@ Repository = "https://github.com/JackSmith111977/Hermes-Cap-Pack.git"
 
 [tool.version]
 # Managed by scripts/bump-version.py
+#
+# SDD 语义版本映射:
+#   patch  ← Story / Debug 更新
+#   minor  ← Spec 更新
+#   major  ← Epic 完成
+#
 # Current: 0.3.0
 last_bump = "2026-05-13"
 bump_type = "patch"
