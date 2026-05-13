@@ -1,0 +1,45 @@
+# 🚦 doc-engine 健康门禁配置
+
+name: doc-engine-health-gate
+version: 1.0.0
+
+## 触发条件
+
+trigger:
+  on_pack_update: true
+  on_skill_change: true
+  schedule: "0 9 * * 1"  # 每周一
+
+## 门禁规则
+
+gates:
+  - id: min-avg-sqs
+    description: "包内技能平均 SQS ≥ 70"
+    check: "python3 scripts/health-check.py --gate"
+    severity: high
+    auto_block: true
+
+  - id: zero-low-score
+    description: "包内无 SQS < 60 的技能"
+    check: "python3 scripts/quality-score.py --pack doc-engine --json | python3 -c \"import sys,json; d=json.load(sys.stdin); exit(0 if all(s['sqs_total']>=60 for s in d) else 1)\""
+    severity: high
+    auto_block: true
+
+  - id: full-version
+    description: "所有技能有版本号"
+    check: "python3 scripts/quality-score.py --pack doc-engine --json | python3 -c \"import sys,json; d=json.load(sys.stdin); exit(0 if all(s.get('version','?')!='?' for s in d) else 1)\""
+    severity: medium
+    auto_block: false  # 警告但不阻塞
+
+  - id: chi-index
+    description: "综合健康指数 ≥ 0.70"
+    check: "python3 scripts/health-check.py --gate"
+    severity: high
+    auto_block: true
+
+## 通知
+
+notification:
+  on_pass: "doc-engine ✅ 健康检查通过 (CHI ≥ 0.70)"
+  on_fail: "doc-engine 🔴 健康检查未通过 — 详情见: scripts/health-check.py --json"
+  channel: feishu:home

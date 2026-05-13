@@ -1,0 +1,184 @@
+# 🏗️ 能力包清单 — doc-engine (分层重组版)
+
+name: doc-engine
+version: 2.0.0
+description: "文档生成能力包 — PDF/HTML/PPTX 排版 + 视觉QA + 质量门禁"
+author: boku (Emma)
+created: 2026-05-13
+updated: 2026-05-13
+cap_version: 1
+
+## 包信息
+
+emoji: 📄
+category: content-creation
+domain: doc-engine
+maintainer: boku
+
+## 技能 (10 个原子技能，重组后)
+
+skills:
+  # ─── PDF 簇 (合并后 2 个) ───
+  - id: pdf-layout
+    name: PDF 排版与生成
+    description: "专业 PDF 排版设计与生成 — 合并原 pdf-layout + pdf-layout-reportlab + pdf-layout-weasyprint。涵盖 ReportLab 和 WeasyPrint 双引擎、中文 CJK 字体方案、智能分页、表格/图片/图表嵌入"
+    version: 3.0.0
+    tags: [pdf, layout, reportlab, weasyprint, 排版, 中文PDF]
+    cluster: pdf
+    sqs_target: 78.0
+
+  - id: pdf-pro-design
+    name: 高级 PDF 设计
+    description: "高级 PDF 排版设计指南 — 跨场景排版规范、CRAP 原则、商业文档模板、视觉层次"
+    version: 2.0.0
+    tags: [pdf, design, 排版设计, 高级排版]
+    cluster: pdf
+    sqs_target: 80.0
+
+  # ─── 渲染对比 (独立) ───
+  - id: pdf-render-comparison
+    name: PDF 渲染对比
+    description: "PDF 渲染工具选型决策树 — WeasyPrint/ReportLab/Chrome/chromium 对比"
+    version: 1.0.0
+    tags: [pdf, 选型, 对比, 渲染]
+    cluster: pdf
+    sqs_target: 85.0
+
+  # ─── HTML 簇 ───
+  - id: html-presentation
+    name: HTML 演示文稿
+    description: "用 HTML/CSS 制作演示文稿 — reveal.js/Slidev/Marp 四大方案"
+    version: 2.1.0
+    tags: [html, 演示文稿, presentation, reveal.js]
+    cluster: html
+    sqs_target: 80.0
+
+  # ─── PPTX 簇 ───
+  - id: pptx-guide
+    name: PPTX 操作指南
+    description: "PowerPoint (.pptx) 操作 — python-pptx 创建专业 PPT"
+    version: 1.0.0
+    tags: [pptx, 演示文稿, powerpoint]
+    cluster: pptx
+    sqs_target: 72.0
+
+  # ─── 视觉 QA 簇 ───
+  - id: vision-qc-patterns
+    name: 排版质量检查
+    description: "PDF 排版错误模式库 — 粘连/错位/截断/字体回退 视觉检测"
+    version: 1.0.0
+    tags: [vision, qc, 排版, 质量检测]
+    cluster: vision
+    sqs_target: 80.0
+
+  # ─── 路由/索引簇 ───
+  - id: doc-design
+    name: 文档排版路由
+    description: "文档排版设计索引 — 根据格式路由到原子 skill"
+    version: 5.1.0
+    tags: [文档, 排版, doc, 路由]
+    cluster: router
+    sqs_target: 78.0
+
+  # ─── 其他 ───
+  - id: nano-pdf
+    name: Nano PDF 编辑
+    description: "自然语言 PDF 编辑 — nano-pdf CLI"
+    version: 1.0.0
+    tags: [pdf, 编辑, nano]
+    cluster: edit
+    sqs_target: 70.0
+
+  - id: readme-for-ai
+    name: AI 友好 README
+    description: "编写模型友好型 README — 让 AI Agent 自主完成安装配置"
+    version: 1.1.0
+    tags: [readme, 文档, agent]
+    cluster: meta
+    sqs_target: 75.0
+
+## 经验 (11 个 — 5 个原有 + 6 个降级)
+
+experiences:
+  # 原有
+  - id: pdf-tool-decision-tree
+    title: PDF 工具选型决策树
+  - id: reportlab-cjk-encoding
+    title: ReportLab 中文编码要点
+  - id: wqy-font-fallback
+    title: WQY 字体回退方案
+  - id: pptx-chinese-fonts
+    title: PPTX 中文字体配置
+  - id: design-crap-principles
+    title: CRAP 排版原则速查
+
+  # 新增 — 从微 skill 降级
+  - id: latex-quick-ref
+    title: LaTeX 排版速查
+    description: "LaTeX 学术论文排版要点 — 从 latex-guide skill 降级"
+  - id: html-quick-ref
+    title: HTML 文档排版速查
+    description: "HTML/CSS 网页排版要点 — 从 html-guide skill 降级"
+  - id: epub-quick-ref
+    title: EPUB 电子书生成速查
+    description: "使用 ebooklib 创建标准 EPUB — 从 epub-guide skill 降级"
+  - id: xlsx-quick-ref
+    title: Excel 表格操作速查
+    description: "openpyxl 创建带样式图表 — 从 xlsx-guide skill 降级（可移至 productivity 包）"
+  - id: docx-quick-ref
+    title: Word 文档操作速查
+    description: "python-docx 创建/编辑 Word 文档 — 从 docx-guide skill 降级"
+  - id: markdown-quick-ref
+    title: Markdown 写作与转换
+    description: "Markdown 语法 + pandoc 转换 — 从 markdown-guide skill 降级"
+
+## 簇结构 (7 簇)
+
+clusters:
+  - id: pdf
+    name: PDF 排版
+    description: "PDF 排版生成全链路 — 布局/设计/渲染对比"
+    skills: [pdf-layout, pdf-pro-design, pdf-render-comparison]
+  - id: html
+    name: HTML 演示
+    description: "HTML/CSS 演示文稿制作"
+    skills: [html-presentation]
+  - id: pptx
+    name: PPT 制作
+    description: "PowerPoint 生成与美化"
+    skills: [pptx-guide]
+  - id: vision
+    name: 视觉质检
+    description: "PDF 排版质量自动检测"
+    skills: [vision-qc-patterns]
+  - id: router
+    name: 格式路由
+    description: "文档格式识别与调度"
+    skills: [doc-design]
+  - id: edit
+    name: 文档编辑
+    description: "轻量级文档编辑工具"
+    skills: [nano-pdf]
+  - id: meta
+    name: 元工具
+    description: "文档相关辅助工具"
+    skills: [readme-for-ai]
+
+## 依赖
+
+depends_on:
+  skill-creator:
+    version: ">=5.0.0"
+    reason: "SQS 质量门禁集成"
+  quality-assurance:
+    version: ">=1.0.0"
+    reason: "健康检查脚本 + 质量门禁"
+
+## 质量门禁
+
+health_gates:
+  min_avg_sqs: 70
+  max_low_score_ratio: 0.0
+  min_version_rate: 1.0
+  min_chi: 0.70
+  check_script: scripts/health-check.py
