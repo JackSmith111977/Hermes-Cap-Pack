@@ -139,7 +139,7 @@ class OpenCodeAdapter:
 
     # ── 安装 ──
 
-    def install(self, pack: CapPack, dry_run: bool = False) -> AdapterResult:
+    def install(self, pack: CapPack, dry_run: bool = False, skip_deps: bool = False) -> AdapterResult:
         """安装能力包到 OpenCode"""
         if not dry_run and not self.is_available:
             return AdapterResult(

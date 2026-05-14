@@ -50,7 +50,8 @@ class CapPack:
     skills: list[CapPackSkill] = field(default_factory=list)
     experiences: list[CapPackExperience] = field(default_factory=list)
     mcp_configs: list[CapPackMCP] = field(default_factory=list)
-    dependencies: list[str] = field(default_factory=list)
+    dependencies: list[str] = field(default_factory=list)      # Python packages
+    depends_on: dict = field(default_factory=dict)              # pack-level deps: {name: {version, reason}}
     hooks: list[dict] = field(default_factory=list)
     compatibility: dict = field(default_factory=dict)
 

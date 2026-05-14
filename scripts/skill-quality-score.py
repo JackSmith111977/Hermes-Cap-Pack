@@ -5,12 +5,15 @@ skill-quality-score.py v1.0 — Skill 质量评分系统 (SQS)
 Skill Quality Score (SQS) 是衡量 Hermes Skill 质量的标准化评分体系。
 满分 100 分，5 个维度各 20 分。
 
-用法:
-  python3 skill-quality-score.py <skill-name>         # 评分单个技能
-  python3 skill-quality-score.py <skill-name> --json   # JSON 输出
-  python3 skill-quality-score.py --audit               # 审计所有技能
-  python3 skill-quality-score.py --audit --threshold 70 # 只报告低于阈值
-  python3 skill-quality-score.py --audit --json        # 全量 JSON 报告
+|用法:
+  python3 skill-quality-score.py <skill-name>           # 评分单个技能
+  python3 skill-quality-score.py <skill-name> --json     # JSON 输出
+  python3 skill-quality-score.py --audit                 # 审计所有技能
+  python3 skill-quality-score.py --audit --threshold 70  # 只报告低于阈值
+  python3 skill-quality-score.py --audit --json          # 全量 JSON 报告
+  python3 skill-quality-score.py --audit --save          # 审计并保存到 DB
+  python3 skill-quality-score.py --init-db               # 初始化 SQS 数据库
+  python3 skill-quality-score.py --history <skill-name>  # 查看技能历史趋势|
 
 评分维度:
   S1: 结构完整性 (20分) — YAML frontmatter 完整度
@@ -23,12 +26,155 @@ Skill Quality Score (SQS) 是衡量 Hermes Skill 质量的标准化评分体系�
   90-100: 🟢 优秀  70-89: 🟡 良好  50-69: 🟠 需改进  <50: 🔴 不合格
 """
 
-import os, sys, re, json
+import os, sys, re, json, sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
 SKILLS_DIR = Path.home() / ".hermes" / "skills"
+DATA_DIR = Path.home() / ".hermes" / "data"
+DB_PATH = DATA_DIR / "skill-quality.db"
 NOW = datetime.now(timezone.utc)
+
+
+def get_db():
+    """获取 SQLite 数据库连接"""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(DB_PATH))
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def init_db():
+    """初始化 SQS 数据库表结构"""
+    conn = get_db()
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS scores (
+            skill_name TEXT PRIMARY KEY,
+            sqs_total REAL NOT NULL,
+            s1 REAL NOT NULL,
+            s2 REAL NOT NULL,
+            s3 REAL NOT NULL,
+            s4 REAL NOT NULL,
+            s5 REAL NOT NULL,
+            version TEXT DEFAULT '?',
+            scored_at TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS score_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            skill_name TEXT NOT NULL,
+            sqs_total REAL NOT NULL,
+            s1 REAL NOT NULL, s2 REAL NOT NULL,
+            s3 REAL NOT NULL, s4 REAL NOT NULL,
+            s5 REAL NOT NULL,
+            scored_at TEXT NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_history_skill
+            ON score_history(skill_name, scored_at);
+    """)
+    conn.commit()
+    conn.close()
+    print(f"✅ SQS 数据库已初始化: {DB_PATH}")
+
+
+def save_to_db(report: dict):
+    """保存单个 skill 的 SQS 评分到数据库（upsert）"""
+    dims = report["dimensions"]
+    conn = get_db()
+    now_str = datetime.now(timezone.utc).isoformat()[:19]
+    conn.execute("""
+        INSERT INTO scores (skill_name, sqs_total, s1, s2, s3, s4, s5, version, scored_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(skill_name) DO UPDATE SET
+            sqs_total = excluded.sqs_total,
+            s1 = excluded.s1, s2 = excluded.s2,
+            s3 = excluded.s3, s4 = excluded.s4,
+            s5 = excluded.s5,
+            version = excluded.version,
+            scored_at = excluded.scored_at
+    """, (
+        report["skill"], report["sqs_total"],
+        dims["S1_structure"], dims["S2_content"],
+        dims["S3_freshness"], dims["S4_relations"],
+        dims["S5_discoverability"],
+        report.get("version", "?"), now_str,
+    ))
+    # 历史记录
+    conn.execute("""
+        INSERT INTO score_history (skill_name, sqs_total, s1, s2, s3, s4, s5, scored_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        report["skill"], report["sqs_total"],
+        dims["S1_structure"], dims["S2_content"],
+        dims["S3_freshness"], dims["S4_relations"],
+        dims["S5_discoverability"], now_str,
+    ))
+    conn.commit()
+    conn.close()
+
+
+def save_audit_to_db(reports: list):
+    """批量保存审计结果到数据库"""
+    conn = get_db()
+    now_str = datetime.now(timezone.utc).isoformat()[:19]
+    for r in reports:
+        dims = r["dimensions"]
+        conn.execute("""
+            INSERT INTO scores (skill_name, sqs_total, s1, s2, s3, s4, s5, version, scored_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(skill_name) DO UPDATE SET
+                sqs_total = excluded.sqs_total,
+                s1 = excluded.s1, s2 = excluded.s2,
+                s3 = excluded.s3, s4 = excluded.s4,
+                s5 = excluded.s5,
+                version = excluded.version,
+                scored_at = excluded.scored_at
+        """, (
+            r["skill"], r["sqs_total"],
+            dims["S1_structure"], dims["S2_content"],
+            dims["S3_freshness"], dims["S4_relations"],
+            dims["S5_discoverability"],
+            r.get("version", "?"), now_str,
+        ))
+        conn.execute("""
+            INSERT INTO score_history (skill_name, sqs_total, s1, s2, s3, s4, s5, scored_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            r["skill"], r["sqs_total"],
+            dims["S1_structure"], dims["S2_content"],
+            dims["S3_freshness"], dims["S4_relations"],
+            dims["S5_discoverability"], now_str,
+        ))
+    conn.commit()
+    conn.close()
+    print(f"✅ 已保存 {len(reports)} 个 skill 的 SQS 评分到 {DB_PATH}")
+
+
+def show_history(skill_name: str):
+    """显示某个 skill 的历史评分趋势"""
+    conn = get_db()
+    rows = conn.execute("""
+        SELECT sqs_total, s1, s2, s3, s4, s5, scored_at
+        FROM score_history
+        WHERE skill_name = ?
+        ORDER BY scored_at ASC
+    """, (skill_name,)).fetchall()
+    conn.close()
+
+    if not rows:
+        print(f"📭 '{skill_name}' 无历史数据")
+        return
+
+    print(f"\n📈 SQS 历史趋势: {skill_name}\n")
+    print(f"{'日期':<20} {'总分':>6} {'S1':>5} {'S2':>5} {'S3':>5} {'S4':>5} {'S5':>5}")
+    print("-" * 55)
+    for row in rows:
+        print(f"{row['scored_at']:<20} {row['sqs_total']:6.1f} {row['s1']:5.1f} {row['s2']:5.1f} {row['s3']:5.1f} {row['s4']:5.1f} {row['s5']:5.1f}")
+    if len(rows) >= 2:
+        delta = rows[-1]["sqs_total"] - rows[0]["sqs_total"]
+        arrow = "↗" if delta > 0 else "↘" if delta < 0 else "→"
+        print(f"\n趋势: {arrow} {delta:+.1f} 分 (首次→最新)")
 
 
 def read_skill(skill_name):
@@ -365,7 +511,7 @@ def calculate_sqs(skill_name, output_json=False):
     return total, report
 
 
-def cmd_audit(threshold=50, output_json=False):
+def cmd_audit(threshold=50, output_json=False, save_to_db_flag=False):
     """审计所有 skill，输出 SQS 报告"""
     skills = []
     for root, dirs, files in os.walk(SKILLS_DIR):
@@ -378,6 +524,9 @@ def cmd_audit(threshold=50, output_json=False):
     skills.sort(key=lambda x: -x[0])
 
     if output_json:
+        if save_to_db_flag:
+            reports = [s[1] for s in skills]
+            save_audit_to_db(reports)
         print(json.dumps([s[1] for s in skills], ensure_ascii=False, indent=2))
         return
 
@@ -446,6 +595,11 @@ def cmd_audit(threshold=50, output_json=False):
         elif avg < 16:
             print(f"  🟡 {dname} ({avg:.1f}) 可进一步优化")
 
+    # DB 保存（非 JSON 模式）
+    if save_to_db_flag:
+        reports = [s[1] for s in skills]
+        save_audit_to_db(reports)
+
     print()
 
 
@@ -455,6 +609,7 @@ def main():
         sys.exit(0)
 
     output_json = '--json' in sys.argv
+    save_db = '--save' in sys.argv
     threshold = 50
 
     # 提取阈值
@@ -466,7 +621,14 @@ def main():
                 pass
 
     if sys.argv[1] == '--audit':
-        cmd_audit(threshold, output_json)
+        cmd_audit(threshold, output_json, save_db)
+    elif sys.argv[1] == '--init-db':
+        init_db()
+    elif sys.argv[1] == '--history':
+        if len(sys.argv) >= 3:
+            show_history(sys.argv[2])
+        else:
+            print("用法: python3 skill-quality-score.py --history <skill-name>")
     else:
         skill_name = sys.argv[1]
         calculate_sqs(skill_name, output_json)

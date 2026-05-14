@@ -1,7 +1,7 @@
 # STORY-2-3-2: SQS 质量加权 SRA 推荐
 
-> **状态**: `draft` · **优先级**: P2 · **Epic**: EPIC-002 · **Sprint**: 3
-> **SDD 状态**: `draft` · **创建**: 2026-05-13 · **预估**: 1 轮
+> **状态**: `implemented` · **优先级**: P2 · **Epic**: EPIC-002 · **Sprint**: 3
+> **SDD 状态**: `implemented` · **创建**: 2026-05-13 · **预估**: 1 轮
 > **标签**: `sra`, `sqs`, `quality-weighting`
 
 ---
@@ -12,13 +12,23 @@
 **I want** SRA 推荐时考虑 skill 的质量分，低质量 skill 即使语义匹配也不优先推荐
 **So that** 不会因为 SRA 推荐了低质量 skill 而浪费时间
 
-## 验收标准
+## 验收状态
 
-- [ ] AC-01: SRA 推荐结果受 SQS 质量分影响
-- [ ] AC-02: SQS ≥ 80 → 不降权；SQS 50-79 → 降权 10-30%；SQS < 50 → 降权 60%
-- [ ] AC-03: 无 SQS 评分的 skill 使用默认值 50（中性降权）
-- [ ] AC-04: 质量加权可开关（`--no-quality` 参数）
-- [ ] AC-05: 加权后的推荐列表排序合理（高分高质量 skill 排最前）
+- [x] AC-01: SRA 推荐结果受 SQS 质量分影响
+- [x] AC-02: SQS ≥ 80 → 不降权；SQS 50-79 → 降权 10-30%；SQS < 50 → 降权 60%
+- [x] AC-03: 无 SQS 评分的 skill 使用默认值 50（中性降权）
+- [x] AC-04: 质量加权可开关（`--no-quality` 参数）
+- [x] AC-05: 加权后的推荐列表排序合理（高分高质量 skill 排最前）
+
+## 交付物
+
+| 文件 | 说明 |
+|:-----|:------|
+| `scripts/sqs-sync.py` | SQS → SRA 同步器（每 6 小时自动同步） |
+| `~/.sra/data/sqs-scores.json` | SRA 可读的 SQS 评分映射文件 |
+| SRA `matcher.py` | 新增 `_quality_modifier()` 质量加权函数 |
+| SRA `advisor.py` | `recommend()` 新增 `no_quality` 参数 |
+| Cron `sqs-score-sync` | 每 6 小时同步一次 |
 
 ## 质量修饰函数
 

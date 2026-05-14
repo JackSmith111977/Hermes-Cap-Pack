@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Capability Pack — 项目全貌报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0b0f17;
+  --card: #131924;
+  --card-hover: #1a2235;
+  --border: #1e2a42;
+  --text: #e4e9f2;
+  --dim: #7b89a6;
+  --accent: #6c9bff;
+  --accent2: #a78bfa;
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --bad: #f87171;
+  --purple: #c084fc;
+  --teal: #2dd4bf;
+  --radius: 12px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'PingFang SC', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-lg); }
+
+/* Header */
+.hero { padding: 60px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: var(--space-xl); }
+.hero h1 { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: var(--space-sm); }
+.hero .subtitle { font-size: 1.1rem; color: var(--dim); }
+.hero .meta { margin-top: var(--space-md); display: flex; gap: var(--space-lg); flex-wrap: wrap; }
+.hero .meta span { color: var(--dim); font-size: 0.9rem; }
+.hero .meta strong { color: var(--text); font-weight: 600; }
+
+/* KPI Cards */
+.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); margin-bottom: var(--space-xl); }
+.kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-lg); transition: background 0.2s; }
+.kpi-card:hover { background: var(--card-hover); }
+.kpi-card .kpi-label { font-size: 0.8rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-xs); }
+.kpi-card .kpi-value { font-size: 2rem; font-weight: 700; }
+.kpi-card .kpi-sub { font-size: 0.85rem; color: var(--dim); margin-top: 2px; }
+.kpi-card .kpi-trend { font-size: 0.75rem; margin-top: var(--space-sm); }
+.trend-up { color: var(--ok); }
+.trend-warn { color: var(--warn); }
+
+/* Sections */
+.section { margin-bottom: var(--space-xl); }
+.section-header { display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--border); }
+.section-header h2 { font-size: 1.5rem; font-weight: 600; }
+.section-header .section-num { font-size: 0.8rem; color: var(--accent); font-weight: 700; background: rgba(108,155,255,0.1); padding: 2px 10px; border-radius: 20px; }
+.section-header .section-tag { font-size: 0.7rem; color: var(--dim); background: var(--card); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); }
+
+/* Cards */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-md); }
+@media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+.info-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-lg); }
+.info-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: var(--space-md); color: var(--accent); }
+.info-card p, .info-card li { font-size: 0.9rem; color: var(--dim); line-height: 1.7; }
+.info-card ul { list-style: none; padding: 0; }
+.info-card ul li { padding: var(--space-xs) 0; padding-left: 16px; position: relative; }
+.info-card ul li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* Status badges */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.badge-ok { background: rgba(52,211,153,0.15); color: var(--ok); }
+.badge-warn { background: rgba(251,191,36,0.15); color: var(--warn); }
+.badge-bad { background: rgba(248,113,113,0.15); color: var(--bad); }
+.badge-info { background: rgba(108,155,255,0.15); color: var(--accent); }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: var(--space-md); }
+.timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.timeline-item .date { font-size: 0.75rem; color: var(--dim); }
+.timeline-item .title { font-weight: 600; font-size: 0.9rem; }
+.timeline-item .desc { font-size: 0.85rem; color: var(--dim); }
+
+/* Tables */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.data-table th { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--dim); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid rgba(30,42,66,0.5); color: var(--text); }
+.data-table tr:hover td { background: rgba(108,155,255,0.03); }
+
+/* Chart containers */
+.chart-container { position: relative; height: 280px; width: 100%; margin: var(--space-md) 0; }
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+@media (max-width: 768px) { .chart-row { grid-template-columns: 1fr; } }
+
+/* Roadmap */
+.roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); margin-top: var(--space-md); }
+@media (max-width: 768px) { .roadmap { grid-template-columns: 1fr; } }
+.roadmap-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-lg); position: relative; }
+.roadmap-item .phase { font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: var(--space-xs); }
+.roadmap-item h4 { font-size: 0.95rem; margin-bottom: var(--space-sm); }
+.roadmap-item ul { list-style: none; padding: 0; }
+.roadmap-item li { font-size: 0.8rem; color: var(--dim); padding: 2px 0; }
+.roadmap-item .phase-line { position: absolute; top: 16px; right: 16px; width: 6px; height: 6px; border-radius: 50%; }
+.phase-now { background: var(--accent); box-shadow: 0 0 8px rgba(108,155,255,0.5); }
+.phase-next { background: var(--dim); }
+.phase-done { background: var(--ok); }
+
+/* Footer */
+.footer { text-align: center; padding: var(--space-xl) 0; border-top: 1px solid var(--border); color: var(--dim); font-size: 0.8rem; }
+.footer a { color: var(--accent); text-decoration: none; }
+
+/* Progress bar */
+.progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: var(--space-sm) 0; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--purple)); transition: width 1s ease; }
+
+/* Risk cards */
+.risk-high { border-left: 3px solid var(--bad); }
+.risk-mid { border-left: 3px solid var(--warn); }
+.risk-low { border-left: 3px solid var(--ok); }
+
+/* Print */
+@media print {
+  body { background: #fff; color: #222; }
+  .hero h1 { -webkit-text-fill-color: #333; }
+  .kpi-card, .info-card, .roadmap-item { background: #f5f5f5; border-color: #ddd; }
+  .section-header { border-bottom-color: #ddd; }
+  .data-table td { border-bottom-color: #eee; }
+  .badge-ok { color: #166534; }
+  .badge-warn { color: #92400e; }
+  .badge-bad { color: #991b1b; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <h1>Hermes Capability Pack</h1>
+    <p class="subtitle">Agent 能力模块化与跨平台复用框架 — 全貌报告</p>
+    <div class="meta">
+      <span>版本 <strong>v0.7.0</strong></span>
+      <span>生成 <strong>2026-05-14</strong></span>
+      <span>提交 <strong>27 commits</strong></span>
+      <span>分支 <strong>main</strong></span>
+      <span>许可 <strong>MIT</strong></span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- §1 Executive Summary -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§1</span>
+      <h2>执行摘要</h2>
+      <span class="section-tag">executive summary</span>
+    </div>
+    <p style="color:var(--dim);margin-bottom:var(--space-lg);font-size:1.05rem;line-height:1.8;">
+      从 2026-05-12 到 2026-05-14，<strong style="color:var(--text);">3 天内</strong>从零构建了 
+      <strong style="color:var(--accent);">Agent 能力模块化框架</strong>的完整底座。项目已交付 
+      <strong style="color:var(--text);">3 个 Epic</strong>、<strong style="color:var(--text);">9 个 Spec</strong>、<strong style="color:var(--text);">28 个 Story</strong>，生成 
+      <strong style="color:var(--text);">16 个 Python 脚本</strong>（4,753 行代码）和 
+      <strong style="color:var(--text);">3 个能力包</strong>。101 个测试全部通过，SQS 质量均分稳步上升。
+    </p>
+
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">SDD 文档</div>
+        <div class="kpi-value" style="color:var(--accent);">40</div>
+        <div class="kpi-sub">3 Epics · 9 Specs · 28 Stories</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">代码规模</div>
+        <div class="kpi-value" style="color:var(--purple);">6,363</div>
+        <div class="kpi-sub">4,753 脚本 + 1,610 测试行</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">测试</div>
+        <div class="kpi-value" style="color:var(--ok);">101 ✅</div>
+        <div class="kpi-sub">8 个测试文件，全部通过</div>
+        <div class="kpi-trend trend-up">↑ 0 失败</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">SQS 均分</div>
+        <div class="kpi-value" style="color:var(--warn);">67.9</div>
+        <div class="kpi-sub">201 个技能已评分</div>
+        <div class="kpi-trend trend-up">↑ 从 65.8 持续上升</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">能力包</div>
+        <div class="kpi-value" style="color:var(--teal);">3</div>
+        <div class="kpi-sub">doc-engine · quality-assurance · learning-workflow</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">交付周期</div>
+        <div class="kpi-value" style="color:var(--accent2);">3 天</div>
+        <div class="kpi-sub">从 5/12 到 5/14</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §2 Project Overview -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§2</span>
+      <h2>项目概况</h2>
+      <span class="section-tag">overview</span>
+    </div>
+    <div class="grid-2">
+      <div class="info-card">
+        <h3>🎯 项目使命</h3>
+        <p>将 boku（艾玛/小玛）的扁平化技能体系拆分为<strong>标准化、可移植的「能力包」</strong>，通过统一的适配层部署到不同的 Agent 框架（Hermes / OpenCode / Claude Code）。让每个 Agent 都能复用 boku 积累的能力和经验。</p>
+        <ul style="margin-top:var(--space-md);">
+          <li>18 个能力领域（包） × ~70 技能簇 × ~200 原子技能</li>
+          <li>技能 + 经验 + MCP 配置三位一体</li>
+          <li>三层树状索引 + SQS 质量评分 + 生命周期审计</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🏗️ 技术栈</h3>
+        <ul>
+          <li><strong>格式</strong>: YAML Schema v1 · JSON Schema 验证</li>
+          <li><strong>核心框架</strong>: UCA Core (Protocol + Parser + Verifier)</li>
+          <li><strong>适配器</strong>: HermesAdapter · OpenCodeAdapter</li>
+          <li><strong>质量体系</strong>: SQS 五维评分 · SQLite 持久化 · 历史趋势</li>
+          <li><strong>CI/CD</strong>: GitHub Actions · 4 job 并行门禁</li>
+          <li><strong>运行时集成</strong>: SRA v1.4.0 质量加权推荐</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- §3 Architecture -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§3</span>
+      <h2>架构总览</h2>
+      <span class="section-tag">architecture</span>
+    </div>
+    <div class="info-card" style="margin-bottom:var(--space-md);">
+      <h3>三层架构</h3>
+      <table class="data-table">
+        <tr><th>层</th><th>模块</th><th>说明</th></tr>
+        <tr><td><span class="badge badge-info">L3</span></td><td><strong>能力包层</strong></td><td>doc-engine / quality-assurance / learning-workflow — 用户直接消费的能力单元</td></tr>
+        <tr><td><span class="badge badge-info">L2</span></td><td><strong>工具层</strong></td><td>scripts/adapters + scripts/uca + install-pack + SQS + 树索引 — 核心引擎</td></tr>
+        <tr><td><span class="badge badge-info">L1</span></td><td><strong>基础设施</strong></td><td>SDD 文档体系 · 能力包目录 · JSON Schema · CI 门禁</td></tr>
+      </table>
+    </div>
+    <div class="grid-2">
+      <div class="info-card">
+        <h3>🔧 核心模块 (8 个)</h3>
+        <ul>
+          <li><strong>PackParser</strong> — cap-pack.yaml 解析器 (175 行)</li>
+          <li><strong>CapPack Protocol</strong> — 数据类 + 适配器接口 (110 行)</li>
+          <li><strong>HermesAdapter</strong> — Hermes Agent 安装引擎 (690 行)</li>
+          <li><strong>OpenCodeAdapter</strong> — OpenCode CLI 适配器 (370 行)</li>
+          <li><strong>Skill Tree Index</strong> — 三层树状索引生成器 (550 行)</li>
+          <li><strong>SQS 评分引擎</strong> — 五维质量评分 (320 行)</li>
+          <li><strong>生命周期审计</strong> — 退役/恢复管理 (240 行)</li>
+          <li><strong>merge-suggest</strong> — 技能合并建议引擎</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🔄 数据流</h3>
+        <p>cap-pack.yaml → PackParser → CapPack 对象 → Adapter.install() → Agent 运行时</p>
+        <div style="margin-top:var(--space-sm);padding:8px 12px;background:rgba(108,155,255,0.05);border-radius:8px;font-size:0.8rem;color:var(--dim);">
+          SRA 在每次用户消息前拦截 → 调 SRA Proxy 推荐 skill → 质量加权 → 注入 rag_context
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 Epics & Delivery -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§4</span>
+      <h2>Epics & 交付进度</h2>
+      <span class="section-tag">delivery</span>
+    </div>
+    <div class="grid-3">
+      <div class="info-card">
+        <h3>📋 EPIC-001 能力模块化</h3>
+        <div class="badge badge-ok" style="margin-bottom:var(--space-sm);">已批准</div>
+        <p style="font-size:0.85rem;">20/20 Stories 完成</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+        <ul>
+          <li>5 Specs · 20 Stories</li>
+          <li>UCA Core 框架 · 双适配器</li>
+          <li>cap-pack CLI · CI 门禁</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🌳 EPIC-002 树状健康度</h3>
+        <div class="badge badge-warn" style="margin-bottom:var(--space-sm);">qa_gate</div>
+        <p style="font-size:0.85rem;">8/8 交付物完成</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+        <ul>
+          <li>4 Specs · 8 Stories</li>
+          <li>SQS · 树索引 · 仪表盘</li>
+          <li>SRA 质量加权 · 报告生成器</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>📦 EPIC-003 模块提取</h3>
+        <div class="badge badge-info" style="margin-bottom:var(--space-sm);">规划中</div>
+        <p style="font-size:0.85rem;">0/0 Stories — 即将启动</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        <ul>
+          <li>Phase 1: learning-engine</li>
+          <li>Phase 2: developer-workflow</li>
+          <li>CI 增强 · 跨 Agent 扩展</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-card" style="margin-top:var(--space-md);">
+      <h3>⏱️ 交付时间线</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="date">5/12</div>
+          <div class="title">🎬 项目启动 — EPIC-001 调研 + Spec 写作</div>
+          <div class="desc">4 个 Spec 在 1 天内完成并获批</div>
+        </div>
+        <div class="timeline-item">
+          <div class="date">5/13</div>
+          <div class="title">🏗️ 核心框架搭建 — UCA Core + 双适配器 + CI</div>
+          <div class="desc">Phase 0 完成，3 个能力包原型就绪</div>
+        </div>
+        <div class="timeline-item">
+          <div class="date">5/13-14</div>
+          <div class="title">🌳 EPIC-002 — 树状健康度全链路打通</div>
+          <div class="desc">SQS · 仪表盘 · SQLite 持久化 · 合并建议 · SRA 加权 · 报告生成器</div>
+        </div>
+        <div class="timeline-item">
+          <div class="date">5/14</div>
+          <div class="title">🎨 SDD 融合 — project-report-generator Skill</div>
+          <div class="desc">从脚本模板 → LLM 驱动创作，融入 SDD 工作流</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §5 Quality Panorama -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§5</span>
+      <h2>质量全景</h2>
+      <span class="section-tag">SQS</span>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">SQS 均分</div>
+        <div class="kpi-value" style="color:var(--warn);">67.9</div>
+        <div class="kpi-sub">201 个已评分技能</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">高分 (≥70)</div>
+        <div class="kpi-value" style="color:var(--ok);">79</div>
+        <div class="kpi-sub">39.3% 在健康区间</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">中分 (50-69)</div>
+        <div class="kpi-value" style="color:var(--warn);">122</div>
+        <div class="kpi-sub">60.7% 可优化</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">低分 (&lt;50)</div>
+        <div class="kpi-value" style="color:var(--ok);">0</div>
+        <div class="kpi-sub">无风险技能</div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="info-card">
+        <h3>📈 SQS 趋势 (4 周)</h3>
+        <div class="chart-container">
+          <canvas id="trendChart"></canvas>
+        </div>
+        <p style="font-size:0.8rem;color:var(--dim);text-align:center;">持续上升：65.8 → 67.9 (+2.1, +3.2%)</p>
+      </div>
+      <div class="info-card">
+        <h3>🎯 五维雷达</h3>
+        <div class="chart-container">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:var(--space-md);">
+      <div class="info-card">
+        <h3>🏆 最佳技能 (Top 5)</h3>
+        <table class="data-table">
+          <tr><th>技能</th><th>SQS</th></tr>
+          <tr><td>deep-research</td><td><span class="badge badge-ok">89.8</span></td></tr>
+          <tr><td>learning</td><td><span class="badge badge-ok">88.8</span></td></tr>
+          <tr><td>night-study-engine</td><td><span class="badge badge-ok">88.2</span></td></tr>
+          <tr><td>self-capabilities-map</td><td><span class="badge badge-ok">86.2</span></td></tr>
+          <tr><td>sdd-research</td><td><span class="badge badge-ok">85.8</span></td></tr>
+        </table>
+      </div>
+      <div class="info-card">
+        <h3>🔻 待改进 (Bottom 5)</h3>
+        <table class="data-table">
+          <tr><th>技能</th><th>SQS</th><th>优先级</th></tr>
+          <tr><td>bmad-context-insights</td><td><span class="badge badge-warn">50.2</span></td><td>🟡 中</td></tr>
+          <tr><td>pokemon-player</td><td><span class="badge badge-warn">51.5</span></td><td>🟢 低</td></tr>
+          <tr><td>plan</td><td><span class="badge badge-warn">51.8</span></td><td>🟡 中</td></tr>
+          <tr><td>obsidian</td><td><span class="badge badge-warn">53.2</span></td><td>🟢 低</td></tr>
+          <tr><td>google-workspace</td><td><span class="badge badge-warn">53.8</span></td><td>🟢 低</td></tr>
+        </table>
+        <p style="font-size:0.8rem;color:var(--dim);margin-top:var(--space-sm);">注: 无 &lt;50 低风险技能，最低分仍需关注关联完整性</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- §6 Testing & CI/CD -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§6</span>
+      <h2>测试与 CI/CD</h2>
+      <span class="section-tag">quality assurance</span>
+    </div>
+    <div class="grid-2">
+      <div class="info-card">
+        <h3>🧪 测试覆盖</h3>
+        <table class="data-table">
+          <tr><th>测试文件</th><th>说明</th></tr>
+          <tr><td>test_uca_protocol.py</td><td>Protocol 单元测试</td></tr>
+          <tr><td>test_uca_parser.py</td><td>Parser 解析测试</td></tr>
+          <tr><td>test_uca_dependency.py</td><td>依赖检查测试</td></tr>
+          <tr><td>test_uca_verifier.py</td><td>验证器测试</td></tr>
+          <tr><td>test_hermes_adapter.py</td><td>Hermes 安装/卸载/回滚</td></tr>
+          <tr><td>test_opencode_adapter.py</td><td>OpenCode 适配器</td></tr>
+          <tr><td>test_parity.py</td><td>跨适配器一致性</td></tr>
+          <tr><td>test_epic002_tools.py</td><td>EPIC-002 工具链</td></tr>
+        </table>
+        <p style="margin-top:var(--space-sm);font-size:0.85rem;">总计: <strong style="color:var(--ok);">101 测试全部通过</strong> (1,610 行测试代码)</p>
+      </div>
+      <div class="info-card">
+        <h3>⚙️ CI 门禁 (GitHub Actions)</h3>
+        <ul>
+          <li><strong>4 Job 并行</strong> — lint → validate-packs + health-gate + cross-ref-consistency</li>
+          <li>每次 push 自动触发，5 分钟内完成</li>
+          <li>Python 3.12 · Ubuntu 22.04</li>
+        </ul>
+        <div style="margin-top:var(--space-md);padding:var(--space-md);background:rgba(52,211,153,0.05);border-radius:8px;border:1px solid rgba(52,211,153,0.2);">
+          <p style="font-size:0.85rem;color:var(--ok);">✅ CI 历史: #3, #4 连续成功，仅 #2 一次失败后已修复</p>
+        </div>
+        <h3 style="margin-top:var(--space-md);">🕐 Cron 自动化</h3>
+        <ul>
+          <li><strong>weekly-health-report</strong> — 每周日 09:00 CST 发送健康报告</li>
+          <li><strong>sqs-score-sync</strong> — 每 6 小时同步 SQS 到 SRA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- §7 Document System -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§7</span>
+      <h2>文档体系</h2>
+      <span class="section-tag">SDD</span>
+    </div>
+    <div class="grid-2">
+      <div class="info-card">
+        <h3>📐 SDD 三层架构</h3>
+        <table class="data-table">
+          <tr><th>类型</th><th>数量</th><th>层级</th></tr>
+          <tr><td>🧩 Epic</td><td>3</td><td>P0 战略: 可行性 · 健康度 · 模块提取</td></tr>
+          <tr><td>📋 Spec</td><td>9</td><td>P1 战术: 具体方案设计</td></tr>
+          <tr><td>📝 Story</td><td>28</td><td>P2 执行: 可实施的交付单元</td></tr>
+        </table>
+        <div class="progress-bar" style="margin-top:var(--space-md);"><div class="progress-fill" style="width:100%"></div></div>
+        <p style="font-size:0.85rem;color:var(--dim);">文档体系完整，各文档间可交叉引用</p>
+      </div>
+      <div class="info-card">
+        <h3>📊 文档健康度</h3>
+        <ul>
+          <li><strong>EPIC-001</strong> — <span class="badge badge-ok">已批准</span> 5 Specs, 20 Stories</li>
+          <li><strong>EPIC-002</strong> — <span class="badge badge-warn">qa_gate</span> 4 Specs, 8 Stories</li>
+          <li><strong>EPIC-003</strong> — <span class="badge badge-info">draft</span> 规划中</li>
+        </ul>
+        <h3 style="margin-top:var(--space-md);">🔗 新增融合</h3>
+        <ul>
+          <li><strong>SPEC-2-4</strong> — 项目报告生成器工作流集成规范</li>
+          <li><strong>STORY-2-4-1</strong> — project-report-generator skill 创建与 SDD 融合</li>
+          <li>报告生成成为 SDD 流程中 QA_GATE 后的正式步骤</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- §8 Risks & Debt -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§8</span>
+      <h2>风险与技术债务</h2>
+      <span class="section-tag">risks</span>
+    </div>
+    <div class="grid-2">
+      <div class="info-card risk-high">
+        <h3>🔴 S4 关联完整性 — 6.0/20</h3>
+        <p>这是 SQS 五维中最弱的一环。技能之间的关联引用、交叉链接严重不足。直接影响 SRA 推荐的上下文完整性和技能发现效率。</p>
+        <div style="margin-top:var(--space-sm);">
+          <span class="badge badge-bad">高影响</span>
+          <span class="badge badge-warn">需优先解决</span>
+        </div>
+      </div>
+      <div class="info-card risk-mid">
+        <h3>🟡 EPIC-003 尚未启动</h3>
+        <p>剩余 17 个能力包（learning-engine, developer-workflow, creative-design 等）均未提取到 cap-pack 格式。目前只有 3 个包完成，距 18 个模块的蓝图还有很大距离。</p>
+      </div>
+      <div class="info-card risk-mid">
+        <h3>🟡 SQS 均分 67.9 — 未达目标 70</h3>
+        <p>当前均分距离目标值 70 分差 2.1 分。虽然呈上升趋势（+3.2%/4 周），但仍需在 S4(关联) 和 S5(发现) 维度重点改进。</p>
+      </div>
+      <div class="info-card risk-low">
+        <h3>🟢 CI #2 修复已验证</h3>
+        <p>历史 CI 失败 (#2: cache:pip 缺 pyproject.toml) 已在 #3 修复并验证通过。#3、#4 连续成功。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- §9 Roadmap -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§9</span>
+      <h2>路线图</h2>
+      <span class="section-tag">roadmap</span>
+    </div>
+    <p style="color:var(--dim);margin-bottom:var(--space-md);">从当前 Sprint 4 出发，按优先级排列未来阶段：</p>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <span class="phase-line phase-now"></span>
+        <div class="phase">➡️ 当前</div>
+        <h4>Sprint 4 — SDD 融合</h4>
+        <ul>
+          <li>✅ SPEC-2-4 报告生成器规范</li>
+          <li>✅ STORY-2-4-1 SDD 集成</li>
+          <li>✅ 本报告 (LLM 驱动创作)</li>
+        </ul>
+      </div>
+      <div class="roadmap-item">
+        <span class="phase-line phase-next"></span>
+        <div class="phase">⬜ P0</div>
+        <h4>Phase 1.2 模块提取</h4>
+        <ul>
+          <li>learning-engine 完整提取</li>
+          <li>developer-workflow 打包</li>
+          <li>creative-design 评估</li>
+          <li>cap-pack.yaml 完善</li>
+        </ul>
+      </div>
+      <div class="roadmap-item">
+        <span class="phase-line phase-next"></span>
+        <div class="phase">⬜ P1</div>
+        <h4>健康度提升</h4>
+        <ul>
+          <li>SQS 均分 67.9 → 75+</li>
+          <li>S4 关联完整性 6.0 → 12+</li>
+          <li>完善 MCP 配置引用</li>
+          <li>技能合并建议落地</li>
+        </ul>
+      </div>
+      <div class="roadmap-item">
+        <span class="phase-line phase-next"></span>
+        <div class="phase">⬜ P2</div>
+        <h4>跨 Agent 适配</h4>
+        <ul>
+          <li>Claude Code 适配器原型</li>
+          <li>Codex CLI 适配器</li>
+          <li>SRA 全平台集成</li>
+          <li>自动化健康报告 cron</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- §10 Appendix -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">§10</span>
+      <h2>附录</h2>
+      <span class="section-tag">appendix</span>
+    </div>
+    <div class="grid-2">
+      <div class="info-card">
+        <h3>📁 项目结构</h3>
+        <pre style="font-size:0.75rem;color:var(--dim);line-height:1.8;overflow-x:auto;"><code>hermes-cap-pack/
+├── docs/           # SDD 文档 (3 Epics, 9 Specs, 28 Stories)
+├── packs/          # 能力包 (doc-engine, quality-assurance, learning-workflow)
+├── scripts/        # 16 个 Python 工具脚本
+│   ├── adapters/   # Hermes + OpenCode 适配器
+│   ├── uca/        # UCA Core 框架
+│   ├── cli/        # cap-pack CLI
+│   └── tests/      # 8 个测试文件 (101 tests)
+├── schemas/        # YAML Schema + JSON Schema
+├── reports/        # 3 份 HTML 报告
+└── .github/        # CI 门禁</code></pre>
+      </div>
+      <div class="info-card">
+        <h3>📊 关键数据指标</h3>
+        <table class="data-table">
+          <tr><td>项目启动</td><td>2026-05-12</td></tr>
+          <tr><td>总提交</td><td>27</td></tr>
+          <tr><td>版本</td><td>v0.7.0 (未发布 tag)</td></tr>
+          <tr><td>Python 代码</td><td>4,753 行</td></tr>
+          <tr><td>测试代码</td><td>1,610 行</td></tr>
+          <tr><td>脚本数</td><td>16</td></tr>
+          <tr><td>测试文件</td><td>8</td></tr>
+          <tr><td>Cap Packs</td><td>3</td></tr>
+          <tr><td>SQS 评分技能</td><td>201</td></tr>
+          <tr><td>SRA 集成</td><td>✅ v1.4.0 质量加权</td></tr>
+          <tr><td>Cron 自动化</td><td>2 (健康报告 + SQS 同步)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="info-card" style="margin-top:var(--space-md);">
+      <h3>📖 术语表</h3>
+      <table class="data-table">
+        <tr><th>术语</th><th>定义</th></tr>
+        <tr><td>Capability Pack</td><td>一组可移植的 Agent 能力单元 (Skills + Experiences + MCP)</td></tr>
+        <tr><td>SQS</td><td>Skill Quality Score — 五维质量评分 (结构/内容/时效/关联/发现)</td></tr>
+        <tr><td>SDD</td><td>Spec-Driven Development — 规范驱动开发方法论 (Epic → Spec → Story)</td></tr>
+        <tr><td>UCA Core</td><td>底层适配器核心框架 (Protocol + Parser + Dependency + Verifier)</td></tr>
+        <tr><td>SRA</td><td>Skill Runtime Advisor — 运行时技能推荐引擎</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Hermes Capability Pack · v0.7.0 · 生成于 2026-05-14</p>
+    <p>由 <a href="#">project-report-generator</a> skill 五阶段创作 · 非模板生成</p>
+  </div>
+</div>
+
+<script>
+// Trend Chart
+new Chart(document.getElementById('trendChart'), {
+  type: 'line',
+  data: {
+    labels: ['4/16', '4/23', '4/30', '5/7', '5/14'],
+    datasets: [{
+      data: [65.8, 66.2, 66.9, 67.3, 67.9],
+      borderColor: '#6c9bff',
+      backgroundColor: 'rgba(108,155,255,0.08)',
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#6c9bff',
+      pointBorderColor: '#0b0f17',
+      pointBorderWidth: 2,
+      pointRadius: 5
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { min: 60, max: 72, ticks: { color: '#7b89a6', stepSize: 3 }, grid: { color: 'rgba(30,42,66,0.4)' } },
+      x: { ticks: { color: '#7b89a6' }, grid: { display: false } }
+    }
+  }
+});
+
+// Radar Chart
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['结构完整性', '内容质量', '时效新鲜度', '关联完整性', '可发现性'],
+    datasets: [{
+      data: [15.5, 14.4, 19.3, 6.0, 12.8],
+      backgroundColor: 'rgba(108,155,255,0.15)',
+      borderColor: '#6c9bff',
+      pointBackgroundColor: '#6c9bff',
+      pointBorderColor: '#0b0f17',
+      pointBorderWidth: 2,
+      pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      r: {
+        beginAtZero: true, max: 25,
+        ticks: { stepSize: 5, color: '#7b89a6', backdropColor: 'transparent' },
+        grid: { color: 'rgba(30,42,66,0.4)' },
+        angleLines: { color: 'rgba(30,42,66,0.4)' },
+        pointLabels: { color: '#7b89a6', font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

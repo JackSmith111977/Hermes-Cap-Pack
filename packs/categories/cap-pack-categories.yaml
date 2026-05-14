@@ -1,0 +1,168 @@
+# 🗂️ CAP Pack 18 模块分类映射表
+#
+# 供 SRA (Skill Runtime Advisor) 加载的类别映射配置。
+# 将 CAP Pack 的 18 模块分类体系映射为 SRA 可消费的格式。
+#
+# 使用方式:
+#   SRA 加载此文件后，类别维度（15%权重）不再靠猜标签，
+#   而是直接使用经过验证的 18 模块分层分类。
+#
+# 扩展说明:
+#   新增模块时，在此文件添加新条目 + 在 CAP_PACK_DIR/packs/ 下创建对应目录。
+# 
+# 版本: 1.0.0
+# 创建: 2026-05-14
+# 维护: boku (Emma)
+
+# 模块分类映射
+# 每个模块包含:
+#   - name: 中文名称
+#   - emoji: 图标
+#   - aliases: 别名列表（SRA 匹配关键词）
+#   - weight: 类别权重（SRA 类别维度权重，默认 15）
+#   - skill_patterns: 该模块下典型 skill 名称模式
+
+categories:
+  knowledge-base:
+    name: 知识库系统
+    emoji: "📚"
+    aliases: [知识库, 知识管理, 知识沉淀, knowledge, wiki, precipitation, routing]
+    weight: 15
+    skill_patterns: [knowledge, llm-wiki, precipitation, routing, file-classification]
+
+  learning-engine:
+    name: 学习引擎
+    emoji: "🧠"
+    aliases: [学习, 研究, 调研, 技能, learning, research, study, skill-creator]
+    weight: 15
+    skill_patterns: [learning, skill-creator, deep-research, night-study]
+
+  doc-engine:
+    name: 文档生成
+    emoji: "📄"
+    aliases: [文档, 排版, PDF, PPTX, DOCX, document, pdf, layout, report]
+    weight: 15
+    skill_patterns: [pdf, pptx, docx, html-guide, markdown, latex, epub, doc-design, readme-for-ai]
+
+  developer-workflow:
+    name: 开发工作流
+    emoji: "💻"
+    aliases: [开发, 工作流, SDD, TDD, 调试, debug, workflow, plan, git]
+    weight: 15
+    skill_patterns: [plan, writing-plans, sdd, debugging, tdd, subagent, spike, git, python-env]
+
+  security-audit:
+    name: 安全审计
+    emoji: "🔒"
+    aliases: [安全, 审计, 删除, 密钥, security, audit, delete, secret]
+    weight: 15
+    skill_patterns: [delete-safety, security, commit-quality, sherlock, 1password, godmode]
+
+  quality-assurance:
+    name: 质量保障
+    emoji: "✅"
+    aliases: [质量, 测试, QA, 审查, 对齐, quality, test, review, alignment]
+    weight: 15
+    skill_patterns: [qa, quality, test, testing, review, cranfield, dogfood, doc-alignment]
+
+  devops-monitor:
+    name: 运维监控
+    emoji: "🔧"
+    aliases: [运维, 监控, Docker, 部署, 系统, devops, docker, monitor, deploy]
+    weight: 15
+    skill_patterns: [linux-ops, docker, process-management, system-health, proxy-monitor, cron, webhook]
+
+  network-proxy:
+    name: 网络代理
+    emoji: "🌐"
+    aliases: [网络, 代理, Clash, mihomo, 浏览器, network, proxy, browser]
+    weight: 15
+    skill_patterns: [clash, proxy-finder, web-access, browser-automation, web-ui]
+
+  messaging:
+    name: 消息平台
+    emoji: "💬"
+    aliases: [消息, 飞书, 微信, 邮件, 通知, feishu, weixin, email, broadcast]
+    weight: 15
+    skill_patterns: [feishu, weixin, email, agentmail, himalaya, messaging, broadcast]
+
+  agent-orchestration:
+    name: Agent 协作
+    emoji: "🤖"
+    aliases: [Agent, 协作, BMAD, Kanban, 编排, agent, orchestration, delegation]
+    weight: 15
+    skill_patterns: [hermes-agent, claude-code, codex, opencode, bmad, kanban, delegate, honcho]
+
+  mcp-integration:
+    name: MCP 集成
+    emoji: "🔌"
+    aliases: [MCP, 协议, 工具, 插件, 集成, mcp, protocol, plugin, integration]
+    weight: 15
+    skill_patterns: [mcp, fastmcp, mcporter, sra]
+
+  financial-analysis:
+    name: 金融分析
+    emoji: "📊"
+    aliases: [金融, 股票, 行情, 分析, financial, stock, akshare, analyst]
+    weight: 15
+    skill_patterns: [financial, akshare, stock, analyst]
+
+  creative-design:
+    name: 创意设计
+    emoji: "🎨"
+    aliases: [设计, 创意, 架构图, 图表, SVG, ASCII, design, creative, architecture-diagram]
+    weight: 15
+    skill_patterns: [architecture-diagram, mermaid, excalidraw, p5js, pixel-art, ascii, creative, design]
+
+  media-processing:
+    name: 音视频媒体
+    emoji: "🎵"
+    aliases: [音频, 视频, 语音, TTS, 图片, media, audio, video, tts, image]
+    weight: 15
+    skill_patterns: [tts, speech, audio, song, gif, comfyui, image-generation, image-prompt]
+
+  github-ecosystem:
+    name: GitHub 生态
+    emoji: "🐙"
+    aliases: [GitHub, Git, PR, CI, 代码审查, github, git, pull-request, release]
+    weight: 15
+    skill_patterns: [github, git, pull-request, code-review, release]
+
+  news-research:
+    name: 新闻研究
+    emoji: "📰"
+    aliases: [新闻, RSS, Arxiv, 趋势, 简报, news, rss, arxiv, trend, briefing]
+    weight: 15
+    skill_patterns: [news, arxiv, rss, blog, trend, polymarket, briefing]
+
+  metacognition:
+    name: 元认知系统
+    emoji: "🪞"
+    aliases: [元认知, 自我, 反思, 记忆, 审计, metacognition, self, memory, meta]
+    weight: 15
+    skill_patterns: [self, meta, memory, anti-repetition, capabilities-map]
+
+  social-gaming:
+    name: 社交娱乐
+    emoji: "🎮"
+    aliases: [游戏, 社交, 健身, Minecraft, game, social, minecraft, pokemon]
+    weight: 15
+    skill_patterns: [minecraft, pokemon, fitness, yuanbao, bangumi, game, social]
+
+# 扩展指南
+# ─────────────────────────────────────────────────────
+# 新增模块步骤:
+# 1. 在此文件添加新的 categories.<id> 条目
+# 2. 在 CAP_PACK_DIR/packs/ 下创建对应能力包目录
+# 3. 在 skill-tree-index.py 的 MODULES dict 中添加映射
+# 4. 在 CLASSIFICATION_RULES 列表中添加分类规则
+# 5. 同步更新 docs/project-report.json 的 architecture 部分
+#
+# SRA 集成说明:
+# ─────────────────────────────────────────────────────
+# SRA 加载此文件后:
+#   1. 类别维度从「猜标签」升级为「体系化分类」
+#   2. 类别匹配精度预计提升 15-20%
+#   3. 使用 `sra index --rebuild` 刷新索引
+#   4. 或在 SRA 配置中设置:
+#      categories_file: ~/projects/hermes-cap-pack/packs/categories/cap-pack-categories.yaml

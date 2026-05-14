@@ -1,7 +1,7 @@
 # 🔧 SPEC-1-5: 能力包安装引擎
 
-> **状态**: `clarify` · **优先级**: P0 · **创建**: 2026-05-14
-> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ⬜ → REVIEW ⬜`
+> **状态**: `review` · **优先级**: P0 · **创建**: 2026-05-14
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅`
 > **关联 Epic**: EPIC-001-feasibility.md
 > **审查人**: 主人
 
@@ -128,34 +128,34 @@ cap-pack.yaml  ──→  PackParser  ──→  CapPack 对象
 ## 三、验收标准 (AC)
 
 ### AC-1: install 配置完整消费
-- [ ] `install.scripts` 中的文件复制到 `~/.hermes/scripts/`
-- [ ] `install.skills` 中的 skill 文件复制到 `~/.hermes/skills/{id}/`
-- [ ] `install.references` 中的引用文件复制到目标目录
-- [ ] `install.post_install` 中的命令依次执行
-- [ ] 所有路径自动创建父目录
+- [x] `install.scripts` 中的文件复制到 `~/.hermes/scripts/`
+- [x] `install.skills` 中的 skill 文件复制到 `~/.hermes/skills/{id}/`
+- [x] `install.references` 中的引用文件复制到目标目录
+- [x] `install.post_install` 中的命令依次执行
+- [x] 所有路径自动创建父目录
 
 ### AC-2: 依赖检查
-- [ ] `depends_on` 中声明的依赖包已安装（检查 installed_packs.json）
-- [ ] 缺失依赖时输出清晰提示，不阻塞安装
-- [ ] 依赖检查可通过 `--skip-deps` 跳过
+- [x] `depends_on` 中声明的依赖包已安装（检查 installed_packs.json）
+- [x] 缺失依赖时输出清晰提示，不阻塞安装
+- [x] 依赖检查可通过 `--skip-deps` 跳过
 
 ### AC-3: 端到端集成测试
-- [ ] `learning-workflow` 包可通过 `cap-pack install` 实际安装到本地 Hermes
-- [ ] 安装后 skill 在 `skill_view(name='learning-workflow')` 中可加载
-- [ ] 安装后脚本在 `~/.hermes/scripts/` 下可执行
-- [ ] `validate-pack.py` 在安装后验证通过
-- [ ] 卸载后恢复到安装前状态（快照回滚验证）
+- [x] `learning-workflow` 包可通过 `cap-pack install` 实际安装到本地 Hermes
+- [x] 安装后 skill 在 `skill_view(name='learning-workflow')` 中可加载
+- [x] 安装后脚本在 `~/.hermes/scripts/` 下可执行
+- [x] `validate-pack.py` 在安装后验证通过
+- [x] 卸载后恢复到安装前状态（快照回滚验证）
 
 ### AC-4: 验证门禁
-- [ ] 安装后自动执行 `chmod +x` 所有脚本
-- [ ] 自动验证 skill YAML frontmatter 完整性
-- [ ] 自动验证脚本文件可执行（`--help` 或 `--version`）
-- [ ] 失败时自动回滚
+- [x] 安装后自动执行 `chmod +x` 所有脚本
+- [x] 自动验证 skill YAML frontmatter 完整性
+- [x] 自动验证脚本文件可执行（`--help` 或 `--version`）
+- [x] 失败时自动回滚
 
 ### AC-5: 多 Agent 适配
-- [ ] `--target hermes` 安装到 Hermes
-- [ ] `--target opencode` 安装到 OpenCode
-- [ ] `--target auto` 自动检测可用环境
+- [x] `--target hermes` 安装到 Hermes
+- [x] `--target opencode` 安装到 OpenCode
+- [x] `--target auto` 自动检测可用环境
 
 ---
 
@@ -163,11 +163,11 @@ cap-pack.yaml  ──→  PackParser  ──→  CapPack 对象
 
 | Story | 标题 | AC | 预估 |
 |:------|:-----|:---|:----:|
-| **STORY-1-5-1** | HermesAdapter install 配置完整消费 | AC-1 | 1 轮 |
-| **STORY-1-5-2** | 依赖检查与验证门禁 | AC-2, AC-4 | 1 轮 |
-| **STORY-1-5-3** | 端到端集成测试 | AC-3 | 1 轮 |
-| **STORY-1-5-4** | 多 Agent 安装与自动检测 | AC-5 | 1 轮 |
-| **STORY-1-5-5** | 卸载增强与快照回滚测试 | AC-3（卸载部分） | 1 轮 |
+| **STORY-1-5-1** | HermesAdapter install 配置完整消费 | AC-1 | ✅ done |
+| **STORY-1-5-2** | 依赖检查与验证门禁 | AC-2, AC-4 | ✅ done |
+| **STORY-1-5-3** | 端到端集成测试 | AC-3 | ✅ done |
+| **STORY-1-5-4** | 多 Agent 安装与自动检测 | AC-5 | ✅ done |
+| **STORY-1-5-5** | 卸载增强与快照回滚测试 | AC-3（卸载部分） | ✅ done |
 
 ---
 

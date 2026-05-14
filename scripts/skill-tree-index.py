@@ -232,6 +232,7 @@ def build_tree(module_skills, unclassified):
             "total_skills": len(unclassified),
             "clusters": [{
                 "cluster_name": "未分类技能",
+                "count": len(unclassified),
                 "skills": unclassified,
             }],
             "needs_attention": len(unclassified),

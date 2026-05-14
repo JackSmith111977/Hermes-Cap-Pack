@@ -96,6 +96,13 @@ class PackParser:
             return hooks_data.get("on_activate", [])
         return []
 
+    def _parse_depends_on(self, data: dict) -> dict:
+        """解析 depends_on（包级依赖）"""
+        deps = data.get("depends_on", {})
+        if isinstance(deps, dict):
+            return deps
+        return {}
+
     def parse(self, pack_dir: Path) -> CapPack:
         """解析 pack_dir 下的 cap-pack.yaml，返回 CapPack 对象
 
@@ -148,6 +155,7 @@ class PackParser:
         mcp_configs = self._parse_mcp(data)
         dependencies = self._parse_dependencies(data)
         hooks = self._parse_hooks(data)
+        depends_on = self._parse_depends_on(data)
         compatibility = data.get("compatibility", {})
 
         # 如果没有 skills，警告
@@ -165,6 +173,7 @@ class PackParser:
             experiences=experiences,
             mcp_configs=mcp_configs,
             dependencies=dependencies,
+            depends_on=depends_on,
             hooks=hooks,
             compatibility=compatibility,
         )

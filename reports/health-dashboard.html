@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌳 Hermes Skill 健康仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-dim: #8b949e;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --blue: #58a6ff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; padding:20px; }
+  .container { max-width:1400px; margin:0 auto; }
+  h1 { font-size:1.8rem; margin-bottom:5px; }
+  .subtitle { color:var(--text-dim); font-size:0.9rem; margin-bottom:20px; }
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); margin-bottom:20px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:18px; }
+  .card h2 { font-size:1rem; color:var(--text-dim); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-value { font-size:2.5rem; font-weight:700; }
+  .stat-bar { margin-top:8px; font-size:0.85rem; color:var(--text-dim); }
+  .full-width { grid-column:1 / -1; }
+  .chart-container { position:relative; height:320px; }
+  .chart-container.radar { height:380px; }
+  .chart-container.trend { height:280px; }
+  table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+  th, td { padding:8px 10px; text-align:left; border-bottom:1px solid var(--border); }
+  th { color:var(--text-dim); font-weight:500; }
+  .ok { color:var(--green); }
+  .warn { color:var(--yellow); }
+  .bad { color:var(--red); }
+  .dist-bar { display:flex; height:24px; border-radius:12px; overflow:hidden; margin-top:10px; }
+  .dist-bar span { display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; min-width:24px; }
+  .dist-excellent { background:#2ea043; }
+  .dist-good { background:#d29922; }
+  .dist-needs { background:#f0883e; }
+  .dist-fail { background:#da3633; }
+  .footer { text-align:center; color:var(--text-dim); font-size:0.8rem; padding:20px; border-top:1px solid var(--border); margin-top:20px; }
+  .degradation-list { list-style:none; }
+  .degradation-list li { padding:6px 0; border-bottom:1px solid var(--border); }
+  .degradation-list li:last-child { border-bottom:none; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.75rem; font-weight:600; }
+  .badge-green { background:rgba(63,185,80,0.15); color:var(--green); }
+  .badge-yellow { background:rgba(210,153,34,0.15); color:var(--yellow); }
+  .badge-red { background:rgba(248,81,73,0.15); color:var(--red); }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:768px) { .two-col { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🌳 Hermes Skill 健康仪表盘</h1>
+  <p class="subtitle">生成于 2026-05-14 09:04 · 共 200 个 skill</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>📊 总体健康度</h2>
+      <div class="stat-value">67.8<span style="font-size:1.2rem;margin-left:8px;">↗</span></div>
+      <div class="stat-bar">🟡 良好 · 满分 100</div>
+      <div class="dist-bar"><span class="dist-excellent" style="width:0.0%">0</span><span class="dist-good" style="width:39.0%">78</span><span class="dist-needs" style="width:61.0%">122</span><span class="dist-fail" style="width:1%">0</span></div>
+    </div>
+    <div class="card">
+      <h2>📈 分布</h2>
+      <div style="margin-top:8px;">
+        🟢 优秀: <strong class="ok">0</strong><br>
+        🟡 良好: <strong class="warn">78</strong><br>
+        🟠 需改进: <strong style="color:#f0883e">122</strong><br>
+        🔴 不合格: <strong class="bad">0</strong>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🏆 Top 5</h2>
+      <table>
+        <tr><td>deep-research</td><td>89.8</td><td class="ok">🟢 优秀</td></tr><tr><td>learning</td><td>88.8</td><td class="ok">🟢 优秀</td></tr><tr><td>night-study-engine</td><td>88.2</td><td class="ok">🟢 优秀</td></tr><tr><td>self-capabilities-map</td><td>86.2</td><td class="ok">🟢 优秀</td></tr><tr><td>sdd-research</td><td>85.8</td><td class="ok">🟢 优秀</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>📈 SQS 历史趋势</h2>
+      <div class="chart-container trend">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🎯 模块雷达图</h2>
+      <div class="chart-container radar">
+        <canvas id="radarChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card full-width">
+      <h2>📋 模块健康度详情</h2>
+      <div style="max-height:400px;overflow-y:auto;">
+      <table>
+        <tr><th>模块</th><th>SQS 均分</th><th>Skill 数</th></tr>
+        <tr><td>📚 知识库系统</td><td>71.1</td><td>5</td></tr><tr><td>🧠 学习引擎</td><td>84.7</td><td>6</td></tr><tr><td>📄 文档生成</td><td>65.2</td><td>15</td></tr><tr><td>💻 开发工作流</td><td>69.8</td><td>11</td></tr><tr><td>🔒 安全审计</td><td>71.1</td><td>6</td></tr><tr><td>✅ 质量保障</td><td>69.5</td><td>11</td></tr><tr><td>🔧 运维监控</td><td>70.7</td><td>7</td></tr><tr><td>🌐 网络代理</td><td>70.6</td><td>6</td></tr><tr><td>💬 消息平台</td><td>66.0</td><td>7</td></tr><tr><td>🤖 Agent 协作</td><td>65.6</td><td>12</td></tr><tr><td>🔌 MCP 集成</td><td>68.0</td><td>6</td></tr><tr><td>📊 金融分析</td><td>77.2</td><td>1</td></tr><tr><td>🎨 创意设计</td><td>65.6</td><td>15</td></tr><tr><td>🎵 音视频媒体</td><td>60.9</td><td>7</td></tr><tr><td>🐙 GitHub 生态</td><td>71.4</td><td>6</td></tr><tr><td>📰 新闻研究</td><td>64.8</td><td>5</td></tr><tr><td>🪞 元认知系统</td><td>73.0</td><td>4</td></tr><tr><td>🎮 社交娱乐</td><td>61.9</td><td>5</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h2>⚠️ 退化检测 Top 8</h2>
+      <p style="color:var(--green);">✅ 无显著退化</p>
+    </div>
+    <div class="card">
+      <h2>🔻 低分 Skill 排行榜</h2>
+      <div style="max-height:400px;overflow-y:auto;">
+      <table>
+        <tr><th>Skill</th><th>SQS</th><th>等级</th></tr>
+        <tr><td>bmad-context-insights</td><td>50.2</td><td class="bad">🟠 需关注</td></tr><tr><td>pokemon-player</td><td>51.5</td><td class="bad">🟠 需关注</td></tr><tr><td>plan</td><td>51.8</td><td class="bad">🟠 需关注</td></tr><tr><td>obsidian</td><td>53.2</td><td class="bad">🟠 需关注</td></tr><tr><td>google-workspace</td><td>53.8</td><td class="bad">🟠 需关注</td></tr><tr><td>markdown-guide</td><td>54.2</td><td class="bad">🟠 需关注</td></tr><tr><td>latex-guide</td><td>54.2</td><td class="bad">🟠 需关注</td></tr><tr><td>epub-guide</td><td>54.2</td><td class="bad">🟠 需关注</td></tr><tr><td>xlsx-guide</td><td>54.2</td><td class="bad">🟠 需关注</td></tr><tr><td>powerpoint</td><td>54.5</td><td class="bad">🟠 需关注</td></tr><tr><td>docx-guide</td><td>55.2</td><td class="warn">🟠 需关注</td></tr><tr><td>html-guide</td><td>55.2</td><td class="warn">🟠 需关注</td></tr><tr><td>youtube-content</td><td>55.2</td><td class="warn">🟠 需关注</td></tr><tr><td>humanizer</td><td>55.5</td><td class="warn">🟠 需关注</td></tr><tr><td>manim-video</td><td>56.2</td><td class="warn">🟠 需关注</td></tr>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer">
+    数据源: skill-quality.db · 由 health-dashboard.py 自动生成
+  </p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ── 趋势折线图 ──
+  const trendCtx = document.getElementById('trendChart').getContext('2d');
+  new Chart(trendCtx, {
+    type: 'line',
+    data: {
+      labels: ["2026-03-26", "2026-04-02", "2026-04-09", "2026-04-16", "2026-04-23", "2026-04-30", "2026-05-07", "2026-05-14"],
+      datasets: [{
+        label: 'SQS 均分',
+        data: [64.3, 64.7, 65.3, 65.8, 66.2, 66.9, 67.3, 67.8],
+        borderColor: '#58a6ff',
+        backgroundColor: 'rgba(88,166,255,0.1)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: '#58a6ff',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { min: 50, max: 100, ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        x: { ticks: { color: '#8b949e', maxTicksLimit: 8 }, grid: { display: false } }
+      }
+    }
+  });
+
+  // ── 模块雷达图 ──
+  const radarCtx = document.getElementById('radarChart').getContext('2d');
+  new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+      labels: ["📚 知识库系统", "🧠 学习引擎", "📄 文档生成", "💻 开发工作流", "🔒 安全审计", "✅ 质量保障", "🔧 运维监控", "🌐 网络代理", "💬 消息平台", "🤖 Agent 协作", "🔌 MCP 集成", "📊 金融分析", "🎨 创意设计", "🎵 音视频媒体", "🐙 GitHub 生态", "📰 新闻研究", "🪞 元认知系统", "🎮 社交娱乐"],
+      datasets: [{
+        label: 'SQS 均分',
+        data: [71.1, 84.7, 65.2, 69.8, 71.1, 69.5, 70.7, 70.6, 66.0, 65.6, 68.0, 77.2, 65.6, 60.9, 71.4, 64.8, 73.0, 61.9],
+        borderColor: '#3fb950',
+        backgroundColor: 'rgba(63,185,80,0.15)',
+        pointBackgroundColor: '#3fb950',
+        pointBorderColor: '#3fb950',
+        pointRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        r: {
+          min: 0, max: 100,
+          ticks: { color: '#8b949e', backdropColor: 'transparent', stepSize: 20 },
+          grid: { color: '#21262d' },
+          angleLines: { color: '#21262d' },
+          pointLabels: { color: '#c9d1d9', font: { size: 10 } }
+        }
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

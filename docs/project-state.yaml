@@ -1,0 +1,483 @@
+project:
+  name: hermes-cap-pack
+  version: 0.8.0
+  current_phase: sprint-5
+  overall_state: review
+  created: 2026-05-12
+  updated: '2026-05-14'
+workflow:
+  sdd:
+    state_machine:
+    - name: CLARIFY
+      description: 需求澄清 — 理解问题、确认范围、out_of_scope
+    - name: RESEARCH
+      description: 深度调研 — sdd-research 结构化调研、交叉验证
+    - name: CREATE
+      description: 文档创作 — 编写 Spec/Story、技术方案
+    - name: QA_GATE
+      description: 质量门禁 — 结构检查 P0 + 内容检查 P1 + 体系检查 P2
+    - name: REVIEW
+      description: 主人审阅 — 提交后等待主人批准或驳回
+    - name: APPROVED
+      description: 已批准 — 可以进入 ARCHITECT 阶段
+    - name: ARCHITECT
+      description: 架构设计 — ADR、数据模型、API 契约、文件变更范围
+    - name: PLAN
+      description: 实现计划 — 原子任务分解、依赖标注
+    - name: IMPLEMENT
+      description: 技术实现 — TDD RED-GREEN-REFACTOR
+    - name: COMPLETED
+      description: 完成 — 测试通过、AC 验证通过、doc-alignment 完成
+    - name: ARCHIVED
+      description: 已归档 — 漂移=0，HTML 已生成
+    transitions:
+    - from: (none)
+      to: draft
+      gate: create
+    - from: draft
+      to: review
+      gate: submit
+      checks:
+      - file_exists
+      - fields_complete
+    - from: review
+      to: approved
+      gate: approve
+      checks:
+      - owner_approved
+    - from: review
+      to: draft
+      gate: reject
+      checks:
+      - reason_recorded
+    - from: approved
+      to: architect
+      gate: architect_start
+      checks:
+      - adr_recorded
+    - from: architect
+      to: plan
+      gate: plan_start
+      checks:
+      - plan_file_exists
+    - from: plan
+      to: implement
+      gate: implement_start
+      checks:
+      - tasks_defined
+    - from: implement
+      to: completed
+      gate: complete
+      checks:
+      - pytest_passes
+      - ac_verified
+      - doc_alignment_done
+    - from: completed
+      to: archived
+      gate: archive
+      checks:
+      - drift_zero
+      - html_generated
+  development:
+    state_machine:
+    - name: REQ_CLARIFY
+      description: 需求确认 — 理解要做什么
+    - name: REALITY_CHECK
+      description: 环境基线 — git log, test baseline, version
+    - name: PLAN
+      description: 实施计划 — writing-plans 任务分解
+    - name: TDD_RED
+      description: 写失败测试
+    - name: TDD_GREEN
+      description: 写最少代码让测试通过
+    - name: TDD_REFACTOR
+      description: 重构 + 确认测试仍通过
+    - name: VERIFY
+      description: 全量测试验证
+    - name: SELF_REVIEW
+      description: self-review 自我审查
+    - name: COMMIT
+      description: git commit + doc-alignment
+  qa:
+    state_machine:
+    - name: L0_SYNTAX
+      description: P0 语法检查 — Python syntax + YAML valid
+    - name: L1_UNIT
+      description: P1 单元测试 — pytest 单模块
+    - name: L2_INTEGRATION
+      description: P2 集成测试 — pytest 全量
+    - name: L3_GATE
+      description: P3 门禁检查 — naming + cross-ref + quality
+    - name: L4_REPORT
+      description: P4 报告生成 — HTML 报告 + 健康仪表盘
+  startup:
+    state_machine:
+    - name: P0_SKELETON
+      description: 项目骨架 — 目录、README、.gitignore、constraints
+    - name: P1_VERSION
+      description: 版本管理 — pyproject.toml、bump-version.py、CHANGELOG
+    - name: P2_CI
+      description: CI/CD 管道 — GitHub Actions、语法检查、本地预测试
+    - name: P3_DOC_ALIGN
+      description: 文档对齐 — 版本三处一致、数字与实际一致
+    - name: P4_GATES
+      description: 质量门禁 — pre-push.sh、安全红线、版本一致
+  gates:
+    pre_flight:
+      description: 通用守门员 — 学习状态 + SDD 门禁 + 技能检测
+      script: ~/.hermes/scripts/pre_flight.py
+      severity: blocking
+    naming:
+      description: 命名规范门禁 — 文档命名合规
+      script: python3 ~/.hermes/skills/sdd-workflow/scripts/validate-sdd-naming.py
+      severity: blocking
+    tests:
+      description: 测试门禁 — 全量测试通过
+      script: python3 -m pytest tests/ -q
+      severity: blocking
+    cross_ref:
+      description: 交叉引用门禁 — 引用完整性
+      script: python3 scripts/ci-check-cross-refs.py
+      severity: warning
+    state_sync:
+      description: 状态同步门禁 — project-state.yaml 与实际文档一致
+      script: python3 scripts/project-state.py verify
+      severity: blocking
+entities:
+  epics:
+    EPIC-001:
+      title: 能力模块化可行性调查
+      state: approved
+      spec_count: 5
+      story_count: 20
+      completed_count: 20
+      priority: P0
+      qa_gate_date: 2026-05-12
+      review_date: 2026-05-12
+    EPIC-002:
+      title: Skill 树状层次管理与健康度优化系统
+      state: approved
+      spec_count: 4
+      story_count: 8
+      completed_count: 8
+      priority: P1
+      qa_gate_date: 2026-05-14
+      review_date: null
+    EPIC-003:
+      title: 能力包管理器增强 — CLI 升级/技能管理/测试
+      state: implemented
+      spec_count: 2
+      story_count: 6
+      completed_count: 6
+      priority: P1
+      qa_gate_date: null
+      review_date: null
+  specs:
+    SPEC-1-1:
+      state: approved
+      epic: EPIC-001
+      stories:
+      - STORY-1-1-1
+      - STORY-1-1-2
+      - STORY-1-1-3
+    SPEC-1-2:
+      state: approved
+      epic: EPIC-001
+      stories:
+      - STORY-1-2-1
+      - STORY-1-2-2
+    SPEC-1-3:
+      state: approved
+      epic: EPIC-001
+      stories:
+      - STORY-1-3-1
+      - STORY-1-3-2
+    SPEC-1-4:
+      state: approved
+      epic: EPIC-001
+      stories:
+      - STORY-1-4-1
+      - STORY-1-4-2
+      - STORY-1-4-3
+      - STORY-1-4-4
+      - STORY-1-4-5
+      - STORY-1-4-6
+      - STORY-1-4-7
+      - STORY-1-4-8
+    SPEC-1-5:
+      state: review
+      epic: EPIC-001
+      stories:
+      - STORY-1-5-1
+      - STORY-1-5-2
+      - STORY-1-5-3
+      - STORY-1-5-4
+      - STORY-1-5-5
+    SPEC-2-1:
+      state: create
+      epic: EPIC-002
+      stories:
+      - STORY-2-1-1
+    SPEC-2-2:
+      state: qa_gate
+      epic: EPIC-002
+      stories:
+      - STORY-2-2-1
+      - STORY-2-2-2
+      - STORY-2-2-3
+      - STORY-2-2-4
+    SPEC-2-3:
+      state: qa_gate
+      epic: EPIC-002
+      stories:
+      - STORY-2-3-1
+      - STORY-2-3-2
+    SPEC-2-4:
+      state: draft
+      epic: EPIC-002
+      stories:
+      - STORY-2-4-1
+    SPEC-3-1:
+      state: draft
+      epic: EPIC-003
+      stories:
+      - STORY-3-1
+      - STORY-3-2
+      - STORY-3-3
+    SPEC-3-2:
+      state: implemented
+      epic: EPIC-003
+      stories:
+      - STORY-3-4
+      - STORY-3-5
+      - STORY-3-6
+  stories:
+    STORY-1-1-1:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-1
+    STORY-1-1-2:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-1
+    STORY-1-1-3:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-1
+    STORY-1-2-1:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-2
+    STORY-1-2-2:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-2
+    STORY-1-3-1:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-3
+    STORY-1-3-2:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-3
+    STORY-1-4-1:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-2:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-3:
+      state: draft
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-4:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-5:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-6:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-7:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-4-8:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-4
+    STORY-1-5-1:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-5
+    STORY-1-5-2:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-5
+    STORY-1-5-3:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-5
+    STORY-1-5-4:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-5
+    STORY-1-5-5:
+      state: implemented
+      epic: EPIC-001
+      spec: SPEC-1-5
+    STORY-2-1-1:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-1
+    STORY-2-2-1:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-2
+    STORY-2-2-2:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-2
+    STORY-2-2-3:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-2
+    STORY-2-2-4:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-2
+    STORY-2-3-1:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-3
+    STORY-2-3-2:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-3
+    STORY-2-4-1:
+      state: implemented
+      epic: EPIC-002
+      spec: SPEC-2-4
+    # ─── EPIC-003 Stories ───
+    STORY-3-1:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-1
+    STORY-3-2:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-1
+    STORY-3-3:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-1
+    STORY-3-4:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-2
+    STORY-3-5:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-2
+    STORY-3-6:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-2
+sprints:
+  sprint-1:
+    title: 核心框架搭建
+    state: released
+    stories_planned: 5
+    stories_completed: 5
+    start: 2026-05-12
+    end: 2026-05-13
+  sprint-2:
+    title: 树状索引 + SQS
+    state: released
+    stories_planned: 2
+    stories_completed: 2
+    start: 2026-05-13
+    end: 2026-05-13
+  sprint-3:
+    title: SRA 加权 + 仪表盘 + 合并
+    state: released
+    stories_planned: 6
+    stories_completed: 6
+    start: 2026-05-13
+    end: 2026-05-14
+  sprint-4:
+    title: SDD 融合 — 报告生成器
+    state: released
+    stories_planned: 1
+    stories_completed: 1
+    start: 2026-05-14
+    end: 2026-05-14
+  sprint-5:
+    title: CLI 增强 — upgrade/search/status/skill 命令测试
+    state: in_progress
+    stories_planned: 3
+    stories_completed: 3
+    start: 2026-05-14
+    end: null
+quality:
+  sqs:
+    avg: 67.9
+    target: 70
+    dimensions:
+      s1_structure: 15.5
+      s2_content: 14.4
+      s3_freshness: 19.3
+      s4_association: 6.0
+      s5_discoverability: 12.8
+  tests:
+    count: 101
+    passing: 101
+    target: 100
+  chi:
+    value: 0.6355
+    target: 0.75
+  low_score_skills: 0
+  mid_score_skills: 122
+  high_score_skills: 79
+history:
+- date: 2026-05-14 19:30:00
+  entity: system
+  from: null
+  to: created
+  action: init
+  reason: 创建统一状态机管理中枢
+  gate: null
+- date: 2026-05-14 19:30:00
+  entity: SPEC-2-4
+  from: null
+  to: draft
+  action: create
+  reason: 项目报告生成器工作流集成规范
+  gate: null
+- date: 2026-05-14 19:30:00
+  entity: STORY-2-4-1
+  from: null
+  to: implemented
+  action: create
+  reason: project-report-generator skill 创建与 SDD 工作流集成
+  gate: null
+- date: 2026-05-14 20:15:00
+  entity: project
+  from: v0.7.0
+  to: v0.7.1
+  action: version_bump
+  reason: 沉淀 unified-state-machine skill + 四个工作流集成 + 8 个状态漂移修复
+  gate: verify
+- date: '2026-05-14T04:04:20Z'
+  entity: EPIC-002
+  from: qa_gate
+  to: approved
+  action: transition
+  reason: 主人审阅批准 EPIC-002，13/13 交付物全部完成
+  gate: pre_flight

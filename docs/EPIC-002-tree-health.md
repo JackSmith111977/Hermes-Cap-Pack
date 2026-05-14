@@ -1,9 +1,8 @@
 # 🌳 EPIC-002: Skill 树状层次管理与健康度优化系统
 
-> **状态**: `draft` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-13
-> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
-> **负责人**: boku (Emma/小玛) · **到期**: 2026-06-13
-> **Epic 自检清单**: [✅ CLARIFY] [✅ RESEARCH] [⬜ SPEC-2-1] [⬜ SPEC-2-2] [⬜ 测试覆盖] [⬜ 文档对齐]
+> **状态**: `approved` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-14
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅ → APPROVED ✅`
+> **Epic 自检清单**: [✅ CLARIFY] [✅ RESEARCH] [✅ SPEC-2-1] [✅ SPEC-2-2] [✅ SPEC-2-3] [✅ SPEC-2-4] [✅ 测试覆盖] [✅ 文档对齐] [✅ 主人审批 ✅]
 
 ---
 
@@ -144,12 +143,18 @@ EPIC-001: 能力模块化                  EPIC-002: 层次管理与健康度
 | # | 交付物 | 类型 | 状态 | 对应文档 |
 |:-:|:-------|:----:|:----:|:---------|
 | 1 | `scripts/skill-tree-index.py` | 工具 | ✅ `completed` | SPEC-2-1 |
-| 2 | `scripts/skill-quality-score.py` | 工具 | ✅ `completed` (在 skill-creator) | SPEC-2-2 |
-| 3 | `scripts/skill-lifecycle-audit.py` | 工具 | ✅ `completed` (在 skill-creator) | SPEC-2-2 |
+| 2 | `scripts/skill-quality-score.py` | 工具 | ✅ `completed` | SPEC-2-2 |
+| 3 | `scripts/skill-lifecycle-audit.py` | 工具 | ✅ `completed` | SPEC-2-2 |
 | 4 | `reports/skill-tree-architecture-research.html` | 报告 | ✅ `completed` | 本 EPIC |
-| 5 | 自动健康 cron 定时报告 | 自动化 | ⬜ `planned` | STORY-2-2-2 |
-| 6 | 健康趋势仪表盘 | 可视化 | ⬜ `planned` | STORY-2-2-3 |
-| 7 | 合并建议自动生成 | 功能 | ⬜ `planned` | STORY-2-2-4 |
+| 5 | `scripts/tests/test_epic002_tools.py` | 测试 | ✅ `completed` | STORY-2-1-1, STORY-2-2-1 |
+| 6 | `scripts/health-report.py` + cron | 自动化 | ✅ `completed` | STORY-2-2-2 |
+| 7 | `packs/categories/cap-pack-categories.yaml` | 配置 | ✅ `completed` | STORY-2-3-1 |
+| 8 | `scripts/health-dashboard.py` + `reports/health-dashboard.html` | 可视化 | ✅ `completed` | STORY-2-2-3 |
+| 9 | `scripts/merge-suggest.py` | 功能 | ✅ `completed` | STORY-2-2-4 |
+| 10 | `scripts/sqs-sync.py` + cron（每6h） | 功能 | ✅ `completed` | STORY-2-3-2 |
+| 11 | SRA `matcher.py` + `advisor.py` 质量加权 | 集成 | ✅ `completed` | STORY-2-3-2 |
+| 12 | SQLite SQS 持久化（`scores` + `score_history`） | 基础设施 | ✅ `completed` | Phase 1 |
+| **13** | **`docs/SPEC-2-4.md` + `docs/stories/STORY-2-4-1.md` + project-report-generator skill** | **工作流** | **✅ `completed`** | **Sprint 4** |
 
 ---
 
@@ -162,7 +167,7 @@ EPIC-001: 能力模块化                  EPIC-002: 层次管理与健康度
 | AC-03 | SQS 评分在 0-100 范围内且可复现 | 同一 skill 连评 3 次标准差 < 3 | P0 |
 | AC-04 | 生命周期审计可标记 `deprecated` 状态 | `deprecate` + `status` 验证 | P1 |
 | AC-05 | 健康报告含趋势数据 | `--health` 输出含历史对比 | P1 |
-| AC-06 | 各项工具已纳入 cap-pack 项目结构 | `scripts/` 下可找到对应文件 | P1 |
+| AC-06 | 各项工具已纳入 cap-pack 项目结构 | `scripts/` 下可找到对应文件 | ✅ P1 |
 | AC-07 | 研究报告所有来源为可点击链接 | 逐个验证 HTML `<a>` 标签 | P2 |
 
 ---

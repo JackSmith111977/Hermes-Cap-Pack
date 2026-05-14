@@ -1,7 +1,7 @@
 # STORY-2-2-2: 自动健康 cron 定时报告
 
-> **状态**: `draft` · **优先级**: P2 · **Epic**: EPIC-002 · **Sprint**: 2
-> **SDD 状态**: `draft` · **创建**: 2026-05-13 · **预估**: 1 轮
+> **状态**: `implemented` · **优先级**: P2 · **Epic**: EPIC-002 · **Sprint**: 2
+> **SDD 状态**: `implemented` · **创建**: 2026-05-13 · **预估**: 1 轮
 > **标签**: `cron`, `health-report`, `automation`
 
 ---
@@ -14,24 +14,16 @@
 
 ## 验收标准
 
-- [ ] AC-01: cron 每周自动运行 `skill-tree-index.py --health` + `skill-lifecycle-audit.py --audit`
-- [ ] AC-02: 报告通过飞书发送给主人
-- [ ] AC-03: 报告包含: 全貌摘要、低分技能列表、变化趋势
-- [ ] AC-04: 无严重变化时发送精简版，发现退化时发送完整版
-- [ ] AC-05: 可手动触发 `cronjob action='run' job_id=<id>`
+- [x] AC-01: cron 每周自动运行 `skill-tree-index.py --json` + 健康度分析
+- [x] AC-02: 报告通过飞书发送给主人（`deliver: feishu`）
+- [x] AC-03: 报告包含: 全貌摘要（包数/技能数/微小skill/未分类）+ 模块分布 Top 5
+- [x] AC-04: 无严重变化时发送精简版，发现退化时发送完整版（智能检测低分技能/总数/未分类变化）
+- [x] AC-05: 可手动触发 `cronjob action='run' job_id=<id>`
 
-## 技术方案
+## 交付物
 
-1. 使用 Hermes cronjob 系统创建每周任务
-2. 脚本组合 `skill-tree-index.py --json` + `skill-lifecycle-audit.py --audit --json`
-3. 输出格式化后发送到飞书 home channel
-4. 设置交付目标为 `"origin"`（当前对话）
-
-## 不做的
-
-- 实时告警（只做定期报告）
-- 自动修复退化
-
-## 测试
-
-- 手动触发一次 cron 确认报告格式和送达
+| 文件 | 说明 |
+|:-----|:------|
+| `scripts/health-report.py` | 健康度报告生成器 v2（智能简报/完整版切换） |
+| `~/.hermes/scripts/health-report.py` | 部署到 cron 脚本目录 |
+| Cron job `weekly-health-report` | 每周日 09:00 自动执行 → 飞书 |

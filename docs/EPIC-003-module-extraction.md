@@ -1,9 +1,9 @@
 # EPIC-003: 剩余能力模块纳入 + 质检 + 合并 + 升级改造
 
 > **epic_id**: `EPIC-003`
-> **status**: `draft` → `clarify` (需求确认中)
+> **status**: `create`
 > **created**: 2026-05-13
-> **updated**: 2026-05-13 (v2 — 基于 351 个 skill 实际数据修正)
+> **updated**: 2026-05-14 (v3 — 全盘 5 Phase 路线图，覆盖 18+1 模块)
 > **owner**: boku
 
 ---

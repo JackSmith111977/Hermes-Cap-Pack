@@ -11,6 +11,7 @@ HermesAdapter — 将能力包安装到 Hermes Agent
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -187,8 +188,14 @@ class HermesAdapter:
 
     # ── 安装 ──
 
-    def install(self, pack: CapPack, dry_run: bool = False) -> AdapterResult:
-        """安装能力包到 Hermes"""
+    def install(self, pack: CapPack, dry_run: bool = False, skip_deps: bool = False) -> AdapterResult:
+        """安装能力包到 Hermes
+
+        Args:
+            pack: 要安装的能力包
+            dry_run: 仅预览不实际安装
+            skip_deps: 跳过依赖检查
+        """
         if not dry_run and not self.is_available:
             return AdapterResult(
                 success=False,
@@ -202,6 +209,12 @@ class HermesAdapter:
             pack_name=pack.name,
             action="install",
         )
+
+        # Step 0: 依赖检查（非阻塞，缺失只警告不阻塞）
+        if not dry_run:
+            missing_deps = self._check_dependencies(pack, skip_deps)
+            if missing_deps:
+                result.warnings.append(f"缺失依赖包: {', '.join(missing_deps)}")
 
         # Step 1: 创建快照（用于失败回滚）
         snapshot_id = None
@@ -232,9 +245,37 @@ class HermesAdapter:
                 if not post_install_ok:
                     result.warnings.append("部分 post_install 命令执行失败")
 
-            # Step 7: 记录跟踪
+            # Step 7: 验证门禁（失败 → 自动回滚）
+            if not dry_run:
+                verify_result = self._verify_installation(pack)
+                result.details["verification"] = {
+                    "passed": verify_result["passed"],
+                    "check_count": len(verify_result["checks"]),
+                    "failure_count": len(verify_result["failures"]),
+                }
+                if not verify_result["passed"]:
+                    for f in verify_result["failures"]:
+                        result.errors.append(f"验证失败: {f}")
+                    # 自动回滚
+                    if snapshot_id:
+                        ops = SnapshotManager.restore(snapshot_id)
+                        result.details["rollback_ops"] = ops
+                        result.warnings.append("验证门禁未通过，已自动回滚到安装前状态")
+                        snapshot_id = None  # 防止再次清理
+                    result.success = False
+                    return result
+
+            # Step 8: 记录跟踪
             if not dry_run:
                 tracked = _load_tracked()
+                # 收集 script target 路径（用于后续 verify 检查）
+                script_targets = []
+                manifest = pack.manifest
+                install_cfg = manifest.get("install", {})
+                for entry in install_cfg.get("scripts", []):
+                    dst_abs = entry.get("target", "")
+                    if dst_abs:
+                        script_targets.append(str(Path(dst_abs).expanduser()))
                 tracked[pack.name] = {
                     "version": pack.version,
                     "path": str(pack.pack_dir),
@@ -242,12 +283,13 @@ class HermesAdapter:
                     "skills": installed_skills,
                     "skill_count": len(installed_skills),
                     "script_count": len(installed_scripts),
+                    "script_targets": script_targets,
                     "experience_count": len(pack.experiences),
                     "mcp_count": mcp_results,
                 }
                 _save_tracked(tracked)
 
-            # Step 8: 成功 → 清理快照
+            # Step 9: 成功 → 清理快照
             if not dry_run and snapshot_id:
                 SnapshotManager.cleanup(snapshot_id)
                 result.details.pop("snapshot_id", None)
@@ -424,6 +466,97 @@ class HermesAdapter:
 
         return all_ok
 
+    # ── 依赖检查 ──
+
+    def _check_dependencies(self, pack: CapPack, skip_deps: bool = False) -> list[str]:
+        """检查包级依赖是否已安装，返回缺失依赖列表（非阻塞）"""
+        if skip_deps:
+            return []
+
+        if not pack.depends_on:
+            return []
+
+        tracked = _load_tracked()
+        missing = []
+        for dep_name, dep_info in pack.depends_on.items():
+            if dep_name not in tracked:
+                reason = ""
+                if isinstance(dep_info, dict):
+                    reason = dep_info.get("reason", "")
+                msg = dep_name
+                if reason:
+                    msg += f" ({reason})"
+                missing.append(msg)
+
+        return missing
+
+    # ── 验证门禁 ──
+
+    def _verify_installation(self, pack: CapPack) -> dict:
+        """安装后验证门禁：检查 skill / 脚本 / YAML 前端
+
+        Returns:
+            dict: {"passed": bool, "checks": list[str], "failures": list[str]}
+        """
+        checks = []
+        failures = []
+
+        # 1. 检查每个 skill SKILL.md 是否存在
+        for skill in pack.skills:
+            src = pack.pack_dir / "SKILLS" / skill.id
+            skill_file = src / "SKILL.md"
+            if skill_file.exists():
+                checks.append(f"skill {skill.id}: SKILL.md 存在")
+                # 2. 检查 YAML frontmatter
+                content = skill_file.read_text()
+                if content.startswith("---"):
+                    # 基本 frontmatter 完整性检查
+                    try:
+                        import yaml
+                        parts = content.split("---", 2)
+                        if len(parts) >= 3:
+                            fm = yaml.safe_load(parts[1])
+                            if isinstance(fm, dict):
+                                has_id = "id" in fm or "name" in fm or "description" in fm
+                                if has_id:
+                                    checks.append(f"skill {skill.id}: YAML frontmatter 完整")
+                                else:
+                                    failures.append(f"skill {skill.id}: YAML frontmatter 缺少 id/name/description")
+                            else:
+                                failures.append(f"skill {skill.id}: YAML frontmatter 不是对象")
+                        else:
+                            failures.append(f"skill {skill.id}: frontmatter 未闭合")
+                    except Exception as e:
+                        failures.append(f"skill {skill.id}: YAML frontmatter 解析失败: {e}")
+                else:
+                    failures.append(f"skill {skill.id}: 缺少 YAML frontmatter (---)")
+            else:
+                failures.append(f"skill {skill.id}: SKILL.md 不存在")
+
+        # 3. 检查脚本可执行性
+        manifest = pack.manifest
+        install_cfg = manifest.get("install", {})
+        for entry in install_cfg.get("scripts", []):
+            dst_abs = entry.get("target", "")
+            if not dst_abs:
+                continue
+            dst_path = Path(dst_abs).expanduser()
+            if dst_path.exists():
+                checks.append(f"script {dst_path.name}: 文件存在")
+                # 检查可执行权限
+                if not os.access(str(dst_path), os.X_OK):
+                    failures.append(f"script {dst_path.name}: 缺少可执行权限")
+                else:
+                    checks.append(f"script {dst_path.name}: 可执行权限正确")
+            else:
+                failures.append(f"script {dst_path.name}: 文件不存在")
+
+        return {
+            "passed": len(failures) == 0,
+            "checks": checks,
+            "failures": failures,
+        }
+
     # ── 卸载 ──
 
     def uninstall(self, pack_name: str) -> AdapterResult:
@@ -509,6 +642,7 @@ class HermesAdapter:
 
     def verify(self, pack_name: str) -> AdapterResult:
         """验证已安装的能力包"""
+        import yaml
         result = AdapterResult(
             success=True,
             pack_name=pack_name,
@@ -524,26 +658,64 @@ class HermesAdapter:
         info = tracked[pack_name]
         skill_ids = info.get("skills", [])
 
-        # 检查每个 skill 文件
+        # 1. 检查每个 skill 文件 + YAML frontmatter
         missing_skills = []
         valid_skills = []
+        bad_frontmatter_skills = []
         for sid in skill_ids:
             skill_file = HERMES_SKILLS / sid / "SKILL.md"
             if skill_file.exists():
                 valid_skills.append(sid)
+                # 检查 YAML frontmatter
+                content = skill_file.read_text()
+                if content.startswith("---"):
+                    try:
+                        parts = content.split("---", 2)
+                        if len(parts) >= 3:
+                            fm = yaml.safe_load(parts[1])
+                            if isinstance(fm, dict) and ("id" in fm or "name" in fm or "description" in fm):
+                                pass  # OK
+                            else:
+                                bad_frontmatter_skills.append(f"{sid}(不完整YAML)")
+                        else:
+                            bad_frontmatter_skills.append(f"{sid}(frontmatter未闭合)")
+                    except Exception as e:
+                        bad_frontmatter_skills.append(f"{sid}(解析失败:{e})")
+                else:
+                    bad_frontmatter_skills.append(f"{sid}(无frontmatter)")
             else:
                 missing_skills.append(sid)
 
         result.details["total_skills"] = len(skill_ids)
         result.details["valid_skills"] = len(valid_skills)
         result.details["missing_skills"] = missing_skills
+        result.details["bad_frontmatter_skills"] = bad_frontmatter_skills
 
         if missing_skills:
             result.success = False
             for sid in missing_skills:
                 result.errors.append(f"缺失 skill: {sid}")
 
-        # 获取包路径检查 MCP（如果 manifest 有记录）
+        if bad_frontmatter_skills:
+            result.warnings.append(f"YAML frontmatter 问题: {', '.join(bad_frontmatter_skills)}")
+
+        # 2. 检查脚本可执行性
+        script_targets = info.get("script_targets", [])
+        bad_scripts = []
+        for script_path in script_targets:
+            sp = Path(script_path)
+            if sp.exists():
+                if not os.access(str(sp), os.X_OK):
+                    bad_scripts.append(f"{sp.name}(不可执行)")
+            else:
+                bad_scripts.append(f"{sp.name}(文件不存在)")
+
+        result.details["script_count"] = len(script_targets)
+        result.details["bad_scripts"] = bad_scripts
+        if bad_scripts:
+            result.warnings.append(f"脚本问题: {', '.join(bad_scripts)}")
+
+        # 3. 获取包路径检查 MCP
         pack_path = info.get("path", "")
         if pack_path:
             pack_dir = Path(pack_path)
@@ -552,7 +724,6 @@ class HermesAdapter:
                 manifest = _load_yaml(manifest_file)
                 if "mcp_servers" in manifest:
                     result.details["has_mcp_config"] = True
-                    # 验证 MCP 是否已注入
                     if HERMES_CONFIG.exists():
                         config = _load_yaml(HERMES_CONFIG)
                         configured = [m["id"] for m in manifest["mcp_servers"]]

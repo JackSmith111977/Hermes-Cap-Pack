@@ -103,3 +103,6 @@ jobs:
 
       - name: 🔗 Check cross-pack references
         run: python3 scripts/ci-check-cross-refs.py
+
+      - name: 📊 Verify project state consistency
+        run: python3 scripts/project-state.py verify

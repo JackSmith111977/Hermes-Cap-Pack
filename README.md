@@ -1,267 +1,358 @@
-# Hermes Capability Pack (hermes-cap-pack)
+# hermes-cap-pack
 
-> **boku 能力模块化与跨 Agent 可复用性项目**
-> 将 boku（艾玛/小玛）的全部 Agent 能力拆分为标准化的「能力包」，让其他 Agent 通过适配器快速复用。
-
-## 项目定位
-
-```text
-┌─────────────────────────────────────────────────────────┐
-│  目标：建立 Agent 能力模块化标准                           │
-│  ───────────────────────────────────────────────         │
-│  每个模块 = 技能 (Skills) + 经验 (Experiences)            │
-│            + MCP 配置 + 知识库引用                        │
-│  └─ 通过统一的适配层，部署到不同的 Agent 框架               │
-|  └─ 预留扩展槽，Hermes 框架成长时自动吸纳新能力             │
-|  └─ 随 boku 的进化不断迭代模块内容                         │
-└─────────────────────────────────────────────────────────┘
-```
-
-## 🤝 最佳拍档：SRA (Skill Runtime Advisor)
-
-> **CAP Pack = 技能的结构管理，SRA = 技能的运行时发现。两者互补，缺一不可。**
-
-| | CAP Pack | SRA |
-|:--|:----------|:-----|
-| **解决什么问题** | 技能怎么分类、评分、合并、退役 | 用户发消息时该用什么技能 |
-| **核心能力** | 树状索引 + SQS 质量分 + 生命周期 | 语义匹配 + 上下文注入 + 场景记忆 |
-| **输出** | `cap-pack.yaml`, `skill-tree-index.py` | `POST /recommend` → rag_context |
-| **消费方** | 开发者/维护者 | Agent 运行时 |
-| **项目地址** | 你现在就在看 ✨ | [Hermes-Skill-View → SRA](https://github.com/JackSmith111977/Hermes-Skill-View) |
-
-SRA 每次用户消息前自动推荐最匹配的技能，**CAP Pack 的分类体系和 SQS 质量分能让 SRA 推荐更精准**。详见 [SPEC-2-3: SRA-CAP Pack 适配方案](./docs/SPEC-2-3.md)。
-
-## 核心概念
-
-| 术语 | 定义 | 示例 |
-|:-----|:-----|:------|
-| **能力包 (Capability Pack)** | 一组可移植的 Agent 能力单元 | 文档生成包、安全审计包 |
-| **技能 (Skill)** | 如何完成某事的步骤化指令 | pdf-layout/SKILL.md |
-| **经验 (Experience)** | 什么场景用什么、已知陷阱 | WQY 字体回退经验、ReportLab 中文编码 |
-| **MCP 配置** | 外部工具服务的连接定义 | OCR 服务、翻译 API、RAG 引擎 |
-| **知识库引用** | 三层知识库的关联路径 | L3 Brain 概念页、L2 经验索引 |
-| **适配器 (Adapter)** | 将能力包映射到特定 Agent 格式 | Hermes 适配器、Claude Code 适配器 |
+> Agent 能力包标准化格式 + CLI 管理工具  
+> 版本：**0.8.0** | 测试：**141 ✅** | 能力包：**6 个** | 覆盖：**32% 模块**
 
 ---
 
-## 📊 完整能力分类体系（v2.0 — 覆盖全部 185 项技能）
+## 一、项目身份
 
-boku 的 185 个技能按领域分为 **18 个大类 + 3 个预留扩展槽**：
+| 属性 | 值 |
+|:-----|:----|
+| **目的** | 将 Hermes Agent 的 351+ 个技能拆分为可移植的「能力包」，跨 Agent 复用 |
+| **CLI 入口** | `python -m scripts.cli.main`（或创建 alias `cap-pack`） |
+| **Schema** | `schemas/cap-pack-v1.schema.json` |
+| **最小 Python** | ≥ 3.11 |
+| **唯一依赖** | `pyyaml>=6.0` |
+| **仓库** | `https://github.com/JackSmith111977/Hermes-Cap-Pack.git` |
+| **作者** | boku (Emma) |
 
-### 🟢 已定义的 18 个能力领域
+---
 
-| # | 模块 ID | 名称 | 技能数 | 核心能力 |
-|:--|:--------|:-----|:------:|:---------|
-| 1 | `knowledge-base` | 📚 知识库系统 | ~6 | 三层知识沉淀/索引/路由/维护 |
-| 2 | `learning-engine` | 🧠 学习引擎 | ~7 | 深度调研/学习方法/技能创作/夜间自习 |
-| 3 | `doc-engine` | 📄 文档生成 | ~12 | PDF/PPT/DOCX/HTML/LaTeX/EPUB/排版 |
-| 4 | `developer-workflow` | 💻 开发工作流 | ~16 | SDD/计划/TDD/调试/子代理/Spike/环境 |
-| 5 | `security-audit` | 🔒 安全审计 | ~5 | 删除安全/提交检查/秘密扫描/OSINT |
-| 6 | `quality-assurance` | ✅ 质量保障 | ~10 | QA 门禁/测试框架/代码审查/文档对齐/对抗测试/SQS评分/生命周期审计 |
-| 7 | `devops-monitor` | 🔧 运维监控 | ~8 | 系统健康/代理监控/Docker/进程/Webhook |
-| 8 | `network-proxy` | 🌐 网络代理 | ~5 | Clash 配置/代理发现/浏览器自动化/网络访问 |
-| 9 | `messaging` | 💬 消息平台 | ~8 | 飞书/微信/Email/短信/20+ 平台适配 |
-| 10 | `agent-orchestration` | 🤖 Agent 协作 | ~12 | 子代理/多Agent/BMAD/Kanban/Advisor模式 |
-| 11 | `mcp-integration` | 🔌 MCP 集成 | ~5 | 原生MCP/FastMCP/MCPorter/SRA消息注入 |
-| 12 | `financial-analysis` | 📊 金融分析 | ~2 | akshare/ta/matplotlib/研报生成 |
-| 13 | `creative-design` | 🎨 创意设计 | ~18 | 架构图/Mermaid/手绘/动画/像素画/表情包 |
-| 14 | `media-processing` | 🎵 音视频媒体 | ~8 | TTS/音乐生成/频谱/GIF/图像生成/Prompt设计 |
-| 15 | `github-ecosystem` | 🐙 GitHub 生态 | ~10 | PR/代码审查/Issues/Actions/Release/高级Git |
-| 16 | `news-research` | 📰 新闻研究 | ~5 | 新闻简报/Arxiv/AI趋势/RSS/预测市场 |
-| 17 | `metacognition` | 🪞 元认知系统 | ~6 | 自我分析/自我审查/防重复/能力地图/记忆管理 |
-| 18 | `social-gaming` | 🎮 社交娱乐 | ~6 | MC服务器/宝可梦/健身/Xuite/元宝/Bangumi |
+## 二、快速安装
 
-### 🟡 预留扩展槽（框架成长性）
+```bash
+# 1. 克隆
+git clone https://github.com/JackSmith111977/Hermes-Cap-Pack.git
+cd Hermes-Cap-Pack
 
-| 槽位 | 用途 | 预期来源 |
-|:-----|:------|:---------|
-| `hermes-new-features` | Hermes 框架新增的未分类能力 | `hermes update` 新功能 |
-| `custom-plugin` | 第三方 Plugin 生态 | `hermes plugin install` |
-| `future-domain` | 尚未出现的全新领域 | AI Agent 技术演进 |
+# 2. 安装 Python 依赖
+pip install pyyaml>=6.0
 
-### 扩展性机制
+# 3. 验证
+python -m scripts.cli.main --help
 
-```text
-成长场景                              应对机制
-─────────────────────────────────────────────────────
-Hermes v2026.6 推出新工具集    →   智能路由到现有模块或创建新槽
-boku 创建新 skill              →   skill 标签自动匹配模块分类
-安装社区 MCP Server           →   按 domain/tags 归入对应模块
-第三方 Plugin 安装            →   注册为 custom-plugin 模块
-新消息平台适配                 →   messaging 模块自动扩展
-Hermes 大版本升级              →   hermes-new-features 模块吸纳
+# 4. （可选）创建 alias
+alias cap-pack='python -m scripts.cli.main'
+```
+
+**验证安装成功**：
+```bash
+python -m scripts.cli.main list
+# → 📭 (无已安装的能力包) [首次安装时]
 ```
 
 ---
 
-## ⚙️ 分类原则（指导模块的持续扩展）
+## 三、能力包列表
 
-### 三个不变原则
+当前 **6 个已提取的能力包**（全部在 `packs/` 目录下）：
 
-| 原则 | 说明 | 实践 |
-|:-----|:------|:------|
-| **按领域不按工具** | 按「解决什么问题」而非「用什么工具」 | 一个模块含 Skills + Experiences + MCP |
-| **模块内完整闭环** | 模块内容纳该领域的完整知识链 | 包含怎么做 + 何时做 + 踩过什么坑 |
-| **扩展优先于重构** | 新能力先入槽，不完美也比丢失好 | 预留 3 个扩展槽，新技能自动匹配 |
+| 包名 | 目录 | Skills | 版本 | 状态 |
+|:-----|:-----|:------:|:----:|:----:|
+| **doc-engine** | `packs/doc-engine/` | 9 | 2.0.0 | ✅ 完整 |
+| **quality-assurance** | `packs/quality-assurance/` | 7 | 1.0.0 | ✅ 完整 |
+| **learning-workflow** | `packs/learning-workflow/` | 4 | 5.5.0 | ⚠️ 骨架 |
+| **developer-workflow** | `packs/developer-workflow/` | 16 | 1.0.0 | ✅ 完整 |
+| **agent-orchestration** | `packs/agent-orchestration/` | 8 | 1.0.0 | ✅ 完整 |
+| **metacognition** | `packs/metacognition/` | 6 | 1.0.0 | ✅ 完整 |
 
-### 分类决策树（新能力归属判断）
+> **已覆盖：6/19 模块（32%）** — 剩余 13 个模块待提取（learning-engine, creative-design, github, devops 等）
 
+---
+
+## 四、CLI 完整参考
+
+### 4.1 安装能力包
+
+```bash
+cap-pack install packs/doc-engine              # 安装到 Hermes（auto 检测）
+cap-pack install packs/doc-engine --dry-run     # 预览（不实际执行）
+cap-pack install packs/doc-engine --target hermes   # 强制安装到 Hermes
+cap-pack install packs/doc-engine --target opencode # 安装到 OpenCode
 ```
-新能力诞生（新 skill / 新工具 / 新 MCP）
-    ↓
-① 属于已有领域？ → 是 → 归入对应模块
-    ↓ 否
-② 与多个领域交叉？ → 是 → 主模块 + 模块间交叉引用
-    ↓ 否
-③ 是全新的领域且有 ≥3 个技能？ → 是 → 创建新模块
-    ↓ 否
-④ 暂存到 hermes-new-features 待观察 → 满 3 技能后升级为独立模块
+
+**输出示例**：
+```
+============================================================
+  📦 安装能力包: doc-engine
+============================================================
+     名称:    doc-engine
+     版本:    2.0.0
+     Skills:  9
+     经验:    11
+     MCP:     3
+     目标:    auto
+     适配器:  HermesAdapter
+
+  ✅ 安装完成！共安装 9 个 skill → HermesAdapter
+```
+
+### 4.2 卸载能力包
+
+```bash
+cap-pack remove doc-engine                  # 从 Hermes 卸载
+cap-pack remove doc-engine --target hermes  # 指定 Agent
+cap-pack remove doc-engine --target opencode
+```
+
+### 4.3 验证安装
+
+```bash
+cap-pack verify doc-engine
+cap-pack verify doc-engine --target hermes
+cap-pack verify doc-engine --target opencode
+```
+
+### 4.4 列表已安装
+
+```bash
+cap-pack list
+```
+
+### 4.5 检查包内容
+
+```bash
+cap-pack inspect packs/doc-engine
+```
+
+### 4.6 升级能力包
+
+```bash
+cap-pack upgrade doc-engine          # 升级指定包
+cap-pack upgrade --all               # 全部升级
+cap-pack upgrade doc-engine --dry-run # 预览升级
+```
+
+**行为**：
+1. 读取 `~/.hermes/installed_packs.json` 当前版本
+2. 比较 `packs/<name>/cap-pack.yaml` 新版本
+3. 备份后执行安装
+4. 验证完整性
+
+### 4.7 搜索可用包
+
+```bash
+cap-pack search doc       # 搜索名称/描述包含 "doc"
+cap-pack search pdf       
+cap-pack search learning
+```
+
+**匹配范围**：包名、描述、技能名、技能描述
+
+### 4.8 全局状态概览
+
+```bash
+cap-pack status
+```
+
+**输出包含**：
+- 已提取 Skills 总数
+- 已安装能力包列表（名称 + 版本 + 时间）
+- 可用但未安装的包
+- SQS 质量评分均分
+
+### 4.9 包内 Skill 管理
+
+```bash
+# 添加 skill
+cap-pack skill add doc-engine ~/.hermes/skills/web-ui-ux-design
+cap-pack skill add doc-engine /absolute/path/to/skill
+
+# 移除 skill
+cap-pack skill remove doc-engine vision-qc-patterns
+cap-pack skill remove doc-engine vision-qc-patterns --dry-run
+
+# 列出 pack 内技能
+cap-pack skill list doc-engine
+
+# 更新某 skill
+cap-pack skill update doc-engine pdf-layout                    # 从 Hermes 同步
+cap-pack skill update doc-engine pdf-layout ~/new-version/     # 从指定路径
+```
+
+**版本变更规则**：
+- `skill add` → minor bump（1.0.0 → 1.1.0）
+- `skill remove` → patch bump（1.0.0 → 1.0.1）
+- `skill update` → patch bump
+
+---
+
+## 五、作为 Python 模块使用
+
+```python
+from scripts.uca import PackParser
+from scripts.adapters.hermes import HermesAdapter
+from pathlib import Path
+
+# 解析能力包
+parser = PackParser(schema_path=Path("schemas/cap-pack-v1.schema.json"))
+pack = parser.parse(Path("packs/doc-engine"))
+print(f"📦 {pack.name} v{pack.version} — {len(pack.skills)} skills")
+
+# 安装到 Hermes
+adapter = HermesAdapter()
+result = adapter.install(pack)
+print(f"✅ 安装: {len(result.details['installed_skills'])} skills")
+
+# 卸载
+result = adapter.uninstall("doc-engine")
+
+# 验证
+result = adapter.verify("doc-engine")
+
+# 更新（升级）
+result = adapter.update(pack, "1.0.0")  # 从 1.0.0 升级到 pack.version
 ```
 
 ---
 
-## SDD 流程状态（v2.0 — CLARIFY → RESEARCH → CREATE → QA_GATE → REVIEW）
+## 六、适配器系统
 
-| Spec | SDD 进度 | CLARIFY | RESEARCH | CREATE | QA_GATE | REVIEW | 优先级 |
-|:-----|:--------:|:-------:|:--------:|:------:|:-------:|:------:|:-----:|
-| EPIC-001 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P0 |
-| SPEC-1-1 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
-| SPEC-1-2 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
-| SPEC-1-3 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P1 |
-| SPEC-1-4 | ✅ 完成 | ✅ | ✅ | ✅ | ✅ | ✅ 已批准 | P2 |
-| **EPIC-002** | ⬜ draft | ✅ | ✅ | ✅ 部分 | ⬜ | ⬜ | **P1** |
-| **SPEC-2-1** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
-| **SPEC-2-2** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
-| **SPEC-2-3** | ⬜ draft | ✅ | ✅ | ⬜ | ⬜ | ⬜ | **P1** |
+| 适配器 | 类 | 文件 | 状态 | 目标 Agent |
+|:-------|:---|:-----|:----:|:-----------|
+| **Hermes** | `HermesAdapter` | `scripts/adapters/hermes.py` | ✅ | Hermes Agent |
+| **OpenCode** | `OpenCodeAdapter` | `scripts/adapters/opencode.py` | ✅ | OpenCode CLI |
 
-### EPIC-002: Skill 树状层次管理与健康度优化（新建 — P1）
-
-> 将 302 个扁平 skill 组织为三层树状索引，建立 SQS 质量评分与生命周期审计体系。
-
-| 交付物 | 状态 | 说明 |
-|:-------|:----:|:------|
-| `docs/EPIC-002-tree-health.md` | ✅ 完成 | EPIC 文档 |
-| `docs/SPEC-2-1.md` | ✅ 完成 | 树状索引系统规范 |
-| `docs/SPEC-2-2.md` | ✅ 完成 | SQS 质量评分系统规范 |
-| `docs/stories/STORY-2-1-1~STORY-2-2-4` | ✅ 完成 | 5 个 Story 文档（draft） |
-| `scripts/skill-tree-index.py` | ✅ 完成 | 三层树状索引生成器 |
-| `scripts/skill-quality-score.py` | ✅ 已纳入 | SQS 五维评分引擎 |
-| `scripts/skill-lifecycle-audit.py` | ✅ 已纳入 | 生命周期审计与退役管理 |
-| `packs/quality-assurance/` | ✅ 已创建 | 质量保障能力包 |
-| `reports/skill-tree-architecture-research.html` | ✅ 已更新 | 研究报告（来源可点击） |
-| `docs/SPEC-2-3.md` | ✅ 完成 | SRA 运行时发现层适配方案 |
-| `docs/stories/STORY-2-3-1~STORY-2-3-2` | ✅ 完成 | SRA 分类映射 + SQS 质量加权 |
-| `scripts/skill-tree-index.py` | ✅ SRA 模式 | `--sra` 输出簇/包/同类技能格式 |
-
-## Phase 1 进展（格式设计 + 原型 — 进行中）
-
-| 产出物 | 状态 | 说明 |
-|:-------|:----:|:------|
-| `schemas/cap-pack-format-v1.md` | ✅ 完成 | YAML 格式规范 v1（含完整字段定义） |
-| `schemas/cap-pack-v1.schema.json` | ✅ 完成 | JSON Schema（可验证所有 cap-pack.yaml） |
-| `packs/doc-engine/cap-pack.yaml` | ✅ 完成 | 文档生成能力包（9 skills + 11 experiences + linked files） |
-| `packs/doc-engine/SKILLS/` | ✅ 完成 | 9 个技能（含 scripts/references/checklists） |
-| `packs/doc-engine/EXPERIENCES/` | ✅ 完成 | 11 个实战经验文档 |
-| `packs/quality-assurance/cap-pack.yaml` | ✅ 完成 | 质量保障能力包（SQS + 审计 + 树索引） |
-| `scripts/skill-tree-index.py` | ✅ 完成 | 三层树状索引生成器 + 合并潜力分析 |
-| `scripts/skill-quality-score.py` | ✅ 已纳入 | SQS 五维质量评分引擎 |
-| `scripts/skill-lifecycle-audit.py` | ✅ 已纳入 | 生命周期审计 + deprecate/revive 管理 |
-| `scripts/extract-pack.py` | ✅ 完成 | 从 Hermes 提取真实 skill 内容到能力包 |
-| `scripts/validate-pack.py` | ✅ 完成 | 能力包完整性验证（JSON Schema + 文件检查） |
-| `scripts/install-pack.py` | ✅ 完成 | 安装能力包到 Hermes（备份还原 + hooks） |
-| `reports/skill-tree-architecture-research.html` | ✅ 完成 | 树状层次可行性研究报告（来源可点击） |
-|| `pyproject.toml` | ✅ 完成 | 项目元数据 + 版本管理（version: 0.3.0） |
-|| `scripts/bump-version.py` | ✅ 完成 | 版本号自动递增（patch/minor/major + git tag） |
-|| `.github/workflows/ci.yml` | ✅ 完成 | GitHub Actions CI（4 job 并行质量门禁） |
-|| `scripts/ci-check-yaml.py` | ✅ 完成 | YAML 语法验证 |
-|| `scripts/ci-check-cross-refs.py` | ✅ 完成 | 跨包引用完整性检查 |
-|| `scripts/uca/` | ✅ 完成 | UCA Core 框架（Protocol + Parser + Dependency + Verifier） |
-| `scripts/cli/main.py` | ✅ 完成 | cap-pack CLI（install/remove/verify/list/inspect） |
-|               `scripts/adapters/hermes.py` | ✅ 完成 | HermesAdapter（Hermes Agent 适配器，含 MCP 注入 + 快照回滚） |
-| `scripts/adapters/opencode.py` | ✅ 完成 | OpenCodeAdapter（OpenCode CLI Agent 适配器） |
-| `docs/developer-guide-adapter.md` | ✅ 完成 | 第三方适配器开发指南 |
-| 更多模块提取 | ⏳ Phase 1.2 | learning-engine, developer-workflow 等 |
-
-### 项目结构
+**所有适配器遵循 UCA Protocol**（`scripts/uca/protocol.py`）：
 
 ```
-~/projects/hermes-cap-pack/
-├── README.md                         # 项目说明
-├── CHANGELOG.md                      # 版本日志
-├── constraints.md                    # 项目约束与边界
-├── pyproject.toml                     # 项目元数据 + 版本管理（0.3.0）
-├── .gitignore
-├── docs/
-│   ├── EPIC-001-feasibility.md       # Epic: 前期可行性调查
-│   ├── EPIC-002-tree-health.md       # Epic: 树状健康度管理
-│   ├── EPIC-003-module-extraction.md # Epic: 剩余模块提取
-│   ├── SPEC-1-1.md                   # Spec: 模块分割方案
-│   ├── SPEC-1-2.md                   # Spec: 模块生命周期管理
-│   ├── SPEC-1-3.md                   # Spec: 模块迭代与进化
-│   ├── SPEC-1-4.md                   # Spec: 跨 Agent 适配层
-│   ├── SPEC-2-1.md                   # Spec: 树状索引系统
-│   ├── SPEC-2-2.md                   # Spec: 质量健康度体系
-│   ├── SPEC-2-3.md                   # Spec: SRA 适配方案
-│   ├── STORY-TEMPLATE.md             # Story 模板（SDD 标准）
-│   ├── developer-guide-adapter.md    # 第三方适配器开发指南
-│   ├── stories/                      # Story 文档（22 个）
-│   └── plans/                        # 分解方案
-├── schemas/
-│   ├── cap-pack-format-v1.md         # 能力包格式规范 v1
-│   └── cap-pack-v1.schema.json       # JSON Schema 验证
-├── packs/
-│   ├── doc-engine/                   # 📄 文档生成能力包
-│   │   ├── cap-pack.yaml             # 模块清单（9 skills + 11 experiences）
-│   │   ├── SKILLS/                   # 技能（9个）
-│   │   ├── EXPERIENCES/              # 实战经验（11个）
-│   │   └── MCP/                      # MCP 配置
-│   └── quality-assurance/            # ✅ 质量保障能力包
-│       ├── cap-pack.yaml
-│       ├── SKILLS/
-│       └── SCRIPTS/
-├── .github/workflows/
-│   └── ci.yml                        # GitHub Actions CI 工作流
+AgentAdapter              # Protocol（抽象基类）
+ ├── name                 # 适配器名称
+ ├── is_available         # 检测目标 Agent 是否存在
+ ├── install(pack)        # 安装能力包
+ ├── uninstall(name)      # 卸载
+ ├── verify(name)         # 验证安装完整性
+ ├── list_installed()     # 列出已安装
+ └── update(pack, old_ver) # 升级
+```
+
+**创建新适配器**：实现 `AgentAdapter` Protocol 即可，参考 `docs/developer-guide-adapter.md`
+
+---
+
+## 七、能力包格式规范
+
+每个能力包是一个目录，包含：
+
+```
+packs/<name>/
+├── cap-pack.yaml        # 📋 包清单（必需）
+├── SKILLS/              # 📄 技能文件
+│   ├── <skill-id>/
+│   │   └── SKILL.md
+│   └── ...
+├── EXPERIENCES/         # 📝 实战经验
+│   ├── <exp-id>.md
+│   └── ...
+├── MCP/                 # 🔌 MCP 配置（可选）
+└── SCRIPTS/             # ⚙️ 辅助脚本（可选）
+```
+
+**cap-pack.yaml 最小示例**：
+```yaml
+name: my-pack
+version: 1.0.0
+type: capability-pack
+description: "我的第一个能力包"
+skills:
+  - id: my-skill
+    path: SKILLS/my-skill/SKILL.md
+    description: "我的第一个技能"
+```
+
+**完整格式规范**：`schemas/cap-pack-format-v1.md`  
+**JSON Schema**：`schemas/cap-pack-v1.schema.json`
+
+---
+
+## 八、运行测试
+
+```bash
+# 全量 141 个测试
+python -m pytest scripts/tests/ -q
+
+# 按类别
+python -m pytest scripts/tests/test_uca_parser.py -v       # 解析器
+python -m pytest scripts/tests/test_uca_verifier.py -v     # 验证器
+python -m pytest scripts/tests/test_hermes_adapter.py -v    # Hermes 适配器
+python -m pytest scripts/tests/test_opencode_adapter.py -v  # OpenCode 适配器
+python -m pytest scripts/tests/test_cli_commands.py -v      # CLI 命令
+python -m pytest scripts/tests/test_parity.py -v            # 跨适配器一致性
+```
+
+---
+
+## 九、目录结构
+
+```
+hermes-cap-pack/
+├── README.md               # ← 你现在看的
+├── CHANGELOG.md            # 版本日志
+├── constraints.md          # 项目约束
+├── pyproject.toml          # Python 包元数据 (v0.8.0)
+│
+├── docs/                   # 设计文档
+│   ├── EPIC-*.md           # Epic 文档
+│   ├── SPEC-*.md           # Spec 规范
+│   ├── stories/            # Story 文档（22 个）
+│   ├── project-state.yaml  # 统一状态机
+│   └── developer-guide-adapter.md
+│
+├── schemas/                # 格式规范
+│   ├── cap-pack-format-v1.md
+│   └── cap-pack-v1.schema.json
+│
+├── packs/                  # 能力包仓库
+│   ├── doc-engine/         # 📄 文档生成 (9 skills)
+│   ├── quality-assurance/  # ✅ 质量保障 (7 skills)
+│   ├── learning-workflow/  # 🧠 学习工作流 (4 skills)
+│   ├── developer-workflow/ # 💻 开发工作流 (16 skills)
+│   ├── agent-orchestration/# 🤖 Agent 协作 (8 skills)
+│   └── metacognition/      # 🪞 元认知 (6 skills)
+│
 ├── scripts/
-│   ├── cli/
-│   │   ├── main.py                   # cap-pack CLI 入口
-│   │   └── commands.py               # install/remove/verify/list 命令实现
-│   ├── adapters/
-│   │   ├── hermes.py                 # Hermes Agent 适配器
-│   │   └── opencode.py               # OpenCode CLI 适配器
-│   ├── tests/
-│   │   ├── test_uca_protocol.py       # Protocol 单元测试
-│   │   ├── test_uca_parser.py         # Parser 单元测试
-│   │   ├── test_uca_dependency.py     # Dependency 单元测试
-│   │   ├── test_uca_verifier.py       # Verifier 单元测试
-│   │   ├── test_hermes_adapter.py     # HermesAdapter 测试
-│   │   ├── test_opencode_adapter.py   # OpenCodeAdapter 测试
-│   │   └── test_parity.py            # 跨 Adapter 一致性测试
-│   ├── uca/
-│   │   ├── __init__.py               # UCA Core 包导出
-│   │   ├── protocol.py               # AgentAdapter Protocol + 数据类
-│   │   ├── parser.py                 # cap-pack.yaml 解析器
-│   │   ├── dependency.py             # 依赖检查器
-│   │   └── verifier.py               # 安装后验证器
-│   ├── bump-version.py               # 版本号自动递增
-│   ├── ci-check-yaml.py              # YAML 语法验证（CI）
-│   ├── ci-check-cross-refs.py        # 跨包引用检查（CI）
-│   ├── validate-pack.py              # 能力包完整性验证
-│   ├── health-check.py               # 健康检查 + 量化测试
-│   ├── install-pack.py               # [弃用] 由 cap-pack CLI 替代
-│   ├── extract-pack.py               # 从 Hermes 提取 skill 内容
-│   ├── skill-tree-index.py           # 三层树状索引生成器
-│   ├── skill-quality-score.py        # SQS 五维质量评分引擎
-│   ├── skill-lifecycle-audit.py      # 生命周期审计
-│   └── sra-discovery-test.py         # SRA 发现测试
-└── reports/
-    └── lifecycle.html                # HTML 全生命周期追踪报告
+│   ├── cli/main.py         # CLI 入口
+│   ├── cli/commands.py     # 命令实现（13 个命令）
+│   ├── adapters/           # Agent 适配器
+│   │   ├── hermes.py
+│   │   └── opencode.py
+│   ├── uca/                # UCA Core 框架
+│   │   ├── protocol.py     # AgentAdapter Protocol
+│   │   ├── parser.py       # cap-pack.yaml 解析器
+│   │   ├── dependency.py   # 依赖检查
+│   │   └── verifier.py     # 安装验证
+│   ├── tests/              # 141 个测试
+│   └── ... (bump-version, validate-pack, health-check, etc.)
+│
+├── reports/                # HTML 报告
+└── .github/workflows/      # CI (4 job 并行)
 ```
 
-## 四个核心问题
+---
 
-本项目的可行性调查围绕四个核心问题展开：
+## 十、完整命令速查表
 
-1. **如何分割 (Splitting)** — 按什么粒度、什么维度将 185 个技能拆分为 ~18 个独立模块？
-2. **如何管理 (Management)** — 模块的生命周期、版本、依赖如何管理？
-3. **如何迭代 (Iteration)** — 模块如何随 boku 的进化不断更新？
-4. **如何适配 (Adaptation)** — 跨 Agent 的适配层如何设计？
+| 命令 | 作用 | 关键参数 |
+|:-----|:-----|:---------|
+| `install <dir>` | 从目录安装能力包 | `--dry-run`, `--target hermes\|opencode` |
+| `remove <name>` | 卸载已安装的包 | `--target` |
+| `verify <name>` | 验证安装完整性 | `--target` |
+| `list` | 列出已安装包 | `--target` |
+| `inspect <dir>` | 查看包内容（不安装） | — |
+| `upgrade <name>` | 升级已安装的包 | `--all`, `--dry-run` |
+| `status` | 全局状态概览 | — |
+| `search <term>` | 搜索可用包 | — |
+| `skill add <p> <src>` | 向包添加 skill | — |
+| `skill remove <p> <id>` | 从包移除 skill | `--dry-run` |
+| `skill list <p>` | 列出包内 skill | — |
+| `skill update <p> <id> [src]` | 更新包内 skill | — |
+
+---
+
+## 十一、相关项目
+
+| 项目 | 关系 |
+|:-----|:------|
+| [SRA (Skill Runtime Advisor)](https://github.com/JackSmith111977/Hermes-Skill-View) | CAP Pack 的运行时推荐搭档。CAP Pack 管理「有什么技能」，SRA 管理「该用什么技能」 |
+| [Hermes Agent](https://hermes-agent.nousresearch.com) | 上层 Agent 框架，能力包的消费者 |

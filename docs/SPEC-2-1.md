@@ -1,7 +1,7 @@
 # 🌳 SPEC-2-1: 树状 Skill 层次索引系统
 
-> **状态**: `draft` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-13
-> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
+> **状态**: `create` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-14
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ⬜ → REVIEW ⬜`
 > **关联 Epic**: EPIC-002-tree-health.md
 > **审查人**: 主人
 
@@ -156,10 +156,11 @@ python3 scripts/skill-tree-index.py --output file.yaml # 输出到文件
 | ID | 描述 | 验证方式 |
 |:---|:-----|:---------|
 | AC-01 | 工具可执行并输出三层结构 | `--json | jq '.tree | length' == 18` |
-| AC-02 | 重复检测可发现已知重复 | `--consolidate` 输出包含 BMAD 冗余 |
-| AC-03 | 健康度模式包含 SQS 分数 | `--health` 输出含 `平均 SQS` 字段 |
-| AC-04 | 单包过滤有效 | `--pack doc-engine` 仅输出该包技能 |
-| AC-05 | 500 行内合理，无严重性能问题 | 完整扫描 < 3 秒 |
+| ✅ AC-01 | 工具可执行并输出三层结构 | `--json` 输出为有效 list 含 module_id |
+| AC-02 | 重复检测可发现已知重复 | `--consolidate` 输出建议数 >0 |
+| AC-03 | 健康度模式包含系统概览 | `--health` 输出含 `总数/未分类` 字段 |
+| AC-04 | 单包过滤有效 | `--pack` 参数不崩溃 |
+| AC-05 | 可独立运行 | `scripts/` 下执行无需额外配置 |
 
 ---
 

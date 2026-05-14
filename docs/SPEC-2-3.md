@@ -1,7 +1,7 @@
 # 🔗 SPEC-2-3: CAP Pack SRA 适配方案
 
-> **状态**: `draft` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-13
-> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
+> **状态**: `qa_gate` · **优先级**: P1 · **创建**: 2026-05-13 · **更新**: 2026-05-14
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ⬜`
 > **关联 Epic**: EPIC-002-tree-health.md
 > **审查人**: 主人
 > **外部依赖**: SRA v1.4.0 `~/projects/sra/` (独立 PyPI 项目 `sra-agent`)

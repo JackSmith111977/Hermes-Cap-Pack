@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.7.1] — 2026-05-14
+
+### Added
+- **统一状态机管理中枢** (`docs/project-state.yaml` + `scripts/project-state.py`): 所有项目实体状态的唯一真相来源
+  - 8 个管理命令: status / verify / scan / sync / gate / transition / list / history
+  - 每次状态变更带门禁检查 + 日志审计 + 自动纠偏
+  - 已融入 SDD / Dev / QA / Startup 四个工作流
+- **沉淀为 Hermes Skill** (`unified-state-machine`): 可复用的项目状态管理技能
+- **CI 门禁**: `.github/workflows/ci.yml` 新增 `project-state.py verify` 步骤
+- **SPEC-2-4**: 项目报告生成器工作流集成规范
+- **STORY-2-4-1**: project-report-generator skill 创建与 SDD 工作流集成
+
+### Changed
+- 四个工作流 skill 新增 `unified-state-machine` 依赖引用
+- 修复 8 个状态漂移（EPIC-001 Story 状态与文档不一致）
+
 ## [0.7.0] — 2026-05-13
 
 ### Added
