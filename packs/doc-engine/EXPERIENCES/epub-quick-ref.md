@@ -1,3 +1,10 @@
+---
+type: tutorial
+skill_ref: "epub quick ref"
+keywords: [epub-quick-ref]
+created: 2026-05-14
+---
+
 # EPUB 电子书生成速查
 
 > 从 `epub-guide` skill 降级（SQS 47.2/100 — 使用频率极低）

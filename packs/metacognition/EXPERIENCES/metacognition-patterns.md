@@ -1,3 +1,10 @@
+---
+type: best-practice
+skill_ref: "metacognition patterns"
+keywords: [metacognition-patterns]
+created: 2026-05-14
+---
+
 # Metacognition Patterns — Skill Lifecycle & Capability Mapping Best Practices
 
 > 元认知系统经验沉淀。涵盖 Skill 生命周期管理、能力认知审计、设计哲学迁移等核心模式。

@@ -1,3 +1,10 @@
+---
+type: decision-tree
+skill_ref: "pdf tool decision tree"
+keywords: [pdf-tool-decision-tree]
+created: 2026-05-14
+---
+
 # PDF 渲染工具选型决策树
 
 > **类型**: decision-tree · **关联技能**: pdf-layout, pdf-render-comparison, latex-guide

@@ -1,6 +1,6 @@
 project:
   name: hermes-cap-pack
-  version: 0.8.0
+  version: 0.9.1
   current_phase: sprint-5
   overall_state: review
   created: 2026-05-12
@@ -222,7 +222,7 @@ entities:
       review_date: null
     EPIC-004:
       title: 能力包质量升级 — 三层改造 + 健康度检测 + 合并优化
-      state: draft
+      state: approved
       spec_count: 0
       story_count: 0
       completed_count: 0
@@ -312,6 +312,19 @@ entities:
       state: draft
       epic: '?'
       stories: []
+    SPEC-4-1:
+      state: approved
+      epic: EPIC-004
+      stories:
+      - STORY-4-1
+      - STORY-4-2
+    SPEC-4-2:
+      state: approved
+      epic: EPIC-004
+      stories:
+      - STORY-4-3
+      - STORY-4-4
+      - STORY-4-5
   stories:
     STORY-1-1-1:
       state: draft
@@ -477,6 +490,26 @@ entities:
       state: completed
       epic: '?'
       spec: '?'
+    STORY-4-1:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-1
+    STORY-4-2:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-1
+    STORY-4-3:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-2
+    STORY-4-4:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-2
+    STORY-4-5:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-2
 sprints:
   sprint-1:
     title: 核心框架搭建
@@ -568,4 +601,151 @@ history:
   to: approved
   action: transition
   reason: 主人审阅批准 EPIC-002，13/13 交付物全部完成
+  gate: pre_flight
+- date: '2026-05-14T13:37:35Z'
+  entity: EPIC-004
+  from: draft
+  to: review
+  action: transition
+  reason: CLARIFY 确认通过，进入 owner 审阅
+  gate: pre_flight
+- date: '2026-05-14T13:44:50Z'
+  entity: EPIC-004
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准 EPIC-004 增量循环方案
+  gate: pre_flight
+- date: '2026-05-14T13:49:23Z'
+  entity: SPEC-4-1
+  from: draft
+  to: review
+  action: transition
+  reason: SPEC-4-1 CLARIFY+RESEARCH+CREATE 完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T13:49:56Z'
+  entity: SPEC-4-1
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准 SPEC-4-1 基线扫描方案
+  gate: pre_flight
+- date: '2026-05-14T13:51:27Z'
+  entity: STORY-4-1
+  from: draft
+  to: review
+  action: transition
+  reason: STORY-4-1 创建完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T13:51:28Z'
+  entity: STORY-4-2
+  from: draft
+  to: review
+  action: transition
+  reason: STORY-4-2 创建完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T13:57:14Z'
+  entity: STORY-4-1
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准 STORY-4-1
+  gate: pre_flight
+- date: '2026-05-14T13:57:14Z'
+  entity: STORY-4-2
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准 STORY-4-2
+  gate: pre_flight
+- date: '2026-05-14T14:05:40Z'
+  entity: STORY-4-1
+  from: approved
+  to: completed
+  action: transition
+  reason: 实现完成，AC全部达标：基线 JSON + 仪表盘 HTML + 新增 aggregate-sqs.py
+  gate: pre_flight
+- date: '2026-05-14T14:05:40Z'
+  entity: STORY-4-2
+  from: approved
+  to: completed
+  action: transition
+  reason: 实现完成，AC全部达标：优先级报告 + aggregate-sqs.py --prioritize
+  gate: pre_flight
+- date: '2026-05-14T14:26:58Z'
+  entity: SPEC-4-2
+  from: draft
+  to: review
+  action: transition
+  reason: SPEC-4-2 CLARIFY+RESEARCH+CREATE 完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T14:28:20Z'
+  entity: SPEC-4-2
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准 SPEC-4-2 L2/L3 升级方案
+  gate: pre_flight
+- date: '2026-05-14T14:28:49Z'
+  entity: STORY-4-3
+  from: draft
+  to: review
+  action: transition
+  reason: STORY-4-3 创建完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T14:28:49Z'
+  entity: STORY-4-4
+  from: draft
+  to: review
+  action: transition
+  reason: STORY-4-4 创建完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T14:28:50Z'
+  entity: STORY-4-5
+  from: draft
+  to: review
+  action: transition
+  reason: STORY-4-5 创建完成，送主人审阅
+  gate: pre_flight
+- date: '2026-05-14T14:34:52Z'
+  entity: STORY-4-3
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准
+  gate: pre_flight
+- date: '2026-05-14T14:34:52Z'
+  entity: STORY-4-4
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准
+  gate: pre_flight
+- date: '2026-05-14T14:34:52Z'
+  entity: STORY-4-5
+  from: review
+  to: approved
+  action: transition
+  reason: 主人批准
+  gate: pre_flight
+- date: '2026-05-14T15:02:03Z'
+  entity: STORY-4-3
+  from: approved
+  to: completed
+  action: transition
+  reason: 实现完成，L2/L3 全部补充完毕
+  gate: pre_flight
+- date: '2026-05-14T15:02:03Z'
+  entity: STORY-4-4
+  from: approved
+  to: completed
+  action: transition
+  reason: 实现完成，L2/L3 全部补充完毕
+  gate: pre_flight
+- date: '2026-05-14T15:02:03Z'
+  entity: STORY-4-5
+  from: approved
+  to: completed
+  action: transition
+  reason: 实现完成，L2/L3 全部补充完毕
   gate: pre_flight

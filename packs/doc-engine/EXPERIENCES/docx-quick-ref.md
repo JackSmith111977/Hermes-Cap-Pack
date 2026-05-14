@@ -1,3 +1,10 @@
+---
+type: tutorial
+skill_ref: "docx quick ref"
+keywords: [docx-quick-ref]
+created: 2026-05-14
+---
+
 # Word 文档操作速查
 
 > 从 `docx-guide` skill 降级（SQS 50.2/100 — 无版本号，内容简单）

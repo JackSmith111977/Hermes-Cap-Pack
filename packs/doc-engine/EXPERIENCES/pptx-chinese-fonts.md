@@ -1,3 +1,10 @@
+---
+type: pitfall
+skill_ref: "pptx chinese fonts"
+keywords: [pptx-chinese-fonts]
+created: 2026-05-14
+---
+
 # python-pptx 中文字体问题
 
 > **类型**: pitfall · **关联技能**: pptx-guide

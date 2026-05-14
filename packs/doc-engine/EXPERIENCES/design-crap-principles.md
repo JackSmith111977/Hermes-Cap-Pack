@@ -1,3 +1,10 @@
+---
+type: lesson-learned
+skill_ref: "design crap principles"
+keywords: [design-crap-principles]
+created: 2026-05-14
+---
+
 # CRAP 设计原则在排版中的应用
 
 > **类型**: comparison · **关联技能**: pdf-pro-design, doc-design

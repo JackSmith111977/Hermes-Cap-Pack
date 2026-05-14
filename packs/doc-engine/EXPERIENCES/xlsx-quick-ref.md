@@ -1,3 +1,10 @@
+---
+type: tutorial
+skill_ref: "xlsx quick ref"
+keywords: [xlsx-quick-ref]
+created: 2026-05-14
+---
+
 # Excel 表格操作速查
 
 > 从 `xlsx-guide` skill 降级（SQS 47.2/100 — 主题偏向 productivity 包）

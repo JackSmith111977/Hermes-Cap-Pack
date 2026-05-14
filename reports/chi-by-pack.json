@@ -1,0 +1,2666 @@
+{
+  "agent-orchestration": {
+    "pack_name": "agent-orchestration",
+    "skill_count": 8,
+    "avg_sqs": 67.92,
+    "min_sqs": 61.8,
+    "max_sqs": 76.8,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 8,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "opencode",
+        "sqs": 76.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "bmad-party-mode-orchestration",
+        "sqs": 72.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "hermes-message-injection",
+        "sqs": 72.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 10,
+          "S3_freshness": 20,
+          "S4_relations": 8,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "hermes-agent",
+        "sqs": 67.0,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 6.5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "claude-code",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 10,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "blackbox",
+        "sqs": 63.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "honcho",
+        "sqs": 63.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "codex",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "creative-design": {
+    "pack_name": "creative-design",
+    "skill_count": 25,
+    "avg_sqs": 65.29,
+    "min_sqs": 55.5,
+    "max_sqs": 85.2,
+    "distribution": {
+      "🟢 excellent": 2,
+      "🟡 good": 16,
+      "🟠 needs_work": 7,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "meme-creation",
+        "sqs": 85.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 13,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "image-to-image-guide",
+        "sqs": 80.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 11,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "popular-web-designs",
+        "sqs": 74.0,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 19.0,
+          "S2_content": 11,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "baoyu-comic",
+        "sqs": 70.0,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 6.5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "pretext",
+        "sqs": 69.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "baoyu-infographic",
+        "sqs": 69.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 16,
+          "S3_freshness": 20,
+          "S4_relations": 6.5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "touchdesigner-mcp",
+        "sqs": 68.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "visual-aesthetics",
+        "sqs": 68.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "comfyui",
+        "sqs": 67.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "design-md",
+        "sqs": 66.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "excalidraw",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "creative-ideation",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "architecture-diagram",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "concept-diagrams",
+        "sqs": 65.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "claude-design",
+        "sqs": 62.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 16,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "image-prompt-guide",
+        "sqs": 62.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 10.2,
+          "S2_content": 18,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "pixel-art",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 11,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "image-generation",
+        "sqs": 61.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 10.2,
+          "S2_content": 18,
+          "S3_freshness": 15,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "sketch",
+        "sqs": 59.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "ascii-art",
+        "sqs": 58.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 6,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "songwriting-and-ai-music",
+        "sqs": 58.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.5,
+          "S2_content": 11,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "ascii-video",
+        "sqs": 58.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12.2,
+          "S2_content": 18,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "manim-video",
+        "sqs": 56.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "p5js",
+        "sqs": 56.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 5,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 12
+        }
+      },
+      {
+        "name": "humanizer",
+        "sqs": 55.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 8,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 8
+        }
+      }
+    ]
+  },
+  "developer-workflow": {
+    "pack_name": "developer-workflow",
+    "skill_count": 16,
+    "avg_sqs": 64.58,
+    "min_sqs": 51.8,
+    "max_sqs": 75.2,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 13,
+      "🟠 needs_work": 3,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "writing-styles-guide",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 11,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "sra-cli-usage",
+        "sqs": 74.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "patch-file-safety",
+        "sqs": 73.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "systematic-debugging",
+        "sqs": 66.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "debugging-hermes-tui-commands",
+        "sqs": 65.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "writing-plans",
+        "sqs": 64.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "subagent-driven-development",
+        "sqs": 64.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "python-env-guide",
+        "sqs": 64.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "requesting-code-review",
+        "sqs": 63.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "node-inspect-debugger",
+        "sqs": 63.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "hermes-agent-skill-authoring",
+        "sqs": 63.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "python-debugpy",
+        "sqs": 62.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 6
+        }
+      },
+      {
+        "name": "spike",
+        "sqs": 60.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "test-driven-development",
+        "sqs": 59.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 8,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "one-three-one-rule",
+        "sqs": 58.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 10,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "plan",
+        "sqs": 51.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 3,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "devops-monitor": {
+    "pack_name": "devops-monitor",
+    "skill_count": 10,
+    "avg_sqs": 69.19,
+    "min_sqs": 60,
+    "max_sqs": 79.2,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 10,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "process-management",
+        "sqs": 79.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 8,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "linux-ops-guide",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "project-startup-workflow",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "docker-terminal",
+        "sqs": 74.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 8,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "docker-management",
+        "sqs": 70.5,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "hermes-ops-tips",
+        "sqs": 67.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12.2,
+          "S2_content": 18,
+          "S3_freshness": 15,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "proxy-monitor",
+        "sqs": 65.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "kanban-orchestrator",
+        "sqs": 65,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "webhook-subscriptions",
+        "sqs": 60.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "kanban-worker",
+        "sqs": 60,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "doc-engine": {
+    "pack_name": "doc-engine",
+    "skill_count": 12,
+    "avg_sqs": 67.27,
+    "min_sqs": 54.2,
+    "max_sqs": 83.2,
+    "distribution": {
+      "🟢 excellent": 2,
+      "🟡 good": 5,
+      "🟠 needs_work": 5,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "pdf-render-comparison",
+        "sqs": 83.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 12,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "pdf-layout",
+        "sqs": 81.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "readme-for-ai",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "pdf-pro-design",
+        "sqs": 77.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 10,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "vision-qc-patterns",
+        "sqs": 76.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 12,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "doc-design",
+        "sqs": 75.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 11,
+          "S3_freshness": 20,
+          "S4_relations": 14,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "pptx-guide",
+        "sqs": 60.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12.2,
+          "S2_content": 18,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "docx-guide",
+        "sqs": 55.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "html-guide",
+        "sqs": 55.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "markdown-guide",
+        "sqs": 54.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 10
+        }
+      },
+      {
+        "name": "latex-guide",
+        "sqs": 54.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 10
+        }
+      },
+      {
+        "name": "epub-guide",
+        "sqs": 54.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 10
+        }
+      }
+    ]
+  },
+  "financial-analysis": {
+    "pack_name": "financial-analysis",
+    "skill_count": 1,
+    "avg_sqs": 77.2,
+    "min_sqs": 77.2,
+    "max_sqs": 77.2,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 1,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "financial-analyst",
+        "sqs": 77.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 10,
+          "S5_discoverability": 15
+        }
+      }
+    ]
+  },
+  "github-ecosystem": {
+    "pack_name": "github-ecosystem",
+    "skill_count": 9,
+    "avg_sqs": 70.56,
+    "min_sqs": 64.8,
+    "max_sqs": 79.8,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 9,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "github-deploy-upload",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "github-project-ops",
+        "sqs": 77.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "git-advanced-ops",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "github-auth",
+        "sqs": 74.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "github-repo-management",
+        "sqs": 66.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "codebase-inspection",
+        "sqs": 66.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "github-pr-workflow",
+        "sqs": 64.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "github-code-review",
+        "sqs": 64.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "github-issues",
+        "sqs": 64.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "learning-engine": {
+    "pack_name": "learning-engine",
+    "skill_count": 11,
+    "avg_sqs": 72.15,
+    "min_sqs": 56.8,
+    "max_sqs": 89.8,
+    "distribution": {
+      "🟢 excellent": 3,
+      "🟡 good": 5,
+      "🟠 needs_work": 3,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "deep-research",
+        "sqs": 89.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 15.0,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "learning",
+        "sqs": 88.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 14,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "capability-pack-design",
+        "sqs": 85.0,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 19.0,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 8,
+          "S5_discoverability": 20
+        }
+      },
+      {
+        "name": "knowledge-routing",
+        "sqs": 79.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "knowledge-precipitation",
+        "sqs": 73.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 8,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "hermes-knowledge-base",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 9,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "ai-trends",
+        "sqs": 68.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "polymarket",
+        "sqs": 64.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "blogwatcher",
+        "sqs": 58.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "llm-wiki",
+        "sqs": 58.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "arxiv",
+        "sqs": 56.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 6,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "learning-workflow": {
+    "pack_name": "learning-workflow",
+    "skill_count": 1,
+    "avg_sqs": 81.2,
+    "min_sqs": 81.2,
+    "max_sqs": 81.2,
+    "distribution": {
+      "🟢 excellent": 1,
+      "🟡 good": 0,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "learning-workflow",
+        "sqs": 81.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 14,
+          "S5_discoverability": 19
+        }
+      }
+    ]
+  },
+  "media-processing": {
+    "pack_name": "media-processing",
+    "skill_count": 5,
+    "avg_sqs": 59.9,
+    "min_sqs": 55.2,
+    "max_sqs": 68.2,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 1,
+      "🟠 needs_work": 4,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "heartmula",
+        "sqs": 68.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "songsee",
+        "sqs": 59.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 11,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "spotify",
+        "sqs": 58.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "gif-search",
+        "sqs": 57.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 8,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "youtube-content",
+        "sqs": 55.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12.2,
+          "S2_content": 15,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "messaging": {
+    "pack_name": "messaging",
+    "skill_count": 8,
+    "avg_sqs": 66.45,
+    "min_sqs": 56.2,
+    "max_sqs": 75.2,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 7,
+      "🟠 needs_work": 1,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "feishu-batch-send",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 16,
+          "S3_freshness": 19,
+          "S4_relations": 10,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "xurl",
+        "sqs": 69.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "feishu-send-file",
+        "sqs": 68.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "smart-broadcast",
+        "sqs": 67.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 11,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "agentmail",
+        "sqs": 66,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "himalaya",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "feishu",
+        "sqs": 63.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 12.2,
+          "S2_content": 18,
+          "S3_freshness": 15,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "feishu-card-merge-streaming",
+        "sqs": 56.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 10.2,
+          "S2_content": 13,
+          "S3_freshness": 15,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      }
+    ]
+  },
+  "metacognition": {
+    "pack_name": "metacognition",
+    "skill_count": 5,
+    "avg_sqs": 77.12,
+    "min_sqs": 72.2,
+    "max_sqs": 86.2,
+    "distribution": {
+      "🟢 excellent": 1,
+      "🟡 good": 4,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "self-capabilities-map",
+        "sqs": 86.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 14,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "skill-creator",
+        "sqs": 77.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "skill-to-pypi",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "architecture-trilemma",
+        "sqs": 74.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "design-philosophy-migration",
+        "sqs": 72.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      }
+    ]
+  },
+  "network-proxy": {
+    "pack_name": "network-proxy",
+    "skill_count": 3,
+    "avg_sqs": 67.47,
+    "min_sqs": 58.8,
+    "max_sqs": 77.8,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 2,
+      "🟠 needs_work": 1,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "web-access",
+        "sqs": 77.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "clash-config",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 8,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "proxy-finder",
+        "sqs": 58.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 6,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      }
+    ]
+  },
+  "security-audit": {
+    "pack_name": "security-audit",
+    "skill_count": 5,
+    "avg_sqs": 71.28,
+    "min_sqs": 61.8,
+    "max_sqs": 79.8,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 5,
+      "🟠 needs_work": 0,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "delete-safety",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 11,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "commit-quality-check",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "1password",
+        "sqs": 68.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 12
+        }
+      },
+      {
+        "name": "sherlock",
+        "sqs": 66.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "godmode",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 11,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      }
+    ]
+  },
+  "social-gaming": {
+    "pack_name": "social-gaming",
+    "skill_count": 4,
+    "avg_sqs": 60.6,
+    "min_sqs": 51.5,
+    "max_sqs": 70.2,
+    "distribution": {
+      "🟢 excellent": 0,
+      "🟡 good": 2,
+      "🟠 needs_work": 2,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "bangumi-recommender",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "yuanbao",
+        "sqs": 61.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "minecraft-modpack-server",
+        "sqs": 59.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 11.5,
+          "S2_content": 18,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "pokemon-player",
+        "sqs": 51.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.5,
+          "S2_content": 8,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      }
+    ]
+  },
+  "uncategorized": {
+    "pack_name": "uncategorized",
+    "skill_count": 79,
+    "avg_sqs": 68.44,
+    "min_sqs": 50.2,
+    "max_sqs": 88.2,
+    "distribution": {
+      "🟢 excellent": 7,
+      "🟡 good": 61,
+      "🟠 needs_work": 11,
+      "🔴 poor": 0
+    },
+    "skills": [
+      {
+        "name": "night-study-engine",
+        "sqs": 88.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 16,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "project-state-machine",
+        "sqs": 86.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 9,
+          "S5_discoverability": 20
+        }
+      },
+      {
+        "name": "sdd-research",
+        "sqs": 85.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 11,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "learning-review-cycle",
+        "sqs": 83.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 13,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "generic-dev-workflow",
+        "sqs": 82.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 6,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "project-report-generator",
+        "sqs": 81.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 6,
+          "S5_discoverability": 20
+        }
+      },
+      {
+        "name": "image-recognition-workflow",
+        "sqs": 81.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 11,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "skill-eval-cranfield",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "doc-alignment",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "sdd-workflow",
+        "sqs": 79.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "sprint-planning",
+        "sqs": 77.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 6,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "hy3-model-guide",
+        "sqs": 77.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 20
+        }
+      },
+      {
+        "name": "sra-dev-workflow",
+        "sqs": 77.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "pptx-analysis",
+        "sqs": 77.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 19,
+          "S4_relations": 10,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "web-ui-ux-design",
+        "sqs": 76.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "html-presentation",
+        "sqs": 76.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 9,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "analysis-workflow",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "self-review",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 7,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "news-briefing",
+        "sqs": 75.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 10,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "bmad-context-engineering",
+        "sqs": 74.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "file-classification",
+        "sqs": 74.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 10,
+          "S5_discoverability": 16
+        }
+      },
+      {
+        "name": "web-ui",
+        "sqs": 74.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 8,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "generic-qa-workflow",
+        "sqs": 73.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 6,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "mermaid-guide",
+        "sqs": 72.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "duckduckgo-search",
+        "sqs": 72.5,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "memory-management",
+        "sqs": 72.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 20,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "maps",
+        "sqs": 71.8,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "file-system-manager",
+        "sqs": 71.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 10,
+          "S3_freshness": 20,
+          "S4_relations": 10,
+          "S5_discoverability": 16
+        }
+      },
+      {
+        "name": "sra-qa-workflow",
+        "sqs": 71.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 8,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "memento-flashcards",
+        "sqs": 70.5,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "searxng-search",
+        "sqs": 70.5,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "problem-solving-sherlock",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "system-health-check",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "hermes-self-analysis",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "browser-automation",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "html-css-rendering-qa",
+        "sqs": 70.2,
+        "level": "🟡 良好",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 17
+        }
+      },
+      {
+        "name": "development-workflow-index",
+        "sqs": 69.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 0,
+          "S5_discoverability": 19
+        }
+      },
+      {
+        "name": "ocr-and-documents",
+        "sqs": 68.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "research-paper-writing",
+        "sqs": 68.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "python-testing",
+        "sqs": 68,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "native-mcp",
+        "sqs": 67.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "axolotl",
+        "sqs": 67.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "fitness-nutrition",
+        "sqs": 67.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 18,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "airtable",
+        "sqs": 66.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 20,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 7
+        }
+      },
+      {
+        "name": "notion",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "trl-fine-tuning",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "lm-evaluation-harness",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "obliteratus",
+        "sqs": 65.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "fastmcp",
+        "sqs": 65.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 15,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "imessage",
+        "sqs": 63.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "llama-cpp",
+        "sqs": 63.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "adversarial-ux-test",
+        "sqs": 63.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "canvas",
+        "sqs": 63.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 16.5,
+          "S2_content": 13,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "dogfood",
+        "sqs": 63.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 15,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "anti-repetition-loop",
+        "sqs": 63.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "segment-anything",
+        "sqs": 62.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 15
+        }
+      },
+      {
+        "name": "unsloth",
+        "sqs": 62.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "information-decomposition",
+        "sqs": 62.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 7,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "apple-notes",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "apple-reminders",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "findmy",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "jupyter-live-kernel",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 13,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "linear",
+        "sqs": 61.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 11,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "nano-pdf",
+        "sqs": 60.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "audiocraft",
+        "sqs": 60.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "dspy",
+        "sqs": 60.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "vllm",
+        "sqs": 60.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "outlines",
+        "sqs": 60.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 10,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "huggingface-hub",
+        "sqs": 59.0,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.0,
+          "S2_content": 5,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      },
+      {
+        "name": "weights-and-biases",
+        "sqs": 58.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "mcporter",
+        "sqs": 58.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 14.5,
+          "S2_content": 10,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "pdf-layout-reportlab",
+        "sqs": 57.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "pdf-layout-weasyprint",
+        "sqs": 57.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 11
+        }
+      },
+      {
+        "name": "openhue",
+        "sqs": 56.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 15.8,
+          "S2_content": 8,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "powerpoint",
+        "sqs": 54.5,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.5,
+          "S2_content": 13,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "xlsx-guide",
+        "sqs": 54.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 13.2,
+          "S2_content": 6,
+          "S3_freshness": 20,
+          "S4_relations": 5,
+          "S5_discoverability": 10
+        }
+      },
+      {
+        "name": "google-workspace",
+        "sqs": 53.8,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 17.8,
+          "S2_content": 3,
+          "S3_freshness": 19,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "obsidian",
+        "sqs": 53.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 10.2,
+          "S2_content": 15,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 9
+        }
+      },
+      {
+        "name": "bmad-context-insights",
+        "sqs": 50.2,
+        "level": "🟠 需改进",
+        "dimensions": {
+          "S1_structure": 10.2,
+          "S2_content": 8,
+          "S3_freshness": 14,
+          "S4_relations": 5,
+          "S5_discoverability": 13
+        }
+      }
+    ]
+  }
+}

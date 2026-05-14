@@ -1,3 +1,10 @@
+---
+type: tutorial
+skill_ref: "latex quick ref"
+keywords: [latex-quick-ref]
+created: 2026-05-14
+---
+
 # LaTeX 排版速查
 
 > 从 `latex-guide` skill 降级（SQS 45.2/100 — 行数不足，无版本号）

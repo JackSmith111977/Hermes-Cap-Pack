@@ -1,3 +1,10 @@
+---
+type: best-practice
+skill_ref: "agent orchestration patterns"
+keywords: [agent-orchestration-patterns]
+created: 2026-05-14
+---
+
 # Agent Orchestration Patterns
 
 > 多 Agent 编排实战经验 — 从消息注入到多 Agent 协作的完整指南

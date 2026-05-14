@@ -1,3 +1,10 @@
+---
+type: lesson-learned
+skill_ref: "wqy font fallback"
+keywords: [wqy-font-fallback]
+created: 2026-05-14
+---
+
 # WQY 字体回退问题
 
 > **类型**: pitfall · **关联技能**: pdf-layout, pdf-pro-design

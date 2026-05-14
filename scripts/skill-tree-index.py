@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-skill-tree-index.py v1.0 — Hermes Skill 分层树状索引生成器
+skill-tree-index.py v1.1 — Hermes Skill 分层树状索引生成器 + CHI 健康仪表盘
 
 基于 18 能力包模块 + skill 元数据扫描，生成三层树状索引：
   Layer 1: Capability Pack (领域层, 18 个)
@@ -20,7 +20,10 @@ skill-tree-index.py v1.0 — Hermes Skill 分层树状索引生成器
   python3 skill-tree-index.py --consolidate         # 显示合并建议
   python3 skill-tree-index.py --json               # JSON 输出
   python3 skill-tree-index.py --health             # 系统健康度速览
-  python3 skill-tree-index.py --sra                # SRA 兼容格式（含簇/包/同类技能）
+  python3 skill-tree-index.py --sra                # SRA 兼容格式
+  python3 skill-tree-index.py --dashboard          # CHI 健康仪表盘 (HTML)
+    --input <chi-by-pack.json>                     #  聚合数据输入
+    --output <chi-dashboard.html>                  #  HTML 输出
 """
 
 import os, sys, json, re, yaml
@@ -513,6 +516,167 @@ def build_sra_output(tree, all_skills):
     return sra_index
 
 
+def print_dashboard():
+    """生成 CHI 健康仪表盘 HTML"""
+    import argparse
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', default='reports/chi-by-pack.json')
+    parser.add_argument('--output', default='reports/chi-dashboard-v2.html')
+    
+    args, _ = parser.parse_known_args()
+    
+    with open(args.input) as f:
+        packs = json.load(f)
+    
+    # Calculate global metrics
+    all_scores = []
+    for pack_name, pack_data in packs.items():
+        for skill in pack_data.get("skills", []):
+            all_scores.append(skill["sqs"])
+    
+    chi = round(sum(all_scores) / len(all_scores), 2) if all_scores else 0
+    total_skills = len(all_scores)
+    
+    # Sort packs by avg_sqs
+    sorted_packs = sorted(packs.items(), key=lambda x: x[1]["avg_sqs"])
+    
+    # Build HTML
+    bars_html = ""
+    table_rows_html = ""
+    for rank, (pack_name, data) in enumerate(sorted_packs, 1):
+        avg = data["avg_sqs"]
+        bar_pct = min(avg, 100)
+        if avg >= 80: color = "#22c55e"
+        elif avg >= 60: color = "#eab308"
+        elif avg >= 40: color = "#f97316"
+        else: color = "#ef4444"
+        
+        marker = " 🎯" if rank <= 3 else ""
+        bars_html += f"""\
+        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>{rank}. {pack_name}</strong>{marker} <span style="color:#888;">({data['skill_count']} skills)</span></span>
+            <span style="font-weight:bold;color:{color}">{avg}</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:{bar_pct}%;background:{color};height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>"""
+        
+        dist = data["distribution"]
+        table_rows_html += f"""\
+        <tr>
+          <td style="padding:6px 12px;">{pack_name}</td>
+          <td style="padding:6px 12px;text-align:center;">{data['skill_count']}</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:{color};">{avg}</td>
+          <td style="padding:6px 12px;text-align:center;">{dist.get('🟢 excellent', 0)}</td>
+          <td style="padding:6px 12px;text-align:center;">{dist.get('🟡 good', 0)}</td>
+          <td style="padding:6px 12px;text-align:center;">{dist.get('🟠 needs_work', 0)}</td>
+          <td style="padding:6px 12px;text-align:center;">{dist.get('🔴 poor', 0)}</td>
+        </tr>"""
+    
+    # Low-score skills detail
+    low_skills = []
+    for pack_name, data in sorted_packs:
+        for s in data.get("skills", []):
+            if s["sqs"] < 60:
+                low_skills.append((pack_name, s["name"], s["sqs"]))
+    
+    low_skills_html = ""
+    for pack_name, skill_name, sqs in sorted(low_skills, key=lambda x: x[2]):
+        low_skills_html += f"""\
+        <tr>
+          <td style="padding:4px 12px;">{pack_name}</td>
+          <td style="padding:4px 12px;">{skill_name}</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">{sqs}</td>
+        </tr>"""
+    
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CHI 健康仪表盘 v2 — hermes-cap-pack</title>
+<style>
+  * {{ margin:0; padding:0; box-sizing:border-box; }}
+  body {{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f8fafc; color:#1e293b; padding:0; }}
+  .header {{ background:linear-gradient(135deg,#1e293b,#334155); color:white; padding:32px 48px; }}
+  .header h1 {{ font-size:28px; }}
+  .header p {{ color:#94a3b8; margin-top:8px; }}
+  .metrics {{ display:flex; gap:24px; padding:24px 48px; background:white; border-bottom:1px solid #e2e8f0; }}
+  .metric-card {{ flex:1; padding:20px; border-radius:12px; background:#f8fafc; text-align:center; }}
+  .metric-value {{ font-size:36px; font-weight:bold; }}
+  .metric-label {{ font-size:14px; color:#64748b; margin-top:4px; }}
+  .content {{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:24px; padding:24px 48px; }}
+  .card {{ background:white; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }}
+  .card h2 {{ font-size:18px; margin-bottom:16px; }}
+  table {{ width:100%; border-collapse:collapse; font-size:14px; }}
+  th {{ background:#f1f5f9; padding:8px 12px; text-align:left; font-weight:600; }}
+  td {{ border-bottom:1px solid #f1f5f9; }}
+  tr:hover td {{ background:#f8fafc; }}
+  .footer {{ text-align:center; padding:24px; color:#94a3b8; font-size:13px; }}
+  @media (max-width:900px) {{ .content {{ grid-template-columns:1fr; }} .metrics {{ flex-direction:column; }} .header, .metrics, .content {{ padding:16px; }} }}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🏥 CHI 健康仪表盘</h1>
+  <p>hermes-cap-pack · 全量 SQS 评分 · 按能力包聚合 · 生成于 2026-05-14</p>
+</div>
+
+<div class="metrics">
+  <div class="metric-card" style="background:#f0fdf4;">
+    <div class="metric-value" style="color:#16a34a;">{chi}</div>
+    <div class="metric-label">全局 CHI (均分)</div>
+  </div>
+  <div class="metric-card" style="background:#fefce8;">
+    <div class="metric-value" style="color:#ca8a04;">{total_skills}</div>
+    <div class="metric-label">Skill 总数</div>
+  </div>
+  <div class="metric-card" style="background:#fef2f2;">
+    <div class="metric-value" style="color:#dc2626;">{len(sorted_packs)}</div>
+    <div class="metric-label">能力包数</div>
+  </div>
+  <div class="metric-card" style="background:#f0f9ff;">
+    <div class="metric-value" style="color:#2563eb;">{len(low_skills)}</div>
+    <div class="metric-label">低分 skill (&lt;60)</div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="card">
+    <h2>📊 能力包 SQS 均分</h2>
+    {bars_html}
+  </div>
+  <div class="card">
+    <h2>📋 评分分布</h2>
+    <table>
+      <tr><th>能力包</th><th>数</th><th>均分</th><th>🟢</th><th>🟡</th><th>🟠</th><th>🔴</th></tr>
+      {table_rows_html}
+    </table>
+  </div>
+  {f'''<div class="card" style="grid-column:1/-1;">
+    <h2>⚠️ 低分 skill 详情 (&lt;60)</h2>
+    <table>
+      <tr><th>能力包</th><th>Skill</th><th>SQS</th></tr>
+      {low_skills_html}
+    </table>
+  </div>''' if low_skills_html else ''}
+</div>
+
+<div class="footer">
+  <p>hermes-cap-pack · project-state.py &bull; aggregate-sqs.py &bull; skill-tree-index.py --dashboard</p>
+</div>
+</body>
+</html>"""
+    
+    with open(args.output, 'w') as f:
+        f.write(html)
+    print(f"✅ 仪表盘已生成: {args.output}", file=sys.stderr)
+    print(f"   CHI: {chi} | 能力包: {len(sorted_packs)} | Skill: {total_skills} | 低分: {len(low_skills)}", file=sys.stderr)
+
+
 def main():
     if len(sys.argv) < 2 or sys.argv[1] in ('-h', '--help'):
         print(__doc__)
@@ -537,6 +701,8 @@ def main():
         print(json.dumps(sra_output, ensure_ascii=False, indent=2))
     elif '--health' in sys.argv:
         print_health_summary(all_skills, module_skills, unclassified, name_groups)
+    elif '--dashboard' in sys.argv:
+        print_dashboard()
     elif '--consolidate' in sys.argv:
         print_tree(tree, pack_filter)
         print("\n" + "─" * 65)

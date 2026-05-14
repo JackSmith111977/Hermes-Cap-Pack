@@ -1,3 +1,10 @@
+---
+type: tutorial
+skill_ref: "html quick ref"
+keywords: [html-quick-ref]
+created: 2026-05-14
+---
+
 # HTML 文档排版速查
 
 > 从 `html-guide` skill 降级（SQS 46.2/100 — 内容被 html-presentation 覆盖）

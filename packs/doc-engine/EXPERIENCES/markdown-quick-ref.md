@@ -1,3 +1,10 @@
+---
+type: tutorial
+skill_ref: "markdown quick ref"
+keywords: [markdown-quick-ref]
+created: 2026-05-14
+---
+
 # Markdown 写作与转换速查
 
 > 从 `markdown-guide` skill 降级（SQS 54.2/100 — 基础语法无版本号）

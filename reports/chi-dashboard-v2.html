@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CHI 健康仪表盘 v2 — hermes-cap-pack</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f8fafc; color:#1e293b; padding:0; }
+  .header { background:linear-gradient(135deg,#1e293b,#334155); color:white; padding:32px 48px; }
+  .header h1 { font-size:28px; }
+  .header p { color:#94a3b8; margin-top:8px; }
+  .metrics { display:flex; gap:24px; padding:24px 48px; background:white; border-bottom:1px solid #e2e8f0; }
+  .metric-card { flex:1; padding:20px; border-radius:12px; background:#f8fafc; text-align:center; }
+  .metric-value { font-size:36px; font-weight:bold; }
+  .metric-label { font-size:14px; color:#64748b; margin-top:4px; }
+  .content { display:grid; grid-template-columns:1.2fr 0.8fr; gap:24px; padding:24px 48px; }
+  .card { background:white; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+  .card h2 { font-size:18px; margin-bottom:16px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { background:#f1f5f9; padding:8px 12px; text-align:left; font-weight:600; }
+  td { border-bottom:1px solid #f1f5f9; }
+  tr:hover td { background:#f8fafc; }
+  .footer { text-align:center; padding:24px; color:#94a3b8; font-size:13px; }
+  @media (max-width:900px) { .content { grid-template-columns:1fr; } .metrics { flex-direction:column; } .header, .metrics, .content { padding:16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🏥 CHI 健康仪表盘</h1>
+  <p>hermes-cap-pack · 全量 SQS 评分 · 按能力包聚合 · 生成于 2026-05-14</p>
+</div>
+
+<div class="metrics">
+  <div class="metric-card" style="background:#f0fdf4;">
+    <div class="metric-value" style="color:#16a34a;">67.92</div>
+    <div class="metric-label">全局 CHI (均分)</div>
+  </div>
+  <div class="metric-card" style="background:#fefce8;">
+    <div class="metric-value" style="color:#ca8a04;">202</div>
+    <div class="metric-label">Skill 总数</div>
+  </div>
+  <div class="metric-card" style="background:#fef2f2;">
+    <div class="metric-value" style="color:#dc2626;">16</div>
+    <div class="metric-label">能力包数</div>
+  </div>
+  <div class="metric-card" style="background:#f0f9ff;">
+    <div class="metric-value" style="color:#2563eb;">37</div>
+    <div class="metric-label">低分 skill (&lt;60)</div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="card">
+    <h2>📊 能力包 SQS 均分</h2>
+            <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>1. media-processing</strong> 🎯 <span style="color:#888;">(5 skills)</span></span>
+            <span style="font-weight:bold;color:#f97316">59.9</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:59.9%;background:#f97316;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>2. social-gaming</strong> 🎯 <span style="color:#888;">(4 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">60.6</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:60.6%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>3. developer-workflow</strong> 🎯 <span style="color:#888;">(16 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">64.58</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:64.58%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>4. creative-design</strong> <span style="color:#888;">(25 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">65.29</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:65.29%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>5. messaging</strong> <span style="color:#888;">(8 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">66.45</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:66.45%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>6. doc-engine</strong> <span style="color:#888;">(12 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">67.27</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:67.27%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>7. network-proxy</strong> <span style="color:#888;">(3 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">67.47</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:67.47%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>8. agent-orchestration</strong> <span style="color:#888;">(8 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">67.92</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:67.92%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>9. uncategorized</strong> <span style="color:#888;">(79 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">68.44</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:68.44%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>10. devops-monitor</strong> <span style="color:#888;">(10 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">69.19</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:69.19%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>11. github-ecosystem</strong> <span style="color:#888;">(9 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">70.56</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:70.56%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>12. security-audit</strong> <span style="color:#888;">(5 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">71.28</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:71.28%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>13. learning-engine</strong> <span style="color:#888;">(11 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">72.15</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:72.15%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>14. metacognition</strong> <span style="color:#888;">(5 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">77.12</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:77.12%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>15. financial-analysis</strong> <span style="color:#888;">(1 skills)</span></span>
+            <span style="font-weight:bold;color:#eab308">77.2</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:77.2%;background:#eab308;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>        <div style="margin:12px 0;">
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;">
+            <span><strong>16. learning-workflow</strong> <span style="color:#888;">(1 skills)</span></span>
+            <span style="font-weight:bold;color:#22c55e">81.2</span>
+          </div>
+          <div style="background:#eee;border-radius:8px;height:24px;overflow:hidden;">
+            <div style="width:81.2%;background:#22c55e;height:100%;border-radius:8px;transition:width 0.3s;"></div>
+          </div>
+        </div>
+  </div>
+  <div class="card">
+    <h2>📋 评分分布</h2>
+    <table>
+      <tr><th>能力包</th><th>数</th><th>均分</th><th>🟢</th><th>🟡</th><th>🟠</th><th>🔴</th></tr>
+              <tr>
+          <td style="padding:6px 12px;">media-processing</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#f97316;">59.9</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;">4</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">social-gaming</td>
+          <td style="padding:6px 12px;text-align:center;">4</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">60.6</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">2</td>
+          <td style="padding:6px 12px;text-align:center;">2</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">developer-workflow</td>
+          <td style="padding:6px 12px;text-align:center;">16</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">64.58</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">13</td>
+          <td style="padding:6px 12px;text-align:center;">3</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">creative-design</td>
+          <td style="padding:6px 12px;text-align:center;">25</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">65.29</td>
+          <td style="padding:6px 12px;text-align:center;">2</td>
+          <td style="padding:6px 12px;text-align:center;">16</td>
+          <td style="padding:6px 12px;text-align:center;">7</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">messaging</td>
+          <td style="padding:6px 12px;text-align:center;">8</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">66.45</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">7</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">doc-engine</td>
+          <td style="padding:6px 12px;text-align:center;">12</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">67.27</td>
+          <td style="padding:6px 12px;text-align:center;">2</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">network-proxy</td>
+          <td style="padding:6px 12px;text-align:center;">3</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">67.47</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">2</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">agent-orchestration</td>
+          <td style="padding:6px 12px;text-align:center;">8</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">67.92</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">8</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">uncategorized</td>
+          <td style="padding:6px 12px;text-align:center;">79</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">68.44</td>
+          <td style="padding:6px 12px;text-align:center;">7</td>
+          <td style="padding:6px 12px;text-align:center;">61</td>
+          <td style="padding:6px 12px;text-align:center;">11</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">devops-monitor</td>
+          <td style="padding:6px 12px;text-align:center;">10</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">69.19</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">10</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">github-ecosystem</td>
+          <td style="padding:6px 12px;text-align:center;">9</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">70.56</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">9</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">security-audit</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">71.28</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">learning-engine</td>
+          <td style="padding:6px 12px;text-align:center;">11</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">72.15</td>
+          <td style="padding:6px 12px;text-align:center;">3</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;">3</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">metacognition</td>
+          <td style="padding:6px 12px;text-align:center;">5</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">77.12</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;">4</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">financial-analysis</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#eab308;">77.2</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>        <tr>
+          <td style="padding:6px 12px;">learning-workflow</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;font-weight:bold;color:#22c55e;">81.2</td>
+          <td style="padding:6px 12px;text-align:center;">1</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+          <td style="padding:6px 12px;text-align:center;">0</td>
+        </tr>
+    </table>
+  </div>
+  <div class="card" style="grid-column:1/-1;">
+    <h2>⚠️ 低分 skill 详情 (&lt;60)</h2>
+    <table>
+      <tr><th>能力包</th><th>Skill</th><th>SQS</th></tr>
+              <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">bmad-context-insights</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">50.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">social-gaming</td>
+          <td style="padding:4px 12px;">pokemon-player</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">51.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">developer-workflow</td>
+          <td style="padding:4px 12px;">plan</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">51.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">obsidian</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">53.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">google-workspace</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">53.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">doc-engine</td>
+          <td style="padding:4px 12px;">markdown-guide</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">54.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">doc-engine</td>
+          <td style="padding:4px 12px;">latex-guide</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">54.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">doc-engine</td>
+          <td style="padding:4px 12px;">epub-guide</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">54.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">xlsx-guide</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">54.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">powerpoint</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">54.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">media-processing</td>
+          <td style="padding:4px 12px;">youtube-content</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">55.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">doc-engine</td>
+          <td style="padding:4px 12px;">docx-guide</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">55.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">doc-engine</td>
+          <td style="padding:4px 12px;">html-guide</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">55.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">humanizer</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">55.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">manim-video</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">56.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">p5js</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">56.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">messaging</td>
+          <td style="padding:4px 12px;">feishu-card-merge-streaming</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">56.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">openhue</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">56.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">learning-engine</td>
+          <td style="padding:4px 12px;">arxiv</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">56.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">pdf-layout-reportlab</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">57.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">pdf-layout-weasyprint</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">57.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">media-processing</td>
+          <td style="padding:4px 12px;">gif-search</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">57.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">ascii-video</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.2</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">media-processing</td>
+          <td style="padding:4px 12px;">spotify</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">developer-workflow</td>
+          <td style="padding:4px 12px;">one-three-one-rule</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">songwriting-and-ai-music</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">mcporter</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">ascii-art</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">network-proxy</td>
+          <td style="padding:4px 12px;">proxy-finder</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">weights-and-biases</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">learning-engine</td>
+          <td style="padding:4px 12px;">blogwatcher</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">learning-engine</td>
+          <td style="padding:4px 12px;">llm-wiki</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">58.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">uncategorized</td>
+          <td style="padding:4px 12px;">huggingface-hub</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">59.0</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">social-gaming</td>
+          <td style="padding:4px 12px;">minecraft-modpack-server</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">59.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">creative-design</td>
+          <td style="padding:4px 12px;">sketch</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">59.5</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">media-processing</td>
+          <td style="padding:4px 12px;">songsee</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">59.8</td>
+        </tr>        <tr>
+          <td style="padding:4px 12px;">developer-workflow</td>
+          <td style="padding:4px 12px;">test-driven-development</td>
+          <td style="padding:4px 12px;text-align:center;color:#ef4444;">59.8</td>
+        </tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p>hermes-cap-pack · project-state.py &bull; aggregate-sqs.py &bull; skill-tree-index.py --dashboard</p>
+</div>
+</body>
+</html>

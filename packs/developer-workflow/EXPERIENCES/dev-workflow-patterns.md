@@ -1,8 +1,11 @@
 ---
-id: dev-workflow-patterns
-type: lesson
-description: 开发工作流已知陷阱与最佳实践 — Plan/Spike/TDD/调试各环节常见问题
-skill_refs:
+
+type: best-practice
+skill_ref: developer-workflow
+keywords: [dev-workflow, patterns]
+created: 2026-05-14
+---
+
   - plan
   - writing-plans
   - spike

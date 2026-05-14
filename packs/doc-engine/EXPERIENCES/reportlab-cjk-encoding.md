@@ -1,3 +1,10 @@
+---
+type: lesson-learned
+skill_ref: "reportlab cjk encoding"
+keywords: [reportlab-cjk-encoding]
+created: 2026-05-14
+---
+
 # ReportLab 中文字体编码问题
 
 > **类型**: pitfall · **关联技能**: pdf-layout

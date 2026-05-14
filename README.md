@@ -1,10 +1,11 @@
 # hermes-cap-pack
 
 > Agent 能力包标准化格式 + CLI 管理工具  
-> **版本**：`0.9.0` · **测试**：`141 ✅` · **许可**：MIT  
-> **能力包**：8 个 · **覆盖**：47% 模块 (8/17)[^kb]  
+> **版本**：`0.9.1` · **测试**：`141 ✅` · **许可**：MIT  
+> **能力包**：17 个 · **三层完整率**：**100%** (L2✅ L3✅)[^kb]  
+> **CHI**：`67.92` 🟡 · **SQS 均分**：`67.9` · **低分占比**：`18%`
 
-[^kb]: ⚡ knowledge-base 已合并至 learning-engine。模块体系从 19 更新为 17。详见 `docs/SPEC-1-1.md` 合并注释。
+[^kb]: 所有 17 个能力包已具备 L2 Experiences + L3 Knowledge 三层结构。详见 `docs/EPIC-004-quality-upgrade.md`。
 
 ---
 
@@ -14,7 +15,7 @@
 |:-----|:----|
 | **目的** | 将 Hermes Agent 的 351+ 个技能拆分为可移植的「能力包」，跨 Agent 复用 |
 | **CLI 入口** | `python -m scripts.cli.main`（或创建 alias `cap-pack`） |
-| **Schema** | `schemas/cap-pack-v2.schema.json` |
+| **Schema** | `schemas/cap-pack-v0.9.1schema.json` |
 | **最小 Python** | ≥ 3.11 |
 | **唯一依赖** | `pyyaml>=6.0` |
 | **仓库** | `https://github.com/JackSmith111977/Hermes-Cap-Pack.git` |
@@ -65,18 +66,27 @@ python -m scripts.cli.main list
 
 | 包名 | 目录 | Skills | 版本 | 状态 |
 |:-----|:-----|:------:|:----:|:----:|
-| **doc-engine** | `packs/doc-engine/` | 9 | 2.0.0 | ✅ 完整 |
-| **quality-assurance** | `packs/quality-assurance/` | 7 | 1.0.0 | ⚠️ 内容待补充 |
-| **learning-workflow** | `packs/learning-workflow/` | 4 | 5.5.0 | ⚠️ 骨架 |
-| **developer-workflow** | `packs/developer-workflow/` | 16 | 1.0.0 | ✅ 完整 |
 | **agent-orchestration** | `packs/agent-orchestration/` | 8 | 1.0.0 | ✅ 完整 |
+| **creative-design** | `packs/creative-design/` | 26 | 1.0.0 | ✅ 完整 |
+| **developer-workflow** | `packs/developer-workflow/` | 16 | 1.0.0 | ✅ 完整 |
+| **devops-monitor** | `packs/devops-monitor/` | 10 | 1.0.0 | ✅ 完整 |
+| **doc-engine** | `packs/doc-engine/` | 12 | 2.0.0 | ✅ 完整 |
+| **financial-analysis** | `packs/financial-analysis/` | 1 | 1.0.0 | ✅ 完整 |
+| **github-ecosystem** | `packs/github-ecosystem/` | 9 | 1.0.0 | ✅ 完整 |
+| **learning-engine** | `packs/learning-engine/` | 11 | 1.0.0 | ✅ 完整（含知识库） |
+| **learning-workflow** | `packs/learning-workflow/` | 4 | 5.5.0 | ✅ 完整 |
+| **media-processing** | `packs/media-processing/` | 5 | 1.0.0 | ✅ 完整 |
+| **messaging** | `packs/messaging/` | 8 | 1.0.0 | ✅ 完整 |
 | **metacognition** | `packs/metacognition/` | 6 | 1.0.0 | ✅ 完整 |
-| **skill-quality** | `packs/skill-quality/` | — | 1.0.0 | 🆕 基础设施型 |
-| **learning-engine** | `packs/learning-engine/` | 11 | 1.0.0 | ✅ 完整（含知识库[^kb]） |
+| **network-proxy** | `packs/network-proxy/` | 3 | 1.0.0 | ✅ 完整 |
+| **quality-assurance** | `packs/quality-assurance/` | — | 1.0.0 | ✅ 完整（基础设施型） |
+| **security-audit** | `packs/security-audit/` | 5 | 1.0.0 | ✅ 完整 |
+| **skill-quality** | `packs/skill-quality/` | — | 1.0.0 | ✅ 完整（基础设施型） |
+| **social-gaming** | `packs/social-gaming/` | 4 | 1.0.0 | ✅ 完整 |
 
-> **已覆盖：8/17 模块（47%）** — 剩余 9 个模块待提取（creative-design, github-ecosystem, devops-monitor 等）
-
-> [^kb]: knowledge-base 原为独立模块，已合并至 learning-engine。详见 `docs/SPEC-1-1.md` 合并注释。
+> **已覆盖：17/17 模块（100%）** — 全部模块已完成提取且三层结构完整 📦
+>
+> 质量基线：**CHI 67.92** · **SQS 均分 67.9** · 详见 `docs/EPIC-004-quality-upgrade.md`
 
 ---
 
@@ -212,7 +222,7 @@ from scripts.adapters.hermes import HermesAdapter
 from pathlib import Path
 
 # 解析能力包
-parser = PackParser(schema_path=Path("schemas/cap-pack-v0.8.0schema.json"))
+parser = PackParser(schema_path=Path("schemas/cap-pack-v0.9.1schema.json"))
 pack = parser.parse(Path("packs/doc-engine"))
 print(f"📦 {pack.name} v{pack.version} — {len(pack.skills)} skills")
 
@@ -287,8 +297,8 @@ skills:
     description: "我的第一个技能"
 ```
 
-**完整格式规范**：`schemas/cap-pack-v2.schema.json`  
-**JSON Schema**：`schemas/cap-pack-v2.schema.json`
+**完整格式规范**：`schemas/cap-pack-v0.9.1schema.json`  
+**JSON Schema**：`schemas/cap-pack-v0.9.1schema.json`
 
 ---
 
@@ -316,7 +326,7 @@ hermes-cap-pack/
 ├── README.md               # ← 你现在看的
 ├── CHANGELOG.md            # 版本日志
 ├── constraints.md          # 项目约束
-├── pyproject.toml          # Python 包元数据 (v0.8.0)
+├── pyproject.toml          # Python 包元数据 (v0.9.1)
 │
 ├── docs/                   # 设计文档
 │   ├── EPIC-*.md           # Epic 文档
@@ -326,8 +336,8 @@ hermes-cap-pack/
 │   └── developer-guide-adapter.md
 │
 ├── schemas/                # 格式规范
-│   ├── cap-pack-v1.schema.json         # v1 兼容
-│   └── cap-pack-v2.schema.json         # v2 结构化（推荐）
+│   ├── cap-pack-v0.9.1schema.json         # v0.9.1 兼容
+│   └── cap-pack-v0.9.1schema.json         # v0.9.1 结构化（推荐）
 │
 ├── packs/                  # 能力包仓库
 │   ├── doc-engine/         # 📄 文档生成 (9 skills)
