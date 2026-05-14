@@ -1,18 +1,18 @@
 # hermes-cap-pack
 
 > Agent 能力包标准化格式 + CLI 管理工具  
-> **版本**：`0.8.0` · **测试**：`141 ✅` · **许可**：MIT  
-> **能力包**：6 个 · **覆盖**：32% 模块 (6/19)
+> **版本**：`0.9.0` · **测试**：`141 ✅` · **许可**：MIT  
+> **能力包**：7 个 · **覆盖**：37% 模块 (7/19)
 
 ---
 
 ## 一、项目身份
 
-| 属性 | 值 |
+| | 属性 | 值 |
 |:-----|:----|
 | **目的** | 将 Hermes Agent 的 351+ 个技能拆分为可移植的「能力包」，跨 Agent 复用 |
 | **CLI 入口** | `python -m scripts.cli.main`（或创建 alias `cap-pack`） |
-| **Schema** | `schemas/cap-pack-v0.8.0schema.json` |
+| **Schema** | `schemas/cap-pack-v2.schema.json` |
 | **最小 Python** | ≥ 3.11 |
 | **唯一依赖** | `pyyaml>=6.0` |
 | **仓库** | `https://github.com/JackSmith111977/Hermes-Cap-Pack.git` |
@@ -59,18 +59,19 @@ python -m scripts.cli.main list
 
 ## 三、能力包列表
 
-当前 **6 个已提取的能力包**（全部在 `packs/` 目录下）：
+当前 **7 个已提取的能力包**（全部在 `packs/` 目录下）：
 
 | 包名 | 目录 | Skills | 版本 | 状态 |
 |:-----|:-----|:------:|:----:|:----:|
 | **doc-engine** | `packs/doc-engine/` | 9 | 2.0.0 | ✅ 完整 |
-| **quality-assurance** | `packs/quality-assurance/` | 7 | 1.0.0 | ✅ 完整 |
+| **quality-assurance** | `packs/quality-assurance/` | 7 | 1.0.0 | ⚠️ 内容待补充 |
 | **learning-workflow** | `packs/learning-workflow/` | 4 | 5.5.0 | ⚠️ 骨架 |
 | **developer-workflow** | `packs/developer-workflow/` | 16 | 1.0.0 | ✅ 完整 |
 | **agent-orchestration** | `packs/agent-orchestration/` | 8 | 1.0.0 | ✅ 完整 |
 | **metacognition** | `packs/metacognition/` | 6 | 1.0.0 | ✅ 完整 |
+| **skill-quality** | `packs/skill-quality/` | — | 1.0.0 | 🆕 基础设施型，含质量检测引擎 |
 
-> **已覆盖：6/19 模块（32%）** — 剩余 13 个模块待提取（learning-engine, creative-design, github, devops 等）
+> **已覆盖：7/19 模块（37%）** — 剩余 12 个模块待提取（learning-engine, creative-design, github, devops, knowledge-base 等 Phase 2-4）
 
 ---
 
@@ -281,8 +282,8 @@ skills:
     description: "我的第一个技能"
 ```
 
-**完整格式规范**：`schemas/cap-pack-format-v0.8.0md`  
-**JSON Schema**：`schemas/cap-pack-v0.8.0schema.json`
+**完整格式规范**：`schemas/cap-pack-v2.schema.json`  
+**JSON Schema**：`schemas/cap-pack-v2.schema.json`
 
 ---
 
@@ -320,8 +321,8 @@ hermes-cap-pack/
 │   └── developer-guide-adapter.md
 │
 ├── schemas/                # 格式规范
-│   ├── cap-pack-format-v0.8.0md
-│   └── cap-pack-v0.8.0schema.json
+│   ├── cap-pack-v1.schema.json         # v1 兼容
+│   └── cap-pack-v2.schema.json         # v2 结构化（推荐）
 │
 ├── packs/                  # 能力包仓库
 │   ├── doc-engine/         # 📄 文档生成 (9 skills)
@@ -329,7 +330,8 @@ hermes-cap-pack/
 │   ├── learning-workflow/  # 🧠 学习工作流 (4 skills)
 │   ├── developer-workflow/ # 💻 开发工作流 (16 skills)
 │   ├── agent-orchestration/# 🤖 Agent 协作 (8 skills)
-│   └── metacognition/      # 🪞 元认知 (6 skills)
+│   ├── metacognition/      # 🪞 元认知 (6 skills)
+│   └── skill-quality/      # 🛡️ 质量门禁 (基础设施型)
 │
 ├── scripts/
 │   ├── cli/main.py         # CLI 入口
