@@ -27,7 +27,7 @@
 | **network-proxy** | 🌐 网络代理 | 3 | ⬜ | 🔵 P3 | ★☆☆ | — |
 | **news-research** | 📰 新闻研究 | 2 | ⬜ | 🔵 P3 | ★☆☆ | — |
 | **financial-analysis** | 📊 金融分析 | 2 | ✅ | 🔵 P3 | ★☆☆ | data-science |
-| **social-gaming** | 🎮 社交娱乐 | 4 | ⬜ | 🔵 P3 | ★☆☆ | — |
+| **social-gaming** | 🎮 社交娱乐 | 4 | ✅ | 🔵 P3 | ★☆☆ | — |
 
 > [^1]: ⚡ knowledge-base（原独立模块）已合并至 learning-engine。核心知识技能（knowledge-precipitation, knowledge-routing, hermes-knowledge-base, llm-wiki）已在提取时吸收，消除循环依赖。详见 SPEC-1-1 合并注释。
 | **预留: hermes-new-features** | 🆕 | — | ⬜ | ⏳ | — | — |
@@ -86,7 +86,7 @@
 | STORY-3-12 | network-proxy | 3 | 0.5天 |
 | STORY-3-13 | news-research | 2 | 0.5天 |
 | STORY-3-14 | financial-analysis | 2 | ✅ 已提取 |
-| STORY-3-15 | social-gaming | 4 | 0.5天 |
+| STORY-3-15 | social-gaming | 4 | ✅ 已提取 |
 
 ### 🟣 Phase 5 — 收尾（扩展槽配置）
 

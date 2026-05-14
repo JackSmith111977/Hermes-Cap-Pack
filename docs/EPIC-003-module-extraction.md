@@ -81,7 +81,7 @@
 |:-:|:-----|:-----------|:----:|
 | 12 | **financial-analysis** | financial-analyst, data-science, health | ~4 | ✅ 已提取 |
 | 16 | **news-research** | news-briefing, research(大部分) | ~4 |
-| 18 | **social-gaming** | gaming(2): minecraft, pokemon-player + bangumi-recommender, yuanbao, apple(4) | ~5 |
+| 18 | **social-gaming** | gaming(2): minecraft, pokemon-player + bangumi-recommender, yuanbao, apple(4) | ~5 | ✅ 已提取 |
 
 ### 预留 / 待定
 
