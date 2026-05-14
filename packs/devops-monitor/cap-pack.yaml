@@ -1,0 +1,108 @@
+# 🔧 devops-monitor — 运维监控能力包
+# Schema: cap-pack-v2.schema.json
+
+name: devops-monitor
+version: 1.0.0
+type: capability-pack
+classification: domain
+display_name: "运维监控"
+description: "运维监控全栈能力包 — Docker 管理、Linux 运维、进程管理、项目起步工作流、代理监控、Webhook 订阅、Kanban 任务编排、运维技巧等。覆盖服务器运维的日常操作和监控需求。"
+author: "boku (Emma)"
+created: "2026-05-14"
+updated: "2026-05-14"
+emoji: 🔧
+category: devops-monitor
+domain: devops
+maintainer: "boku"
+
+compatibility:
+  agent_types: [hermes, claude-code, opencode]
+  hermes_version:
+    min: "0.10.0"
+    max: "99.99.99"
+
+dependencies:
+  cap_packs:
+    - name: skill-quality
+      version: "1.0.0"
+
+skills:
+  - id: docker-management
+    name: docker-management
+    description: "Manage Docker containers, images, volumes, networks, and Compose stacks."
+    path: SKILLS/docker-management/SKILL.md
+    version: 1.0.0
+    tags: [docker, container, devops, management]
+    sqs_target: 80.0
+
+  - id: docker-terminal
+    name: docker-terminal
+    description: "Execute commands in isolated Docker sandbox containers — secure, configurable shell environment."
+    path: SKILLS/docker-terminal/SKILL.md
+    version: 1.0.0
+    tags: [docker, sandbox, terminal, security]
+    sqs_target: 75.0
+
+  - id: hermes-ops-tips
+    name: hermes-ops-tips
+    description: "Hermes 运维与工具流最佳实践 — 手动升级、SRA 迁移、高清架构图生成等."
+    path: SKILLS/hermes-ops-tips/SKILL.md
+    version: 1.0.0
+    tags: [hermes, ops, tips, upgrade]
+    sqs_target: 75.0
+
+  - id: kanban-orchestrator
+    name: kanban-orchestrator
+    description: "Decomposition playbook + specialist-roster conventions + task orchestration for Kanban workflows."
+    path: SKILLS/kanban-orchestrator/SKILL.md
+    version: 1.0.0
+    tags: [kanban, orchestration, workflow, task]
+    sqs_target: 75.0
+
+  - id: kanban-worker
+    name: kanban-worker
+    description: "Pitfalls, examples, and edge cases for Hermes Kanban worker execution."
+    path: SKILLS/kanban-worker/SKILL.md
+    version: 1.0.0
+    tags: [kanban, worker, execution, pitfall]
+    sqs_target: 70.0
+
+  - id: linux-ops-guide
+    name: linux-ops-guide
+    description: "Hermes 服务器（Ubuntu）日常运维指南 — systemd 服务管理、日志分析、端口排查、磁盘监控等."
+    path: SKILLS/linux-ops-guide/SKILL.md
+    version: 1.0.0
+    tags: [linux, ops, ubuntu, server, devops]
+    sqs_target: 80.0
+
+  - id: process-management
+    name: process-management
+    description: "长任务监控与后台进程管理最佳实践 — 8 种操作模式、notify_on_complete、watch_patterns."
+    path: SKILLS/process-management/SKILL.md
+    version: 1.0.0
+    tags: [process, management, background, task]
+    sqs_target: 80.0
+
+  - id: project-startup-workflow
+    name: project-startup-workflow
+    description: "项目起步基础建设标准化工作流 — 从 0 到 CI 绿灯的 5 阶段顺序流程."
+    path: SKILLS/project-startup-workflow/SKILL.md
+    version: 1.0.0
+    tags: [project, startup, workflow, ci, setup]
+    sqs_target: 75.0
+
+  - id: proxy-monitor
+    name: proxy-monitor
+    description: "代理节点健康监控与工业级部署流水线 — 活性/依赖性检查、熔断策略、安全部署."
+    path: SKILLS/proxy-monitor/SKILL.md
+    version: 1.0.0
+    tags: [proxy, monitor, health, deployment, security]
+    sqs_target: 75.0
+
+  - id: webhook-subscriptions
+    name: webhook-subscriptions
+    description: "Create and manage webhook subscriptions for event-driven workflows and notifications."
+    path: SKILLS/webhook-subscriptions/SKILL.md
+    version: 1.0.0
+    tags: [webhook, subscription, event, notification]
+    sqs_target: 70.0

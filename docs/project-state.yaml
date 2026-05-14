@@ -215,8 +215,8 @@ entities:
       title: 能力包管理器增强 — CLI 升级/技能管理/测试
       state: implemented
       spec_count: 3
-      story_count: 9
-      completed_count: 9
+      story_count: 10
+      completed_count: 10
       priority: P1
       qa_gate_date: null
       review_date: null
