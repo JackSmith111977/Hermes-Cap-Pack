@@ -1,0 +1,52 @@
+# 🌐 network-proxy — 网络代理能力包
+# Schema: cap-pack-v2.schema.json
+
+name: network-proxy
+version: 1.0.0
+type: capability-pack
+classification: domain
+display_name: "网络代理"
+description: "网络代理能力包 — Clash/mihomo 代理配置管理、免费代理搜集与节点测试、Web 访问通用入口。覆盖代理工具链的配置、发现和联网操作。"
+author: "boku (Emma)"
+created: "2026-05-14"
+updated: "2026-05-14"
+emoji: 🌐
+category: network-proxy
+domain: network
+maintainer: "boku"
+
+compatibility:
+  agent_types: [hermes, claude-code, opencode]
+  hermes_version:
+    min: "0.10.0"
+    max: "99.99.99"
+
+dependencies:
+  cap_packs:
+    - name: skill-quality
+      version: "1.0.0"
+
+skills:
+  - id: clash-config
+    name: clash-config
+    description: "Clash / mihomo 代理工具配置管理 — 配置格式、代理协议、代理组、路由规则、DNS 设置、TUN 模式."
+    path: SKILLS/clash-config/SKILL.md
+    version: 1.0.0
+    tags: [clash, mihomo, proxy, vpn, config]
+    sqs_target: 80.0
+
+  - id: proxy-finder
+    name: proxy-finder
+    description: "免费代理机场搜集与节点测试 — 搜索可用订阅源、测试节点连通性、筛选可用节点写入配置."
+    path: SKILLS/proxy-finder/SKILL.md
+    version: 1.0.0
+    tags: [proxy, finder, test, node]
+    sqs_target: 70.0
+
+  - id: web-access
+    name: web-access
+    description: "所有联网操作的统一入口 — 搜索、网页抓取、浏览器自动化、Tavily MCP 等."
+    path: SKILLS/web-access/SKILL.md
+    version: 1.0.0
+    tags: [web, access, network, browser, search]
+    sqs_target: 80.0
