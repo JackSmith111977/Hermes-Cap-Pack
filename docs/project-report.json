@@ -16,14 +16,14 @@
     "overview_cards": [
       {"label": "名称", "value": "Hermes Cap Pack", "sub": "hermes-cap-pack"},
       {"label": "版本", "value": "0.9.0", "sub": "MIT License"},
-      {"label": "能力包", "value": "13", "sub": "17 模块体系"},
+      {"label": "能力包", "value": "14", "sub": "17 模块体系"},
       {"label": "测试", "value": "141 ✅", "sub": "全通过"}
     ],
     "info_table": [
       {"attr": "作者", "value": "boku (Emma/小玛)"},
       {"attr": "仓库", "value": "<code>github.com/JackSmith111977/Hermes-Cap-Pack</code>"},
       {"attr": "入口", "value": "<code>python -m scripts.cli.main</code>"},
-      {"attr": "覆盖", "value": "<strong>76% (13/17)</strong> — 剩余 4 模块待提取"}
+      {"attr": "覆盖", "value": "<strong>82% (14/17)</strong> — 剩余 3 模块待提取"}
     ]
   },
   "architecture": {
@@ -43,7 +43,8 @@
           {"name": "github-ecosystem", "description": "GitHub 生态 — 9 skills"},
           {"name": "devops-monitor", "description": "运维监控 — 10 skills"},
           {"name": "messaging", "description": "消息平台 — 8 skills"},
-          {"name": "network-proxy", "description": "网络代理 — 3 skills"}
+          {"name": "network-proxy", "description": "网络代理 — 3 skills"},
+          {"name": "security-audit", "description": "安全审计 — 5 skills"}
         ],
         "direction": "user-facing"
       },
@@ -158,7 +159,8 @@
         {"id": "STORY-3-9", "name": "github-ecosystem 能力包提取（9 skills）", "status": "implemented"},
         {"id": "STORY-3-10", "name": "devops-monitor 能力包提取（10 skills）", "status": "implemented"},
         {"id": "STORY-3-11", "name": "messaging 能力包提取（8 skills）", "status": "implemented"},
-        {"id": "STORY-3-12", "name": "network-proxy 能力包提取（3 skills）", "status": "implemented"}
+        {"id": "STORY-3-12", "name": "network-proxy 能力包提取（3 skills）", "status": "implemented"},
+        {"id": "STORY-3-13", "name": "security-audit 能力包提取（5 skills）", "status": "implemented"}
       ]
     }
   ],

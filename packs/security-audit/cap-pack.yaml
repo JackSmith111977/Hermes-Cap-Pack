@@ -1,0 +1,68 @@
+# 🔒 security-audit — 安全审计能力包
+# Schema: cap-pack-v2.schema.json
+
+name: security-audit
+version: 1.0.0
+type: capability-pack
+classification: domain
+display_name: "安全审计"
+description: "安全审计能力包 — 提交质量检查、删除操作安全边界、1Password 凭据管理、OSINT 用户名搜索 (Sherlock)、LLM 红队测试 (G0DM0D3)。覆盖代码安全、凭据管理、信息收集和安全测试。"
+author: "boku (Emma)"
+created: "2026-05-14"
+updated: "2026-05-14"
+emoji: 🔒
+category: security-audit
+domain: security
+maintainer: "boku"
+
+compatibility:
+  agent_types: [hermes, claude-code, opencode]
+  hermes_version:
+    min: "0.10.0"
+    max: "99.99.99"
+
+dependencies:
+  cap_packs:
+    - name: skill-quality
+      version: "1.0.0"
+
+skills:
+  - id: commit-quality-check
+    name: commit-quality-check
+    description: "GitHub 项目提交前文档与业务一致性检查 + 提交质量检查清单."
+    path: SKILLS/commit-quality-check/SKILL.md
+    version: 1.0.0
+    tags: [git, commit, quality, check, security]
+    sqs_target: 80.0
+
+  - id: delete-safety
+    name: delete-safety
+    description: "删除操作安全边界与确认框架 — 风险分级、确认模板、批量删除安全策略."
+    path: SKILLS/delete-safety/SKILL.md
+    version: 1.0.0
+    tags: [delete, safety, risk, git, security]
+    sqs_target: 75.0
+
+  - id: op-1password
+    name: 1password
+    description: "Set up and use 1Password CLI (op) — sign-in, item management, secret injection."
+    path: SKILLS/1password/SKILL.md
+    version: 1.0.0
+    tags: [1password, password, secrets, security]
+    sqs_target: 75.0
+
+  - id: sherlock
+    name: sherlock
+    description: "OSINT username search across 400+ social networks — hunt down user accounts."
+    path: SKILLS/sherlock/SKILL.md
+    version: 1.0.0
+    tags: [sherlock, osint, username, search, security]
+    sqs_target: 70.0
+
+  - id: godmode
+    name: godmode
+    description: "Jailbreak API-served LLMs using G0DM0D3 techniques — prompt injection and safety evaluation."
+    path: SKILLS/godmode/SKILL.md
+    version: 1.0.0
+    tags: [red-teaming, jailbreak, security, llm]
+    sqs_target: 65.0
