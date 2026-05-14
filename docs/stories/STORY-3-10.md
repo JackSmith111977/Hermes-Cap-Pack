@@ -1,6 +1,6 @@
 # STORY-3-10: devops-monitor 能力包提取
 
-> **状态**: `approved` · **优先级**: P1 · **Epic**: EPIC-003 · **Spec**: SPEC-3-3
+> **状态**: `completed` · **优先级**: P1 · **Epic**: EPIC-003 · **Spec**: SPEC-3-3
 > **创建**: 2026-05-14
 > **标签**: `extraction`, `devops-monitor`
 

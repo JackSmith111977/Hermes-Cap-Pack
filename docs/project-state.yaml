@@ -450,31 +450,31 @@ entities:
       epic: EPIC-003
       spec: SPEC-3-2
     STORY-3-7:
-      state: approved
+      state: completed
       epic: EPIC-003
       spec: SPEC-3-2
     STORY-3-8:
-      state: approved
+      state: completed
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-9:
-      state: approved
+      state: completed
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-10:
-      state: approved
+      state: completed
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-11:
-      state: approved
+      state: completed
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-12:
-      state: approved
+      state: completed
       epic: '?'
       spec: '?'
     STORY-3-13:
-      state: approved
+      state: completed
       epic: '?'
       spec: '?'
 sprints:
