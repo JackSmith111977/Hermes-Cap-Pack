@@ -16,8 +16,8 @@
 | **developer-workflow** | 💻 开发工作流 | 16 | ⬜ | 🔴 P0 | ★★★ | knowledge-base |
 | **agent-orchestration** | 🤖 Agent 协作 | 8 | ⬜ | 🔴 P0 | ★★☆ | mcp-integration |
 | **metacognition** | 🪞 元认知系统 | 6+ | ⬜ | 🔴 P0 | ★★☆ | — |
+| **learning-engine**（含知识库[^1]） | 🧠 学习引擎 | 11 | ✅ learning-engine | 🟡 P1 | ★★☆ | — |
 | **creative-design** | 🎨 创意设计 | 27 | ⬜ | 🟡 P1 | ★★★ | media-processing |
-| **learning-engine** | 🧠 学习引擎 | 15 | ⬜ | 🟡 P1 | ★★☆ | — |
 | **github-ecosystem** | 🐙 GitHub 生态 | 9 | ⬜ | 🟡 P1 | ★☆☆ | — |
 | **messaging** | 💬 消息平台 | 9 | ⬜ | 🟡 P1 | ★★☆ | — |
 | **devops-monitor** | 🔧 运维监控 | 9 | ⬜ | 🟢 P2 | ★☆☆ | — |
@@ -28,7 +28,8 @@
 | **news-research** | 📰 新闻研究 | 2 | ⬜ | 🔵 P3 | ★☆☆ | — |
 | **financial-analysis** | 📊 金融分析 | 2 | ⬜ | 🔵 P3 | ★☆☆ | data-science |
 | **social-gaming** | 🎮 社交娱乐 | 4 | ⬜ | 🔵 P3 | ★☆☆ | — |
-| knowledge-base | 📚 知识库系统 | 3 | ⬜ | 🟣 P4 | ★★☆ | — |
+
+> [^1]: ⚡ knowledge-base（原独立模块）已合并至 learning-engine。核心知识技能（knowledge-precipitation, knowledge-routing, hermes-knowledge-base, llm-wiki）已在提取时吸收，消除循环依赖。详见 SPEC-1-1 合并注释。
 | **预留: hermes-new-features** | 🆕 | — | ⬜ | ⏳ | — | — |
 | **预留: custom-plugin** | 🔌 | — | ⬜ | ⏳ | — | — |
 | **预留: future-domain** | 🔮 | — | ⬜ | ⏳ | — | — |
@@ -87,11 +88,12 @@
 | STORY-3-14 | financial-analysis | 2 | 0.5天 |
 | STORY-3-15 | social-gaming | 4 | 0.5天 |
 
-### 🟣 Phase 5 — 收尾（P4, ~3 skills + 扩展槽）
+### 🟣 Phase 5 — 收尾（扩展槽配置）
+
+> ⚡ knowledge-base 原定在此 Phase，已合并至 learning-engine（详见 SPEC-1-1 合并注释）
 
 | Story | 模块 | Skills | 预计 |
 |:------|:-----|:------:|:----:|
-| STORY-3-16 | knowledge-base | 3 | 0.5天 |
 | STORY-3-17 | 跨模块清理 + 扩展槽配置 | 残余 | 1天 |
 
 ---
@@ -117,11 +119,8 @@ Phase 1                  Phase 2               Phase 3              Phase 4
                    └──────────────┘     │ mcp-         │  │ gaming       │
                                         │ integration  │  └──────────────┘
                    ┌──────────────┐     └──────────────┘
-                   │ metacognition│     
-                   └──────────────┘     ┌──────────────┐
-                                        │ knowledge-   │
-                                        │ base         │
-                                        └──────────────┘
+                   │ metacognition│
+                   └──────────────┘
 ```
 
 ---
@@ -182,8 +181,10 @@ entities:
 
 | 指标 | 当前 | Phase 1 后 | 全部完成后 |
 |:-----|:----:|:----------:|:----------:|
-| 已提取模块 | 3/18 | 6/18 | 18/18 |
-| 已提取 skills | ~20 | ~50 | ~160+ |
-| 覆盖 skill 比例 | ~12% | ~30% | ~85%+ |
-| 新增 cap-pack.yaml | 3 | 6 | 18 |
+| 已提取模块 | 8/17 | 11/17 | 17/17 |
+| 已提取 skills | ~55 | ~97 | ~160+ |
+| 覆盖 skill 比例 | ~28% | ~48% | ~85%+ |
+| 新增 cap-pack.yaml | 8 | 11 | 17 |
 | SQS 覆盖 skills | 201 | 201 | 201 |
+
+> ⚡ 模块总数从 18 更新为 17（knowledge-base 已合并至 learning-engine）

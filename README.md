@@ -2,7 +2,9 @@
 
 > Agent 能力包标准化格式 + CLI 管理工具  
 > **版本**：`0.9.0` · **测试**：`141 ✅` · **许可**：MIT  
-> **能力包**：7 个 · **覆盖**：37% 模块 (7/19)
+> **能力包**：8 个 · **覆盖**：47% 模块 (8/17)[^kb]  
+
+[^kb]: ⚡ knowledge-base 已合并至 learning-engine。模块体系从 19 更新为 17。详见 `docs/SPEC-1-1.md` 合并注释。
 
 ---
 
@@ -59,7 +61,7 @@ python -m scripts.cli.main list
 
 ## 三、能力包列表
 
-当前 **7 个已提取的能力包**（全部在 `packs/` 目录下）：
+当前 **8 个已提取的能力包**（全部在 `packs/` 目录下，含 learning-engine）：
 
 | 包名 | 目录 | Skills | 版本 | 状态 |
 |:-----|:-----|:------:|:----:|:----:|
@@ -69,9 +71,12 @@ python -m scripts.cli.main list
 | **developer-workflow** | `packs/developer-workflow/` | 16 | 1.0.0 | ✅ 完整 |
 | **agent-orchestration** | `packs/agent-orchestration/` | 8 | 1.0.0 | ✅ 完整 |
 | **metacognition** | `packs/metacognition/` | 6 | 1.0.0 | ✅ 完整 |
-| **skill-quality** | `packs/skill-quality/` | — | 1.0.0 | 🆕 基础设施型，含质量检测引擎 |
+| **skill-quality** | `packs/skill-quality/` | — | 1.0.0 | 🆕 基础设施型 |
+| **learning-engine** | `packs/learning-engine/` | 11 | 1.0.0 | ✅ 完整（含知识库[^kb]） |
 
-> **已覆盖：7/19 模块（37%）** — 剩余 12 个模块待提取（learning-engine, creative-design, github, devops, knowledge-base 等 Phase 2-4）
+> **已覆盖：8/17 模块（47%）** — 剩余 9 个模块待提取（creative-design, github-ecosystem, devops-monitor 等）
+
+> [^kb]: knowledge-base 原为独立模块，已合并至 learning-engine。详见 `docs/SPEC-1-1.md` 合并注释。
 
 ---
 

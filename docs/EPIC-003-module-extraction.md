@@ -55,13 +55,14 @@
 
 ### Phase 2: P1 高频
 
-| # | 模块 | Hermes 目录 | 估算 | 
-|:-:|:-----|:-----------|:----:|
-| 2 | **learning-engine** | research/deep-research, research/arxiv, research/blogwatcher, research/hermes-knowledge-base, research/llm-wiki, learning(1), knowledge-precipitation, knowledge-routing | ~8 |
-| 13 | **creative-design** | creative(23): ascii-art, architecture-diagram, concept-diagrams, excalidraw, mermaid-guide, pixel-art, sketch, claude-design, design-md, p5js, comfyui, meme-creation + image-generation, image-prompt-guide | ~20 |
-| 15 | **github-ecosystem** | github(9): codebase-inspection, git-advanced-ops, github-auth, github-code-review, github-deploy-upload, github-issues, github-pr-workflow, github-project-ops, github-repo-management | ~9 |
-| 7 | **devops-monitor** | devops(7): docker-management, kanban-orchestrator, kanban-worker, linux-ops-guide, project-startup-workflow, proxy-monitor, webhook-subscriptions + hermes-ops-tips, process-management | ~10 |
-| 1 | **knowledge-base** | knowledge-precipitation, knowledge-routing, note-taking/obsidian, research/hermes-knowledge-base, doc-alignment | ~6 |
+| # | 模块 | Hermes 目录 | 估算 | 状态 |
+|:-:|:-----|:-----------|:----:|:----:|
+| 2 | **learning-engine**（含知识库[^1]） | research/deep-research, research/arxiv, research/blogwatcher, research/hermes-knowledge-base, research/llm-wiki, research/ai-trends, research/polymarket, learning(1), knowledge-precipitation, knowledge-routing, capability-pack-design | ~11 | ✅ **已提取** |
+| 13 | **creative-design** | creative(23): ascii-art, architecture-diagram, concept-diagrams, excalidraw, mermaid-guide, pixel-art, sketch, claude-design, design-md, p5js, comfyui, meme-creation + image-generation, image-prompt-guide | ~20 | ⬜ 待提取 |
+| 15 | **github-ecosystem** | github(9): codebase-inspection, git-advanced-ops, github-auth, github-code-review, github-deploy-upload, github-issues, github-pr-workflow, github-project-ops, github-repo-management | ~9 | ⬜ 待提取 |
+| 7 | **devops-monitor** | devops(7): docker-management, kanban-orchestrator, kanban-worker, linux-ops-guide, project-startup-workflow, proxy-monitor, webhook-subscriptions + hermes-ops-tips, process-management | ~10 | ⬜ 待提取 |
+
+> [^1]: ⚡ `knowledge-base` 模块已合并至此。原因：核心技能（knowledge-precipitation, knowledge-routing 等）已在 learning-engine 提取时吸收，消除循环依赖。详见 SPEC-1-1 合并注释。
 
 ### Phase 3: P2 专用
 
@@ -94,11 +95,12 @@
 
 ---
 
-## 三、更新后的 19 模块体系
+## 三、更新后的 18 模块体系
 
 相比 v2.0 的 18 模块，v2.1 变更：
 - ❌ **删除**: bmad-method（项目级框架，已删除）
 - ✅ **新增**: mlops（ML/AI 工程化，原分类遗漏，13 skill）
+- ⚡ **合并**: knowledge-base → learning-engine（详见 Phase 2 注释）
 
 | 变更 | 原因 |
 |:-----|:------|
@@ -115,8 +117,8 @@ EPIC-003: 剩余 16 模块纳入 + 质检 + 合并 + 升级
 ├─ Phase 1 (P0): developer-workflow + agent-orchestration + metacognition
 │  ├── ~42 skills → 3 packs → 预计 2-3 天
 │
-├─ Phase 2 (P1): learning-engine + creative-design + github + devops + knowledge-base
-│  ├── ~53 skills → 5 packs → 预计 2 天
+├─ Phase 2 (P1): learning-engine (含知识库) + creative-design + github + devops
+│  ├── ~50 skills → 4 packs → 预计 2 天
 │
 ├─ Phase 3 (P2): messaging + network-proxy + security + media + mcp + mlops
 │  ├── ~41 skills → 6 packs → 预计 1-2 天
@@ -129,10 +131,12 @@ EPIC-003: 剩余 16 模块纳入 + 质检 + 合并 + 升级
 
 ## 五、验收标准
 
-- [ ] AC1: 全部 ~20 模块提取为 cap-pack，每个含 cap-pack.yaml
+- [ ] AC1: 全部 ~17 模块提取为 cap-pack，每个含 cap-pack.yaml（knowledge-base 已合并至 learning-engine）
 - [ ] AC2: 每个提取的 skill 有 SQS 质量评分记录
 - [ ] AC3: 识别并合并 ≥5 组重复/重叠 skill
 - [ ] AC4: 每个 pack 通过 `validate-pack.py` 验证
 - [ ] AC5: 至少 3 个 pack 可安装到 Hermes 和 OpenCode
 - [ ] AC6: 产出全局质量报告（HTML 格式）
 - [ ] AC7: 更新 README 模块分类表（v2.1 → 20 模块 + 3 扩展槽）
+
+[^1]: ⚡ knowledge-base 模块已合并至 learning-engine。原因：核心知识技能（knowledge-precipitation, knowledge-routing 等）已在 learning-engine 提取时吸收，消除循环依赖。详见 SPEC-1-1 合并注释。
