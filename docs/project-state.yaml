@@ -308,6 +308,10 @@ entities:
       - STORY-3-4
       - STORY-3-5
       - STORY-3-6
+    SPEC-3-3:
+      state: draft
+      epic: '?'
+      stories: []
   stories:
     STORY-1-1-1:
       state: draft
@@ -421,7 +425,6 @@ entities:
       state: implemented
       epic: EPIC-002
       spec: SPEC-2-4
-    # ─── EPIC-003 Stories ───
     STORY-3-1:
       state: implemented
       epic: EPIC-003
@@ -447,25 +450,33 @@ entities:
       epic: EPIC-003
       spec: SPEC-3-2
     STORY-3-7:
-      state: implemented
+      state: approved
       epic: EPIC-003
       spec: SPEC-3-2
     STORY-3-8:
-      state: implemented
+      state: approved
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-9:
-      state: implemented
+      state: approved
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-10:
-      state: implemented
+      state: approved
       epic: EPIC-003
       spec: SPEC-3-3
     STORY-3-11:
-      state: implemented
+      state: approved
       epic: EPIC-003
       spec: SPEC-3-3
+    STORY-3-12:
+      state: approved
+      epic: '?'
+      spec: '?'
+    STORY-3-13:
+      state: approved
+      epic: '?'
+      spec: '?'
 sprints:
   sprint-1:
     title: 核心框架搭建
