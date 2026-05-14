@@ -1,7 +1,7 @@
 # STORY-3-2: agent-orchestration 模块提取
 
-> **状态**: `draft` · **优先级**: P0 · **Epic**: EPIC-003 · **Spec**: SPEC-3-1
-> **SDD 状态**: `draft` · **创建**: 2026-05-14
+> **状态**: `implemented` · **优先级**: P0 · **Epic**: EPIC-003 · **Spec**: SPEC-3-1
+> **SDD 状态**: `completed` · **创建**: 2026-05-14
 > **标签**: `extraction`, `agent-orchestration`
 
 ## 用户故事

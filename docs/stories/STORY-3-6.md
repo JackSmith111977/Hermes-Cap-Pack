@@ -1,7 +1,7 @@
 # STORY-3-6: 测试 + 集成 + 文档更新
 
-> **状态**: `draft` · **优先级**: P0 · **Epic**: EPIC-003 · **Spec**: SPEC-3-2
-> **SDD 状态**: `draft` · **创建**: 2026-05-14
+> **状态**: `implemented` · **优先级**: P0 · **Epic**: EPIC-003 · **Spec**: SPEC-3-2
+> **SDD 状态**: `completed` · **创建**: 2026-05-14
 > **标签**: `testing`, `docs`
 
 ## 用户故事

@@ -1,7 +1,7 @@
 # 🎯 SPEC-3-2: 能力包管理器增强 — 升级/技能级操作/搜索/状态
 
-> **状态**: `draft` · **优先级**: P0 · **创建**: 2026-05-14 · **更新**: 2026-05-14
-> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
+> **状态**: `implemented` · **优先级**: P0 · **创建**: 2026-05-14 · **更新**: 2026-05-14
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅`
 > **关联 Epic**: EPIC-003-module-extraction.md
 > **基础 CLI**: `scripts/cli/main.py` + `scripts/cli/commands.py` + `scripts/adapters/hermes.py`
 

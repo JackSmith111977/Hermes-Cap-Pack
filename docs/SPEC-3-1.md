@@ -1,7 +1,7 @@
 # 🔧 SPEC-3-1: 核心能力包提取 — Phase 1
 
-> **状态**: `draft` · **优先级**: P0 · **创建**: 2026-05-14 · **更新**: 2026-05-14
-> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ⬜ → QA_GATE ⬜ → REVIEW ⬜`
+> **状态**: `implemented` · **优先级**: P0 · **创建**: 2026-05-14 · **更新**: 2026-05-14
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → CREATE ✅ → QA_GATE ✅ → REVIEW ✅`
 > **关联 Epic**: EPIC-003-module-extraction.md
 > **全盘路线图**: EPIC-003-comprehensive-roadmap.md
 

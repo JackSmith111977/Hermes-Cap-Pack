@@ -238,7 +238,7 @@ entities:
       stories:
       - STORY-2-4-1
     SPEC-3-1:
-      state: draft
+      state: implemented
       epic: EPIC-003
       stories:
       - STORY-3-1

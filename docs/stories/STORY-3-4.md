@@ -1,7 +1,7 @@
 # STORY-3-4: cap-pack upgrade + search + status 命令
 
-> **状态**: `draft` · **优先级**: P0 · **Epic**: EPIC-003 · **Spec**: SPEC-3-2
-> **SDD 状态**: `draft` · **创建**: 2026-05-14
+> **状态**: `implemented` · **优先级**: P0 · **Epic**: EPIC-003 · **Spec**: SPEC-3-2
+> **SDD 状态**: `completed` · **创建**: 2026-05-14
 > **标签**: `cli`, `upgrade`, `search`, `status`
 
 ## 用户故事
