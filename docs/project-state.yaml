@@ -214,10 +214,19 @@ entities:
     EPIC-003:
       title: 能力包管理器增强 — CLI 升级/技能管理/测试
       state: implemented
-      spec_count: 2
-      story_count: 6
-      completed_count: 6
+      spec_count: 3
+      story_count: 8
+      completed_count: 8
       priority: P1
+      qa_gate_date: null
+      review_date: null
+    EPIC-004:
+      title: 能力包质量升级 — 三层改造 + 健康度检测 + 合并优化
+      state: draft
+      spec_count: 0
+      story_count: 0
+      completed_count: 0
+      priority: P0
       qa_gate_date: null
       review_date: null
   specs:
@@ -437,6 +446,14 @@ entities:
       state: implemented
       epic: EPIC-003
       spec: SPEC-3-2
+    STORY-3-7:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-2
+    STORY-3-8:
+      state: implemented
+      epic: EPIC-003
+      spec: SPEC-3-3
 sprints:
   sprint-1:
     title: 核心框架搭建
