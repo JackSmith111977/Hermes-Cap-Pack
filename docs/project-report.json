@@ -16,14 +16,14 @@
     "overview_cards": [
       {"label": "名称", "value": "Hermes Cap Pack", "sub": "hermes-cap-pack"},
       {"label": "版本", "value": "0.9.0", "sub": "MIT License"},
-      {"label": "能力包", "value": "9", "sub": "17 模块体系"},
+      {"label": "能力包", "value": "10", "sub": "17 模块体系"},
       {"label": "测试", "value": "141 ✅", "sub": "全通过"}
     ],
     "info_table": [
       {"attr": "作者", "value": "boku (Emma/小玛)"},
       {"attr": "仓库", "value": "<code>github.com/JackSmith111977/Hermes-Cap-Pack</code>"},
       {"attr": "入口", "value": "<code>python -m scripts.cli.main</code>"},
-      {"attr": "覆盖", "value": "<strong>47% (8/17)</strong> — 剩余 9 模块待提取"}
+      {"attr": "覆盖", "value": "<strong>59% (10/17)</strong> — 剩余 7 模块待提取"}
     ]
   },
   "architecture": {
@@ -39,7 +39,8 @@
           {"name": "metacognition", "description": "元认知系统 — 自我审查/内存管理/自我分析"},
           {"name": "skill-quality", "description": "质量门禁 — 基础设施型，含 SQS 引擎"},
           {"name": "learning-engine", "description": "研究与学习引擎（含知识库）— 11 skills"},
-          {"name": "creative-design", "description": "创意设计 — 26 skills"}
+          {"name": "creative-design", "description": "创意设计 — 26 skills"},
+          {"name": "github-ecosystem", "description": "GitHub 生态 — 9 skills"}
         ],
         "direction": "user-facing"
       },
@@ -150,7 +151,8 @@
         {"id": "STORY-3-5", "name": "metacognition 能力包提取", "status": "completed"},
         {"id": "STORY-3-6", "name": "skill-quality 能力包提取", "status": "completed"},
         {"id": "STORY-3-7", "name": "learning-engine（含知识库合并）能力包提取", "status": "completed"},
-        {"id": "STORY-3-8", "name": "creative-design 能力包提取（26 skills）", "status": "implemented"}
+        {"id": "STORY-3-8", "name": "creative-design 能力包提取（26 skills）", "status": "implemented"},
+        {"id": "STORY-3-9", "name": "github-ecosystem 能力包提取（9 skills）", "status": "implemented"}
       ]
     }
   ],
