@@ -22,7 +22,7 @@
 | **messaging** | 💬 消息平台 | 9 | ⬜ | 🟡 P1 | ★★☆ | — |
 | **devops-monitor** | 🔧 运维监控 | 9 | ⬜ | 🟢 P2 | ★☆☆ | — |
 | **security-audit** | 🔒 安全审计 | 5 | ⬜ | 🟢 P2 | ★☆☆ | — |
-| **media-processing** | 🎵 音视频媒体 | 5 | ⬜ | 🟢 P2 | ★☆☆ | creative-design |
+| **media-processing** | 🎵 音视频媒体 | 5 | ✅ | 🟢 P2 | ★☆☆ | creative-design |
 | **mcp-integration** | 🔌 MCP 集成 | 3 | ⬜ | 🟢 P2 | ★☆☆ | — |
 | **network-proxy** | 🌐 网络代理 | 3 | ⬜ | 🔵 P3 | ★☆☆ | — |
 | **news-research** | 📰 新闻研究 | 2 | ⬜ | 🔵 P3 | ★☆☆ | — |
@@ -76,7 +76,7 @@
 |:------|:-----|:------:|:----:|
 | STORY-3-8 | devops-monitor | 9 | 0.5天 |
 | STORY-3-9 | security-audit | 5 | 0.5天 |
-| STORY-3-10 | media-processing | 5 | 0.5天 |
+| STORY-3-10 | media-processing | 5 | ✅ 已提取 |
 | STORY-3-11 | mcp-integration | 3 | 0.5天 |
 
 ### 🔵 Phase 4 — 低优先级（P3, ~11 skills）

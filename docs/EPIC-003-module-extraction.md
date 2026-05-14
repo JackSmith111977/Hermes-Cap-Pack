@@ -71,7 +71,7 @@
 | 9 | **messaging** | feishu(2), feishu-batch-send, feishu-card-merge-streaming, email(2), social-media, smart-broadcast | ~8 |
 | 8 | **network-proxy** | clash-config, proxy-finder, web-access, browser-automation | ~5 |
 | 5 | **security-audit** | security(2), red-teaming, delete-safety, commit-quality-check | ~4 |
-| 14 | **media-processing** | media(5): gif-search, heartmula, songsee, spotify, youtube-content + text-to-speech | ~6 |
+| 14 | **media-processing** | media(5): gif-search, heartmula, songsee, spotify, youtube-content + text-to-speech | ~6 | ✅ 已提取 |
 | 11 | **mcp-integration** | mcp(3): fastmcp, mcporter, native-mcp + 部分 autonomous-ai-agents | ~5 |
 | 新 | **mlops** | mlops(13): huggingface-hub, llama-cpp, vllm, outlines, dspy, axolotl, unsloth, trl, evaluating-llms-harness, weights-and-biases, obliteratus, audiocraft, segment-anything | **13** |
 
