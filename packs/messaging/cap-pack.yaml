@@ -1,0 +1,92 @@
+# 💬 messaging — 消息平台能力包
+# Schema: cap-pack-v2.schema.json
+
+name: messaging
+version: 1.0.0
+type: capability-pack
+classification: domain
+display_name: "消息平台"
+description: "消息平台全栈能力包 — 飞书消息/文件/卡片/批量发送、智能播报、邮件 (AgentMail/Himalaya)、社交平台发布 (X/Twitter)。覆盖多平台消息通信的发送、接收和管理能力。"
+author: "boku (Emma)"
+created: "2026-05-14"
+updated: "2026-05-14"
+emoji: 💬
+category: messaging
+domain: messaging
+maintainer: "boku"
+
+compatibility:
+  agent_types: [hermes, claude-code, opencode]
+  hermes_version:
+    min: "0.10.0"
+    max: "99.99.99"
+
+dependencies:
+  cap_packs:
+    - name: skill-quality
+      version: "1.0.0"
+
+skills:
+  - id: feishu
+    name: feishu
+    description: "飞书全套操作技能 — 消息、云文档、多维表格、日历、通讯录、审批、知识库、任务、事件订阅."
+    path: SKILLS/feishu/SKILL.md
+    version: 1.0.0
+    tags: [feishu, lark, messaging, bot]
+    sqs_target: 85.0
+
+  - id: feishu-send-file
+    name: feishu-send-file
+    description: "飞书发送文件的正确流程 — 上传→获 file_key→发送 file 消息."
+    path: SKILLS/feishu-send-file/SKILL.md
+    version: 1.0.0
+    tags: [feishu, file, upload, messaging]
+    sqs_target: 75.0
+
+  - id: feishu-batch-send
+    name: feishu-batch-send
+    description: "飞书批量发送文件/图片技能 — 支持一次发送多个文件到同一个或多个聊天."
+    path: SKILLS/feishu-batch-send/SKILL.md
+    version: 1.0.0
+    tags: [feishu, batch, file, image, messaging]
+    sqs_target: 75.0
+
+  - id: feishu-card-merge-streaming
+    name: feishu-card-merge-streaming
+    description: "飞书平台进度消息与 LLM 回复合并为单卡片的流式输出方案."
+    path: SKILLS/feishu-card-merge-streaming/SKILL.md
+    version: 1.0.0
+    tags: [feishu, card, streaming, merge]
+    sqs_target: 70.0
+
+  - id: smart-broadcast
+    name: smart-broadcast
+    description: "Hermes 智能播报引擎 v2.0 管理指南 — 状态检查、数据源配置、静默管理、故障排查."
+    path: SKILLS/smart-broadcast/SKILL.md
+    version: 1.0.0
+    tags: [broadcast, notification, cron, messaging]
+    sqs_target: 75.0
+
+  - id: agentmail
+    name: agentmail
+    description: "Give the agent its own dedicated email inbox via AgentMail for sending, receiving, and managing emails."
+    path: SKILLS/agentmail/SKILL.md
+    version: 1.0.0
+    tags: [email, agentmail, communication]
+    sqs_target: 75.0
+
+  - id: himalaya
+    name: himalaya
+    description: "CLI to manage emails via IMAP/SMTP — list, read, send, search, and manage folders."
+    path: SKILLS/himalaya/SKILL.md
+    version: 1.0.0
+    tags: [email, imap, smtp, cli]
+    sqs_target: 70.0
+
+  - id: xurl
+    name: xurl
+    description: "Interact with X/Twitter via xurl, the official X API CLI — post tweets, read timelines, search."
+    path: SKILLS/xurl/SKILL.md
+    version: 1.0.0
+    tags: [x, twitter, social-media, api]
+    sqs_target: 70.0

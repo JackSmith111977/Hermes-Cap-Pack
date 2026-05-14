@@ -16,14 +16,14 @@
     "overview_cards": [
       {"label": "名称", "value": "Hermes Cap Pack", "sub": "hermes-cap-pack"},
       {"label": "版本", "value": "0.9.0", "sub": "MIT License"},
-      {"label": "能力包", "value": "11", "sub": "17 模块体系"},
+      {"label": "能力包", "value": "12", "sub": "17 模块体系"},
       {"label": "测试", "value": "141 ✅", "sub": "全通过"}
     ],
     "info_table": [
       {"attr": "作者", "value": "boku (Emma/小玛)"},
       {"attr": "仓库", "value": "<code>github.com/JackSmith111977/Hermes-Cap-Pack</code>"},
       {"attr": "入口", "value": "<code>python -m scripts.cli.main</code>"},
-      {"attr": "覆盖", "value": "<strong>65% (11/17)</strong> — 剩余 6 模块待提取"}
+      {"attr": "覆盖", "value": "<strong>71% (12/17)</strong> — 剩余 5 模块待提取"}
     ]
   },
   "architecture": {
@@ -41,7 +41,8 @@
           {"name": "learning-engine", "description": "研究与学习引擎（含知识库）— 11 skills"},
           {"name": "creative-design", "description": "创意设计 — 26 skills"},
           {"name": "github-ecosystem", "description": "GitHub 生态 — 9 skills"},
-          {"name": "devops-monitor", "description": "运维监控 — 10 skills"}
+          {"name": "devops-monitor", "description": "运维监控 — 10 skills"},
+          {"name": "messaging", "description": "消息平台 — 8 skills"}
         ],
         "direction": "user-facing"
       },
@@ -154,7 +155,8 @@
         {"id": "STORY-3-7", "name": "learning-engine（含知识库合并）能力包提取", "status": "completed"},
         {"id": "STORY-3-8", "name": "creative-design 能力包提取（26 skills）", "status": "implemented"},
         {"id": "STORY-3-9", "name": "github-ecosystem 能力包提取（9 skills）", "status": "implemented"},
-        {"id": "STORY-3-10", "name": "devops-monitor 能力包提取（10 skills）", "status": "implemented"}
+        {"id": "STORY-3-10", "name": "devops-monitor 能力包提取（10 skills）", "status": "implemented"},
+        {"id": "STORY-3-11", "name": "messaging 能力包提取（8 skills）", "status": "implemented"}
       ]
     }
   ],
