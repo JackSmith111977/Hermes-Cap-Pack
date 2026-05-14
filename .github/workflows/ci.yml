@@ -43,6 +43,9 @@ jobs:
       - name: 📄 YAML syntax check
         run: python3 scripts/ci-check-yaml.py
 
+      - name: 📖 README alignment check
+        run: python3 scripts/validate-readme.py
+
   validate-packs:
     name: 📦 Cap-Pack Validation
     needs: lint

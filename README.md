@@ -1,7 +1,8 @@
 # hermes-cap-pack
 
 > Agent 能力包标准化格式 + CLI 管理工具  
-> 版本：**0.8.0** | 测试：**141 ✅** | 能力包：**6 个** | 覆盖：**32% 模块**
+> **版本**：`0.8.0` · **测试**：`141 ✅` · **许可**：MIT  
+> **能力包**：6 个 · **覆盖**：32% 模块 (6/19)
 
 ---
 
@@ -21,6 +22,18 @@
 
 ## 二、快速安装
 
+### 前置条件
+
+```bash
+python3 --version
+# 预期输出: Python 3.11.x 或以上
+
+git --version
+# 预期输出: git 2.x
+```
+
+### 安装
+
 ```bash
 # 1. 克隆
 git clone https://github.com/JackSmith111977/Hermes-Cap-Pack.git
@@ -39,7 +52,7 @@ alias cap-pack='python -m scripts.cli.main'
 **验证安装成功**：
 ```bash
 python -m scripts.cli.main list
-# → 📭 (无已安装的能力包) [首次安装时]
+# 预期输出: 📭 (无已安装的能力包)
 ```
 
 ---
@@ -175,6 +188,13 @@ cap-pack skill update doc-engine pdf-layout ~/new-version/     # 从指定路径
 - `skill add` → minor bump（1.0.0 → 1.1.0）
 - `skill remove` → patch bump（1.0.0 → 1.0.1）
 - `skill update` → patch bump
+
+### CLI 验证
+
+```bash
+cap-pack status
+# 预期输出包含: 📊 能力包状态概览
+```
 
 ---
 
@@ -354,5 +374,16 @@ hermes-cap-pack/
 
 | 项目 | 关系 |
 |:-----|:------|
-| [SRA (Skill Runtime Advisor)](https://github.com/JackSmith111977/Hermes-Skill-View) | CAP Pack 的运行时推荐搭档。CAP Pack 管理「有什么技能」，SRA 管理「该用什么技能」 |
+| [SRA](https://github.com/JackSmith111977/Hermes-Skill-View) | CAP Pack 的运行时推荐搭档。 |
 | [Hermes Agent](https://hermes-agent.nousresearch.com) | 上层 Agent 框架，能力包的消费者 |
+
+---
+
+## FAQ
+
+| 问题 | 排查步骤 | 恢复命令 |
+|:-----|:---------|:---------|
+| `cap-pack: command not found` | 未创建 alias，或 Python 环境未激活 | `alias cap-pack='python -m scripts.cli.main'` |
+| pip install 失败 | 检查 Python 版本 ≥ 3.11，或使用 conda 环境 | `python3 --version && pip install pyyaml>=6.0` |
+| 安装后 skill 不生效 | Hermes 需要重启才能识别新 skill | `systemctl --user restart hermes-gateway` |
+| 升级后版本不对 | 检查 `installed_packs.json` 是否更新 | `cap-pack list` 确认版本号 |

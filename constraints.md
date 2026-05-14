@@ -21,6 +21,7 @@
 - ✅ Hermes Agent 适配器的实现
 - ✅ 至少一个完整能力包的原型（文档生成模块）
 - ✅ HTML 全生命周期追踪报告
+- ✅ AI 友好 README 模板管理与对齐验证 (`docs/templates/README-template.md` + `scripts/validate-readme.py`)
 
 ### 不包含 (Out of Scope)
 - ❌ 所有 Agent 适配器的完整实现（Phase 3 只做 2-3 个）
