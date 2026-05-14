@@ -2,13 +2,15 @@
 
 name: quality-assurance
 version: 1.0.0
+classification: toolset
+display_name: "质量保证能力包"
 type: capability-pack
 compatibility:
   agent_types: [hermes]
 description: "质量保障能力包 — SQS 评分 + 生命周期审计 + 树状索引 + 代码审查门禁"
 author: boku (Emma)
-created: 2026-05-13
-updated: 2026-05-13
+created: "2026-05-13"
+updated: "2026-05-13"
 cap_version: 1
 
 ## 包信息
@@ -24,21 +26,21 @@ skills:
   - id: skill-quality-score
     name: SQS 质量评分
     description: "五维质量评分引擎 — 结构/内容/时效/关联/可发现性"
-    source: scripts/skill-quality-score.py
+    path: scripts/skill-quality-score.py
     version: 1.0.0
     tags: [sqs, quality, scoring, audit]
 
   - id: skill-lifecycle-audit
     name: 生命周期审计
     description: "Skill 生命周期审计与退役管理"
-    source: scripts/skill-lifecycle-audit.py
+    path: scripts/skill-lifecycle-audit.py
     version: 1.0.0
     tags: [lifecycle, audit, deprecate, revive]
 
   - id: skill-tree-index
     name: 树状索引
     description: "18 包 → ~70 簇 → ~200 技能三层索引生成器"
-    source: scripts/skill-tree-index.py
+    path: scripts/skill-tree-index.py
     version: 1.0.0
     tags: [tree-index, hierarchy, consolidation]
 

@@ -2,13 +2,15 @@
 
 name: learning-workflow
 version: 5.5.0
+classification: skill
+display_name: "学习工作流能力包"
 type: capability-pack
 compatibility:
   agent_types: [hermes]
 description: "学习/研究任务强制流程引擎 — 状态机+文件标志物防跳过机制，5 层 Quality Gate"
 author: boku (Emma)
-created: 2026-05-14
-updated: 2026-05-14
+created: "2026-05-14"
+updated: "2026-05-14"
 cap_version: 1
 
 ## 包信息
@@ -26,7 +28,7 @@ skills:
     description: "所有学习/研究任务的强制流程拦截器。状态机+文件标志物实现防跳过机制。v5.0 循环真正落地，含 R1/R2/R3/Quality Gate 自动化检查"
     version: 5.5.0
     tags: [learning, workflow, research, study, gate, loop]
-    source: learning-workflow
+    path: learning-workflow
     sqs_target: 80.0
 
 ## 依赖

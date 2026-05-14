@@ -1,0 +1,221 @@
+# 🛡️ skill-quality — Hermes Skill 质量门禁能力包
+# Schema: cap-pack-v2.schema.json
+# 类型: infrastructure — 纯外部方案，不修改任何 Hermes 核心文件
+
+name: skill-quality
+version: 1.0.0
+type: capability-pack
+classification: infrastructure
+display_name: "Skill 质量门禁系统"
+description: "纯外部 Hermes Skill 质量门禁 — 自动检测环境、监控文件变更、定期审计健康度、提供行为约束规则。不修改任何 Hermes 核心代码。"
+author: "boku (Emma)"
+created: "2026-05-14"
+updated: "2026-05-14"
+emoji: 🛡️
+category: system-integration
+domain: skill-quality
+maintainer: "boku"
+
+compatibility:
+  agent_types: [hermes]
+  hermes_version:
+    min: "0.10.0"
+    max: "99.99.99"
+  requires_network: false
+  requires_env: []
+
+dependencies:
+  python_packages:
+    - pyyaml>=6.0
+
+integration:
+  # ── Layer 1: 环境检测 ──
+  locate:
+    script: scripts/hermes-locate.py
+    required: true
+    auto_detect:
+      targets:
+        - hermes_home
+        - source_type
+        - version
+        - tools
+        - skills_dirs
+        - profiles
+      fallback: scripts/hermes-locate-fallback.sh
+
+  # ── Layer 2: 监控器 ──
+  monitors:
+    - id: skill-file-watchdog
+      script: scripts/skill-file-watchdog.py
+      trigger: cron
+      schedule: "*/15 * * * *"
+      description: "每 15 分钟扫描 skill 目录的新增/修改文件，记录变更日志"
+      alert_on: change
+
+    - id: hermes-version-tracker
+      script: scripts/hermes-version-tracker.py
+      trigger: cron
+      schedule: "0 6 * * *"
+      description: "每天检测 Hermes 版本是否变化，触发 re-locate"
+      alert_on: change
+
+  # ── Layer 3: 质量门禁（通过 pre_flight / skill-creator 等已有入口调用） ──
+  gates:
+    - id: pre-flight-enhancer
+      script: scripts/pre-flight-enhancer.py
+      hook_point: pre_flight
+      blocking: false
+      description: "增强 pre_flight.py 的 skill 路径检测能力（通过正则匹配任务描述中的 skill 路径模式）"
+      timeout_seconds: 10
+
+    - id: skill-create-gate
+      script: scripts/skill-create-gate.py
+      hook_point: skill_create
+      blocking: true
+      description: "创建 skill 前检查：1) 是否加载了 skill-creator 2) 目标名称是否与已有 skill 冲突"
+      timeout_seconds: 15
+
+    - id: skill-edit-gate
+      script: scripts/skill-edit-gate.py
+      hook_point: skill_edit
+      blocking: false
+      description: "编辑 skill 前运行：1) 依赖扫描 2) 影响范围分析"
+      timeout_seconds: 15
+
+    - id: skill-delete-gate
+      script: scripts/skill-delete-gate.py
+      hook_point: skill_delete
+      blocking: true
+      description: "删除 skill 前检查：1) 引用链分析 2) 确认备份"
+      timeout_seconds: 10
+
+  # ── Layer 4: 定期审计 ──
+  audits:
+    - id: daily-quality-audit
+      script: scripts/daily-quality-audit.py
+      schedule: "0 7 * * *"
+      output_format: feishu_card
+      description: "每日 7:00 全量审计 — SQS 分布/新增 skill/断裂引用/生命周期异常"
+      deliver_to: "feishu"
+
+    - id: weekly-health-report
+      script: scripts/weekly-health-report.py
+      schedule: "0 9 * * 1"
+      output_format: markdown
+      description: "每周一 9:00 深度健康报告 — CHI 趋势/合并建议/生态分析"
+      deliver_to: "feishu"
+
+  # ── Layer 5: 行为约束（boku 的规则，不碰核心文件） ──
+  behaviors:
+    - id: subagent-skill-guard
+      rule: >
+        在 delegate_task 的 context 参数中，如果任务可能涉及 skill 操作
+        （关键词匹配：skill_manage, create/update/edit/delete skill, SKILL.md），
+        必须注入约束：「你在修改或创建任何 skill 前，必须先确认已加载
+        skill-creator 并运行依赖扫描。质量门禁脚本位于 skills/skill-quality/scripts/。」
+      enforcement: self_discipline
+      trigger_condition: "每次调用 delegate_task 时检查任务描述"
+      description: "让子代理也有 skill 操作意识，通过 context 注入行为规则"
+
+    - id: write-file-awareness
+      rule: >
+        当使用 write_file 或 patch 工具时，如果目标路径匹配
+        ~/.hermes/skills/*/SKILL.md 或 ~/.hermes/skills/*/references/* 等模式，
+        应自动先运行 skill-quality 的预检脚本。
+      enforcement: self_discipline
+      trigger_condition: "使用 write_file/patch 工具前检查路径"
+      description: "在文件工具操作 skill 相关路径时自动触发质量预检"
+
+    - id: cron-skill-safety
+      rule: >
+        创建或更新 cron 任务时，检查 prompt 中是否包含 skill_manage 或
+        SKILL.md 写入操作。如是，在 cron prompt 开头注入 quality gate 约束。
+      enforcement: self_discipline
+      trigger_condition: "cronjob action=create/update 时检查 prompt"
+      description: "确保定时任务中的 skill 操作也有质量约束"
+
+    - id: curator-complement
+      rule: >
+        Curator 运行后（通过 curator 状态日志检测），自动触发一次
+        skill-quality 的审计扫描，检查 curator 是否创建了低质量 skill。
+      enforcement: self_discipline
+      trigger_condition: "检测到 curator 状态更新（last_run_at 变化）后"
+      description: "补充 Curator 缺少的质量门禁，通过事后审计兜底"
+
+lifecycle:
+  install:
+    pre_install:
+      - type: python
+        code: |
+          from scripts.hermes_locate import locate_all, verify_can_patch
+          loc = locate_all()
+          issues = verify_can_patch(loc)
+          if issues:
+              raise RuntimeError(f"Environment issues: {issues}")
+    install:
+      - type: shell
+        command: "python3 scripts/hermes-locate.py --check-only"
+        description: "验证环境就绪"
+      - type: shell
+        command: "mkdir -p ~/.hermes/cap-packs/skill-quality/{logs,state}"
+        description: "创建运行时目录"
+      - type: shell
+        command: "python3 scripts/register-cron-jobs.py install"
+        description: "注册 cron 任务（monitors + audits）"
+    post_install:
+      - type: notify
+        message: "skill-quality 能力包已安装！下次 pre_flight 运行时自动激活。"
+
+  update:
+    pre_update:
+      - type: shell
+        command: "python3 scripts/register-cron-jobs.py save"
+        description: "备份当前 cron 配置"
+    update:
+      - type: shell
+        command: "python3 scripts/hermes-locate.py --check-only"
+        description: "重新检测环境变化"
+      - type: shell
+        command: "python3 scripts/register-cron-jobs.py update"
+        description: "更新 cron 配置"
+    post_update:
+      - type: notify
+        message: "skill-quality 能力包已更新！cron 配置已刷新。"
+
+  uninstall:
+    pre_uninstall:
+      - type: shell
+        command: "python3 scripts/register-cron-jobs.py uninstall"
+        description: "移除所有注册的 cron 任务"
+    uninstall:
+      - type: shell
+        command: "rm -rf ~/.hermes/cap-packs/skill-quality"
+        description: "清理运行时数据"
+    rollback:
+      - type: shell
+        command: "python3 scripts/register-cron-jobs.py restore"
+        description: "从备份恢复 cron 配置"
+
+verification:
+  health_check_script: scripts/verify-integration.py
+  sqs_targets:
+    minimum: 50
+    target: 75
+  signatures:
+    scripts/hermes-locate.py: ""
+    scripts/pre-flight-enhancer.py: ""
+    scripts/daily-quality-audit.py: ""
+
+config_defaults:
+  quality:
+    sqs_minimum: 50
+    sqs_target: 75
+    dependency_check: true
+  audit:
+    daily_enabled: true
+    weekly_enabled: true
+    report_language: "zh"
+  watchdog:
+    enabled: true
+    scan_interval_minutes: 15
+    alert_on_new_skills: true

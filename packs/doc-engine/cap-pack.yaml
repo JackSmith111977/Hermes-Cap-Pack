@@ -2,13 +2,15 @@
 
 name: doc-engine
 version: 2.0.0
+classification: domain
+display_name: "文档引擎能力包"
 type: capability-pack
 compatibility:
   agent_types: [hermes]
 description: "文档生成能力包 — PDF/HTML/PPTX 排版 + 视觉QA + 质量门禁"
 author: boku (Emma)
-created: 2026-05-13
-updated: 2026-05-13
+created: "2026-05-13"
+updated: "2026-05-13"
 cap_version: 1
 
 ## 包信息

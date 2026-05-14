@@ -1,5 +1,9 @@
 name: agent-orchestration
 version: 1.0.0
+classification: toolset
+display_name: "Agent 编排能力包"
+updated: "2026-05-14"
+created: "2026-05-14"
 type: capability-pack
 description: "Agent 协作能力包 — 多 Agent 编排、消息注入、独立 Agent 集成"
 compatibility:
@@ -14,7 +18,7 @@ skills:
   - id: hermes-agent
     name: hermes-agent
     description: "Complete guide to using and extending Hermes Agent — CLI usage, setup, configuration, spawning additional agents, gateway platforms, skills, voice, tools, profiles, and a concise contributor reference."
-    source: autonomous-ai-agents/hermes-agent
+    path: autonomous-ai-agents/hermes-agent
     version: 2.0.0
     tags:
       - hermes
@@ -29,7 +33,7 @@ skills:
   - id: claude-code
     name: claude-code
     description: "Delegate coding tasks to Claude Code (Anthropic's CLI agent). Use for building features, code review, refactoring, and autonomous coding via print mode or interactive PTY sessions."
-    source: autonomous-ai-agents/claude-code
+    path: autonomous-ai-agents/claude-code
     version: 2.2.0
     tags:
       - Coding-Agent
@@ -43,7 +47,7 @@ skills:
   - id: codex
     name: codex
     description: "Delegate coding tasks to OpenAI Codex CLI agent. Use for building features, code review, refactoring, and autonomous coding via one-shot exec or interactive sessions."
-    source: autonomous-ai-agents/codex
+    path: autonomous-ai-agents/codex
     version: 1.0.0
     tags:
       - Coding-Agent
@@ -55,7 +59,7 @@ skills:
   - id: opencode
     name: opencode
     description: "OpenCode CLI Agent — platform architecture, skill system, MCP configuration, rules/instructions, and task delegation. Covers all aspects of the OpenCode ecosystem: how to USE it as a coding worker AND how to CONFIGURE it."
-    source: autonomous-ai-agents/opencode
+    path: autonomous-ai-agents/opencode
     version: 2.0.0
     tags:
       - Coding-Agent
@@ -69,7 +73,7 @@ skills:
   - id: blackbox
     name: blackbox
     description: "Delegate coding tasks to Blackbox AI CLI agent. Multi-model agent with built-in judge that runs tasks through multiple LLMs and picks the best result."
-    source: autonomous-ai-agents/blackbox
+    path: autonomous-ai-agents/blackbox
     version: 1.0.0
     tags:
       - Coding-Agent
@@ -81,7 +85,7 @@ skills:
   - id: honcho
     name: honcho
     description: "Configure and use Honcho memory with Hermes — cross-session user modeling, multi-profile peer isolation, observation config, dialectic reasoning, session summaries, and context budget enforcement."
-    source: autonomous-ai-agents/honcho
+    path: autonomous-ai-agents/honcho
     version: 2.0.0
     tags:
       - Honcho
@@ -95,7 +99,7 @@ skills:
   - id: hermes-message-injection
     name: hermes-message-injection
     description: "向 Hermes Agent 的消息管道注入外部服务上下文（如 SRA 技能推荐）。每次用户消息自动拦截 → 调外部服务 → 将结果作为前缀注入到消息前。涵盖 run_agent.py 注入点、module-level 缓存、降级策略。"
-    source: autonomous-ai-agents/hermes-message-injection
+    path: autonomous-ai-agents/hermes-message-injection
     version: 2.2.0
     tags:
       - hermes
@@ -108,7 +112,7 @@ skills:
   - id: bmad-party-mode-orchestration
     name: bmad-party-mode-orchestration
     description: "BMAD 多智能体编排指南。详解如何使用 Party Mode 并行 Spawn Subagent、动态路由上下文、以及进行上下文压缩。适用于需要多视角分析、复杂问题研讨或模拟专家会议的场景。"
-    source: bmad-party-mode-orchestration
+    path: bmad-party-mode-orchestration
     version: 1.0.0
     tags:
       - bmad
