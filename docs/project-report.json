@@ -16,7 +16,7 @@
     "overview_cards": [
       {"label": "名称", "value": "Hermes Cap Pack", "sub": "hermes-cap-pack"},
       {"label": "版本", "value": "0.9.0", "sub": "MIT License"},
-      {"label": "能力包", "value": "8", "sub": "17 模块体系"},
+      {"label": "能力包", "value": "9", "sub": "17 模块体系"},
       {"label": "测试", "value": "141 ✅", "sub": "全通过"}
     ],
     "info_table": [
@@ -38,7 +38,8 @@
           {"name": "agent-orchestration", "description": "Agent 协作 — 多代理编排/BMAD Party Mode"},
           {"name": "metacognition", "description": "元认知系统 — 自我审查/内存管理/自我分析"},
           {"name": "skill-quality", "description": "质量门禁 — 基础设施型，含 SQS 引擎"},
-          {"name": "learning-engine", "description": "研究与学习引擎（含知识库）— 11 skills"}
+          {"name": "learning-engine", "description": "研究与学习引擎（含知识库）— 11 skills"},
+          {"name": "creative-design", "description": "创意设计 — 26 skills"}
         ],
         "direction": "user-facing"
       },
@@ -148,7 +149,8 @@
         {"id": "STORY-3-4", "name": "agent-orchestration 能力包提取", "status": "completed"},
         {"id": "STORY-3-5", "name": "metacognition 能力包提取", "status": "completed"},
         {"id": "STORY-3-6", "name": "skill-quality 能力包提取", "status": "completed"},
-        {"id": "STORY-3-7", "name": "learning-engine（含知识库合并）能力包提取", "status": "completed"}
+        {"id": "STORY-3-7", "name": "learning-engine（含知识库合并）能力包提取", "status": "completed"},
+        {"id": "STORY-3-8", "name": "creative-design 能力包提取（26 skills）", "status": "implemented"}
       ]
     }
   ],
