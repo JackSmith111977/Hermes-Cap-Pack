@@ -12,7 +12,7 @@
 |:-----|:----|
 | **目的** | 将 Hermes Agent 的 351+ 个技能拆分为可移植的「能力包」，跨 Agent 复用 |
 | **CLI 入口** | `python -m scripts.cli.main`（或创建 alias `cap-pack`） |
-| **Schema** | `schemas/cap-pack-v1.schema.json` |
+| **Schema** | `schemas/cap-pack-v0.8.0schema.json` |
 | **最小 Python** | ≥ 3.11 |
 | **唯一依赖** | `pyyaml>=6.0` |
 | **仓库** | `https://github.com/JackSmith111977/Hermes-Cap-Pack.git` |
@@ -206,7 +206,7 @@ from scripts.adapters.hermes import HermesAdapter
 from pathlib import Path
 
 # 解析能力包
-parser = PackParser(schema_path=Path("schemas/cap-pack-v1.schema.json"))
+parser = PackParser(schema_path=Path("schemas/cap-pack-v0.8.0schema.json"))
 pack = parser.parse(Path("packs/doc-engine"))
 print(f"📦 {pack.name} v{pack.version} — {len(pack.skills)} skills")
 
@@ -281,8 +281,8 @@ skills:
     description: "我的第一个技能"
 ```
 
-**完整格式规范**：`schemas/cap-pack-format-v1.md`  
-**JSON Schema**：`schemas/cap-pack-v1.schema.json`
+**完整格式规范**：`schemas/cap-pack-format-v0.8.0md`  
+**JSON Schema**：`schemas/cap-pack-v0.8.0schema.json`
 
 ---
 
@@ -320,8 +320,8 @@ hermes-cap-pack/
 │   └── developer-guide-adapter.md
 │
 ├── schemas/                # 格式规范
-│   ├── cap-pack-format-v1.md
-│   └── cap-pack-v1.schema.json
+│   ├── cap-pack-format-v0.8.0md
+│   └── cap-pack-v0.8.0schema.json
 │
 ├── packs/                  # 能力包仓库
 │   ├── doc-engine/         # 📄 文档生成 (9 skills)

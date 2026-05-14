@@ -12,8 +12,14 @@ workflow:
       description: 需求澄清 — 理解问题、确认范围、out_of_scope
     - name: RESEARCH
       description: 深度调研 — sdd-research 结构化调研、交叉验证
-    - name: CREATE
-      description: 文档创作 — 编写 Spec/Story、技术方案
+    - name: SPEC_CREATE
+      description: Spec 文档创作 — 编写 Spec、技术方案
+    - name: SPEC_REVIEW
+      description: 🔔 Spec 主人审阅 — 自动送审主人，等待批准
+    - name: STORY_CREATE
+      description: Story 文档创作 — 编写 Story、验收标准
+    - name: STORY_REVIEW
+      description: 🔔 Story 主人审阅 — 自动送审主人，等待批准
     - name: QA_GATE
       description: 质量门禁 — 结构检查 P0 + 内容检查 P1 + 体系检查 P2
     - name: REVIEW
@@ -50,6 +56,48 @@ workflow:
       gate: reject
       checks:
       - reason_recorded
+    - from: research
+      to: spec_create
+      gate: spec_write
+      checks:
+      - research_complete
+    - from: spec_create
+      to: spec_review
+      gate: spec_submit
+      checks:
+      - file_exists
+      - fields_complete
+    - from: spec_review
+      to: story_create
+      gate: spec_approve
+      checks:
+      - owner_approved
+    - from: spec_review
+      to: research
+      gate: spec_reject
+      checks:
+      - reason_recorded
+    - from: story_create
+      to: story_review
+      gate: story_submit
+      checks:
+      - file_exists
+      - fields_complete
+    - from: story_review
+      to: approved
+      gate: story_approve
+      checks:
+      - owner_approved
+    - from: story_review
+      to: spec_create
+      gate: story_reject
+      checks:
+      - reason_recorded
+    - from: story_review
+      to: qa_gate
+      gate: story_approved_proceed
+      checks:
+      - owner_approved
     - from: approved
       to: architect
       gate: architect_start
