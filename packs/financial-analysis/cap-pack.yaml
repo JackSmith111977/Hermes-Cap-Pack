@@ -1,0 +1,49 @@
+# 📊 financial-analysis — 金融数据分析能力包
+# Schema: cap-pack-v2.schema.json
+
+name: financial-analysis
+version: 1.0.0
+type: capability-pack
+classification: domain
+display_name: "金融数据分析"
+description: "金融数据分析能力包 — akshare 行情获取、ta 技术指标计算、matplotlib 图表绘制、LLM 智能研报生成。覆盖 A 股/港股/美股数据分析和可视化全流程。"
+author: "boku (Emma)"
+created: "2026-05-14"
+updated: "2026-05-14"
+emoji: 📊
+category: financial-analysis
+domain: finance
+maintainer: "boku"
+
+compatibility:
+  agent_types: [hermes, claude-code, opencode]
+  hermes_version:
+    min: "0.10.0"
+    max: "99.99.99"
+
+dependencies:
+  cap_packs:
+    - name: doc-engine
+      version: "1.0.0"
+
+skills:
+  - id: financial-analyst
+    name: financial-analyst
+    description: "金融数据分析与研报生成 — akshare 行情获取、ta 技术指标（MA/MACD/RSI/BOLL）、matplotlib 图表、LLM 智能研报。"
+    path: SKILLS/financial-analyst/SKILL.md
+    version: 1.0.0
+    tags: [finance, analysis, stock, akshare, report]
+    sqs_target: 75.0
+
+experiences:
+  - id: data-fetch-pitfalls
+    name: "金融数据获取陷阱"
+    description: "akshare 接口用法、数据格式、股票代码规范、数据过期处理"
+    path: EXPERIENCES/data-fetch-pitfalls.md
+    type: pitfall
+
+  - id: chart-rendering-tips
+    name: "图表渲染经验"
+    description: "无头渲染、中文字体配置、多面板布局、交付顺序"
+    path: EXPERIENCES/chart-rendering-tips.md
+    type: pitfall
