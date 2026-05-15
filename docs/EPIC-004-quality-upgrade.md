@@ -142,7 +142,7 @@
 - [ ] AC5: 每个 pack 至少 1 篇 L2 Experience
 - [ ] AC6: 每个 pack 至少 1 篇 L3 Knowledge
 - [ ] AC7: CI pr-check 包含 CHI 不降级门禁
-- [ ] AC8: 合并建议报告已生成，2-3 个试点已执行
+- [x] AC8: 合并建议报告已生成，2-3 个试点已执行 — BMAD 系列合并(2个) + 6个微技能降级 ✅
 - [ ] AC9: 质量升级 HTML 报告已生成并归档
 
 ---

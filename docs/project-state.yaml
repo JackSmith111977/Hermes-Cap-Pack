@@ -655,14 +655,15 @@ phases:
         title: 合并/清理
         acceptance_criteria:
           - criteria: 跨包重叠检测引擎
-            done: false
+            done: true
           - criteria: 手动确认执行试点
-            done: false
+            done: true
         requires:
           - Phase-2 已完成
         stories:
           - STORY-4-9
           - STORY-4-10
+        # ✅ Completed — BMAD 系列合并(2个) + 6个微技能降级为experiences
       - name: Phase-4
         title: 门禁固化
         acceptance_criteria:
@@ -679,6 +680,7 @@ phases:
       - Phase-0
       - Phase-1
       - Phase-2
+      - Phase-3
 history:
 - date: 2026-05-14 19:30:00
   entity: system
