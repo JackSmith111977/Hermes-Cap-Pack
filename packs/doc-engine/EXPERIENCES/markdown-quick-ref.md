@@ -1,5 +1,5 @@
 ---
-type: tutorial
+type: experience
 skill_ref: "markdown quick ref"
 keywords: [markdown-quick-ref]
 created: 2026-05-14

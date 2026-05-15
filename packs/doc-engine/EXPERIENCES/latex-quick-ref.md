@@ -1,5 +1,5 @@
 ---
-type: tutorial
+type: experience
 skill_ref: "latex quick ref"
 keywords: [latex-quick-ref]
 created: 2026-05-14

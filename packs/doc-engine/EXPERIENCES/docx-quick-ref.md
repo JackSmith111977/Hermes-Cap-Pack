@@ -1,5 +1,5 @@
 ---
-type: tutorial
+type: experience
 skill_ref: "docx quick ref"
 keywords: [docx-quick-ref]
 created: 2026-05-14

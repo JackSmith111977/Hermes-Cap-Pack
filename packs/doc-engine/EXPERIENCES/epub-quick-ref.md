@@ -1,5 +1,5 @@
 ---
-type: tutorial
+type: experience
 skill_ref: "epub quick ref"
 keywords: [epub-quick-ref]
 created: 2026-05-14

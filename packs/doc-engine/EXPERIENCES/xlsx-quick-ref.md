@@ -1,5 +1,5 @@
 ---
-type: tutorial
+type: experience
 skill_ref: "xlsx quick ref"
 keywords: [xlsx-quick-ref]
 created: 2026-05-14

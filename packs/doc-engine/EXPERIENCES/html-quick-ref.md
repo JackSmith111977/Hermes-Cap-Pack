@@ -1,5 +1,5 @@
 ---
-type: tutorial
+type: experience
 skill_ref: "html quick ref"
 keywords: [html-quick-ref]
 created: 2026-05-14
