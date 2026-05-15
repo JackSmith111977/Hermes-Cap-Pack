@@ -664,23 +664,26 @@ phases:
           - STORY-4-9
           - STORY-4-10
         # ✅ Completed — BMAD 系列合并(2个) + 6个微技能降级为experiences
+        completed: true
       - name: Phase-4
         title: 门禁固化
         acceptance_criteria:
           - criteria: 质量升级 HTML 报告
-            done: false
+            done: true
           - criteria: 验收门禁 + 基准锁定
-            done: false
+            done: true
         requires:
           - Phase-3 已完成
         stories:
           - STORY-4-11
           - STORY-4-12
+        # ✅ Completed — 质量升级报告 + CI CHI 门禁 blocking
     completed_phases:
       - Phase-0
       - Phase-1
       - Phase-2
       - Phase-3
+      - Phase-4
 history:
 - date: 2026-05-14 19:30:00
   entity: system

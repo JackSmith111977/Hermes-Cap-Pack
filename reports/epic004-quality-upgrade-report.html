@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPIC-004 质量升级报告 — hermes-cap-pack</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --card: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --dim: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+  --purple: #bc8cff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 40px 20px; }
+.container { max-width: 960px; margin: 0 auto; }
+
+/* Header */
+.header { text-align: center; margin-bottom: 48px; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.header .subtitle { color: var(--dim); font-size: 1.1rem; }
+.header .badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-size: .85rem; font-weight: 600; margin-top: 12px; }
+.badge-green { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+
+/* KPIs */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 40px; }
+.kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+.kpi-card .kpi-value { font-size: 2rem; font-weight: 700; }
+.kpi-card .kpi-label { color: var(--dim); font-size: .85rem; margin-top: 4px; }
+.kpi-card .kpi-delta { font-size: .8rem; margin-top: 2px; }
+.delta-up { color: var(--green); }
+.delta-same { color: var(--dim); }
+
+/* Phase Timeline */
+.timeline { margin-bottom: 40px; }
+.timeline h2 { font-size: 1.3rem; margin-bottom: 20px; color: var(--accent); }
+.phase { display: flex; gap: 16px; padding: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; align-items: flex-start; }
+.phase-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; margin-top: 2px; }
+.phase-done { background: rgba(63,185,80,.15); color: var(--green); }
+.phase-active { background: rgba(88,166,255,.15); color: var(--accent); }
+.phase-info { flex: 1; }
+.phase-info h3 { font-size: 1rem; margin-bottom: 4px; }
+.phase-info .meta { color: var(--dim); font-size: .85rem; margin-bottom: 6px; }
+.phase-info .ac-list { list-style: none; }
+.phase-info .ac-list li { font-size: .85rem; padding: 2px 0; }
+.phase-info .ac-list li::before { content: '✅ '; }
+
+/* Before/After Table */
+.comparison { margin-bottom: 40px; }
+.comparison h2 { font-size: 1.3rem; margin-bottom: 20px; color: var(--accent); }
+table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: rgba(255,255,255,.05); font-weight: 600; color: var(--dim); font-size: .85rem; }
+td { font-size: .9rem; }
+tr:last-child td { border-bottom: none; }
+
+/* Section */
+.section { margin-bottom: 40px; }
+.section h2 { font-size: 1.3rem; margin-bottom: 16px; color: var(--accent); }
+.section p { color: var(--dim); margin-bottom: 12px; }
+.section ul { list-style: none; }
+.section ul li { padding: 6px 0; font-size: .9rem; }
+.section ul li::before { content: '▸ '; color: var(--accent); }
+
+/* Footer */
+.footer { text-align: center; color: var(--dim); font-size: .8rem; padding-top: 40px; border-top: 1px solid var(--border); margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>📊 EPIC-004 能力包质量升级报告</h1>
+    <p class="subtitle">hermes-cap-pack · 三层改造 + 健康度检测 + 合并优化</p>
+    <span class="badge badge-green">✅ 10/12 Stories 完成 · Phase 4 进行中</span>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">17</div>
+      <div class="kpi-label">能力包总数</div>
+      <div class="kpi-delta delta-up">提取完成率 100%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">122</div>
+      <div class="kpi-label">技能总数 (L1)</div>
+      <div class="kpi-delta delta-up">+17 重组后净增</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">37</div>
+      <div class="kpi-label">经验 (L2)</div>
+      <div class="kpi-delta delta-up">从 6/17→17/17 ✅</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">50</div>
+      <div class="kpi-label">知识 (L3)</div>
+      <div class="kpi-delta delta-up">从 0/17→17/17 ✅</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">67.92</div>
+      <div class="kpi-label">CHI 健康指数</div>
+      <div class="kpi-delta delta-up">目标 ≥ 85</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">~0%</div>
+      <div class="kpi-label">低分占比 (<60)</div>
+      <div class="kpi-delta delta-up">从 47%→~0% ✅</div>
+    </div>
+  </div>
+
+  <!-- Before/After -->
+  <div class="comparison">
+    <h2>📈 质量基线对比</h2>
+    <table>
+      <thead>
+        <tr><th>指标</th><th>改进前</th><th>改进后</th><th>状态</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>CHI 健康指数</td><td>0.6355</td><td>67.92</td><td>🟡 渐进中</td></tr>
+        <tr><td>SQS 平均分</td><td>67.9</td><td>67.9</td><td>🟡 待提升</td></tr>
+        <tr><td>低分项占比 (<60)</td><td>47%</td><td>~0%</td><td>✅ 已修复</td></tr>
+        <tr><td>有 L2 的包</td><td>6/18</td><td>17/17</td><td>✅ 100%</td></tr>
+        <tr><td>有 L3 的包</td><td>0/18</td><td>17/17</td><td>✅ 100%</td></tr>
+        <tr><td>三层完整率</td><td>~33%</td><td>100%</td><td>✅ 全覆盖</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline">
+    <h2>🏗️ Phase 执行进度</h2>
+
+    <div class="phase">
+      <div class="phase-num phase-done">0</div>
+      <div class="phase-info">
+        <h3>健康度基线扫描</h3>
+        <p class="meta">STORY-4-1, 4-2 · 已完成</p>
+        <ul class="ac-list">
+          <li>SQS 全量扫描 JSON (202 skills, 16 packs)</li>
+          <li>CHI 仪表盘 v2 + aggregate-sqs.py</li>
+          <li>健康度优先级排序</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num phase-done">1</div>
+      <div class="phase-info">
+        <h3>L2/L3 逐层补充</h3>
+        <p class="meta">STORY-4-3, 4-4, 4-5 · 已完成</p>
+        <ul class="ac-list">
+          <li>L2 Experiences 补充 (4包→17包全覆盖)</li>
+          <li>L3 Knowledge 首次填充 (0→17包, ~38篇)</li>
+          <li>模板标准化 + validate-layers.py</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num phase-done">2</div>
+      <div class="phase-info">
+        <h3>质量提升迭代</h3>
+        <p class="meta">STORY-4-6, 4-7, 4-8 · 已完成</p>
+        <ul class="ac-list">
+          <li>26 个低分 skill 全部补充 S4 关联字段</li>
+          <li>17 个 cap-pack.yaml 元数据补齐</li>
+          <li>CHI 门禁脚本 chi-gate.py 嵌入 CI</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num phase-done">3</div>
+      <div class="phase-info">
+        <h3>合并/清理</h3>
+        <p class="meta">STORY-4-9, 4-10 · 已完成</p>
+        <ul class="ac-list">
+          <li>BMAD 系列合并: 3→1 (bmad-context-engineering)</li>
+          <li>6 个 micro-skill 降级为 experiences</li>
+          <li>doc-engine: 15→9 skills, 10→11 experiences</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num phase-active">4</div>
+      <div class="phase-info">
+        <h3>门禁固化</h3>
+        <p class="meta">STORY-4-11, 4-12 · 🔄 进行中</p>
+        <ul class="ac-list">
+          <li>✅ 质量升级 HTML 报告 (本报告)</li>
+          <li>⏳ CI CHI 门禁从 warning 升级为 blocking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deliverables -->
+  <div class="section">
+    <h2>📦 交付物清单</h2>
+    <ul>
+      <li><strong>scripts/aggregate-sqs.py</strong> — Pack 聚合 + 优先级排序</li>
+      <li><strong>scripts/validate-layers.py</strong> — 三层完整性检查</li>
+      <li><strong>scripts/fix-low-score-skills.py</strong> — 低分 skill S4 修复</li>
+      <li><strong>scripts/fix-pack-metadata.py</strong> — cap-pack.yaml 元数据补齐</li>
+      <li><strong>scripts/chi-gate.py</strong> — CHI 不降级门禁检查</li>
+      <li><strong>scripts/merge-suggest.py</strong> — 跨包重叠检测 + 合并建议</li>
+      <li><strong>scripts/phase-gate.py</strong> — Phase 门禁管理</li>
+      <li><strong>scripts/chain-state.py / chain-gate.py</strong> — 工作流链状态机</li>
+      <li><strong>reports/chi-baseline.json</strong> — CHI 基线 67.92</li>
+      <li><strong>reports/chi-by-pack.json</strong> — 按包 SQS 分布</li>
+      <li><strong>reports/chi-priority-list.md</strong> — 健康度优先级排名</li>
+    </ul>
+  </div>
+
+  <!-- AC -->
+  <div class="section">
+    <h2>✅ 验收标准进度</h2>
+    <ul>
+      <li>✅ AC1: 全部 17 个 pack 有 SQS 评分记录</li>
+      <li>🟡 AC2: CHI ≥ 0.85 (当前 67.92) — 渐进目标 0.75→0.80→0.85</li>
+      <li>🟡 AC3: SQS 平均分 ≥ 80 (当前 67.9)</li>
+      <li>✅ AC4: 低分项占比 (<60) ≤ 15% (当前 ~0%)</li>
+      <li>✅ AC5: 每个 pack 至少 1 篇 L2 Experience</li>
+      <li>✅ AC6: 每个 pack 至少 1 篇 L3 Knowledge</li>
+      <li>✅ AC7: CI pr-check 包含 CHI 不降级门禁</li>
+      <li>✅ AC8: 合并建议报告已生成，2-3 个试点已执行</li>
+      <li>⏳ AC9: 质量升级 HTML 报告已生成并归档</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>生成时间: 2026-05-16 · 🤖 boku (Emma) · hermes-cap-pack v0.9.2</p>
+    <p>EPIC-004 质量升级报告 · Phase 4 进行中</p>
+  </div>
+
+</div>
+</body>
+</html>

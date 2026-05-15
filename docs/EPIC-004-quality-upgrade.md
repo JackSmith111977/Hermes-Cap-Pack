@@ -135,15 +135,15 @@
 
 ## 八、验收标准
 
-- [ ] AC1: 全部 18+ pack 有 SQS 评分记录
+- [x] AC1: 全部 17 个 pack 有 SQS 评分记录 ✅
 - [ ] AC2: CHI ≥ **0.85**（当前 67.92）→ 渐进目标 0.75→0.80→0.85
 - [ ] AC3: SQS 平均分 ≥ **80**（当前 67.9）
 - [ ] AC4: 低分项占比 (<60) ≤ **15%**（当前 ~0% — 已全部修复）
-- [ ] AC5: 每个 pack 至少 1 篇 L2 Experience
-- [ ] AC6: 每个 pack 至少 1 篇 L3 Knowledge
-- [ ] AC7: CI pr-check 包含 CHI 不降级门禁
+- [x] AC5: 每个 pack 至少 1 篇 L2 Experience — 17/17 全覆盖 ✅
+- [x] AC6: 每个 pack 至少 1 篇 L3 Knowledge — 17/17 全覆盖 ✅
+- [x] AC7: CI pr-check 包含 CHI 不降级门禁 (blocking) ✅
 - [x] AC8: 合并建议报告已生成，2-3 个试点已执行 — BMAD 系列合并(2个) + 6个微技能降级 ✅
-- [ ] AC9: 质量升级 HTML 报告已生成并归档
+- [x] AC9: 质量升级 HTML 报告已生成并归档 — reports/epic004-quality-upgrade-report.html ✅
 
 ---
 

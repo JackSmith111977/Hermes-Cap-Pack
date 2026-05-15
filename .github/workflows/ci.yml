@@ -104,9 +104,8 @@ jobs:
       - name: 📦 Install dependencies
         run: pip install pyyaml
 
-      - name: 📊 Check CHI baseline (warning only, non-blocking)
-        continue-on-error: true
-        run: python3 scripts/chi-gate.py --threshold 0.75 || echo "⚠️ CHI gate warning (non-blocking)"
+      - name: 📊 Check CHI baseline (blocking)
+        run: python3 scripts/chi-gate.py --threshold 0.75
 
   consistency:
     name: 🔗 Cross-Reference Integrity
