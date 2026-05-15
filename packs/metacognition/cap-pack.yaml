@@ -1,101 +1,105 @@
----
 name: metacognition
 version: 1.0.0
 classification: skill
-display_name: "元认知能力包"
-updated: "2026-05-14"
-created: "2026-05-14"
+display_name: 元认知能力包
+updated: '2026-05-14'
+created: '2026-05-14'
 type: capability-pack
-description: "元认知系统能力包 — 自我分析/能力认知/skill 创作/PyPI 发布/运维最佳实践"
+description: 元认知系统能力包 — 自我分析/能力认知/skill 创作/PyPI 发布/运维最佳实践
 compatibility:
   agent_types:
-    - hermes
+  - hermes
 author: boku (Emma)
 category: system-insight
 domain: metacognition
-
 skills:
-  - id: self-capabilities-map
-    name: self-capabilities-map
-    description: "boku（小玛/Emma）对 Hermes Agent 完整能力边界的认知地图。涵盖已掌握能力、未利用能力、能力限制、可扩展方向。当 boku 需要评估自己能否完成某项任务时，先加载此 skill 进行能力匹配。"
-    path: ~/.hermes/skills/self-capabilities-map
-    version: 2.2.0
-    tags:
-      - self-awareness
-      - capability-audit
-      - ability-mapping
-      - introspection
-      - skill-type-research
-      - design-pattern-inversion
-
-  - id: architecture-trilemma
-    name: architecture-trilemma
-    description: "运行时(Runtime) vs 技能(Skill) vs 工具(Tool) — 三种Agent扩展机制的架构决策模式。当你需要在系统中设计一个新的组件时，先判断它属于三者中的哪一种，再决定它的集成方式、文档格式和安装流程。"
-    path: ~/.hermes/skills/meta/architecture-trilemma
-    version: 1.1.0
-    tags:
-      - architecture
-      - design-pattern
-      - decision-making
-      - runtime
-      - skill
-      - tool
-      - methodology
-
-  - id: design-philosophy-migration
-    name: design-philosophy-migration
-    description: "跨项目设计哲学重构方法论。从研究目标项目的设计哲学 → 提炼可复用模式 → 应用到自己的项目中。当需要从优秀项目中学习设计模式、并同构到自己的项目时使用此 skill。"
-    path: ~/.hermes/skills/meta/design-philosophy-migration
-    version: 1.0.0
-    tags:
-      - cross-project
-      - design-philosophy
-      - knowledge-transfer
-      - refactoring
-      - methodology
-      - design-pattern-pipeline
-
-  - id: skill-creator
-    name: skill-creator
-    description: "创建、优化、评估 Skill 的完整工作流。支持从实战任务中提取知识、从学习笔记转化 Skill。内置 5 种设计模式，9 阶段创作流程（含快速更新通道），引用依赖检查，以及 skill-manage 联动拦截。"
-    path: ~/.hermes/skills/skill-creator
-    version: 5.0.0
-    tags:
-      - skill-creation
-      - evaluation
-      - knowledge-extraction
-      - versioning
-      - dependency-tracking
-      - quality-gate
-      - skill-lifecycle
-      - design-pattern-pipeline
-
-  - id: skill-to-pypi
-    name: skill-to-pypi
-    description: "将 Hermes 内部组件（skill/脚本/工具）打包为独立的 Python 开源项目。涵盖项目结构初始化、模块化重构、pyproject.toml/setup.py 配置、测试框架搭建、Git 版本管理、覆盖率目标设定、LICENSE 选择等完整流程。"
-    path: ~/.hermes/skills/skill-to-pypi
-    version: 1.1.0
-    tags:
-      - open-source
-      - packaging
-      - pypi
-      - python-package
-      - project-scaffolding
-      - ci-cd
-      - design-pattern-pipeline
-      - skill-type-workflow
-
-  - id: hermes-ops-tips
-    name: hermes-ops-tips
-    description: "Hermes 运维与工具流最佳实践。包含 Hermes 手动升级流程、SRA 迁移与独立工具管理、高清架构图生成 (SVG + cairosvg)、Memory 降级策略。"
-    path: ~/.hermes/skills/hermes-ops-tips
-    version: 1.0.0
-    tags:
-      - ops
-      - maintenance
-      - upgrade
-      - sra
-      - browser-vision
-      - statusline
-      - memory-management
-      - gateway
+- id: self-capabilities-map
+  name: self-capabilities-map
+  description: boku（小玛/Emma）对 Hermes Agent 完整能力边界的认知地图。涵盖已掌握能力、未利用能力、能力限制、可扩展方向。当
+    boku 需要评估自己能否完成某项任务时，先加载此 skill 进行能力匹配。
+  path: ~/.hermes/skills/self-capabilities-map
+  version: 2.2.0
+  tags:
+  - self-awareness
+  - capability-audit
+  - ability-mapping
+  - introspection
+  - skill-type-research
+  - design-pattern-inversion
+- id: architecture-trilemma
+  name: architecture-trilemma
+  description: 运行时(Runtime) vs 技能(Skill) vs 工具(Tool) — 三种Agent扩展机制的架构决策模式。当你需要在系统中设计一个新的组件时，先判断它属于三者中的哪一种，再决定它的集成方式、文档格式和安装流程。
+  path: ~/.hermes/skills/meta/architecture-trilemma
+  version: 1.1.0
+  tags:
+  - architecture
+  - design-pattern
+  - decision-making
+  - runtime
+  - skill
+  - tool
+  - methodology
+- id: design-philosophy-migration
+  name: design-philosophy-migration
+  description: 跨项目设计哲学重构方法论。从研究目标项目的设计哲学 → 提炼可复用模式 → 应用到自己的项目中。当需要从优秀项目中学习设计模式、并同构到自己的项目时使用此
+    skill。
+  path: ~/.hermes/skills/meta/design-philosophy-migration
+  version: 1.0.0
+  tags:
+  - cross-project
+  - design-philosophy
+  - knowledge-transfer
+  - refactoring
+  - methodology
+  - design-pattern-pipeline
+- id: skill-creator
+  name: skill-creator
+  description: 创建、优化、评估 Skill 的完整工作流。支持从实战任务中提取知识、从学习笔记转化 Skill。内置 5 种设计模式，9 阶段创作流程（含快速更新通道），引用依赖检查，以及
+    skill-manage 联动拦截。
+  path: ~/.hermes/skills/skill-creator
+  version: 5.0.0
+  tags:
+  - skill-creation
+  - evaluation
+  - knowledge-extraction
+  - versioning
+  - dependency-tracking
+  - quality-gate
+  - skill-lifecycle
+  - design-pattern-pipeline
+- id: skill-to-pypi
+  name: skill-to-pypi
+  description: 将 Hermes 内部组件（skill/脚本/工具）打包为独立的 Python 开源项目。涵盖项目结构初始化、模块化重构、pyproject.toml/setup.py
+    配置、测试框架搭建、Git 版本管理、覆盖率目标设定、LICENSE 选择等完整流程。
+  path: ~/.hermes/skills/skill-to-pypi
+  version: 1.1.0
+  tags:
+  - open-source
+  - packaging
+  - pypi
+  - python-package
+  - project-scaffolding
+  - ci-cd
+  - design-pattern-pipeline
+  - skill-type-workflow
+- id: hermes-ops-tips
+  name: hermes-ops-tips
+  description: Hermes 运维与工具流最佳实践。包含 Hermes 手动升级流程、SRA 迁移与独立工具管理、高清架构图生成 (SVG + cairosvg)、Memory
+    降级策略。
+  path: ~/.hermes/skills/hermes-ops-tips
+  version: 1.0.0
+  tags:
+  - ops
+  - maintenance
+  - upgrade
+  - sra
+  - browser-vision
+  - statusline
+  - memory-management
+  - gateway
+triggers:
+- 元认知
+- 自我审查
+- 文档对齐
+- 质量检查
+- AI 自省

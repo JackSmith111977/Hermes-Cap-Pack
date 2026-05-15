@@ -26,6 +26,11 @@ metadata:
     category: devops
     skill_type: data-analysis
     design_pattern: pipeline
+depends_on:
+  - clash-config
+  - proxy-monitor
+see_also:
+  - docker-management
 ---
 # proxy-finder · 机场搜集与节点测试
 

@@ -14,6 +14,11 @@ metadata:
     category: productivity
     skill_type: doc-generation
     format: latex
+depends_on:
+  - pdf-layout-weasyprint
+see_also:
+  - markdown-guide
+  - docx-guide
 ---
 # LaTeX 原子操作技能
 

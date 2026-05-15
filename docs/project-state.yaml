@@ -4,8 +4,20 @@ project:
   current_phase: sprint-5
   overall_state: review
   created: 2026-05-12
-  updated: '2026-05-14'
+  updated: '2026-05-15'
 workflow:
+  chain:
+    protocol: chain-state-json
+    state_file: docs/chain-state.json
+    stages:
+      - SPEC
+      - DEV
+      - QA
+      - COMMIT
+    hooks:
+      post_spec: generic-dev-workflow
+      post_dev: generic-qa-workflow
+      post_qa: generic-dev-workflow
   sdd:
     state_machine:
     - name: CLARIFY
@@ -223,9 +235,9 @@ entities:
     EPIC-004:
       title: 能力包质量升级 — 三层改造 + 健康度检测 + 合并优化
       state: approved
-      spec_count: 0
-      story_count: 0
-      completed_count: 0
+      spec_count: 3
+      story_count: 8
+      completed_count: 8
       priority: P0
       qa_gate_date: null
       review_date: null
@@ -325,6 +337,13 @@ entities:
       - STORY-4-3
       - STORY-4-4
       - STORY-4-5
+    SPEC-4-3:
+      state: approved
+      epic: EPIC-004
+      stories:
+      - STORY-4-6
+      - STORY-4-7
+      - STORY-4-8
   stories:
     STORY-1-1-1:
       state: draft
@@ -484,12 +503,12 @@ entities:
       spec: SPEC-3-3
     STORY-3-12:
       state: completed
-      epic: '?'
-      spec: '?'
+      epic: EPIC-003
+      spec: SPEC-3-3
     STORY-3-13:
       state: completed
-      epic: '?'
-      spec: '?'
+      epic: EPIC-003
+      spec: SPEC-3-3
     STORY-4-1:
       state: completed
       epic: EPIC-004
@@ -510,6 +529,18 @@ entities:
       state: completed
       epic: EPIC-004
       spec: SPEC-4-2
+    STORY-4-6:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-3
+    STORY-4-7:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-3
+    STORY-4-8:
+      state: completed
+      epic: EPIC-004
+      spec: SPEC-4-3
 sprints:
   sprint-1:
     title: 核心框架搭建
@@ -566,6 +597,88 @@ quality:
   low_score_skills: 0
   mid_score_skills: 122
   high_score_skills: 79
+phases:
+  EPIC-004:
+    title: 能力包质量升级 — 增量循环
+    phases:
+      - name: Phase-0
+        title: 健康度基线扫描
+        acceptance_criteria:
+          - criteria: SQS 全量扫描 JSON
+            done: true
+          - criteria: CHI 仪表盘
+            done: true
+          - criteria: 健康度优先级排序
+            done: true
+        requires:
+          - EPIC-004 已批准
+        stories:
+          - STORY-4-1
+          - STORY-4-2
+        # ✅ Completed
+        completed: true
+      - name: Phase-1
+        title: L2/L3 逐层补充
+        acceptance_criteria:
+          - criteria: L2 Experiences 补充
+            done: true
+          - criteria: L3 Knowledge 填充
+            done: true
+          - criteria: 模板标准化
+            done: true
+        requires:
+          - Phase-0 已完成
+        stories:
+          - STORY-4-3
+          - STORY-4-4
+          - STORY-4-5
+        # ✅ Completed
+        completed: true
+      - name: Phase-2
+        title: 质量提升迭代
+        acceptance_criteria:
+          - criteria: 低分 skill (SQS<60) 改进
+            done: true
+          - criteria: cap-pack.yaml 元数据补齐
+            done: true
+          - criteria: CHI 门禁脚本嵌入 CI
+            done: true
+        requires:
+          - Phase-1 已完成
+        stories:
+          - STORY-4-6
+          - STORY-4-7
+          - STORY-4-8
+        # ✅ Completed — 26个低分skill全部修复, 17个cap-pack.yaml元数据补齐, chi-gate已嵌入CI
+        completed: true
+      - name: Phase-3
+        title: 合并/清理
+        acceptance_criteria:
+          - criteria: 跨包重叠检测引擎
+            done: false
+          - criteria: 手动确认执行试点
+            done: false
+        requires:
+          - Phase-2 已完成
+        stories:
+          - STORY-4-9
+          - STORY-4-10
+      - name: Phase-4
+        title: 门禁固化
+        acceptance_criteria:
+          - criteria: 质量升级 HTML 报告
+            done: false
+          - criteria: 验收门禁 + 基准锁定
+            done: false
+        requires:
+          - Phase-3 已完成
+        stories:
+          - STORY-4-11
+          - STORY-4-12
+    completed_phases:
+      - Phase-0
+      - Phase-1
+      - Phase-2
 history:
 - date: 2026-05-14 19:30:00
   entity: system

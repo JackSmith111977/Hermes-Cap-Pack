@@ -5,232 +5,322 @@ name: creative-design
 version: 1.0.0
 type: capability-pack
 classification: domain
-display_name: "创意设计"
-description: "创意设计全栈能力包 — 架构图、ASCII 艺术、概念图、Excalidraw 手绘、图片生成与 Prompt 工程、像素艺术、Meme 制作、AI 音乐创作、ComfyUI 工作流、信息图等。覆盖视觉表达、创意工具链和设计审美的完整管线。"
-author: "boku (Emma)"
-created: "2026-05-14"
-updated: "2026-05-14"
+display_name: 创意设计
+description: 创意设计全栈能力包 — 架构图、ASCII 艺术、概念图、Excalidraw 手绘、图片生成与 Prompt 工程、像素艺术、Meme
+  制作、AI 音乐创作、ComfyUI 工作流、信息图等。覆盖视觉表达、创意工具链和设计审美的完整管线。
+author: boku (Emma)
+created: '2026-05-14'
+updated: '2026-05-14'
 emoji: 🎨
 category: creative-design
 domain: creative-design
-maintainer: "boku"
-
+maintainer: boku
 compatibility:
-  agent_types: [hermes, claude-code, opencode]
+  agent_types:
+  - hermes
+  - claude-code
+  - opencode
   hermes_version:
-    min: "0.10.0"
-    max: "99.99.99"
-
+    min: 0.10.0
+    max: 99.99.99
 dependencies:
   cap_packs:
-    - name: skill-quality
-      version: "1.0.0"
-
+  - name: skill-quality
+    version: 1.0.0
 skills:
-  - id: architecture-diagram
-    name: architecture-diagram
-    description: "Generate dark-themed SVG diagrams of software systems and architectures."
-    path: SKILLS/architecture-diagram/SKILL.md
-    version: 1.0.0
-    tags: [diagram, architecture, svg, visualization]
-    sqs_target: 80.0
-
-  - id: ascii-art
-    name: ascii-art
-    description: "Generate ASCII art using pyfiglet (571 fonts), cowsay, and figlet-fonts."
-    path: SKILLS/ascii-art/SKILL.md
-    version: 1.0.0
-    tags: [ascii, art, terminal, typography]
-    sqs_target: 75.0
-
-  - id: baoyu-comic
-    name: baoyu-comic
-    description: "Knowledge comics (知识漫画): educational, biography, tutorial."
-    path: SKILLS/baoyu-comic/SKILL.md
-    version: 1.0.0
-    tags: [comic, education, visual, narrative]
-    sqs_target: 70.0
-
-  - id: baoyu-infographic
-    name: baoyu-infographic
-    description: "Generate professional infographics with 21 layout types and data visualization."
-    path: SKILLS/baoyu-infographic/SKILL.md
-    version: 1.0.0
-    tags: [infographic, data-visualization, layout, design]
-    sqs_target: 75.0
-
-  - id: claude-design
-    name: claude-design
-    description: "Design one-off HTML artifacts (landing, deck, prototype)."
-    path: SKILLS/claude-design/SKILL.md
-    version: 1.0.0
-    tags: [design, html, prototype, artifact]
-    sqs_target: 75.0
-
-  - id: comfyui
-    name: comfyui
-    description: "Generate images, video, and audio with ComfyUI — install, configure, run workflows."
-    path: SKILLS/comfyui/SKILL.md
-    version: 1.0.0
-    tags: [comfyui, stable-diffusion, image-generation, workflow]
-    sqs_target: 70.0
-
-  - id: concept-diagrams
-    name: concept-diagrams
-    description: "Generate flat, minimal light/dark-aware SVG diagrams as single self-contained HTML files."
-    path: SKILLS/concept-diagrams/SKILL.md
-    version: 1.0.0
-    tags: [diagram, svg, concept, minimal]
-    sqs_target: 80.0
-
-  - id: creative-ideation
-    name: creative-ideation
-    description: "Generate project ideas through creative constraints. Use for brainstorming."
-    path: SKILLS/creative-ideation/SKILL.md
-    version: 1.0.0
-    tags: [ideation, brainstorming, creativity, inspiration]
-    sqs_target: 70.0
-
-  - id: design-md
-    name: design-md
-    description: "Author/validate/export Google's DESIGN.md token spec files."
-    path: SKILLS/design-md/SKILL.md
-    version: 1.0.0
-    tags: [design-md, specification, token, design-system]
-    sqs_target: 70.0
-
-  - id: excalidraw
-    name: excalidraw
-    description: "Create hand-drawn style diagrams using Excalidraw JSON format."
-    path: SKILLS/excalidraw/SKILL.md
-    version: 1.0.0
-    tags: [excalidraw, diagram, hand-drawn, whiteboard]
-    sqs_target: 80.0
-
-  - id: humanizer
-    name: humanizer
-    description: "Humanize text: strip AI-isms and add real voice."
-    path: SKILLS/humanizer/SKILL.md
-    version: 1.0.0
-    tags: [writing, humanize, text, style]
-    sqs_target: 75.0
-
-  - id: ideation
-    name: ideation
-    description: "[alias for creative-ideation] Generate project ideas through creative constraints."
-    path: SKILLS/ideation/SKILL.md
-    version: 1.0.0
-    tags: [ideation, brainstorming]
-    sqs_target: 70.0
-
-  - id: image-generation
-    name: image-generation
-    description: "Generate high-quality images using gpt-image-2, Stable Diffusion, or Dashscope."
-    path: SKILLS/image-generation/SKILL.md
-    version: 1.0.0
-    tags: [image-generation, ai-art, stable-diffusion, dalle]
-    sqs_target: 85.0
-
-  - id: image-prompt-guide
-    name: image-prompt-guide
-    description: "Best practices for writing high-quality image generation prompts."
-    path: SKILLS/image-prompt-guide/SKILL.md
-    version: 1.0.0
-    tags: [prompt-engineering, image-generation, guide]
-    sqs_target: 80.0
-
-  - id: image-to-image-guide
-    name: image-to-image-guide
-    description: "Complete guide for image-to-image generation with IP-Adapter and ControlNet."
-    path: SKILLS/image-to-image-guide/SKILL.md
-    version: 1.0.0
-    tags: [image-to-image, controlnet, ip-adapter, guide]
-    sqs_target: 70.0
-
-  - id: manim-video
-    name: manim-video
-    description: "Production pipeline for mathematical and technical animations with Manim."
-    path: SKILLS/manim-video/SKILL.md
-    version: 1.0.0
-    tags: [manim, animation, math, video]
-    sqs_target: 70.0
-
-  - id: meme-creation
-    name: meme-creation
-    description: "Complete meme/梗图 creation workflow — AI image generation, static/animated memes."
-    path: SKILLS/meme-creation/SKILL.md
-    version: 1.0.0
-    tags: [meme, image, humor, social-media]
-    sqs_target: 70.0
-
-  - id: p5js
-    name: p5js
-    description: "Production pipeline for interactive and generative visual art with p5.js."
-    path: SKILLS/p5js/SKILL.md
-    version: 1.0.0
-    tags: [p5js, generative-art, creative-coding, interactive]
-    sqs_target: 75.0
-
-  - id: pixel-art
-    name: pixel-art
-    description: "Convert images into retro pixel art with hardware-accurate palettes."
-    path: SKILLS/pixel-art/SKILL.md
-    version: 1.0.0
-    tags: [pixel-art, retro, image-processing, palette]
-    sqs_target: 70.0
-
-  - id: popular-web-designs
-    name: popular-web-designs
-    description: "54 production-quality design systems extracted from real websites."
-    path: SKILLS/popular-web-designs/SKILL.md
-    version: 1.0.0
-    tags: [design, web, ui, design-system]
-    sqs_target: 75.0
-
-  - id: pretext
-    name: pretext
-    description: "Use when building creative browser demos with @chenglou/pretext."
-    path: SKILLS/pretext/SKILL.md
-    version: 1.0.0
-    tags: [pretext, browser, demo, interactive]
-    sqs_target: 65.0
-
-  - id: sketch
-    name: sketch
-    description: "Throwaway HTML mockups: 2-3 design variants to compare."
-    path: SKILLS/sketch/SKILL.md
-    version: 1.0.0
-    tags: [sketch, mockup, html, prototype]
-    sqs_target: 75.0
-
-  - id: songwriting-and-ai-music
-    name: songwriting-and-ai-music
-    description: "Songwriting craft and AI music generation prompts (Suno focused)."
-    path: SKILLS/songwriting-and-ai-music/SKILL.md
-    version: 1.0.0
-    tags: [music, songwriting, ai-music, suno]
-    sqs_target: 70.0
-
-  - id: touchdesigner-mcp
-    name: touchdesigner-mcp
-    description: "Control a running TouchDesigner instance via twozero MCP integration."
-    path: SKILLS/touchdesigner-mcp/SKILL.md
-    version: 1.0.0
-    tags: [touchdesigner, visual, mcp, realtime]
-    sqs_target: 65.0
-
-  - id: visual-aesthetics
-    name: visual-aesthetics
-    description: "boku's visual aesthetics guide — criteria for beauty vs ugliness."
-    path: SKILLS/visual-aesthetics/SKILL.md
-    version: 1.0.0
-    tags: [aesthetics, design, beauty, visual-judgment]
-    sqs_target: 80.0
-
-  - id: ascii-video
-    name: ascii-video
-    description: "Production pipeline for ASCII art video — any format."
-    path: SKILLS/ascii-video/SKILL.md
-    version: 1.0.0
-    tags: [ascii, video, animation, terminal]
-    sqs_target: 65.0
+- id: architecture-diagram
+  name: architecture-diagram
+  description: Generate dark-themed SVG diagrams of software systems and architectures.
+  path: SKILLS/architecture-diagram/SKILL.md
+  version: 1.0.0
+  tags:
+  - diagram
+  - architecture
+  - svg
+  - visualization
+  sqs_target: 80.0
+- id: ascii-art
+  name: ascii-art
+  description: Generate ASCII art using pyfiglet (571 fonts), cowsay, and figlet-fonts.
+  path: SKILLS/ascii-art/SKILL.md
+  version: 1.0.0
+  tags:
+  - ascii
+  - art
+  - terminal
+  - typography
+  sqs_target: 75.0
+- id: baoyu-comic
+  name: baoyu-comic
+  description: 'Knowledge comics (知识漫画): educational, biography, tutorial.'
+  path: SKILLS/baoyu-comic/SKILL.md
+  version: 1.0.0
+  tags:
+  - comic
+  - education
+  - visual
+  - narrative
+  sqs_target: 70.0
+- id: baoyu-infographic
+  name: baoyu-infographic
+  description: Generate professional infographics with 21 layout types and data visualization.
+  path: SKILLS/baoyu-infographic/SKILL.md
+  version: 1.0.0
+  tags:
+  - infographic
+  - data-visualization
+  - layout
+  - design
+  sqs_target: 75.0
+- id: claude-design
+  name: claude-design
+  description: Design one-off HTML artifacts (landing, deck, prototype).
+  path: SKILLS/claude-design/SKILL.md
+  version: 1.0.0
+  tags:
+  - design
+  - html
+  - prototype
+  - artifact
+  sqs_target: 75.0
+- id: comfyui
+  name: comfyui
+  description: Generate images, video, and audio with ComfyUI — install, configure,
+    run workflows.
+  path: SKILLS/comfyui/SKILL.md
+  version: 1.0.0
+  tags:
+  - comfyui
+  - stable-diffusion
+  - image-generation
+  - workflow
+  sqs_target: 70.0
+- id: concept-diagrams
+  name: concept-diagrams
+  description: Generate flat, minimal light/dark-aware SVG diagrams as single self-contained
+    HTML files.
+  path: SKILLS/concept-diagrams/SKILL.md
+  version: 1.0.0
+  tags:
+  - diagram
+  - svg
+  - concept
+  - minimal
+  sqs_target: 80.0
+- id: creative-ideation
+  name: creative-ideation
+  description: Generate project ideas through creative constraints. Use for brainstorming.
+  path: SKILLS/creative-ideation/SKILL.md
+  version: 1.0.0
+  tags:
+  - ideation
+  - brainstorming
+  - creativity
+  - inspiration
+  sqs_target: 70.0
+- id: design-md
+  name: design-md
+  description: Author/validate/export Google's DESIGN.md token spec files.
+  path: SKILLS/design-md/SKILL.md
+  version: 1.0.0
+  tags:
+  - design-md
+  - specification
+  - token
+  - design-system
+  sqs_target: 70.0
+- id: excalidraw
+  name: excalidraw
+  description: Create hand-drawn style diagrams using Excalidraw JSON format.
+  path: SKILLS/excalidraw/SKILL.md
+  version: 1.0.0
+  tags:
+  - excalidraw
+  - diagram
+  - hand-drawn
+  - whiteboard
+  sqs_target: 80.0
+- id: humanizer
+  name: humanizer
+  description: 'Humanize text: strip AI-isms and add real voice.'
+  path: SKILLS/humanizer/SKILL.md
+  version: 1.0.0
+  tags:
+  - writing
+  - humanize
+  - text
+  - style
+  sqs_target: 75.0
+- id: ideation
+  name: ideation
+  description: '[alias for creative-ideation] Generate project ideas through creative
+    constraints.'
+  path: SKILLS/ideation/SKILL.md
+  version: 1.0.0
+  tags:
+  - ideation
+  - brainstorming
+  sqs_target: 70.0
+- id: image-generation
+  name: image-generation
+  description: Generate high-quality images using gpt-image-2, Stable Diffusion, or
+    Dashscope.
+  path: SKILLS/image-generation/SKILL.md
+  version: 1.0.0
+  tags:
+  - image-generation
+  - ai-art
+  - stable-diffusion
+  - dalle
+  sqs_target: 85.0
+- id: image-prompt-guide
+  name: image-prompt-guide
+  description: Best practices for writing high-quality image generation prompts.
+  path: SKILLS/image-prompt-guide/SKILL.md
+  version: 1.0.0
+  tags:
+  - prompt-engineering
+  - image-generation
+  - guide
+  sqs_target: 80.0
+- id: image-to-image-guide
+  name: image-to-image-guide
+  description: Complete guide for image-to-image generation with IP-Adapter and ControlNet.
+  path: SKILLS/image-to-image-guide/SKILL.md
+  version: 1.0.0
+  tags:
+  - image-to-image
+  - controlnet
+  - ip-adapter
+  - guide
+  sqs_target: 70.0
+- id: manim-video
+  name: manim-video
+  description: Production pipeline for mathematical and technical animations with
+    Manim.
+  path: SKILLS/manim-video/SKILL.md
+  version: 1.0.0
+  tags:
+  - manim
+  - animation
+  - math
+  - video
+  sqs_target: 70.0
+- id: meme-creation
+  name: meme-creation
+  description: Complete meme/梗图 creation workflow — AI image generation, static/animated
+    memes.
+  path: SKILLS/meme-creation/SKILL.md
+  version: 1.0.0
+  tags:
+  - meme
+  - image
+  - humor
+  - social-media
+  sqs_target: 70.0
+- id: p5js
+  name: p5js
+  description: Production pipeline for interactive and generative visual art with
+    p5.js.
+  path: SKILLS/p5js/SKILL.md
+  version: 1.0.0
+  tags:
+  - p5js
+  - generative-art
+  - creative-coding
+  - interactive
+  sqs_target: 75.0
+- id: pixel-art
+  name: pixel-art
+  description: Convert images into retro pixel art with hardware-accurate palettes.
+  path: SKILLS/pixel-art/SKILL.md
+  version: 1.0.0
+  tags:
+  - pixel-art
+  - retro
+  - image-processing
+  - palette
+  sqs_target: 70.0
+- id: popular-web-designs
+  name: popular-web-designs
+  description: 54 production-quality design systems extracted from real websites.
+  path: SKILLS/popular-web-designs/SKILL.md
+  version: 1.0.0
+  tags:
+  - design
+  - web
+  - ui
+  - design-system
+  sqs_target: 75.0
+- id: pretext
+  name: pretext
+  description: Use when building creative browser demos with @chenglou/pretext.
+  path: SKILLS/pretext/SKILL.md
+  version: 1.0.0
+  tags:
+  - pretext
+  - browser
+  - demo
+  - interactive
+  sqs_target: 65.0
+- id: sketch
+  name: sketch
+  description: 'Throwaway HTML mockups: 2-3 design variants to compare.'
+  path: SKILLS/sketch/SKILL.md
+  version: 1.0.0
+  tags:
+  - sketch
+  - mockup
+  - html
+  - prototype
+  sqs_target: 75.0
+- id: songwriting-and-ai-music
+  name: songwriting-and-ai-music
+  description: Songwriting craft and AI music generation prompts (Suno focused).
+  path: SKILLS/songwriting-and-ai-music/SKILL.md
+  version: 1.0.0
+  tags:
+  - music
+  - songwriting
+  - ai-music
+  - suno
+  sqs_target: 70.0
+- id: touchdesigner-mcp
+  name: touchdesigner-mcp
+  description: Control a running TouchDesigner instance via twozero MCP integration.
+  path: SKILLS/touchdesigner-mcp/SKILL.md
+  version: 1.0.0
+  tags:
+  - touchdesigner
+  - visual
+  - mcp
+  - realtime
+  sqs_target: 65.0
+- id: visual-aesthetics
+  name: visual-aesthetics
+  description: boku's visual aesthetics guide — criteria for beauty vs ugliness.
+  path: SKILLS/visual-aesthetics/SKILL.md
+  version: 1.0.0
+  tags:
+  - aesthetics
+  - design
+  - beauty
+  - visual-judgment
+  sqs_target: 80.0
+- id: ascii-video
+  name: ascii-video
+  description: Production pipeline for ASCII art video — any format.
+  path: SKILLS/ascii-video/SKILL.md
+  version: 1.0.0
+  tags:
+  - ascii
+  - video
+  - animation
+  - terminal
+  sqs_target: 65.0
+triggers:
+- 创意设计
+- SVG 图表
+- ASCII 艺术
+- 视频制作
+- 设计

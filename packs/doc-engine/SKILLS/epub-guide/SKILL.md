@@ -13,6 +13,12 @@ metadata:
     category: productivity
     skill_type: doc-generation
     format: epub
+depends_on:
+  - markdown-guide
+  - html-guide
+see_also:
+  - pdf-layout
+  - docx-guide
 ---
 # EPUB 原子操作技能
 

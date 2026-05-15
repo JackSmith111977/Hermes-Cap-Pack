@@ -14,6 +14,12 @@ metadata:
     category: productivity
     skill_type: doc-generation
     format: docx
+depends_on:
+  - markdown-guide
+see_also:
+  - pdf-layout-weasyprint
+  - epub-guide
+  - latex-guide
 ---
 # Word (.docx) 原子操作技能
 

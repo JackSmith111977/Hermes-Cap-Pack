@@ -15,6 +15,11 @@ metadata:
     skill_type: doc-generation
     format: html
     related_skills: ["web-ui-ux-design"]
+depends_on:
+  - markdown-guide
+see_also:
+  - epub-guide
+  - pdf-layout-weasyprint
 ---
 # HTML/CSS 原子操作技能
 

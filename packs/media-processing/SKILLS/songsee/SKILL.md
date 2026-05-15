@@ -7,6 +7,9 @@ triggers:
 - songsee
 author: community
 license: MIT
+depends_on:
+  - youtube-content
+  - spotify
 metadata:
   hermes:
     tags:
@@ -19,6 +22,9 @@ metadata:
 prerequisites:
   commands:
   - songsee
+see_also:
+  - gif-search
+  - songwriting-and-ai-music
 ---
 # songsee
 

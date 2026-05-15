@@ -7,6 +7,9 @@ triggers:
 - arxiv
 author: Hermes Agent
 license: MIT
+depends_on:
+  - llm-wiki
+  - deep-research
 metadata:
   hermes:
     tags:
@@ -18,6 +21,9 @@ metadata:
     - API
     related_skills:
     - ocr-and-documents
+see_also:
+  - blogwatcher
+  - ai-trends
 ---
 # arXiv Research
 

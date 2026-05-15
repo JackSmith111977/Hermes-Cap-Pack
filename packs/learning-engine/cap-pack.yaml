@@ -1,118 +1,164 @@
 # 🧠 learning-engine — 研究与学习引擎能力包
 # Schema: cap-pack-v2.schema.json
+# ℹ️ v1.0.1 — 合并 knowledge-base（原独立包），详见 SPEC-1-1
+# ⚡ knowledge-base 已合并至此包 — 详见 docs/SPEC-1-1.md 合并注释
 
 name: learning-engine
 version: 1.0.0
 type: capability-pack
 classification: domain
-display_name: "研究与学习引擎"
-description: "深度调研、论文搜索、知识沉淀 — 从信息获取到知识结构化的完整管线。包含 deep-research 调研工作流、arXiv 论文检索、blog 监控、知识库构建、三层知识沉淀、路由决策等能力。"
-author: "boku (Emma)"
-created: "2026-05-14"
-updated: "2026-05-14"
-# ℹ️ v1.0.1 — 合并 knowledge-base（原独立包），详见 SPEC-1-1
+display_name: 研究与学习引擎
+description: 深度调研、论文搜索、知识沉淀 — 从信息获取到知识结构化的完整管线。包含 deep-research 调研工作流、arXiv 论文检索、blog
+  监控、知识库构建、三层知识沉淀、路由决策等能力。
+author: boku (Emma)
+created: '2026-05-14'
+updated: '2026-05-14'
 emoji: 🧠
 category: research-education
 domain: learning-engine
-maintainer: "boku"
-
+maintainer: boku
 compatibility:
-  agent_types: [hermes, claude-code, opencode]
+  agent_types:
+  - hermes
+  - claude-code
+  - opencode
   hermes_version:
-    min: "0.10.0"
-    max: "99.99.99"
-
-# ⚡ knowledge-base 已合并至此包 — 详见 docs/SPEC-1-1.md 合并注释
+    min: 0.10.0
+    max: 99.99.99
 dependencies:
   cap_packs:
-    - name: skill-quality
-      version: "1.0.0"
-
+  - name: skill-quality
+    version: 1.0.0
 skills:
-  - id: deep-research
-    name: deep-research
-    description: "深度调研工作流 — 从需求理解到可交付报告（PDF/PPT）的完整方法论。融合 MECE 原则、金字塔原理、SCQA 框架。"
-    path: SKILLS/deep-research/SKILL.md
-    version: 2.2.0
-    tags: [research, deep-research, report, methodology]
-    sqs_target: 85.0
-
-  - id: arxiv
-    name: arxiv
-    description: "Search and retrieve academic papers from arXiv using their API. Supports keyword search, author search, category filtering, and paper metadata extraction."
-    path: SKILLS/arxiv/SKILL.md
-    version: 1.0.0
-    tags: [research, arxiv, papers, academic]
-    sqs_target: 65.0
-
-  - id: blogwatcher
-    name: blogwatcher
-    description: "Monitor blogs and RSS/Atom feeds for updates using the blogwatcher CLI tool. Subscribe, check for new posts, and manage feed subscriptions."
-    path: SKILLS/blogwatcher/SKILL.md
-    version: 1.0.0
-    tags: [research, rss, blog, monitoring]
-    sqs_target: 65.0
-
-  - id: hermes-knowledge-base
-    name: hermes-knowledge-base
-    description: "Hermes 知识库构建方案——基于 Karpathy LLM Wiki + GBrain 的集成设计。涵盖知识库架构、知识沉淀策略、跨会话持久化、知识质量度量。"
-    path: SKILLS/hermes-knowledge-base/SKILL.md
-    version: 1.0.0
-    tags: [knowledge-base, wiki, knowledge-management, karpathy]
-    sqs_target: 75.0
-
-  - id: llm-wiki
-    name: llm-wiki
-    description: "Karpathy's LLM Wiki — build and maintain a persistent, incrementally updated knowledge base. Covers wiki structure, update strategies, cross-referencing, and quality metrics."
-    path: SKILLS/llm-wiki/SKILL.md
-    version: 1.0.0
-    tags: [knowledge-base, wiki, llm-wiki, karpathy]
-    sqs_target: 65.0
-
-  - id: ai-trends
-    name: ai-trends
-    description: "AI前沿技术趋势追踪 — 开源模型、AI Agent、LLM新特性、ML论文动态。定期更新，保持对AI领域最新进展的了解。"
-    path: SKILLS/ai-trends/SKILL.md
-    version: 1.0.0
-    tags: [research, ai, trends, tracking]
-    sqs_target: 75.0
-
-  - id: polymarket
-    name: polymarket
-    description: "Query Polymarket prediction market data — search markets, get market info, prices, and outcomes."
-    path: SKILLS/polymarket/SKILL.md
-    version: 1.0.0
-    tags: [research, prediction-markets, data]
-    sqs_target: 70.0
-
-  - id: learning
-    name: learning
-    description: "当你需要从零开始学习一个新主题、研究新技术、了解陌生领域时使用此 skill。涵盖：联网上下文补充引擎、过滤高质量来源、结构化阅读笔记、反刍理解验证。"
-    path: SKILLS/learning/SKILL.md
-    version: 2.8.0
-    tags: [learning, study, research, methodology]
-    sqs_target: 85.0
-
-  - id: knowledge-precipitation
-    name: knowledge-precipitation
-    description: "三层知识库(L1 Skills/L2 Experiences/L3 Brain)的使用维护指南——知识沉淀后的索引、调用、维护流程"
-    path: SKILLS/knowledge-precipitation/SKILL.md
-    version: 1.3.0
-    tags: [knowledge, precipitation, knowledge-base, indexing]
-    sqs_target: 75.0
-
-  - id: knowledge-routing
-    name: knowledge-routing
-    description: "Multi-dimensional knowledge routing — decide where to store new knowledge across Memory/User/Experience/Skill layers."
-    path: SKILLS/knowledge-routing/SKILL.md
-    version: 1.0.0
-    tags: [knowledge, routing, classification, knowledge-management]
-    sqs_target: 80.0
-
-  - id: capability-pack-design
-    name: capability-pack-design
-    description: "Agent 能力模块化与跨平台复用方法论。涵盖能力包(Capability Pack)格式设计、模块分割决策、生成方法、维护策略与版本管理。"
-    path: SKILLS/capability-pack-design/SKILL.md
-    version: 1.0.0
-    tags: [cap-pack, architecture, design-pattern, modularization]
-    sqs_target: 85.0
+- id: deep-research
+  name: deep-research
+  description: 深度调研工作流 — 从需求理解到可交付报告（PDF/PPT）的完整方法论。融合 MECE 原则、金字塔原理、SCQA 框架。
+  path: SKILLS/deep-research/SKILL.md
+  version: 2.2.0
+  tags:
+  - research
+  - deep-research
+  - report
+  - methodology
+  sqs_target: 85.0
+- id: arxiv
+  name: arxiv
+  description: Search and retrieve academic papers from arXiv using their API. Supports
+    keyword search, author search, category filtering, and paper metadata extraction.
+  path: SKILLS/arxiv/SKILL.md
+  version: 1.0.0
+  tags:
+  - research
+  - arxiv
+  - papers
+  - academic
+  sqs_target: 65.0
+- id: blogwatcher
+  name: blogwatcher
+  description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher
+    CLI tool. Subscribe, check for new posts, and manage feed subscriptions.
+  path: SKILLS/blogwatcher/SKILL.md
+  version: 1.0.0
+  tags:
+  - research
+  - rss
+  - blog
+  - monitoring
+  sqs_target: 65.0
+- id: hermes-knowledge-base
+  name: hermes-knowledge-base
+  description: Hermes 知识库构建方案——基于 Karpathy LLM Wiki + GBrain 的集成设计。涵盖知识库架构、知识沉淀策略、跨会话持久化、知识质量度量。
+  path: SKILLS/hermes-knowledge-base/SKILL.md
+  version: 1.0.0
+  tags:
+  - knowledge-base
+  - wiki
+  - knowledge-management
+  - karpathy
+  sqs_target: 75.0
+- id: llm-wiki
+  name: llm-wiki
+  description: Karpathy's LLM Wiki — build and maintain a persistent, incrementally
+    updated knowledge base. Covers wiki structure, update strategies, cross-referencing,
+    and quality metrics.
+  path: SKILLS/llm-wiki/SKILL.md
+  version: 1.0.0
+  tags:
+  - knowledge-base
+  - wiki
+  - llm-wiki
+  - karpathy
+  sqs_target: 65.0
+- id: ai-trends
+  name: ai-trends
+  description: AI前沿技术趋势追踪 — 开源模型、AI Agent、LLM新特性、ML论文动态。定期更新，保持对AI领域最新进展的了解。
+  path: SKILLS/ai-trends/SKILL.md
+  version: 1.0.0
+  tags:
+  - research
+  - ai
+  - trends
+  - tracking
+  sqs_target: 75.0
+- id: polymarket
+  name: polymarket
+  description: Query Polymarket prediction market data — search markets, get market
+    info, prices, and outcomes.
+  path: SKILLS/polymarket/SKILL.md
+  version: 1.0.0
+  tags:
+  - research
+  - prediction-markets
+  - data
+  sqs_target: 70.0
+- id: learning
+  name: learning
+  description: 当你需要从零开始学习一个新主题、研究新技术、了解陌生领域时使用此 skill。涵盖：联网上下文补充引擎、过滤高质量来源、结构化阅读笔记、反刍理解验证。
+  path: SKILLS/learning/SKILL.md
+  version: 2.8.0
+  tags:
+  - learning
+  - study
+  - research
+  - methodology
+  sqs_target: 85.0
+- id: knowledge-precipitation
+  name: knowledge-precipitation
+  description: 三层知识库(L1 Skills/L2 Experiences/L3 Brain)的使用维护指南——知识沉淀后的索引、调用、维护流程
+  path: SKILLS/knowledge-precipitation/SKILL.md
+  version: 1.3.0
+  tags:
+  - knowledge
+  - precipitation
+  - knowledge-base
+  - indexing
+  sqs_target: 75.0
+- id: knowledge-routing
+  name: knowledge-routing
+  description: Multi-dimensional knowledge routing — decide where to store new knowledge
+    across Memory/User/Experience/Skill layers.
+  path: SKILLS/knowledge-routing/SKILL.md
+  version: 1.0.0
+  tags:
+  - knowledge
+  - routing
+  - classification
+  - knowledge-management
+  sqs_target: 80.0
+- id: capability-pack-design
+  name: capability-pack-design
+  description: Agent 能力模块化与跨平台复用方法论。涵盖能力包(Capability Pack)格式设计、模块分割决策、生成方法、维护策略与版本管理。
+  path: SKILLS/capability-pack-design/SKILL.md
+  version: 1.0.0
+  tags:
+  - cap-pack
+  - architecture
+  - design-pattern
+  - modularization
+  sqs_target: 85.0
+triggers:
+- 学习引擎
+- 调研
+- 研究
+- 论文检索
+- 知识沉淀

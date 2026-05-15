@@ -7,6 +7,8 @@ triggers:
 - blogwatcher
 author: JulienTant (fork of Hyaxia/blogwatcher)
 license: MIT
+depends_on:
+  - llm-wiki
 metadata:
   hermes:
     tags:
@@ -18,6 +20,9 @@ metadata:
 prerequisites:
   commands:
   - blogwatcher-cli
+see_also:
+  - arxiv
+  - ai-trends
 ---
 # Blogwatcher
 

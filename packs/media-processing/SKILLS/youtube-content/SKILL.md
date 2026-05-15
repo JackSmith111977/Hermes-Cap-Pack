@@ -7,6 +7,11 @@ triggers:
 metadata:
   hermes:
     tags: []
+depends_on:
+  - spotify
+see_also:
+  - songsee
+  - gif-search
 ---
 # YouTube Content Tool
 

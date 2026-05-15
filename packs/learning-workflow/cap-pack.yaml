@@ -1,68 +1,76 @@
 # 🏗️ 能力包清单 — learning-workflow
+## 包信息
+## 技能
+## 依赖
+## 安装
+## 经验
 
 name: learning-workflow
 version: 5.5.0
 classification: skill
-display_name: "学习工作流能力包"
+display_name: 学习工作流能力包
 type: capability-pack
 compatibility:
-  agent_types: [hermes]
-description: "学习/研究任务强制流程引擎 — 状态机+文件标志物防跳过机制，5 层 Quality Gate"
+  agent_types:
+  - hermes
+description: 学习/研究任务强制流程引擎 — 状态机+文件标志物防跳过机制，5 层 Quality Gate
 author: boku (Emma)
-created: "2026-05-14"
-updated: "2026-05-14"
+created: '2026-05-14'
+updated: '2026-05-14'
 cap_version: 1
-
-## 包信息
-
 emoji: 📚
 category: workflow
 domain: learning
 maintainer: boku
-
-## 技能
-
 skills:
-  - id: learning-workflow
-    name: 学习研究流程引擎
-    description: "所有学习/研究任务的强制流程拦截器。状态机+文件标志物实现防跳过机制。v5.0 循环真正落地，含 R1/R2/R3/Quality Gate 自动化检查"
-    version: 5.5.0
-    tags: [learning, workflow, research, study, gate, loop]
-    path: learning-workflow
-    sqs_target: 80.0
-
-## 依赖
-
+- id: learning-workflow
+  name: 学习研究流程引擎
+  description: 所有学习/研究任务的强制流程拦截器。状态机+文件标志物实现防跳过机制。v5.0 循环真正落地，含 R1/R2/R3/Quality Gate
+    自动化检查
+  version: 5.5.0
+  tags:
+  - learning
+  - workflow
+  - research
+  - study
+  - gate
+  - loop
+  path: learning-workflow
+  sqs_target: 80.0
 depends_on:
   quality-assurance:
-    version: ">=1.0.0"
-    reason: "健康检查脚本 + 质量门禁"
-
-## 安装
-
+    version: '>=1.0.0'
+    reason: 健康检查脚本 + 质量门禁
 install:
   scripts:
-    - source: SKILLS/learning-workflow/scripts/learning-state.py
-      target: ~/.hermes/skills/learning-workflow/scripts/learning-state.py
-    - source: SKILLS/learning-workflow/scripts/reflection-gate.py
-      target: ~/.hermes/skills/learning-workflow/scripts/reflection-gate.py
-    - source: SKILLS/learning-workflow/scripts/skill_finder.py
-      target: ~/.hermes/skills/learning-workflow/scripts/skill_finder.py
-    - source: SKILLS/learning-workflow/scripts/skill_finder_v2.py
-      target: ~/.hermes/skills/learning-workflow/scripts/skill_finder_v2.py
+  - source: SKILLS/learning-workflow/scripts/learning-state.py
+    target: ~/.hermes/skills/learning-workflow/scripts/learning-state.py
+  - source: SKILLS/learning-workflow/scripts/reflection-gate.py
+    target: ~/.hermes/skills/learning-workflow/scripts/reflection-gate.py
+  - source: SKILLS/learning-workflow/scripts/skill_finder.py
+    target: ~/.hermes/skills/learning-workflow/scripts/skill_finder.py
+  - source: SKILLS/learning-workflow/scripts/skill_finder_v2.py
+    target: ~/.hermes/skills/learning-workflow/scripts/skill_finder_v2.py
   references:
-    - source: SKILLS/learning-workflow/references
-      target: ~/.hermes/skills/learning-workflow/references/
+  - source: SKILLS/learning-workflow/references
+    target: ~/.hermes/skills/learning-workflow/references/
   post_install:
-    - "chmod +x ~/.hermes/skills/learning-workflow/scripts/*.py"
-
-## 经验
-
+  - chmod +x ~/.hermes/skills/learning-workflow/scripts/*.py
 experiences:
-  - id: learning-cycle-debug
-    title: 学习循环调试指南
-    content: |
-      1. 循环卡住时用 `learning-state.py loop-status` 查看状态
-      2. `--regress` 退回到上一步，`--reject` 标记当前步失败
-      3. Quality Gate 失败后必须先修复再继续
-      4. 子代理裁判模式可打破自评自判循环
+- id: learning-cycle-debug
+  title: 学习循环调试指南
+  content: '1. 循环卡住时用 `learning-state.py loop-status` 查看状态
+
+    2. `--regress` 退回到上一步，`--reject` 标记当前步失败
+
+    3. Quality Gate 失败后必须先修复再继续
+
+    4. 子代理裁判模式可打破自评自判循环
+
+    '
+triggers:
+- 学习工作流
+- 学习流程
+- 知识沉淀
+- 学习状态机
+- learning workflow

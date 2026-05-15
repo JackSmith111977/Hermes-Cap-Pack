@@ -7,6 +7,8 @@ triggers:
 - ascii-art
 author: 0xbyt4, Hermes Agent
 license: MIT
+depends_on:
+  - sketch
 dependencies: []
 metadata:
   hermes:
@@ -23,6 +25,9 @@ metadata:
     - boxes
     related_skills:
     - excalidraw
+see_also:
+  - ascii-video
+  - concept-diagrams
 ---
 # ASCII Art Skill
 

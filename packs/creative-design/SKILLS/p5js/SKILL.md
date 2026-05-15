@@ -21,6 +21,11 @@ metadata:
     - ascii-video
     - manim-video
     - excalidraw
+depends_on:
+  - sketch
+see_also:
+  - manim-video
+  - claude-design
 ---
 # p5.js Production Pipeline
 

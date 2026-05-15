@@ -7,6 +7,9 @@ triggers:
 - plan
 author: Hermes Agent
 license: MIT
+depends_on:
+  - writing-plans
+  - spike
 metadata:
   hermes:
     tags:
@@ -17,6 +20,9 @@ metadata:
     related_skills:
     - writing-plans
     - subagent-driven-development
+see_also:
+  - test-driven-development
+  - subagent-driven-development
 ---
 # Plan Mode
 

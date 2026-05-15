@@ -21,6 +21,12 @@ metadata:
     - obsidian
     - arxiv
     - agentic-research-ideas
+depends_on:
+  - deep-research
+  - blogwatcher
+see_also:
+  - arxiv
+  - hermes-knowledge-base
 ---
 # Karpathy's LLM Wiki
 

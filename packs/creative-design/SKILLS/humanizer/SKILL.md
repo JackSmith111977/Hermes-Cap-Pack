@@ -10,6 +10,11 @@ metadata:
     category: creative
     homepage: https://github.com/blader/humanizer
     related_skills: [songwriting-and-ai-music]
+depends_on:
+  - writing-styles-guide
+see_also:
+  - sketch
+  - ascii-art
 ---
 
 # Humanizer: Remove AI Writing Patterns

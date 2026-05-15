@@ -14,6 +14,12 @@ metadata:
     category: productivity
     skill_type: doc-generation
     format: markdown
+depends_on:
+  - html-guide
+  - pdf-layout-weasyprint
+see_also:
+  - epub-guide
+  - latex-guide
 ---
 # Markdown 原子操作技能
 

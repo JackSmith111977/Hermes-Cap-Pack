@@ -12,9 +12,14 @@ version: 1.0.0
 author: Willard Moore
 license: MIT
 category: communication
+depends_on:
+  - writing-plans
 metadata:
   hermes:
     tags: [communication, decision-making, proposals, trade-offs]
+see_also:
+  - information-decomposition
+  - anti-repetition-loop
 ---
 
 # 1-3-1 Communication Rule

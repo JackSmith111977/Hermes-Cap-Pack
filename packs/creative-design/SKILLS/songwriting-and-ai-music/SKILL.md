@@ -16,6 +16,11 @@ tags:
 - parody
 - lyrics
 - creative
+depends_on:
+  - songsee
+see_also:
+  - spotify
+  - humanizer
 ---
 # Songwriting & AI Music Generation
 

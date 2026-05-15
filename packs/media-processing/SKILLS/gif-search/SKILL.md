@@ -7,6 +7,8 @@ triggers:
 - gif-search
 author: Hermes Agent
 license: MIT
+depends_on:
+  - youtube-content
 prerequisites:
   env_vars:
   - TENOR_API_KEY
@@ -21,6 +23,9 @@ metadata:
     - Search
     - Tenor
     - API
+see_also:
+  - spotify
+  - songsee
 ---
 # GIF Search (Tenor API)
 

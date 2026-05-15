@@ -5,81 +5,100 @@ name: social-gaming
 version: 1.0.0
 type: capability-pack
 classification: domain
-display_name: "社交娱乐"
-description: "社交娱乐能力包 — Minecraft 模组服务器搭建、Pokemon 模拟器自动游戏、Bangumi 番剧推荐与搜索、元宝群聊互动 @ 艾特与私信。覆盖游戏搭建、游戏自动化、动漫娱乐和社交互动。"
-author: "boku (Emma)"
-created: "2026-05-14"
-updated: "2026-05-14"
+display_name: 社交娱乐
+description: 社交娱乐能力包 — Minecraft 模组服务器搭建、Pokemon 模拟器自动游戏、Bangumi 番剧推荐与搜索、元宝群聊互动 @
+  艾特与私信。覆盖游戏搭建、游戏自动化、动漫娱乐和社交互动。
+author: boku (Emma)
+created: '2026-05-14'
+updated: '2026-05-14'
 emoji: 🎮
 category: social-gaming
 domain: entertainment
-maintainer: "boku"
-
+maintainer: boku
 compatibility:
-  agent_types: [hermes, claude-code, opencode]
+  agent_types:
+  - hermes
+  - claude-code
+  - opencode
   hermes_version:
-    min: "0.10.0"
-    max: "99.99.99"
-
+    min: 0.10.0
+    max: 99.99.99
 dependencies:
   cap_packs:
-    - name: messaging
-      version: "1.0.0"
-
+  - name: messaging
+    version: 1.0.0
 skills:
-  - id: minecraft-modpack-server
-    name: minecraft-modpack-server
-    description: "Minecraft 模组服搭建 — CurseForge/Modrinth 打包、Java/JVM 调优、防火墙、自动备份。"
-    path: SKILLS/minecraft-modpack-server/SKILL.md
-    version: 1.0.0
-    tags: [minecraft, gaming, server, modded, neoforge]
-    sqs_target: 75.0
-
-  - id: pokemon-player
-    name: pokemon-player
-    description: "Pokemon 自动游戏 — headless PyBoy 模拟器、视觉导航、策略战斗、自动存档。"
-    path: SKILLS/pokemon-player/SKILL.md
-    version: 1.0.0
-    tags: [pokemon, gaming, emulator, pyboy, gameplay]
-    sqs_target: 70.0
-
-  - id: bangumi-recommender
-    name: bangumi-recommender
-    description: "番剧推荐 — Bangumi API 新番表/排行榜/搜索，最新 ACG 资讯。"
-    path: SKILLS/bangumi-recommender/SKILL.md
-    version: 1.1.0
-    tags: [anime, bangumi, recommendation, entertainment]
-    sqs_target: 75.0
-
-  - id: yuanbao
-    name: yuanbao
-    description: "元宝群聊互动 — @ 艾特用户、私信发送、群信息与成员查询。"
-    path: SKILLS/yuanbao/SKILL.md
-    version: 1.0.0
-    tags: [yuanbao, social, group, mention, messaging]
-    sqs_target: 80.0
-
+- id: minecraft-modpack-server
+  name: minecraft-modpack-server
+  description: Minecraft 模组服搭建 — CurseForge/Modrinth 打包、Java/JVM 调优、防火墙、自动备份。
+  path: SKILLS/minecraft-modpack-server/SKILL.md
+  version: 1.0.0
+  tags:
+  - minecraft
+  - gaming
+  - server
+  - modded
+  - neoforge
+  sqs_target: 75.0
+- id: pokemon-player
+  name: pokemon-player
+  description: Pokemon 自动游戏 — headless PyBoy 模拟器、视觉导航、策略战斗、自动存档。
+  path: SKILLS/pokemon-player/SKILL.md
+  version: 1.0.0
+  tags:
+  - pokemon
+  - gaming
+  - emulator
+  - pyboy
+  - gameplay
+  sqs_target: 70.0
+- id: bangumi-recommender
+  name: bangumi-recommender
+  description: 番剧推荐 — Bangumi API 新番表/排行榜/搜索，最新 ACG 资讯。
+  path: SKILLS/bangumi-recommender/SKILL.md
+  version: 1.1.0
+  tags:
+  - anime
+  - bangumi
+  - recommendation
+  - entertainment
+  sqs_target: 75.0
+- id: yuanbao
+  name: yuanbao
+  description: 元宝群聊互动 — @ 艾特用户、私信发送、群信息与成员查询。
+  path: SKILLS/yuanbao/SKILL.md
+  version: 1.0.0
+  tags:
+  - yuanbao
+  - social
+  - group
+  - mention
+  - messaging
+  sqs_target: 80.0
 experiences:
-  - id: minecraft-server-tips
-    name: "Minecraft 服务器搭建经验"
-    description: "Java 版本选择、关键服务器配置、性能调优、备份策略"
-    path: EXPERIENCES/minecraft-server-tips.md
-    type: pitfall
-
-  - id: pokemon-gameplay-tips
-    name: "Pokemon 游戏陷阱"
-    description: "视觉验证策略、过门/悬崖/战斗等常见陷阱应对"
-    path: EXPERIENCES/pokemon-gameplay-tips.md
-    type: pitfall
-
-  - id: bangumi-api-usage
-    name: "Bangumi API 使用"
-    description: "User-Agent 要求、查询接口说明、ID 类型区分"
-    path: EXPERIENCES/bangumi-api-usage.md
-    type: pitfall
-
-  - id: yuanbao-group-tips
-    name: "元宝群聊使用经验"
-    description: "@ 艾特获取昵称、私信发送、群成员查询"
-    path: EXPERIENCES/yuanbao-group-tips.md
-    type: pitfall
+- id: minecraft-server-tips
+  name: Minecraft 服务器搭建经验
+  description: Java 版本选择、关键服务器配置、性能调优、备份策略
+  path: EXPERIENCES/minecraft-server-tips.md
+  type: pitfall
+- id: pokemon-gameplay-tips
+  name: Pokemon 游戏陷阱
+  description: 视觉验证策略、过门/悬崖/战斗等常见陷阱应对
+  path: EXPERIENCES/pokemon-gameplay-tips.md
+  type: pitfall
+- id: bangumi-api-usage
+  name: Bangumi API 使用
+  description: User-Agent 要求、查询接口说明、ID 类型区分
+  path: EXPERIENCES/bangumi-api-usage.md
+  type: pitfall
+- id: yuanbao-group-tips
+  name: 元宝群聊使用经验
+  description: '@ 艾特获取昵称、私信发送、群成员查询'
+  path: EXPERIENCES/yuanbao-group-tips.md
+  type: pitfall
+triggers:
+- 社交娱乐
+- 游戏
+- Minecraft
+- 追番
+- Bangumi

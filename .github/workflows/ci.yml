@@ -88,6 +88,26 @@ jobs:
         continue-on-error: true
         run: python3 scripts/health-check.py --gate
 
+  chi-gate:
+    name: 📈 CHI Quality Gate
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔧 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml
+
+      - name: 📊 Check CHI baseline (warning only, non-blocking)
+        continue-on-error: true
+        run: python3 scripts/chi-gate.py --threshold 0.75 || echo "⚠️ CHI gate warning (non-blocking)"
+
   consistency:
     name: 🔗 Cross-Reference Integrity
     needs: lint

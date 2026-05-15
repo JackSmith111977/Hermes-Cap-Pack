@@ -8,6 +8,11 @@ triggers:
 metadata:
   hermes:
     tags: []
+depends_on:
+  - ascii-video
+see_also:
+  - p5js
+  - sketch
 ---
 # Manim Video Production Pipeline
 

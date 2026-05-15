@@ -6,6 +6,11 @@ tags:
   - streaming
   - card
   - progress-merge
+depends_on:
+  - feishu
+  - feishu-send-file
+see_also:
+  - feishu-batch-send
 ---
 
 # Feishu 卡片流式输出方案（含进度合并回滚记录）

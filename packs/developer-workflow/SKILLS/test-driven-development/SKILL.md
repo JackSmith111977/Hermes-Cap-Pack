@@ -7,6 +7,9 @@ triggers:
 - test-driven-development
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT
+depends_on:
+  - python-testing
+  - systematic-debugging
 metadata:
   hermes:
     tags:
@@ -19,6 +22,9 @@ metadata:
     - systematic-debugging
     - writing-plans
     - subagent-driven-development
+see_also:
+  - subagent-driven-development
+  - generic-dev-workflow
 ---
 # Test-Driven Development (TDD)
 

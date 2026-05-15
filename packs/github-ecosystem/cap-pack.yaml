@@ -5,96 +5,144 @@ name: github-ecosystem
 version: 1.0.0
 type: capability-pack
 classification: domain
-display_name: "GitHub 生态"
-description: "GitHub 生态全栈能力包 — 仓库管理、PR 工作流、Issue 跟踪、Code Review、代码库分析、Git 高级操作、认证配置、自动部署上传等。覆盖 GitHub 平台的核心操作流程。"
-author: "boku (Emma)"
-created: "2026-05-14"
-updated: "2026-05-14"
+display_name: GitHub 生态
+description: GitHub 生态全栈能力包 — 仓库管理、PR 工作流、Issue 跟踪、Code Review、代码库分析、Git 高级操作、认证配置、自动部署上传等。覆盖
+  GitHub 平台的核心操作流程。
+author: boku (Emma)
+created: '2026-05-14'
+updated: '2026-05-14'
 emoji: 🐙
 category: github-ecosystem
 domain: github
-maintainer: "boku"
-
+maintainer: boku
 compatibility:
-  agent_types: [hermes, claude-code, opencode]
+  agent_types:
+  - hermes
+  - claude-code
+  - opencode
   hermes_version:
-    min: "0.10.0"
-    max: "99.99.99"
-
+    min: 0.10.0
+    max: 99.99.99
 dependencies:
   cap_packs:
-    - name: skill-quality
-      version: "1.0.0"
-
+  - name: skill-quality
+    version: 1.0.0
 skills:
-  - id: codebase-inspection
-    name: codebase-inspection
-    description: "Inspect and analyze codebases using pygount for LOC count, file distribution, and structural analysis."
-    path: SKILLS/codebase-inspection/SKILL.md
-    version: 1.0.0
-    tags: [codebase, inspection, analysis, loc]
-    sqs_target: 75.0
-
-  - id: git-advanced-ops
-    name: git-advanced-ops
-    description: "Advanced Git and GitHub operations — interactive rebase, stash management, proxy config for GitHub CLI."
-    path: SKILLS/git-advanced-ops/SKILL.md
-    version: 1.0.0
-    tags: [git, advanced, rebase, stash, proxy]
-    sqs_target: 80.0
-
-  - id: github-auth
-    name: github-auth
-    description: "Set up GitHub authentication for the agent using git (Unix username/token), gh CLI, or SSH keys."
-    path: SKILLS/github-auth/SKILL.md
-    version: 1.0.0
-    tags: [github, auth, token, ssh, cli]
-    sqs_target: 75.0
-
-  - id: github-code-review
-    name: github-code-review
-    description: "Review code changes by analyzing git diffs, leaving inline PR comments, and running automated quality checks."
-    path: SKILLS/github-code-review/SKILL.md
-    version: 1.0.0
-    tags: [github, code-review, pr, quality]
-    sqs_target: 80.0
-
-  - id: github-deploy-upload
-    name: github-deploy-upload
-    description: "Securely push local deployment directories to GitHub repos via cron — secure token storage (600 permissions) and safety checks."
-    path: SKILLS/github-deploy-upload/SKILL.md
-    version: 1.0.0
-    tags: [github, deploy, upload, cron, security]
-    sqs_target: 70.0
-
-  - id: github-issues
-    name: github-issues
-    description: "Create, manage, triage, and close GitHub issues with labels, milestones, and assignees."
-    path: SKILLS/github-issues/SKILL.md
-    version: 1.0.0
-    tags: [github, issues, triage, management]
-    sqs_target: 80.0
-
-  - id: github-pr-workflow
-    name: github-pr-workflow
-    description: "Full pull request lifecycle — create branches, commit changes, push, open PRs, request reviews, merge."
-    path: SKILLS/github-pr-workflow/SKILL.md
-    version: 1.0.0
-    tags: [github, pr, pull-request, workflow]
-    sqs_target: 85.0
-
-  - id: github-project-ops
-    name: github-project-ops
-    description: "Complete GitHub project maintenance — repo management, branch protection, CI/CD (Actions), labels, collaborators, releases."
-    path: SKILLS/github-project-ops/SKILL.md
-    version: 1.0.0
-    tags: [github, project, ops, maintenance, ci]
-    sqs_target: 80.0
-
-  - id: github-repo-management
-    name: github-repo-management
-    description: "Clone, create, fork, configure, and manage GitHub repositories — settings, secrets, environments, and webhooks."
-    path: SKILLS/github-repo-management/SKILL.md
-    version: 1.0.0
-    tags: [github, repo, management, configuration]
-    sqs_target: 75.0
+- id: codebase-inspection
+  name: codebase-inspection
+  description: Inspect and analyze codebases using pygount for LOC count, file distribution,
+    and structural analysis.
+  path: SKILLS/codebase-inspection/SKILL.md
+  version: 1.0.0
+  tags:
+  - codebase
+  - inspection
+  - analysis
+  - loc
+  sqs_target: 75.0
+- id: git-advanced-ops
+  name: git-advanced-ops
+  description: Advanced Git and GitHub operations — interactive rebase, stash management,
+    proxy config for GitHub CLI.
+  path: SKILLS/git-advanced-ops/SKILL.md
+  version: 1.0.0
+  tags:
+  - git
+  - advanced
+  - rebase
+  - stash
+  - proxy
+  sqs_target: 80.0
+- id: github-auth
+  name: github-auth
+  description: Set up GitHub authentication for the agent using git (Unix username/token),
+    gh CLI, or SSH keys.
+  path: SKILLS/github-auth/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - auth
+  - token
+  - ssh
+  - cli
+  sqs_target: 75.0
+- id: github-code-review
+  name: github-code-review
+  description: Review code changes by analyzing git diffs, leaving inline PR comments,
+    and running automated quality checks.
+  path: SKILLS/github-code-review/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - code-review
+  - pr
+  - quality
+  sqs_target: 80.0
+- id: github-deploy-upload
+  name: github-deploy-upload
+  description: Securely push local deployment directories to GitHub repos via cron
+    — secure token storage (600 permissions) and safety checks.
+  path: SKILLS/github-deploy-upload/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - deploy
+  - upload
+  - cron
+  - security
+  sqs_target: 70.0
+- id: github-issues
+  name: github-issues
+  description: Create, manage, triage, and close GitHub issues with labels, milestones,
+    and assignees.
+  path: SKILLS/github-issues/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - issues
+  - triage
+  - management
+  sqs_target: 80.0
+- id: github-pr-workflow
+  name: github-pr-workflow
+  description: Full pull request lifecycle — create branches, commit changes, push,
+    open PRs, request reviews, merge.
+  path: SKILLS/github-pr-workflow/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - pr
+  - pull-request
+  - workflow
+  sqs_target: 85.0
+- id: github-project-ops
+  name: github-project-ops
+  description: Complete GitHub project maintenance — repo management, branch protection,
+    CI/CD (Actions), labels, collaborators, releases.
+  path: SKILLS/github-project-ops/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - project
+  - ops
+  - maintenance
+  - ci
+  sqs_target: 80.0
+- id: github-repo-management
+  name: github-repo-management
+  description: Clone, create, fork, configure, and manage GitHub repositories — settings,
+    secrets, environments, and webhooks.
+  path: SKILLS/github-repo-management/SKILL.md
+  version: 1.0.0
+  tags:
+  - github
+  - repo
+  - management
+  - configuration
+  sqs_target: 75.0
+triggers:
+- GitHub
+- 仓库管理
+- PR 工作流
+- 代码审查
+- Issue

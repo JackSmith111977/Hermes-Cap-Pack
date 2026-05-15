@@ -5,87 +5,111 @@ name: media-processing
 version: 1.0.0
 type: capability-pack
 classification: domain
-display_name: "音视频媒体处理"
-description: "音视频媒体处理能力包 — GIF 搜索 (Tenor API)、音乐生成 (HeartMuLa)、音频可视化 (songsee)、Spotify 播放集成、YouTube 字幕提取与内容转换。覆盖媒体搜索、生成、分析和播放全流程。"
-author: "boku (Emma)"
-created: "2026-05-14"
-updated: "2026-05-14"
+display_name: 音视频媒体处理
+description: 音视频媒体处理能力包 — GIF 搜索 (Tenor API)、音乐生成 (HeartMuLa)、音频可视化 (songsee)、Spotify
+  播放集成、YouTube 字幕提取与内容转换。覆盖媒体搜索、生成、分析和播放全流程。
+author: boku (Emma)
+created: '2026-05-14'
+updated: '2026-05-14'
 emoji: 🎵
 category: media-processing
 domain: media
-maintainer: "boku"
-
+maintainer: boku
 compatibility:
-  agent_types: [hermes, claude-code, opencode]
+  agent_types:
+  - hermes
+  - claude-code
+  - opencode
   hermes_version:
-    min: "0.10.0"
-    max: "99.99.99"
-
+    min: 0.10.0
+    max: 99.99.99
 dependencies:
   cap_packs: []
-
 skills:
-  - id: gif-search
-    name: gif-search
-    description: "通过 Tenor API 搜索和下载 GIF。基于 curl+jq，支持格式筛选和元数据提取。"
-    path: SKILLS/gif-search/SKILL.md
-    version: 1.1.0
-    tags: [gif, tenor, media, search, api]
-    sqs_target: 75.0
-
-  - id: heartmula
-    name: heartmula
-    description: "本地音乐生成 — HeartMuLa 开源模型 (3B/7B)，条件歌词+标签生成完整歌曲。"
-    path: SKILLS/heartmula/SKILL.md
-    version: 1.0.0
-    tags: [music, generation, ai, heartmula, audio]
-    sqs_target: 70.0
-
-  - id: songsee
-    name: songsee
-    description: "音频频谱可视化 — 支持 mel/chroma/MFCC/HPSS/tempogram 等多面板可视化。"
-    path: SKILLS/songsee/SKILL.md
-    version: 1.0.0
-    tags: [audio, spectrogram, visualization, music, analysis]
-    sqs_target: 75.0
-
-  - id: spotify
-    name: spotify
-    description: "Spotify 播放集成 — 搜索、播放、队列、歌单管理、设备控制。7 个内置工具。"
-    path: SKILLS/spotify/SKILL.md
-    version: 1.0.0
-    tags: [spotify, music, playback, playlists, media]
-    sqs_target: 80.0
-
-  - id: youtube-content
-    name: youtube-content
-    description: "YouTube 字幕提取与内容转换 — 章节摘要、博客文章、社交媒体帖子等多格式输出。"
-    path: SKILLS/youtube-content/SKILL.md
-    version: 1.0.0
-    tags: [youtube, transcript, video, content, summary]
-    sqs_target: 75.0
-
+- id: gif-search
+  name: gif-search
+  description: 通过 Tenor API 搜索和下载 GIF。基于 curl+jq，支持格式筛选和元数据提取。
+  path: SKILLS/gif-search/SKILL.md
+  version: 1.1.0
+  tags:
+  - gif
+  - tenor
+  - media
+  - search
+  - api
+  sqs_target: 75.0
+- id: heartmula
+  name: heartmula
+  description: 本地音乐生成 — HeartMuLa 开源模型 (3B/7B)，条件歌词+标签生成完整歌曲。
+  path: SKILLS/heartmula/SKILL.md
+  version: 1.0.0
+  tags:
+  - music
+  - generation
+  - ai
+  - heartmula
+  - audio
+  sqs_target: 70.0
+- id: songsee
+  name: songsee
+  description: 音频频谱可视化 — 支持 mel/chroma/MFCC/HPSS/tempogram 等多面板可视化。
+  path: SKILLS/songsee/SKILL.md
+  version: 1.0.0
+  tags:
+  - audio
+  - spectrogram
+  - visualization
+  - music
+  - analysis
+  sqs_target: 75.0
+- id: spotify
+  name: spotify
+  description: Spotify 播放集成 — 搜索、播放、队列、歌单管理、设备控制。7 个内置工具。
+  path: SKILLS/spotify/SKILL.md
+  version: 1.0.0
+  tags:
+  - spotify
+  - music
+  - playback
+  - playlists
+  - media
+  sqs_target: 80.0
+- id: youtube-content
+  name: youtube-content
+  description: YouTube 字幕提取与内容转换 — 章节摘要、博客文章、社交媒体帖子等多格式输出。
+  path: SKILLS/youtube-content/SKILL.md
+  version: 1.0.0
+  tags:
+  - youtube
+  - transcript
+  - video
+  - content
+  - summary
+  sqs_target: 75.0
 experiences:
-  - id: gif-search-pitfalls
-    name: "GIF 搜索陷阱"
-    description: "Tenor API Key 配置、Rate Limit 应对、格式选择策略"
-    path: EXPERIENCES/gif-search-pitfalls.md
-    type: pitfall
-
-  - id: music-gen-comparison
-    name: "音乐生成选型"
-    description: "HeartMuLa vs Suno vs Audiocraft 对比，硬件需求与已知问题"
-    path: EXPERIENCES/music-gen-comparison.md
-    type: decision-tree
-
-  - id: spotify-failure-modes
-    name: "Spotify 错误处理"
-    description: "常见 HTTP 错误码（403/204/429/401）的根因与恢复策略"
-    path: EXPERIENCES/spotify-failure-modes.md
-    type: pitfall
-
-  - id: youtube-transcript-pitfalls
-    name: "YouTube 字幕陷阱"
-    description: "语言回退、视频不可用处理、大篇幅分块策略"
-    path: EXPERIENCES/youtube-transcript-pitfalls.md
-    type: pitfall
+- id: gif-search-pitfalls
+  name: GIF 搜索陷阱
+  description: Tenor API Key 配置、Rate Limit 应对、格式选择策略
+  path: EXPERIENCES/gif-search-pitfalls.md
+  type: pitfall
+- id: music-gen-comparison
+  name: 音乐生成选型
+  description: HeartMuLa vs Suno vs Audiocraft 对比，硬件需求与已知问题
+  path: EXPERIENCES/music-gen-comparison.md
+  type: decision-tree
+- id: spotify-failure-modes
+  name: Spotify 错误处理
+  description: 常见 HTTP 错误码（403/204/429/401）的根因与恢复策略
+  path: EXPERIENCES/spotify-failure-modes.md
+  type: pitfall
+- id: youtube-transcript-pitfalls
+  name: YouTube 字幕陷阱
+  description: 语言回退、视频不可用处理、大篇幅分块策略
+  path: EXPERIENCES/youtube-transcript-pitfalls.md
+  type: pitfall
+triggers:
+- 媒体处理
+- 音视频
+- GIF
+- 音乐
+- Spotify

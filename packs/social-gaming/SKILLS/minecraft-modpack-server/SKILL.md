@@ -14,6 +14,8 @@ tags:
 metadata:
   hermes:
     tags: []
+depends_on:
+  - pokemon-player
 ---
 # Minecraft Modpack Server Setup
 

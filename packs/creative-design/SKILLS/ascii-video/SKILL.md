@@ -7,6 +7,12 @@ triggers:
 metadata:
   hermes:
     tags: []
+depends_on:
+  - ascii-art
+see_also:
+  - manim-video
+  - sketch
+  - p5js
 ---
 # ASCII Video Production Pipeline
 
