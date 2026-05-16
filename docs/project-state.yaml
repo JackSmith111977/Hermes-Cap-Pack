@@ -10,10 +10,10 @@ workflow:
     protocol: chain-state-json
     state_file: docs/chain-state.json
     stages:
-      - SPEC
-      - DEV
-      - QA
-      - COMMIT
+    - SPEC
+    - DEV
+    - QA
+    - COMMIT
     hooks:
       post_spec: generic-dev-workflow
       post_dev: generic-qa-workflow
@@ -241,7 +241,24 @@ entities:
       priority: P0
       qa_gate_date: null
       review_date: null
+    EPIC-005:
+      title: Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配
+      state: approved
+      spec_count: 1
+      story_count: 4
+      completed_count: 0
+      priority: P1
+      qa_gate_date: null
+      review_date: null
   specs:
+    SPEC-5-1:
+      state: draft
+      epic: EPIC-005
+      stories:
+      - STORY-5-1-1
+      - STORY-5-1-2
+      - STORY-5-1-3
+      - STORY-5-1-4
     SPEC-1-1:
       state: approved
       epic: EPIC-001
@@ -601,89 +618,84 @@ phases:
   EPIC-004:
     title: 能力包质量升级 — 增量循环
     phases:
-      - name: Phase-0
-        title: 健康度基线扫描
-        acceptance_criteria:
-          - criteria: SQS 全量扫描 JSON
-            done: true
-          - criteria: CHI 仪表盘
-            done: true
-          - criteria: 健康度优先级排序
-            done: true
-        requires:
-          - EPIC-004 已批准
-        stories:
-          - STORY-4-1
-          - STORY-4-2
-        # ✅ Completed
-        completed: true
-      - name: Phase-1
-        title: L2/L3 逐层补充
-        acceptance_criteria:
-          - criteria: L2 Experiences 补充
-            done: true
-          - criteria: L3 Knowledge 填充
-            done: true
-          - criteria: 模板标准化
-            done: true
-        requires:
-          - Phase-0 已完成
-        stories:
-          - STORY-4-3
-          - STORY-4-4
-          - STORY-4-5
-        # ✅ Completed
-        completed: true
-      - name: Phase-2
-        title: 质量提升迭代
-        acceptance_criteria:
-          - criteria: 低分 skill (SQS<60) 改进
-            done: true
-          - criteria: cap-pack.yaml 元数据补齐
-            done: true
-          - criteria: CHI 门禁脚本嵌入 CI
-            done: true
-        requires:
-          - Phase-1 已完成
-        stories:
-          - STORY-4-6
-          - STORY-4-7
-          - STORY-4-8
-        # ✅ Completed — 26个低分skill全部修复, 17个cap-pack.yaml元数据补齐, chi-gate已嵌入CI
-        completed: true
-      - name: Phase-3
-        title: 合并/清理
-        acceptance_criteria:
-          - criteria: 跨包重叠检测引擎
-            done: true
-          - criteria: 手动确认执行试点
-            done: true
-        requires:
-          - Phase-2 已完成
-        stories:
-          - STORY-4-9
-          - STORY-4-10
-        # ✅ Completed — BMAD 系列合并(2个) + 6个微技能降级为experiences
-        completed: true
-      - name: Phase-4
-        title: 门禁固化
-        acceptance_criteria:
-          - criteria: 质量升级 HTML 报告
-            done: true
-          - criteria: 验收门禁 + 基准锁定
-            done: true
-        requires:
-          - Phase-3 已完成
-        stories:
-          - STORY-4-11
-          - STORY-4-12
-        # ✅ Completed — 质量升级报告 + CI CHI 门禁 blocking
+    - name: Phase-0
+      title: 健康度基线扫描
+      acceptance_criteria:
+      - criteria: SQS 全量扫描 JSON
+        done: true
+      - criteria: CHI 仪表盘
+        done: true
+      - criteria: 健康度优先级排序
+        done: true
+      requires:
+      - EPIC-004 已批准
+      stories:
+      - STORY-4-1
+      - STORY-4-2
+      completed: true
+    - name: Phase-1
+      title: L2/L3 逐层补充
+      acceptance_criteria:
+      - criteria: L2 Experiences 补充
+        done: true
+      - criteria: L3 Knowledge 填充
+        done: true
+      - criteria: 模板标准化
+        done: true
+      requires:
+      - Phase-0 已完成
+      stories:
+      - STORY-4-3
+      - STORY-4-4
+      - STORY-4-5
+      completed: true
+    - name: Phase-2
+      title: 质量提升迭代
+      acceptance_criteria:
+      - criteria: 低分 skill (SQS<60) 改进
+        done: true
+      - criteria: cap-pack.yaml 元数据补齐
+        done: true
+      - criteria: CHI 门禁脚本嵌入 CI
+        done: true
+      requires:
+      - Phase-1 已完成
+      stories:
+      - STORY-4-6
+      - STORY-4-7
+      - STORY-4-8
+      completed: true
+    - name: Phase-3
+      title: 合并/清理
+      acceptance_criteria:
+      - criteria: 跨包重叠检测引擎
+        done: true
+      - criteria: 手动确认执行试点
+        done: true
+      requires:
+      - Phase-2 已完成
+      stories:
+      - STORY-4-9
+      - STORY-4-10
+      completed: true
+    - name: Phase-4
+      title: 门禁固化
+      acceptance_criteria:
+      - criteria: 质量升级 HTML 报告
+        done: true
+      - criteria: 验收门禁 + 基准锁定
+        done: true
+      requires:
+      - Phase-3 已完成
+      stories:
+      - STORY-4-11
+      - STORY-4-12
     completed_phases:
-      - Phase-0
-      - Phase-1
-      - Phase-2
-      - Phase-3
-      - Phase-4
+    - Phase-0
+    - Phase-1
+    - Phase-2
+    - Phase-3
+    - Phase-4
 history:
 - date: 2026-05-14 19:30:00
   entity: system

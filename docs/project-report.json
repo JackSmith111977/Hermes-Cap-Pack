@@ -10,23 +10,63 @@
     "repo": "github.com/JackSmith111977/Hermes-Cap-Pack",
     "license": "MIT",
     "python": "≥ 3.10",
-    "dependencies": ["pyyaml", "jsonschema"],
+    "dependencies": [
+      "pyyaml",
+      "jsonschema"
+    ],
     "entry_cli": "python3 scripts/install-pack.py",
     "daemon_port": "",
     "overview_cards": [
-      {"label": "名称", "value": "Hermes Cap Pack", "sub": "hermes-cap-pack"},
-      {"label": "版本", "value": "0.9.1", "sub": "MIT License"},
-      {"label": "能力包", "value": "17", "sub": "100% 覆盖 — 全部提取完成"},
-      {"label": "测试", "value": "141 ✅", "sub": "全通过 · 9 个测试文件"}
+      {
+        "label": "名称",
+        "value": "Hermes Cap Pack",
+        "sub": "hermes-cap-pack"
+      },
+      {
+        "label": "版本",
+        "value": "0.9.1",
+        "sub": "MIT License"
+      },
+      {
+        "label": "能力包",
+        "value": "17",
+        "sub": "100% 覆盖 — 全部提取完成"
+      },
+      {
+        "label": "测试",
+        "value": "141 ✅",
+        "sub": "全通过 · 9 个测试文件"
+      }
     ],
     "info_table": [
-      {"attr": "作者", "value": "boku (Emma/小玛)"},
-      {"attr": "仓库", "value": "<code>github.com/JackSmith111977/Hermes-Cap-Pack</code>"},
-      {"attr": "入口", "value": "<code>python -m scripts.cli.main</code>"},
-      {"attr": "覆盖", "value": "<strong>100% (17/17)</strong> — 全部能力包已提取"},
-      {"attr": "三层完整率", "value": "<strong>100%</strong> — L1 Skills ✅ + L2 Experiences ✅ + L3 Knowledge ✅"},
-      {"attr": "CHI", "value": "<code>67.92 🟠</code> · 目标 ≥ 85"},
-      {"attr": "SQS 均分", "value": "<code>67.9</code> · 目标 ≥ 80"}
+      {
+        "attr": "作者",
+        "value": "boku (Emma/小玛)"
+      },
+      {
+        "attr": "仓库",
+        "value": "<code>github.com/JackSmith111977/Hermes-Cap-Pack</code>"
+      },
+      {
+        "attr": "入口",
+        "value": "<code>python -m scripts.cli.main</code>"
+      },
+      {
+        "attr": "覆盖",
+        "value": "<strong>100% (17/17)</strong> — 全部能力包已提取"
+      },
+      {
+        "attr": "三层完整率",
+        "value": "<strong>100%</strong> — L1 Skills ✅ + L2 Experiences ✅ + L3 Knowledge ✅"
+      },
+      {
+        "attr": "CHI",
+        "value": "<code>67.92 🟠</code> · 目标 ≥ 85"
+      },
+      {
+        "attr": "SQS 均分",
+        "value": "<code>67.9</code> · 目标 ≥ 80"
+      }
     ]
   },
   "architecture": {
@@ -34,67 +74,292 @@
       {
         "name": "Layer 3 — 能力包层 Capability Packs",
         "modules": [
-          {"name": "doc-engine", "description": "文档生成 — PDF/HTML/PPTX 排版 + 视觉QA + 质量门禁 (15 skills)"},
-          {"name": "quality-assurance", "description": "质量保障 — SQS + 审计 + 树索引 (0 skills, 基础设施型)"},
-          {"name": "skill-quality", "description": "纯外部 Hermes 质量门禁 — 自动检测/监控/审计 (0 skills, 基础设施型)"},
-          {"name": "learning-workflow", "description": "学习研究流程强制拦截器 — 状态机+5层门禁 (1 skill)"},
-          {"name": "learning-engine", "description": "深度调研/论文搜索/知识沉淀 — 从信息到知识结构化 (11 skills)"},
-          {"name": "developer-workflow", "description": "开发工作流 — TDD/调试/子代理/Code Review (16 skills)"},
-          {"name": "agent-orchestration", "description": "Agent 协作 — 多代理编排/BMAD Party Mode/消息注入 (8 skills)"},
-          {"name": "metacognition", "description": "元认知系统 — 自我审查/内存管理/自我分析/skill 创作 (6 skills)"},
-          {"name": "creative-design", "description": "创意设计 — 架构图/ASCII/概念图/Excalidraw/像素艺术/梗图 (25 skills)"},
-          {"name": "github-ecosystem", "description": "GitHub 生态 — 仓库管理/PR/Issue/Code Review/Git 高级 (9 skills)"},
-          {"name": "devops-monitor", "description": "运维监控 — Docker/Linux/进程/Kanban/代理/Webhook (10 skills)"},
-          {"name": "messaging", "description": "消息平台 — 飞书/邮件/X-Twitter/智能播报 (8 skills)"},
-          {"name": "network-proxy", "description": "网络代理 — Clash/代理搜集/Web 访问入口 (3 skills)"},
-          {"name": "security-audit", "description": "安全审计 — 提交质量/删除安全/1Password/OSINT/红队 (5 skills)"},
-          {"name": "media-processing", "description": "音视频媒体 — GIF/音乐生成/音频可视化/Spotify/YouTube (5 skills)"},
-          {"name": "financial-analysis", "description": "金融数据分析 — akshare/ta/matplotlib/智能研报 (1 skill)"},
-          {"name": "social-gaming", "description": "社交娱乐 — Minecraft/Pokemon/Bangumi/元宝群聊 (4 skills)"}
+          {
+            "name": "doc-engine",
+            "description": "文档生成 — PDF/HTML/PPTX 排版 + 视觉QA + 质量门禁 (15 skills)"
+          },
+          {
+            "name": "quality-assurance",
+            "description": "质量保障 — SQS + 审计 + 树索引 (0 skills, 基础设施型)"
+          },
+          {
+            "name": "skill-quality",
+            "description": "纯外部 Hermes 质量门禁 — 自动检测/监控/审计 (0 skills, 基础设施型)"
+          },
+          {
+            "name": "learning-workflow",
+            "description": "学习研究流程强制拦截器 — 状态机+5层门禁 (1 skill)"
+          },
+          {
+            "name": "learning-engine",
+            "description": "深度调研/论文搜索/知识沉淀 — 从信息到知识结构化 (11 skills)"
+          },
+          {
+            "name": "developer-workflow",
+            "description": "开发工作流 — TDD/调试/子代理/Code Review (16 skills)"
+          },
+          {
+            "name": "agent-orchestration",
+            "description": "Agent 协作 — 多代理编排/BMAD Party Mode/消息注入 (8 skills)"
+          },
+          {
+            "name": "metacognition",
+            "description": "元认知系统 — 自我审查/内存管理/自我分析/skill 创作 (6 skills)"
+          },
+          {
+            "name": "creative-design",
+            "description": "创意设计 — 架构图/ASCII/概念图/Excalidraw/像素艺术/梗图 (25 skills)"
+          },
+          {
+            "name": "github-ecosystem",
+            "description": "GitHub 生态 — 仓库管理/PR/Issue/Code Review/Git 高级 (9 skills)"
+          },
+          {
+            "name": "devops-monitor",
+            "description": "运维监控 — Docker/Linux/进程/Kanban/代理/Webhook (10 skills)"
+          },
+          {
+            "name": "messaging",
+            "description": "消息平台 — 飞书/邮件/X-Twitter/智能播报 (8 skills)"
+          },
+          {
+            "name": "network-proxy",
+            "description": "网络代理 — Clash/代理搜集/Web 访问入口 (3 skills)"
+          },
+          {
+            "name": "security-audit",
+            "description": "安全审计 — 提交质量/删除安全/1Password/OSINT/红队 (5 skills)"
+          },
+          {
+            "name": "media-processing",
+            "description": "音视频媒体 — GIF/音乐生成/音频可视化/Spotify/YouTube (5 skills)"
+          },
+          {
+            "name": "financial-analysis",
+            "description": "金融数据分析 — akshare/ta/matplotlib/智能研报 (1 skill)"
+          },
+          {
+            "name": "social-gaming",
+            "description": "社交娱乐 — Minecraft/Pokemon/Bangumi/元宝群聊 (4 skills)"
+          }
         ],
         "direction": "user-facing"
       },
       {
         "name": "Layer 2 — 工具层 Tools",
         "modules": [
-          {"name": "scripts/cli/", "description": "CLI 入口 + 13 个命令 (install/remove/verify/list/upgrade/status/search/skill)"},
-          {"name": "scripts/adapters/", "description": "HermesAdapter + OpenCodeAdapter + 多 Agent 安装"},
-          {"name": "scripts/uca/", "description": "Parser + Protocol + Verifier + Dependency + 验证门禁"},
-          {"name": "scripts/tests/", "description": "141 个测试 (9 个文件)"}
+          {
+            "name": "scripts/cli/",
+            "description": "CLI 入口 + 13 个命令 (install/remove/verify/list/upgrade/status/search/skill)"
+          },
+          {
+            "name": "scripts/adapters/",
+            "description": "HermesAdapter + OpenCodeAdapter + 多 Agent 安装"
+          },
+          {
+            "name": "scripts/uca/",
+            "description": "Parser + Protocol + Verifier + Dependency + 验证门禁"
+          },
+          {
+            "name": "scripts/tests/",
+            "description": "141 个测试 (9 个文件)"
+          }
         ],
         "direction": "business-logic"
       },
       {
         "name": "Layer 1 — 基础设施层 Infrastructure",
         "modules": [
-          {"name": "docs/", "description": "SDD 文档体系 (4 Epics / 15 Specs / 49 Stories)"},
-          {"name": "packs/", "description": "17 个能力包目录（含 L2 Experiences + L3 Knowledge）"},
-          {"name": "schemas/", "description": "JSON Schema 验证 (v1 + v2) + 健康度检查"},
-          {"name": "reports/", "description": "健康仪表盘 (CHI/SQS/生命周期)"},
-          {"name": ".github/", "description": "CI 门禁 (4 job 并行 + CHI 不降级)"}
+          {
+            "name": "docs/",
+            "description": "SDD 文档体系 (5 Epics / 16 Specs / 53 Stories)"
+          },
+          {
+            "name": "packs/",
+            "description": "17 个能力包目录（含 L2 Experiences + L3 Knowledge）"
+          },
+          {
+            "name": "schemas/",
+            "description": "JSON Schema 验证 (v1 + v2) + 健康度检查"
+          },
+          {
+            "name": "reports/",
+            "description": "健康仪表盘 (CHI/SQS/生命周期)"
+          },
+          {
+            "name": ".github/",
+            "description": "CI 门禁 (4 job 并行 + CHI 不降级)"
+          }
         ],
         "direction": "foundation"
       }
     ],
     "module_table": [
-      {"module": "CLI Main", "file": "scripts/cli/main.py", "desc": "CLI 入口", "methods": ["cli_main()"]},
-      {"module": "CLI Commands", "file": "scripts/cli/commands.py", "desc": "13 个命令实现", "methods": ["cmd_install()", "cmd_remove()", "cmd_verify()", "cmd_upgrade()", "cmd_skill_add()"]},
-      {"module": "PackParser", "file": "scripts/uca/parser.py", "desc": "cap-pack.yaml v2 解析器", "methods": ["parse()", "_parse_skills()"]},
-      {"module": "CapPack Protocol", "file": "scripts/uca/protocol.py", "desc": "数据类 + 适配器接口", "methods": ["CapPack", "AgentAdapter", "AdapterResult"]},
-      {"module": "Verifier", "file": "scripts/uca/verifier.py", "desc": "安装完整性验证", "methods": ["verify()", "_check_skills_exist()"]},
-      {"module": "Dependency Checker", "file": "scripts/uca/dependency.py", "desc": "依赖检查", "methods": ["check_dependencies()"]},
-      {"module": "HermesAdapter", "file": "scripts/adapters/hermes.py", "desc": "安装到 Hermes Agent", "methods": ["install()", "uninstall()", "verify()", "update()"]},
-      {"module": "OpenCodeAdapter", "file": "scripts/adapters/opencode.py", "desc": "安装到 OpenCode CLI", "methods": ["install()", "format_convert()"]},
-      {"module": "SQS Engine", "file": "scripts/skill-quality-score.py", "desc": "五维质量评分 (S1-S5)", "methods": ["score()", "audit()"]},
-      {"module": "Skill Tree Index", "file": "scripts/skill-tree-index.py", "desc": "三层树状索引 + 合并建议 + 健康度", "methods": ["--json", "--health", "--consolidate"]},
-      {"module": "Health Check", "file": "scripts/health-check.py", "desc": "6 KPI + CHI 综合健康指数", "methods": ["--json", "--gate"]},
-      {"module": "Merge Suggest", "file": "scripts/merge-suggest.py", "desc": "内容相似度分析 + 合并建议引擎", "methods": ["--yaml", "--apply"]},
-      {"module": "SQS Sync", "file": "scripts/sqs-sync.py", "desc": "SQS → SRA 质量分同步器", "methods": ["--dry-run"]},
-      {"module": "Aggregate SQS", "file": "scripts/aggregate-sqs.py", "desc": "pack 聚合 + 优先级排序", "methods": ["--prioritize"]},
-      {"module": "Validate Layers", "file": "scripts/validate-layers.py", "desc": "三层完整性检查", "methods": ["verify()"]},
-      {"module": "Project State", "file": "scripts/project-state.py", "desc": "统一状态机管理", "methods": ["verify()", "sync()", "transition()"]},
-      {"module": "Phase Gate", "file": "scripts/phase-gate.py", "desc": "Phase 门禁管理", "methods": ["check()", "start()", "complete()"]},
-      {"module": "CHI Gate", "file": "scripts/chi-gate.py", "desc": "CHI 不降级门禁", "methods": ["check()"]}
+      {
+        "module": "CLI Main",
+        "file": "scripts/cli/main.py",
+        "desc": "CLI 入口",
+        "methods": [
+          "cli_main()"
+        ]
+      },
+      {
+        "module": "CLI Commands",
+        "file": "scripts/cli/commands.py",
+        "desc": "13 个命令实现",
+        "methods": [
+          "cmd_install()",
+          "cmd_remove()",
+          "cmd_verify()",
+          "cmd_upgrade()",
+          "cmd_skill_add()"
+        ]
+      },
+      {
+        "module": "PackParser",
+        "file": "scripts/uca/parser.py",
+        "desc": "cap-pack.yaml v2 解析器",
+        "methods": [
+          "parse()",
+          "_parse_skills()"
+        ]
+      },
+      {
+        "module": "CapPack Protocol",
+        "file": "scripts/uca/protocol.py",
+        "desc": "数据类 + 适配器接口",
+        "methods": [
+          "CapPack",
+          "AgentAdapter",
+          "AdapterResult"
+        ]
+      },
+      {
+        "module": "Verifier",
+        "file": "scripts/uca/verifier.py",
+        "desc": "安装完整性验证",
+        "methods": [
+          "verify()",
+          "_check_skills_exist()"
+        ]
+      },
+      {
+        "module": "Dependency Checker",
+        "file": "scripts/uca/dependency.py",
+        "desc": "依赖检查",
+        "methods": [
+          "check_dependencies()"
+        ]
+      },
+      {
+        "module": "HermesAdapter",
+        "file": "scripts/adapters/hermes.py",
+        "desc": "安装到 Hermes Agent",
+        "methods": [
+          "install()",
+          "uninstall()",
+          "verify()",
+          "update()"
+        ]
+      },
+      {
+        "module": "OpenCodeAdapter",
+        "file": "scripts/adapters/opencode.py",
+        "desc": "安装到 OpenCode CLI",
+        "methods": [
+          "install()",
+          "format_convert()"
+        ]
+      },
+      {
+        "module": "SQS Engine",
+        "file": "scripts/skill-quality-score.py",
+        "desc": "五维质量评分 (S1-S5)",
+        "methods": [
+          "score()",
+          "audit()"
+        ]
+      },
+      {
+        "module": "Skill Tree Index",
+        "file": "scripts/skill-tree-index.py",
+        "desc": "三层树状索引 + 合并建议 + 健康度",
+        "methods": [
+          "--json",
+          "--health",
+          "--consolidate"
+        ]
+      },
+      {
+        "module": "Health Check",
+        "file": "scripts/health-check.py",
+        "desc": "6 KPI + CHI 综合健康指数",
+        "methods": [
+          "--json",
+          "--gate"
+        ]
+      },
+      {
+        "module": "Merge Suggest",
+        "file": "scripts/merge-suggest.py",
+        "desc": "内容相似度分析 + 合并建议引擎",
+        "methods": [
+          "--yaml",
+          "--apply"
+        ]
+      },
+      {
+        "module": "SQS Sync",
+        "file": "scripts/sqs-sync.py",
+        "desc": "SQS → SRA 质量分同步器",
+        "methods": [
+          "--dry-run"
+        ]
+      },
+      {
+        "module": "Aggregate SQS",
+        "file": "scripts/aggregate-sqs.py",
+        "desc": "pack 聚合 + 优先级排序",
+        "methods": [
+          "--prioritize"
+        ]
+      },
+      {
+        "module": "Validate Layers",
+        "file": "scripts/validate-layers.py",
+        "desc": "三层完整性检查",
+        "methods": [
+          "verify()"
+        ]
+      },
+      {
+        "module": "Project State",
+        "file": "scripts/project-state.py",
+        "desc": "统一状态机管理",
+        "methods": [
+          "verify()",
+          "sync()",
+          "transition()"
+        ]
+      },
+      {
+        "module": "Phase Gate",
+        "file": "scripts/phase-gate.py",
+        "desc": "Phase 门禁管理",
+        "methods": [
+          "check()",
+          "start()",
+          "complete()"
+        ]
+      },
+      {
+        "module": "CHI Gate",
+        "file": "scripts/chi-gate.py",
+        "desc": "CHI 不降级门禁",
+        "methods": [
+          "check()"
+        ]
+      }
     ]
   },
   "api_endpoints": {
@@ -103,20 +368,62 @@
     "socket_actions": []
   },
   "cli_commands": [
-    {"command": "cap-pack install <dir>", "description": "从目录安装能力包"},
-    {"command": "cap-pack install <dir> --dry-run", "description": "预览安装"},
-    {"command": "cap-pack remove <name>", "description": "卸载能力包"},
-    {"command": "cap-pack verify <name>", "description": "验证已安装的包"},
-    {"command": "cap-pack list", "description": "列出已安装的能力包"},
-    {"command": "cap-pack upgrade <name>", "description": "升级已安装的包"},
-    {"command": "cap-pack upgrade --all", "description": "升级全部"},
-    {"command": "cap-pack status", "description": "全局状态概览"},
-    {"command": "cap-pack search <term>", "description": "搜索可用能力包"},
-    {"command": "cap-pack inspect <dir>", "description": "查看包内容"},
-    {"command": "cap-pack skill add <pack> <src>", "description": "添加 skill 到能力包"},
-    {"command": "cap-pack skill remove <pack> <id>", "description": "从能力包移除 skill"},
-    {"command": "cap-pack skill list <pack>", "description": "列出能力包内 skill"},
-    {"command": "cap-pack skill update <pack> <id>", "description": "更新能力包内 skill"}
+    {
+      "command": "cap-pack install <dir>",
+      "description": "从目录安装能力包"
+    },
+    {
+      "command": "cap-pack install <dir> --dry-run",
+      "description": "预览安装"
+    },
+    {
+      "command": "cap-pack remove <name>",
+      "description": "卸载能力包"
+    },
+    {
+      "command": "cap-pack verify <name>",
+      "description": "验证已安装的包"
+    },
+    {
+      "command": "cap-pack list",
+      "description": "列出已安装的能力包"
+    },
+    {
+      "command": "cap-pack upgrade <name>",
+      "description": "升级已安装的包"
+    },
+    {
+      "command": "cap-pack upgrade --all",
+      "description": "升级全部"
+    },
+    {
+      "command": "cap-pack status",
+      "description": "全局状态概览"
+    },
+    {
+      "command": "cap-pack search <term>",
+      "description": "搜索可用能力包"
+    },
+    {
+      "command": "cap-pack inspect <dir>",
+      "description": "查看包内容"
+    },
+    {
+      "command": "cap-pack skill add <pack> <src>",
+      "description": "添加 skill 到能力包"
+    },
+    {
+      "command": "cap-pack skill remove <pack> <id>",
+      "description": "从能力包移除 skill"
+    },
+    {
+      "command": "cap-pack skill list <pack>",
+      "description": "列出能力包内 skill"
+    },
+    {
+      "command": "cap-pack skill update <pack> <id>",
+      "description": "更新能力包内 skill"
+    }
   ],
   "epics": [
     {
@@ -124,26 +431,106 @@
       "name": "能力模块化可行性调查 + 适配器实现",
       "status": "approved",
       "stories": [
-        {"id": "STORY-1-1-1", "name": "模块分类方案", "status": "draft"},
-        {"id": "STORY-1-1-2", "name": "18 模块命名", "status": "draft"},
-        {"id": "STORY-1-1-3", "name": "模块定义验证", "status": "draft"},
-        {"id": "STORY-1-2-1", "name": "cap-pack 格式设计", "status": "draft"},
-        {"id": "STORY-1-2-2", "name": "JSON Schema 验证", "status": "draft"},
-        {"id": "STORY-1-3-1", "name": "PackParser 实现", "status": "draft"},
-        {"id": "STORY-1-3-2", "name": "Parser 边界测试", "status": "draft"},
-        {"id": "STORY-1-4-1", "name": "AgentAdapter Protocol", "status": "draft"},
-        {"id": "STORY-1-4-2", "name": "Hermes MCP 注入", "status": "draft"},
-        {"id": "STORY-1-4-3", "name": "Hermes 卸装能力", "status": "draft"},
-        {"id": "STORY-1-4-4", "name": "Hermes 更新能力", "status": "implemented"},
-        {"id": "STORY-1-4-5", "name": "Hermes 列出能力", "status": "implemented"},
-        {"id": "STORY-1-4-6", "name": "Hermes 适配器实现", "status": "implemented"},
-        {"id": "STORY-1-4-7", "name": "回滚机制", "status": "implemented"},
-        {"id": "STORY-1-4-8", "name": "OpenCode 适配器", "status": "implemented"},
-        {"id": "STORY-1-5-1", "name": "install 配置完整消费", "status": "implemented"},
-        {"id": "STORY-1-5-2", "name": "依赖检查与验证门禁", "status": "implemented"},
-        {"id": "STORY-1-5-3", "name": "端到端集成测试", "status": "implemented"},
-        {"id": "STORY-1-5-4", "name": "多 Agent 安装与自动检测", "status": "implemented"},
-        {"id": "STORY-1-5-5", "name": "卸载增强与快照回滚测试", "status": "implemented"}
+        {
+          "id": "STORY-1-1-1",
+          "name": "模块分类方案",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-1-2",
+          "name": "18 模块命名",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-1-3",
+          "name": "模块定义验证",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-2-1",
+          "name": "cap-pack 格式设计",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-2-2",
+          "name": "JSON Schema 验证",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-3-1",
+          "name": "PackParser 实现",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-3-2",
+          "name": "Parser 边界测试",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-1",
+          "name": "AgentAdapter Protocol",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-2",
+          "name": "Hermes MCP 注入",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-3",
+          "name": "Hermes 卸装能力",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-4",
+          "name": "Hermes 更新能力",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-5",
+          "name": "Hermes 列出能力",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-6",
+          "name": "Hermes 适配器实现",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-7",
+          "name": "回滚机制",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-4-8",
+          "name": "OpenCode 适配器",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-5-1",
+          "name": "install 配置完整消费",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-5-2",
+          "name": "依赖检查与验证门禁",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-5-3",
+          "name": "端到端集成测试",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-5-4",
+          "name": "多 Agent 安装与自动检测",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-1-5-5",
+          "name": "卸载增强与快照回滚测试",
+          "status": "completed"
+        }
       ]
     },
     {
@@ -151,14 +538,46 @@
       "name": "Skill 树状层次管理与健康度优化系统",
       "status": "approved",
       "stories": [
-        {"id": "STORY-2-1-1", "name": "树状索引工具纳入 cap-pack 项目", "status": "implemented"},
-        {"id": "STORY-2-2-1", "name": "SQS/审计工具嵌入 cap-pack 项目", "status": "implemented"},
-        {"id": "STORY-2-2-2", "name": "自动健康 cron 定时报告", "status": "implemented"},
-        {"id": "STORY-2-2-3", "name": "健康趋势仪表盘可视化", "status": "implemented"},
-        {"id": "STORY-2-2-4", "name": "合并建议自动生成", "status": "implemented"},
-        {"id": "STORY-2-3-1", "name": "SRA 分类映射表 + 树状索引 SRA 感知", "status": "implemented"},
-        {"id": "STORY-2-3-2", "name": "SQS 质量加权 SRA 推荐", "status": "implemented"},
-        {"id": "STORY-2-4-1", "name": "project-report-generator skill 创建与 SDD 集成", "status": "implemented"}
+        {
+          "id": "STORY-2-1-1",
+          "name": "树状索引工具纳入 cap-pack 项目",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-2-1",
+          "name": "SQS/审计工具嵌入 cap-pack 项目",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-2-2",
+          "name": "自动健康 cron 定时报告",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-2-3",
+          "name": "健康趋势仪表盘可视化",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-2-4",
+          "name": "合并建议自动生成",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-3-1",
+          "name": "SRA 分类映射表 + 树状索引 SRA 感知",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-3-2",
+          "name": "SQS 质量加权 SRA 推荐",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-2-4-1",
+          "name": "project-report-generator skill 创建与 SDD 集成",
+          "status": "completed"
+        }
       ]
     },
     {
@@ -166,19 +585,71 @@
       "name": "能力包管理器增强 + 模块提取",
       "status": "implemented",
       "stories": [
-        {"id": "STORY-3-1", "name": "CLI 升级命令 (upgrade)", "status": "implemented"},
-        {"id": "STORY-3-2", "name": "CLI search/status/skill 命令", "status": "implemented"},
-        {"id": "STORY-3-3", "name": "developer-workflow 能力包提取 (16 skills)", "status": "implemented"},
-        {"id": "STORY-3-4", "name": "agent-orchestration 能力包提取 (8 skills)", "status": "implemented"},
-        {"id": "STORY-3-5", "name": "metacognition 能力包提取 (6 skills)", "status": "implemented"},
-        {"id": "STORY-3-6", "name": "skill-quality 能力包提取 (基础设施)", "status": "implemented"},
-        {"id": "STORY-3-7", "name": "learning-engine（含 knowledge-base 合并）提取 (11 skills)", "status": "completed"},
-        {"id": "STORY-3-8", "name": "creative-design 能力包提取 (25 skills)", "status": "completed"},
-        {"id": "STORY-3-9", "name": "github-ecosystem 能力包提取 (9 skills)", "status": "completed"},
-        {"id": "STORY-3-10", "name": "devops-monitor 能力包提取 (10 skills)", "status": "completed"},
-        {"id": "STORY-3-11", "name": "messaging 能力包提取 (8 skills)", "status": "completed"},
-        {"id": "STORY-3-12", "name": "network-proxy 能力包提取 (3 skills)", "status": "completed"},
-        {"id": "STORY-3-13", "name": "security-audit 能力包提取 (5 skills)", "status": "completed"}
+        {
+          "id": "STORY-3-1",
+          "name": "CLI 升级命令 (upgrade)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-2",
+          "name": "CLI search/status/skill 命令",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-3",
+          "name": "developer-workflow 能力包提取 (16 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-4",
+          "name": "agent-orchestration 能力包提取 (8 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-5",
+          "name": "metacognition 能力包提取 (6 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-6",
+          "name": "skill-quality 能力包提取 (基础设施)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-7",
+          "name": "learning-engine（含 knowledge-base 合并）提取 (11 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-8",
+          "name": "creative-design 能力包提取 (25 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-9",
+          "name": "github-ecosystem 能力包提取 (9 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-10",
+          "name": "devops-monitor 能力包提取 (10 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-11",
+          "name": "messaging 能力包提取 (8 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-12",
+          "name": "network-proxy 能力包提取 (3 skills)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-3-13",
+          "name": "security-audit 能力包提取 (5 skills)",
+          "status": "completed"
+        }
       ]
     },
     {
@@ -186,14 +657,73 @@
       "name": "能力包质量升级 — 三层改造 + 健康度 + 合并优化",
       "status": "approved",
       "stories": [
-        {"id": "STORY-4-1", "name": "Phase 0: 全量 SQS 扫描 + CHI 仪表盘 v2", "status": "completed"},
-        {"id": "STORY-4-2", "name": "Phase 0: 健康度优先级排序 + 定位最低分包", "status": "completed"},
-        {"id": "STORY-4-3", "name": "Phase 1: L2 Experiences 补充 (4包→17包全覆盖)", "status": "completed"},
-        {"id": "STORY-4-4", "name": "Phase 1: L3 Knowledge 首次填充 (0→17包)", "status": "completed"},
-        {"id": "STORY-4-5", "name": "Phase 1: 模板标准化 + validate-layers.py", "status": "completed"},
-        {"id": "STORY-4-6", "name": "Phase 2: 低分 skill (SQS<60) 改进", "status": "completed"},
-        {"id": "STORY-4-7", "name": "Phase 2: cap-pack.yaml 元数据补齐", "status": "completed"},
-        {"id": "STORY-4-8", "name": "Phase 2: CHI 门禁脚本嵌入 CI", "status": "completed"}
+        {
+          "id": "STORY-4-1",
+          "name": "Phase 0: 全量 SQS 扫描 + CHI 仪表盘 v2",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-2",
+          "name": "Phase 0: 健康度优先级排序 + 定位最低分包",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-3",
+          "name": "Phase 1: L2 Experiences 补充 (4包→17包全覆盖)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-4",
+          "name": "Phase 1: L3 Knowledge 首次填充 (0→17包)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-5",
+          "name": "Phase 1: 模板标准化 + validate-layers.py",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-6",
+          "name": "Phase 2: 低分 skill (SQS<60) 改进",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-7",
+          "name": "Phase 2: cap-pack.yaml 元数据补齐",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-4-8",
+          "name": "Phase 2: CHI 门禁脚本嵌入 CI",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "EPIC-005",
+      "name": "Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配",
+      "status": "approved",
+      "stories": [
+        {
+          "id": "STORY-5-1-1",
+          "name": "L1 基础检测器 + L2 健康检测器",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-5-1-2",
+          "name": "L3 生态检测器 + L4 编排检测器",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-5-1-3",
+          "name": "CLI 工具 + JSON/HTML 报告",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-5-1-4",
+          "name": "新增 Skill Watcher (cron + fingerprint)",
+          "status": "draft"
+        }
       ]
     }
   ],
@@ -203,15 +733,51 @@
     "duration_seconds": 8.2,
     "coverage_pct": null,
     "files": [
-      {"name": "test_cli_commands.py", "tests": 40, "passing": 40},
-      {"name": "test_hermes_adapter.py", "tests": 34, "passing": 34},
-      {"name": "test_epic002_tools.py", "tests": 17, "passing": 17},
-      {"name": "test_uca_parser.py", "tests": 16, "passing": 16},
-      {"name": "test_opencode_adapter.py", "tests": 9, "passing": 9},
-      {"name": "test_uca_dependency.py", "tests": 8, "passing": 8},
-      {"name": "test_uca_protocol.py", "tests": 7, "passing": 7},
-      {"name": "test_uca_verifier.py", "tests": 6, "passing": 6},
-      {"name": "test_parity.py", "tests": 4, "passing": 4}
+      {
+        "name": "test_cli_commands.py",
+        "tests": 40,
+        "passing": 40
+      },
+      {
+        "name": "test_hermes_adapter.py",
+        "tests": 34,
+        "passing": 34
+      },
+      {
+        "name": "test_epic002_tools.py",
+        "tests": 17,
+        "passing": 17
+      },
+      {
+        "name": "test_uca_parser.py",
+        "tests": 16,
+        "passing": 16
+      },
+      {
+        "name": "test_opencode_adapter.py",
+        "tests": 9,
+        "passing": 9
+      },
+      {
+        "name": "test_uca_dependency.py",
+        "tests": 8,
+        "passing": 8
+      },
+      {
+        "name": "test_uca_protocol.py",
+        "tests": 7,
+        "passing": 7
+      },
+      {
+        "name": "test_uca_verifier.py",
+        "tests": 6,
+        "passing": 6
+      },
+      {
+        "name": "test_parity.py",
+        "tests": 4,
+        "passing": 4
+      }
     ]
   },
   "sprint_history": [
@@ -270,7 +836,14 @@
       "summary": "EPIC-004 Phase 0+1: 基线扫描 + L2/L3 三层补充 — 5 个 Story + 文档对齐 v0.9.1",
       "tests_added": 0,
       "stories_completed": 5
+    },
+    {
+      "sprint": "Sprint 9 (current)",
+      "date": "2026-05-16",
+      "summary": "EPIC-005 Phase 0: 统一标准制定 + 行业调研 + SPEC-5-1 草案 — 4 个 Story",
+      "tests_added": 0,
+      "stories_completed": 0
     }
   ],
-  "footer": "由 project-report.json 驱动生成 — 🤖 boku (Emma) · v0.9.1"
+  "footer": "由 project-report.json 驱动生成 — 🤖 boku (Emma) · v0.9.1 (2026-05-16 对齐)"
 }

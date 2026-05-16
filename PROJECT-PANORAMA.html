@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes Capability Pack — 项目全景 v0.9.0</title>
+<title>Hermes Capability Pack — 项目全景 v0.9.1</title>
 <style>
 :root {
   --bg: #0d1117;
@@ -193,7 +193,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
       <div class="sub">hermes-cap-pack · Agent 能力模块化与跨平台复用框架</div>
     </div>
     <div class="header-right">
-      <div class="version-badge">v0.9.0 · MIT</div>
+      <div class="version-badge">v0.9.1 · MIT</div>
       <div style="margin-top:8px; font-size:0.8rem; color:var(--dim);">github.com/JackSmith111977/Hermes-Cap-Pack</div>
     </div>
   </div>
@@ -212,20 +212,20 @@ tr:hover td { background: rgba(88,166,255,0.04); }
     <div class="sub">100% 覆盖 (17/17 模块)</div>
   </div>
   <div class="kpi-card cyan">
-    <div class="value">30+</div>
+    <div class="value">53</div>
     <div class="label">Stories</div>
-    <div class="sub">3 Epics · 11 Specs</div>
+    <div class="sub">5 Epics · 16 Specs</div>
   </div>
   <div class="kpi-card">
-    <div class="value">6</div>
+    <div class="value">9</div>
     <div class="label">Sprints</div>
-    <div class="sub">2026-05-12 → 05-14</div>
+    <div class="sub">2026-05-12 → 05-16</div>
   </div>
 </div>
 
 <!-- §1 合并注释 -->
 <section class="section">
-  <h2>⚡ 变更记录 <span class="tag">v0.9.0</span></h2>
+  <h2>⚡ 变更记录 <span class="tag">v0.9.1</span></h2>
   <div class="merge-note">
     <strong>📚 knowledge-base 模块 → 合并至 learning-engine</strong><br>
     核心知识技能（knowledge-precipitation, knowledge-routing, hermes-knowledge-base, llm-wiki）
@@ -236,7 +236,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 
 <!-- §2 能力包 -->
 <section class="section">
-      <h2>📦 能力包全景 <span class="tag">14 Packs</span></h2>
+      <h2>📦 能力包全景 <span class="tag">17 Packs</span></h2>
   <div class="cards">
     <div class="card">
       <h3>📄 doc-engine</h3>
@@ -331,7 +331,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 
 <!-- §3 Epics & Stories -->
 <section class="section">
-  <h2>📋 Epics & 交付进度 <span class="tag">30+ Stories</span></h2>
+  <h2>📋 Epics & 交付进度 <span class="tag">53 Stories</span></h2>
 
   <div class="epic-card">
     <div class="epic-header">
@@ -339,7 +339,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
       <span class="status status-approved">✅ approved</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
-    <div style="font-size:0.82rem; color:var(--dim);">20 Stories · 15 completed · 5 implemented</div>
+    <div style="font-size:0.82rem; color:var(--dim);">20 Stories · 20 completed</div>
     <div class="story-grid">
       <span class="story-item done">1-1-1 模块分类方案</span>
       <span class="story-item done">1-1-2 18 模块命名</span>
@@ -369,16 +369,17 @@ tr:hover td { background: rgba(88,166,255,0.04); }
       <h3>EPIC-002 · Skill 树状层次管理与健康度优化</h3>
       <span class="status status-implemented">🟣 implemented</span>
     </div>
-    <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
-    <div style="font-size:0.82rem; color:var(--dim);">7 Stories · 2 implemented · 5 draft</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <div style="font-size:0.82rem; color:var(--dim);">7 Stories · 8 completed</div>
     <div class="story-grid">
       <span class="story-item done">2-1-1 树状索引</span>
       <span class="story-item done">2-2-1 SQS/审计</span>
-      <span class="story-item">2-2-2 cron 报告</span>
-      <span class="story-item">2-2-3 仪表盘</span>
-      <span class="story-item">2-2-4 合并建议</span>
-      <span class="story-item">2-3-1 SRA 映射</span>
-      <span class="story-item">2-3-2 SQS 加权</span>
+      <span class="story-item done">2-2-2 cron 报告</span>
+      <span class="story-item done">2-2-3 仪表盘</span>
+      <span class="story-item done">2-2-4 合并建议</span>
+      <span class="story-item done">2-3-1 SRA 映射</span>
+      <span class="story-item done">2-3-2 SQS 加权</span>
+      <span class="story-item done">2-4-1 报告生成器</span>
     </div>
   </div>
 
@@ -396,14 +397,53 @@ tr:hover td { background: rgba(88,166,255,0.04); }
       <span class="story-item done">3-4 agent-orchestration</span>
       <span class="story-item done">3-5 metacognition</span>
       <span class="story-item done">3-6 skill-quality</span>
-      <span class="story-item done">3-7 learning-engine（含知识库）</span>
+      <span class="story-item done">3-7 learning-engine（合并）</span>
+      <span class="story-item done">3-8 creative-design</span>
+      <span class="story-item done">3-9 github-ecosystem</span>
+      <span class="story-item done">3-10 devops-monitor</span>
+      <span class="story-item done">3-11 messaging</span>
+      <span class="story-item done">3-12 network-proxy</span>
+  </div>
+  </div>
+
+  <div class="epic-card">
+    <div class="epic-header">
+      <h3>EPIC-004 · 能力包质量升级 — 三层改造 + 健康度 + 合并优化</h3>
+      <span class="status status-approved">✅ approved</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--ok),var(--accent))"></div></div>
+    <div style="font-size:0.82rem; color:var(--dim);">8 Stories · 8 completed</div>
+    <div class="story-grid">
+      <span class="story-item done">4-1 SQS 扫描+CHI 仪表盘</span>
+      <span class="story-item done">4-2 健康度优先级排序</span>
+      <span class="story-item done">4-3 L2 Experiences 补充</span>
+      <span class="story-item done">4-4 L3 Knowledge 首次填充</span>
+      <span class="story-item done">4-5 模板标准化+validate-layers</span>
+      <span class="story-item done">4-6 低分 skill 改进</span>
+      <span class="story-item done">4-7 cap-pack.yaml 补齐</span>
+      <span class="story-item done">4-8 CHI 门禁+CI 嵌入</span>
+    </div>
+  </div>
+
+  <div class="epic-card">
+    <div class="epic-header">
+      <h3>EPIC-005 · Skill 治理引擎 — 统一标准 + 四层门禁 + 工作流编排</h3>
+      <span class="status status-draft">⬜ draft</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--warn)"></div></div>
+    <div style="font-size:0.82rem; color:var(--dim);">4 Stories · 0 completed · 🆕 Phase 0 标准定义中</div>
+    <div class="story-grid">
+      <span class="story-item wip">5-1-1 L1/L2 检测器</span>
+      <span class="story-item wip">5-1-2 L3/L4 检测器</span>
+      <span class="story-item wip">5-1-3 CLI + 报告</span>
+      <span class="story-item wip">5-1-4 Skill Watcher</span>
     </div>
   </div>
 </section>
 
 <!-- §4 Sprint History -->
 <section class="section">
-  <h2>🏃 Sprint 时间线 <span class="tag">6 Sprints</span></h2>
+  <h2>🏃 Sprint 时间线 <span class="tag">9 Sprints</span></h2>
   <div class="timeline">
     <div class="tl-item">
       <div class="date">2026-05-12</div>
@@ -435,6 +475,21 @@ tr:hover td { background: rgba(88,166,255,0.04); }
       <h4>Sprint 6 · learning-engine 提取 + 知识库合并</h4>
       <p>learning-engine（含 knowledge-base 合并）提取 · 全文档对齐 · 模块体系 17+3</p>
     </div>
+    <div class="tl-item">
+      <div class="date">2026-05-14</div>
+      <h4>Sprint 7 · Phase 2 模块提取</h4>
+      <p>creative-design + github-ecosystem + devops-monitor + messaging + network-proxy + security-audit + media-processing + financial-analysis + social-gaming</p>
+    </div>
+    <div class="tl-item">
+      <div class="date">2026-05-14</div>
+      <h4>Sprint 8 · EPIC-004 质量升级</h4>
+      <p>EPIC-004 Phase 0+1+2: 全量基线扫描 + L2/L3 三层补充 + 低分改进 + CHI 门禁嵌入 CI</p>
+    </div>
+    <div class="tl-item" style="border-color:var(--accent);">
+      <div class="date">2026-05-16</div>
+      <h4>Sprint 9 (current) · EPIC-005 Phase 0</h4>
+      <p>Skill 治理引擎 — 统一标准制定 + 行业深度调研 + SPEC-5-1 草案</p>
+    </div>
   </div>
 </section>
 
@@ -462,12 +517,12 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 
 <!-- §6 Architecture -->
 <section class="section">
-  <h2>🏗️ 架构总览 <span class="tag">3 Layers</span></h2>
+  <h2>🏗️ 架构总览 <span class="tag">3 Layers · 17 Packs</span></h2>
   <div class="cards">
     <div class="card">
       <h3>🎯 Layer 3 — 能力包层</h3>
-      <p>8 个能力包，用户直接使用</p>
-      <div class="meta">doc-engine · learning-engine · developer-workflow · agent-orchestration · metacognition · quality-assurance · learning-workflow · skill-quality</div>
+      <p>17 个能力包，用户直接使用</p>
+      <div class="meta">doc-engine · learning-engine · developer-workflow · agent-orchestration · metacognition · quality-assurance · learning-workflow · skill-quality · creative-design · github-ecosystem · devops-monitor · messaging · network-proxy · security-audit · media-processing · financial-analysis · social-gaming</div>
     </div>
     <div class="card">
       <h3>🔧 Layer 2 — 工具层</h3>
@@ -511,10 +566,10 @@ tr:hover td { background: rgba(88,166,255,0.04); }
     <table>
       <thead><tr><th>类型</th><th>数量</th><th>状态</th></tr></thead>
       <tbody>
-        <tr><td>Epics</td><td>3</td><td>1 approved · 2 implemented</td></tr>
-        <tr><td>Specs</td><td>11</td><td>3 approved · 4 implemented · 4 进行中</td></tr>
-        <tr><td>Stories</td><td>30+</td><td>24 completed · 5 implemented · 5 draft</td></tr>
-        <tr><td>Sprints</td><td>6</td><td>全部 released</td></tr>
+        <tr><td>Epics</td><td>5</td><td>3 approved · 1 implemented · 1 draft (EPIC-005 🆕)</td></tr>
+        <tr><td>Specs</td><td>16</td><td>4 approved · 2 qa_gate · 4 implemented · 4 draft · 1 review · 1 create</td></tr>
+        <tr><td>Stories</td><td>53</td><td>49 completed · 4 draft (EPIC-005 🆕)</td></tr>
+        <tr><td>Sprints</td><td>9</td><td>8 released · 1 current (Sprint 9 🆕)</td></tr>
       </tbody>
     </table>
   </div>
@@ -522,8 +577,8 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 
 <!-- Footer -->
 <footer class="footer">
-  <p>由 project-report.json 数据驱动生成 · 🤖 boku (Emma) · 2026-05-14</p>
-  <p style="font-size:0.75rem; margin-top:4px;">doc-alignment v3.3 + project-report-generator v1.0 — HTML 报告变更强制流程已对齐</p>
+  <p>由 project-report.json 数据驱动生成 · 🤖 boku (Emma) · 2026-05-16</p>
+  <p style="font-size:0.75rem; margin-top:4px;">doc-alignment v3.3 + project-report-generator v1.0 — 文档对齐完成 · EPIC-005 🆕 · v0.9.1</p>
 </footer>
 
 </div>
