@@ -1,506 +1,544 @@
-# EPIC-007: Skill → Cap-Pack 转换引擎 — 从原生技能目录到标准化能力包
+# EPIC-007: 本地 Cap-Pack 管理系统 — 技能治理、同步与持续进化
 
 > **epic_id**: `EPIC-007`
 > **status**: `draft`
 > **created**: 2026-05-16
 > **updated**: 2026-05-16
 > **owner**: boku (Emma)
-> **优先级**: P1 — 能力包生态闭环的关键拼图
-> **估算**: ~24h（4 Phases · ~14 Stories）
-> **前置条件**: EPIC-005 治理引擎 ✅ + EPIC-006 修复引擎 ✅
+> **优先级**: P1 — 能力包生态的本地管理闭环
+> **估算**: ~28h（5 Phases · ~16 Stories）
+> **前置条件**: EPIC-005 治理引擎 ✅ + EPIC-006 修复引擎 ✅ + v1.0.1 release ✅
 > **SDD 流程**: `CLARIFY ☐ → RESEARCH ☐ → SPEC ☐ → IMPLEMENT ☐ → QA_GATE ☐ → COMMIT ☐`
 
 ---
 
 ## 〇、动机与背景
 
+### 全局视角：三层管理系统
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Layer 1: 远程仓库 (GitHub)                                  │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │  🏛️ 官方能力包 ≡ 17 个 packs/ · CHI 67.92               ││
+│  │  这是「发布态」— 经过治理引擎认证的稳定版本                ││
+│  └─────────────────────────────────────────────────────────┘│
+│                         ↕ sync                              │
+│  Layer 2: 本地 Cap-Pack 管理 (本 EPIC)                      │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │  📦 本地工作副本 ≡ 日常开发的 skill 包                     ││
+│  │  从官方拉取 · 本地修改 · 治理验证 · 推回官方              ││
+│  │  治理引擎集群 × N 个治理引擎 × 快速同步管道                ││
+│  └─────────────────────────────────────────────────────────┘│
+│                         ↕ convert                            │
+│  Layer 3: Hermes 原生技能目录                                │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │  📝 ~/.hermes/skills/ 原生技能                           ││
+│  │  主 Agent (boku) 日常使用的扁平技能库                     ││
+│  └─────────────────────────────────────────────────────────┘│
+│                                                             │
+│  ┌─────────────────────────────────────────────────────────┐│
+│  │  🧠 经验积累系统 (跨层横向)                                ││
+│  │  任务出错 → 标记经验 → 路由 → 改良技能包 / 记忆存档       ││
+│  └─────────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────┘
+```
+
 ### 为什么要做？
 
-当前 cap-pack 项目中已经有 17 个能力包，但全部是 boku **手动**从 `~/.hermes/skills/` 提取的。这个流程存在三个根本问题：
+当前 cap-pack 项目完成了「治理引擎能发现问题、修复引擎能自动修复」，但还缺三个关键能力：
 
-| 问题 | 影响 | 根因 |
-|:-----|:------|:------|
-| 🐢 **全手动提取** | 提取一个包需 20-40 分钟，17 个包 = 6h+ | 无自动化转换工具 |
-| 🧠 **智力依赖 boku** | 新技能上线→boku 不在时无法打包 | 分类/分组/经验提取依赖人工判断 |
-| 🎭 **格式不一致** | 各包质量参差不齐（CHI 67.92 🟡） | 缺乏统一转换标准 |
+| 缺口 | 影响 | 本 EPIC 解决 |
+|:-----|:------|:-------------|
+| 🔴 **没有本地管理体系** | 技能包只有在 GitHub 上有一份，本地无法方便地管理、修改、测试 | **本地 cap-pack 工作副本 + 同步管道** |
+| 🔴 **Hermes 原生技能 → 能力包 转换全靠手动** | 每个新技能需要 boku 手动提取，耗时且易错 | **转换引擎 automate Hermes → Cap-Pack** |
+| 🟡 **经验积累无系统** | 技能执行出问题时，修复经验只留在对话中，无法反哺技能包 | **经验积累框架（本 EPIC 搭架子，后续 EPIC 完善）** |
 
-**核心判断**：治理引擎（EPIC-005）能 「发现问题」，修复引擎（EPIC-006）能「修复问题」，但还没有能力 **「把原始技能自动组织成标准能力包」**。
+### 核心设计原则
 
-### 行业现状
-
-2026 年 Skill 工具生态已出现多个标准化方向：
-
-| 工具/标准 | 核心功能 | 与 EPIC-007 的关系 |
-|:----------|:---------|:-------------------|
-| **SkillKit** ⭐935 | 跨 46 个 Agent 的 skill 安装/翻译/推荐 | 验证了「SKILL.md 标准」的跨平台可行性——46 个 Agent 用同一格式。`skillkit translate` 做格式转换但不做语义分组。 |
-| **Agent Skill Porter** | 7 Agent 间 skill 格式互转 + 占位符转换 | 证明了 SkillBundle 中间格式的有效性。其「Chimera Hub」模式与我们的 converter 复用解码器+编解码器的思路一致。 |
-| **Agent Skills Standard** | Hermes/Claude/Copilot/Cursor 共用 SKILL.md 格式 | 确认了输入格式（Hermes SKILL.md）与输出格式（cap-pack 的 SKILL.md）本质是同一标准——转换的重点不在格式翻译，而在**结构化重组**。 |
-| **Microsoft Agent Framework** | 企业级 Agent Skills 实现 | 四阶段渐进披露模式验证了 skills/references/resources/scripts 的四层组织是正确的设计。 |
-
-**关键洞察**：现有工具都在做「SKILL.md 格式转换」（Hermes → Claude → Cursor），但没有工具做 **「扁平 skill 目录 → 语义化能力包」** 的结构化重组。这正是我们的独特价值。
-
-### 目标
-
-| 维度 | 当前（手动） | 目标（自动化） |
-|:-----|:------------|:--------------|
-| 单 skill 提取耗时 | ~10 min | **< 10 秒**（自动化） |
-| 批量全目录转换 | ❌ 不存在 | **`convert --all` 一键完成** |
-| cap-pack.yaml 生成 | 手写 YAML | **LLM 推断 + 自动填充** |
-| 分类准确率 | 依赖 boku 经验 | **80%+ 自动分类正确** |
-| 经验提取 | 手动复制粘贴 | **LLM 自动识别 + 提取** |
-| 新技能→已有包匹配 | 手动判断 | **`suggest()` 自动推荐** |
+1. **主 Agent 驱动语义分析** — 所有需要 LLM 的工作（分类/分组/描述）由主 Agent（Hermes/boku）通过工具调用完成，不另建 LLM 调用模块
+2. **仓库 = 官方发布态** — GitHub 上的 packs/ 是经过治理引擎认证的官方版本，不可直接修改
+3. **本地 = 工作副本** — 本地是官方包的 downstream，修改后经治理验证才能推回
+4. **经验积累是横向能力** — 不嵌入转换流程，而是跨层的横向系统：任务出错 → 标记经验 → 路由 → 反馈
+5. **同步管道的两种模式** — 存在性同步（新增/缺失检测）+ 版本变更同步（修改检测与推送）
 
 ---
 
-## 一、架构设计
+## 一、三层架构详解
 
-### 整体架构
+### Layer 1: 远程仓库 — 官方能力包 🏛️
 
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                skill-governance convert 命令                       │
-└──────────────────────────┬───────────────────────────────────────┘
-                           │
-                           ▼
-┌──────────────────────────────────────────────────────────────────┐
-│                    Converter 核心管线                              │
-│                                                                   │
-│  ┌──────────┐   ┌────────────┐   ┌────────────┐   ┌───────────┐ │
-│  │ ① SCAN  │──▶│ ② ANALYZE  │──▶│ ③ EXTRACT  │──▶│ ④ GOVERN  │ │
-│  │ 枚举扫描  │   │ LLM分类 +  │   │ 复制文件 + │   │ 治理扫描  │ │
-│  │          │   │ 分组决策    │   │ 生成结构   │   │ + LLM调优 │ │
-│  └──────────┘   └────────────┘   └────────────┘   └─────┬─────┘ │
-│                                                          │       │
-│              ┌──────────────┐                            │       │
-│              │ ⑤ REPORT     │◀───────────────────────────┘       │
-│              │ 输出摘要      │                                    │
-│              └──────────────┘                                     │
-└──────────────────────────────────────────────────────────────────┘
-         │              │                  │
-         ▼              ▼                  ▼
-   ~/.hermes/skills/  packs/<name>/    skill-governance
-   (输入源)            (输出目标)       scanner + fixer
+GitHub: JackSmith111977/Hermes-Cap-Pack
+└── packs/
+    ├── doc-engine/           ← 经过治理验证的官方发布
+    ├── developer-workflow/
+    ├── learning-engine/
+    └── ... (17 个)
 ```
 
-### 五阶段管线
+**特征**：
+- ✅ 只接受通过 `cap-pack scan + fix` 治理验证的包
+- ✅ 每个 release 包含版本号 + CHANGELOG
+- ✅ 是「跨 Agent 兼容的官方标准」
+- ❌ 不直接在本层开发——开发在本地进行
 
-| Phase | 名称 | 谁驱动 | 输入 → 输出 |
-|:-----:|:-----|:------:|:----------|
-| **① SCAN** | 枚举与盘点 | 🛠️ 脚本 | `~/.hermes/skills/*/SKILL.md` → 候选清单 + 已有包索引 |
-| **② ANALYZE** | 智能分析 | 🧠 **LLM** | 每个 skill 的 frontmatter + 内容 → 分类、分组、描述、经验标记 |
-| **③ EXTRACT** | 提取与构建 | 🛠️ 脚本 | 候选清单 + LLM 决策 → 目录结构 + 文件复制 + cap-pack.yaml 生成 |
-| **④ GOVERN** | 治理与调优 | 🛠️+🧠 | 新包 → L0-L4 扫描 + FixRule 修复 + E001/E002 LLM 调优 |
-| **⑤ REPORT** | 报告与验证 | 🛠️ | 修复后结果 → 转换摘要 + schema 验证 + 验证命令 |
+### Layer 2: 本地 Cap-Pack 管理 (本 EPIC) 📦
+
+```
+~/.cap-pack/                    ← 本地管理根目录（与 Hermes 独立）
+├── packs/                      ← 本地工作副本
+│   ├── doc-engine/             ← 从远程拉取 / 本地修改
+│   │   ├── cap-pack.yaml
+│   │   ├── SKILLS/
+│   │   └── ...
+│   ├── my-custom-pack/         ← 本地自建包（不推远程）
+│   └── ...
+├── state.json                  ← 同步状态：每个包的 remote_version / local_version / sync_status
+├── sync.log                    ← 同步操作日志
+└── governance/                 ← 治理引擎本地实例
+    ├── scanner/                ← 复用 EPIC-005
+    └── fixer/                  ← 复用 EPIC-006
+```
+
+**核心操作**：
+
+```
+cap-pack pull                   从远程拉取官方包到本地
+cap-pack push                   本地修改经治理验证后推回远程
+cap-pack status                 显示本地 vs 远程差异状态
+cap-pack sync                   一键同步（pull + push）
+```
+
+### Layer 3: Hermes 原生技能 📝
+
+```
+~/.hermes/skills/
+├── doc-engine/pdf-layout/SKILL.md    ← boku 日常使用的原生 skill
+├── doc-engine/docx-guide/SKILL.md
+└── ...
+```
+
+**转换管道**：Hermes 原生 skill → （经转换引擎）→ 本地 cap-pack
+
+### 🧠 经验积累系统（横向）
+
+```
+                            ┌──────────────────┐
+                            │  任务执行出错      │
+                            └────────┬─────────┘
+                                     │ 标记
+                                     ▼
+                            ┌──────────────────┐
+                            │  经验记录          │
+                            │  (在 cap-pack 层面)│
+                            └────────┬─────────┘
+                                     │ 路由
+                          ┌──────────┴──────────┐
+                          ▼                     ▼
+              ┌───────────────────┐   ┌──────────────────┐
+              │ 学习反馈 → 改良    │   │ 记忆存档          │
+              │ 技能包            │   │ (经验仅供参考)     │
+              └───────────────────┘   └──────────────────┘
+```
+
+**本 EPIC 只做架子**：
+- 在 `cap-pack.yaml` 中标记 `experience_accumulation: true` 支持
+- 预留经验记录格式
+- 不实现学习反馈回路（给后续 EPIC）
 
 ---
 
-## 二、各阶段详细设计
+## 二、核心管线设计
 
-### Phase ① SCAN — 枚举与盘点 🛠️
+### 整体流程
 
-**纯脚本，不调用 LLM。**
+```
+            主 Agent (boku) 全权驱动
+        ┌──────────────────────────────────┐
+        │  技能治理 & 同步 & 转换 统一 CLI   │
+        │  cap-pack sync / status / convert │
+        └──────────────────────────────────┘
+                      │
+        ┌─────────────┼─────────────┐
+        ▼             ▼             ▼
+┌──────────────┐ ┌──────────┐ ┌──────────────┐
+│  同步管道      │ │  转换引擎  │ │  本地管理     │
+│  sync        │ │ convert  │ │  status/pull │
+│  (存在+版本)  │ │ (Hermes→ │ │  /push       │
+│              │ │  CapPack) │ │              │
+└──────────────┘ └──────────┘ └──────────────┘
+        │             │             │
+        ▼             ▼             ▼
+┌──────────────────────────────────────────────┐
+│              治理引擎集群                       │
+│  L0 scanner · L1 scanner · FixRule ·         │
+│  SQS scoring · schema 验证                    │
+└──────────────────────────────────────────────┘
+```
 
-#### 扫描 Hermes 技能目录
+### 所有 LLM 工作怎么完成？
+
+**不需要独立的 LLM 调用模块**。所有需要语义分析的地方，主 Agent (boku) 通过工具调用来完成：
 
 ```python
-# 复用 CLI 的 --list 能力
-def scan_hermes_skills() -> list[SkillCandidate]:
-    """扫描 ~/.hermes/skills/ 下的所有 skill"""
-    skills_dir = Path("~/.hermes/skills").expanduser()
-    candidates = []
-    for skill_dir in sorted(skills_dir.iterdir()):
-        if skill_dir.name.startswith(".") or skill_dir.name.startswith("_"):
-            continue
-        skill_md = skill_dir / "SKILL.md"
-        if not skill_md.exists():
-            continue
-        fm = parse_frontmatter(skill_md)
-        candidates.append(SkillCandidate(
-            name=skill_dir.name,
-            dir=skill_dir,
-            frontmatter=fm,
-            file_count=count_files(skill_dir),
-        ))
-    return candidates
+# 脚本需要 LLM 分析时 → 委托给主 Agent
+def analyze_with_agent(skill_name: str, skill_content: str, packs_info: str) -> dict:
+    """主 Agent 分析 skill 分类/分组/描述
+    
+    脚本不再内置 LLM prompt——通过 subagent 或直接
+    调用 Hermes 自身的推理能力来完成。
+    """
+    # 脚本准备好分析所需的上下文
+    context = f"""
+Skill: {skill_name}
+内容预览: {skill_content[:2000]}
+已有包: {packs_info}
+
+请输出分类决策（JSON）...
+    """
+    # 委托给主 Agent 处理（通过 delegate_task）
+    result = delegate_task(goal="分析技能分类和分组", context=context)
+    return json.loads(result)
 ```
 
-#### 扫描已有能力包
-
-```python
-def scan_cap_packs() -> list[PackInfo]:
-    """扫描 packs/ 下的所有已提取能力包"""
-    packs_dir = Path("packs")
-    packs = []
-    for pack_dir in sorted(packs_dir.iterdir()):
-        manifest = pack_dir / "cap-pack.yaml"
-        if not manifest.exists():
-            continue
-        data = yaml.safe_load(manifest.read_text())
-        packs.append(PackInfo(
-            name=pack_dir.name,
-            manifest=data,
-            existing_skills=[s["id"] for s in data.get("skills", [])],
-        ))
-    return packs
-```
-
-#### 输出格式
-
-```json
-{
-  "unpacked_skills": [
-    {"name": "pdf-layout", "tags": ["pdf", "weasyprint"], "classification": null, "dir_size": "1.2MB"}
-  ],
-  "existing_packs": [
-    {"name": "doc-engine", "skills": ["pdf-layout", "docx-guide"], "classification": "domain"}
-  ]
-}
-```
-
-**产出文件**: `~/.hermes/learning/converter_scan_result.json`
+**实际上更简单**：整个 `convert` 流程就是一个 Hermes skill（`cap-pack-converter`）。boku 加载这个 skill，按照步骤执行——脚本负责文件操作，boku 负责 LLM 判断。
 
 ---
 
-### Phase ② ANALYZE — 智能分析 🧠 LLM 核心
+## 三、CLI 设计（全部使用 cap-pack 前缀）
 
-**LLM 驱动的批量分析。每个 skill 发送一次 LLM 请求（可批量合并减少调用次数）。**
+### 同步命令
 
-#### LLM Prompt 模板
+```bash
+# 拉取官方包到本地
+cap-pack pull                          # 拉取所有
+cap-pack pull doc-engine               # 拉取指定包
+cap-pack pull --dry-run                # 预览
 
-```markdown
-你是一个能力包分类专家。需要分析一个 Hermes Skill 并决定它属于哪个能力包。
+# 推送本地修改到远程
+cap-pack push                          # 推送所有修改
+cap-pack push doc-engine               # 推送指定包
+cap-pack push --dry-run                # 预览（显示变更 diff）
+cap-pack push --force                  # 跳过治理验证（谨慎）
 
-## Skill 信息
-- 名称: {skill_name}
-- 描述: {frontmatter_description}
-- 标签: {tags}
-- 分类: {classification if available}
-- SKILL.md 前 1000 字: {content_preview}
+# 状态查看
+cap-pack status                        # 显示所有包的状态
+cap-pack status doc-engine             # 显示单个包详情
+cap-pack status --format json          # JSON 输出
 
-## 已有能力包清单
-{existing_packs_summary}
-
-## 你的任务
-
-请输出以下 JSON（只输出 JSON，不要多余文字）：
-
-```json
-{
-  "should_pack": true/false,
-  "target_pack": "已有包名 或 'new'",
-  "new_pack_name": "如果创建新包，建议的名称（小写+连字符）",
-  "new_pack_display_name": "人类可读包名",
-  "new_pack_classification": "domain/toolset/infrastructure",
-  "new_pack_description": "包描述（一句话）",
-  "new_pack_tags": ["tag1", "tag2"],
-  "confidence": 0-100,
-  "reasoning": "分类理由（一句话）",
-  "has_experience_content": true/false,
-  "experience_types": ["pitfall"/"decision-tree"/"comparison"],
-  "suggested_triggers": ["trigger1", "trigger2"]
-}
+# 一键同步
+cap-pack sync                          # pull + push 一次完成
 ```
 
-如果 `confidence < 60`，放入待确认列表，由主人审核。
+### 转换命令
+
+```bash
+# 将 Hermes 原生 skill 转换为 cap-pack
+cap-pack convert pdf-layout            # 单个 skill
+cap-pack convert --all                 # 批量所有未打包 skill
+cap-pack convert pdf-layout --pack doc-engine  # 指定目标包
+cap-pack convert --all --dry-run       # 预览
+cap-pack convert --unpacked-only       # 只处理未打包的（默认）
 ```
 
-#### 批量策略
+### 本地管理命令
 
-| 场景 | LLM 调用次数 | 备注 |
-|:-----|:----------:|:-----|
-| 1 个 skill → 已有包 | **1** | 快速追加 |
-| N 个 skill → 新包 | **N** | 逐个分析后 auto-group |
-| ——all ——auto | **N + 1** | N 个 skill 分析 + 1 次分组聚合 |
+```bash
+cap-pack list                          # 列出本地所有包
+cap-pack list --remote                 # 列出远程官方包
+cap-pack list --unpacked               # 列出未打包的 Hermes skill
+cap-pack inspect doc-engine            # 查看包详情
+cap-pack init                          # 初始化本地 ~/.cap-pack/
+cap-pack prune                         # 清理本地冗余文件
+```
 
-**批量优化**：将 5-10 个 skill 合并到一个 prompt 中，减少 LLM 调用。
+### 经验积累（架子命令）
 
-#### 已有包匹配逻辑（脚本辅助）
+```bash
+cap-pack experience mark <skill> --type pitfall --desc "..."  # 标记经验
+cap-pack experience list               # 列出经验
+cap-pack experience export             # 导出经验（给学习系统消费）
+```
 
-安装 `CapPackAdapter.suggest()` 作为 LLM 的参考输入：
+### 输出格式（status 示例）
 
-```python
-from skill_governance.adapter.cap_pack_adapter import CapPackAdapter
+```bash
+$ cap-pack status
+📊 Cap-Pack 状态 — 本地 vs 远程
 
-adapter = CapPackAdapter()
-suggestion = adapter.suggest(skill_path)
-# 输出: {"best_pack": "doc-engine", "score": 0.85, "reason": "tags overlap: PDF..."}
-# 这个结果作为 LLM prompt 的参考输入
+📦 官方包 (17)
+├── doc-engine (2.0.0)      ✅ 同步  本地:2.0.0 = 远程:2.0.0
+├── developer-workflow (1.0.0) 🔄 已修改  本地有 2 个未推送变更
+├── learning-engine (1.0.0)  ⬇️ 可更新  远程为 1.0.1 →
+├── network-proxy (1.0.0)   ⬆️ 未推送  本地新建 → 远程无
+└── ...
+
+📦 本地自建包 (2)
+├── my-workflow (0.1.0)     🏠 仅本地  (无远程对应)
+└── team-scripts (0.5.0)    🏠 仅本地
+
+📦 未打包 Hermes skill (5)
+├── pdf-layout               → 可转换到 doc-engine
+├── clash-config             → 可转换到 network-proxy
+└── ...
 ```
 
 ---
 
-### Phase ③ EXTRACT — 提取与构建 🛠️
+## 四、同步管道设计
 
-**纯脚本。根据 LLM 的决策输出执行文件操作。**
+### 4.1 存在性同步 (Existence Sync)
+
+**检测逻辑**：
 
 ```text
-步骤:
-1. 创建目标目录结构
-   packs/<pack_name>/
-   ├── SKILLS/<skill_name>/
-   │   ├── SKILL.md        (复制)
-   │   ├── references/     (复制)
-   │   ├── scripts/        (复制)
-   │   ├── templates/      (复制)
-   │   └── checklists/     (复制)
-   ├── EXPERIENCES/        (如有经验内容 → 由 LLM 提取)
-   └── KNOWLEDGE/          (可选)
-
-2. 生成 cap-pack.yaml
-   name: <pack_name>
-   version: 1.0.0
-   type: capability-pack
-   classification: <from LLM>
-   description: <from LLM>
-   skills:
-     - id: <skill_name>
-       path: SKILLS/<skill_name>/SKILL.md
-       description: <from frontmatter>
-   compatibility:
-     agent_types: [hermes]
-
-3. 如果已有 cap-pack.yaml → 合并（追加 skills 条目）
-
-4. 更新 pack 级元数据（聚合 version / dependencies / compatibility）
+本地存在             远程存在             状态
+─────────────────────────────────────────────
+✅                    ✅                 同步 (版本一致)
+✅                    ✅                 可更新 (本地版本 < 远程版本)
+✅                    ❌                 仅本地 (自建包或新包待推送)
+❌                    ✅                 缺失 (需 pull)
 ```
 
-**复用现有组件**: `scripts/extract-pack.py` 中的 `find_skill_dir()`, `list_skill_files()`, `copy_skill_files()`
+**实现方式**：
 
----
-
-### Phase ④ GOVERN — 治理与调优 🛠️ + 🧠
-
-**脚本先行 + LLM 兜底。**
-
-| 检查 | 方式 | 操作 |
-|:-----|:----|:------|
-| L0 格式合规 | 🛠️ `schema 验证` | 自动修复 (复用) |
-| L1 结构强制 | 🛠️ `scanner` | FixRule 自动修 (复用) |
-| L2 健康度 | 🛠️ `scanner` | 报告待改进项 |
-| E001 SRA 元数据 | 🧠 **LLM** | 为 skill 生成 SRA 推荐描述 |
-| E002 跨平台声明 | 🧠 **LLM** | 推断兼容性平台 |
-| **经验提取** | 🧠 **LLM** | 从 SKILL.md 的 Pitfalls/经验/对比 → EXPERIENCES/ 文件 |
-
-#### 经验提取 Prompt
-
-```markdown
-从以下 SKILL.md 中提取可复用的经验知识。
-
-## Skill: {name}
-{full_content}
-
-请识别以下三类经验并输出 JSON:
-
-1. **Pitfall** — "操作步骤 X 会报错 Y，因为 Z，正确做法是 W"
-2. **Decision Tree** — "在场景 A 下用方案 X，在场景 B 下用方案 Y"
-3. **Comparison** — "方案 X 比方案 Y 快 3 倍，但需要额外依赖 Z"
-
-如果某类没有内容，输出空数组。
-
-```json
-{
-  "experiences": [
-    {"type": "pitfall", "title": "...", "content": "...", "section_ref": "## Common Pitfalls"},
-    {"type": "decision-tree", "title": "...", "content": "...", "section_ref": "..."}
-  ]
-}
+```python
+def check_existence_sync():
+    """对比本地 packs/ 与远程 GitHub 目录"""
+    local_packs = {p.name for p in Path("~/.cap-pack/packs").iterdir()}
+    remote_packs = fetch_remote_pack_list()  # GitHub API
+    
+    missing_local = remote_packs - local_packs  # 需 pull
+    extra_local = local_packs - remote_packs    # 需 push 或标记为仅本地
+    
+    return {"to_pull": missing_local, "to_push": extra_local}
 ```
+
+### 4.2 版本变更同步 (Version Sync)
+
+**检测逻辑**：
+
+```python
+def check_version_sync():
+    """对比本地与远程版本号和文件 hash"""
+    local_state = load_local_state()  # ~/.cap-pack/state.json
+    for pack_name, local_meta in local_state.items():
+        remote_meta = fetch_remote_meta(pack_name)
+        
+        if local_meta["version"] != remote_meta["version"]:
+            # 版本不同 → 需要更新
+            if semver.compare(local_meta["version"], remote_meta["version"]) < 0:
+                status = "可更新"  # 本地落后
+            else:
+                status = "已修改"  # 本地领先
+        elif file_hash_changed(local_meta, remote_meta):
+            status = "已修改"  # 版本相同但内容变了
+        
+        yield (pack_name, status)
+```
+
+**状态矩阵**：
+
+| 本地版本 | 远程版本 | 本地 Hash | 远程 Hash | 状态 | 操作 |
+|:--------:|:--------:|:---------:|:---------:|:-----|:-----|
+| 2.0.0 | 2.0.0 | abc | abc | ✅ 同步 | 无操作 |
+| 2.0.0 | 2.0.0 | abc | def | 🔄 远程已变更 | `pull` 覆盖本地 |
+| 2.0.0 | 2.0.0 | def | abc | 🔄 本地已修改 | `push` 推送或 revert |
+| 2.0.0 | 2.0.1 | — | — | ⬇️ 可更新 | `pull` 升级 |
+| 2.0.1 | 2.0.0 | — | — | ⬆️ 未推送 | `push` 发布 |
+
+### 4.3 推送前治理门禁
+
+```text
+cap-pack push → 自动执行治理引擎门禁
+    ├── L0 兼容性扫描:     ✅ 通过 → 继续
+    ├── L1 结构强制:       ✅ 通过 → 继续
+    ├── L2 健康度:         ✅ 通过 或 ⚠️ 警告 → 继续或暂停
+    ├── L3 生态检查:       ⚠️ 仅警告 → 可放行
+    ├── schema 验证:       ✅ 通过 → 继续
+    └── SQS 评分阈值:      ✅ ≥ 60 → 继续
+                          ❌ 未通过 → 拦截 + 提示 cap-pack fix
 ```
 
 ---
 
-### Phase ⑤ REPORT — 报告与验证 🛠️
+## 五、转换引擎设计（Hermes 原生 skill → Cap-Pack）
 
-**纯脚本，汇总转换结果。**
+### 核心原则
+
+1. **主 Agent 驱动语义分析** — 脚本做文件操作，所有需要 LLM 判断的地方委托给主 Agent（boku）
+2. **支持自动匹配和自定义包** — `--auto` 用 suggest() 自动匹配，`--pack <name>` 指定目标包，`--new-pack <name>` 创建新包
+3. **经验积累留架子** — 不在此阶段生成 EXPERIENCES/，只标记 `experience_accumulation: true`
+
+### 五步流程（与 EPIC-007 初版一致，但 LLM 工作委派给主 Agent）
+
+| 步 | 名称 | 谁做 | 操作 |
+|:--:|:-----|:----:|:------|
+| ① | **SCAN** 枚举 | 🛠️ 脚本 | `~/.hermes/skills/` 扫描 + `packs/` 扫描 → 候选清单 |
+| ② | **ANALYZE** 分析 | 🤖 **主 Agent** | 加载 skill 内容 → 由主 Agent 判断分类/分组/描述/标签 |
+| ③ | **EXTRACT** 提取 | 🛠️ 脚本 | 创建目录 + 复制文件 + 生成 `cap-pack.yaml` |
+| ④ | **GOVERN** 治理 | 🛠️ 脚本 | 复用 scanner + FixRule 自动扫描修复 |
+| ⑤ | **REPORT** 报告 | 🛠️ 脚本 | 输出转换摘要 + 验证命令 |
+
+### 步骤② 的实际执行方式
+
+整个 `convert` 流程本身就是一个 Hermes Skill（`cap-pack-converter`）：
+
+```text
+1. boku 加载 cap-pack-converter skill
+2. 脚本执行 SCAN → 输出候选清单 JSON
+3. boku (主 Agent) 读取候选清单 → 调用 LLM 判断：
+   - "pdf-layout 属于 doc-engine 包，置信度 92%"
+   - "clash-config 建议创建 network-proxy 新包"
+4. 脚本根据 boku 的判断执行 EXTRACT
+5. 脚本执行 GOVERN (复用 scanner + fixer)
+6. 脚本输出 REPORT
+```
+
+**脚本 ↔ 主 Agent 交互模式**：
 
 ```bash
-=== 转换报告 ===
-📦 目标包: doc-engine (已有)
-├── 新增 skill: pdf-layout (SQS 78.2)
-├── cap-pack.yaml: 已更新 (skills: 10 → 11)
-├── schema 验证: ✅ 通过
-└── 经验提取: 2 个 pitfall → EXPERIENCES/
+# 步骤① 脚本扫描
+$ cap-pack scan --unpacked-only --format json
+# 输出: [{"name":"pdf-layout","tags":["pdf","weasyprint"],"size":"1.2MB"},...]
 
-📦 目标包: network-proxy (新建)
-├── 新增技能: clash-config, proxy-monitor, proxy-finder
-├── cap-pack.yaml: 已创建
-├── schema 验证: ✅ 通过
-└── LLM 辅助完成: 分类推断 ✅ / 经验提取: 3 条
+# 步骤② boku (主 Agent) 看扫描结果 → 做出判断 → 告诉脚本
+# 这是通过 skill 流程完成的，不是独立的命令调用
 
-⚠️ 待确认: social-gaming (confidence 55%)
-└── boku 不确定这是 domain 还是 toolset，请主人审核
-
-验证命令:
-  cap-pack scan packs/doc-engine
-  cap-pack fix packs/doc-engine
+# 步骤③-⑤ 脚本执行
+$ cap-pack convert --from-json decisions.json
+# 批量提取
 ```
 
 ---
 
-## 三、CLI 设计
+## 六、与现有系统集成
 
-```bash
-# 转换单个 skill（自动推荐/创建包）
-cap-pack convert pdf-layout
-cap-pack convert pdf-layout --pack doc-engine       # 指定目标包
-cap-pack convert pdf-layout --dry-run               # 预览
+### 代码复用
 
-# 批量转换
-cap-pack convert --all                              # 所有未打包 skill
-cap-pack convert --all --auto                       # 自动分组+创建
-cap-pack convert --all --interactive                # 逐个确认
-
-# 批量+分组优化
-cap-pack convert --all --group-by domain            # 按领域分组
-cap-pack convert --all --group-by toolset           # 按工具分组
-
-# 仅分析不执行
-cap-pack convert --all --dry-run --format json      # 输出分析结果供审查
-
-# 增量：只处理未打包的 skill
-cap-pack convert --unpacked-only                    # 默认模式
-
-# 重做：强制重新提取已有包中的 skill
-cap-pack convert --all --force
-```
-
----
-
-## 四、与现有系统的关系
-
-```
-EPIC-005 (治理引擎) ─── 提供 scanner/fixer 基础设施
-     ↓                          ↓
-EPIC-006 (修复引擎) ── 提供 FixRule 自动修复
-     ↓                          ↓
-EPIC-007 (转换引擎) ── 消费 scanner + fixer 作为治理阶段
-                         ↑
-                   提供 convert 命令到治理 CLI
-
-    Hermes 原生技能       Cap-Pack 包
-    ~/.hermes/skills/     packs/<name>/
-          │                     │
-          ▼                     ▼
-    EPIC-007 convert ──────► 标准化能力包
-          │                     │
-          ▼                     ▼
-    LLM 分析结果           skill-governance
-    (分类/分组/经验)         scan + fix 验证
-```
-
-### 复用现有组件清单
-
-| 组件 | 位置 | 用途 |
-|:-----|:------|:------|
-| `find_skill_dir()` | `scripts/extract-pack.py` | Hermes skill 路径查找 |
-| `list_skill_files()` | `scripts/extract-pack.py` | skill 文件枚举 |
-| `_parse_frontmatter()` | `adapter/cap_pack_adapter.py` | SKILL.md 解析 |
-| `PackManifest.from_file()` | `adapter/cap_pack_adapter.py` | 已有 manifest 解析 |
-| `CapPackAdapter.suggest()` | `adapter/cap_pack_adapter.py` | 包匹配推荐 |
-| `CapPackAdapter.apply()` | `adapter/cap_pack_adapter.py` | manifest 更新 |
-| `BaseScanner` + 所有子类 | `scanner/` | L0-L4 扫描 |
-| `FixRule` + 注册规则 | `fixer/` | 自动修复 |
-| `CLI framework` | `cli/main.py` | 命令注册 |
-| Schema 验证 | `schemas/cap-pack-v3.schema.json` | 输出格式验证 |
-| `validate-pack.py` | `scripts/validate-pack.py` | 包完整性验证 |
+| 现有组件 | 位置 | 在本 EPIC 中的用途 |
+|:---------|:------|:-------------------|
+| `scripts/extract-pack.py` | `scripts/` | 文件提取（复用 `find_skill_dir()`、`list_skill_files()`） |
+| `adapter/cap_pack_adapter.py` | `skill_governance/` | suggest() 自动匹配（步骤②的参考输入） |
+| `scanner/` (全部) | `skill_governance/` | L0-L4 治理扫描 |
+| `fixer/rules/` (全部) | `skill_governance/` | 自动修复 |
+| `cli/main.py` | `skill_governance/` | CLI 框架 + 命令注册 |
+| `schemas/cap-pack-v3.schema.json` | `schemas/` | 包格式验证 |
+| `scripts/validate-pack.py` | `scripts/` | 包完整性验证 |
+| `scripts/pre-push.sh` | `scripts/` | 推送前门禁（可升级为 `cap-pack push` 的一部分） |
 
 ### 需要新增的文件
 
-| 文件 | 用途 | 模式 | 预计行数 |
-|:-----|:------|:----:|:--------:|
-| `converter/__init__.py` | 包初始化 | 🛠️ | 10 |
-| `converter/scanner.py` | Phase ① 扫描 | 🛠️ | ~100 |
-| `converter/llm_analyzer.py` | Phase ② LLM 分析 + prompt 模板 | 🧠 | ~150 |
-| `converter/extractor.py` | Phase ③ 文件提取 + 结构生成 | 🛠️ | ~200 |
-| `converter/manifest_builder.py` | cap-pack.yaml 生成/合并 | 🛠️ | ~150 |
-| `converter/governor.py` | Phase ④ 治理集成 | 🛠️+🧠 | ~100 |
-| `converter/reporter.py` | Phase ⑤ 报告输出 | 🛠️ | ~80 |
-| `cli/convert_cmd.py` | convert CLI 命令实现 | 🛠️ | ~120 |
-| `tests/test_converter.py` | 测试 | 🛠️ | ~200 |
-| **总计** | | | **~1,110** |
+| 文件 | 用途 | 预计行数 |
+|:-----|:------|:--------:|
+| `cli/sync_cmd.py` | sync/pull/push/status CLI | ~200 |
+| `cli/convert_cmd.py` | convert CLI | ~120 |
+| `sync/existence_sync.py` | 存在性同步逻辑 | ~100 |
+| `sync/version_sync.py` | 版本变更同步逻辑 | ~150 |
+| `sync/state_manager.py` | 本地 state.json 管理 | ~80 |
+| `converter/scanner.py` | 步骤① Hermes skill 扫描 | ~100 |
+| `converter/extractor.py` | 步骤③ 文件提取 + manifest 生成 | ~200 |
+| `converter/governor.py` | 步骤④ 治理集成 | ~80 |
+| `converter/reporter.py` | 步骤⑤ 报告 | ~80 |
+| `cli/experience_cmd.py` | 经验积累架子命令 | ~60 |
+| `tests/` | 测试 | ~300 |
+| **总计** | | **~1,470** |
 
 ---
 
-## 五、分阶段实施
+## 七、分阶段实施
 
-### Phase 0: 基础设施 (3 Stories, ~4h)
-
-| Story | 内容 | 产出 |
-|:------|:------|:-----|
-| STORY-7-0-1 | converter 包结构 + scan 模块 | `converter/` 目录 + Phase ① 实现 |
-| STORY-7-0-2 | convert CLI 架子（`--dry-run`） | `skill-governance convert` 命令 |
-| STORY-7-0-3 | manifest_builder 模块 | cap-pack.yaml 生成/合并 |
-
-**交付标准**：`cap-pack convert pdf-layout --dry-run` 输出分析报告（不走 LLM，只做脚本分析）
-
-### Phase 1: 单 skill 转换 (4 Stories, ~6h)
+### Phase 0: 本地管理工作副本 (3 Stories, ~5h)
 
 | Story | 内容 | 产出 |
-|:------|:------|:-----|
-| STORY-7-1-1 | LLM analyzer + prompt 工程 | Phase ② 实现 |
-| STORY-7-1-2 | Extract 流程（复制文件 + 创建结构） | Phase ③ 实现 |
-| STORY-7-1-3 | LLM 经验提取 | EXPERIENCES/ 自动生成 |
-| STORY-7-1-4 | end-to-end `convert <skill>` 流程 | 单个 skill 完整转换 |
+|:------|:------|:------|
+| STORY-7-0-1 | 初始化 `~/.cap-pack/` 目录 + state.json | 本地管理根目录 |
+| STORY-7-0-2 | `cap-pack pull` — 从 GitHub 拉取官方包 | 同步：远程→本地 |
+| STORY-7-0-3 | `cap-pack list` + `cap-pack list --remote` | 本地/远程包查看 |
 
-**交付标准**：`cap-pack convert pdf-layout --pack doc-engine` 走完 ①→⑤ 全流程
-
-### Phase 2: 批量转换 (4 Stories, ~8h)
+### Phase 1: 同步管道 (4 Stories, ~8h)
 
 | Story | 内容 | 产出 |
-|:------|:------|:-----|
-| STORY-7-2-1 | `convert --all` 批量扫描 + LLM 排队 | 批量处理 50+ skills |
-| STORY-7-2-2 | `--auto` 自动分组（LLM 聚类） | 无 pack 的 skill 自动成组 |
-| STORY-7-2-3 | `--group-by domain/toolset` 分组模式 | 用户指定分组策略 |
-| STORY-7-2-4 | `--interactive` 逐个人工确认 | 低 confidence 暂停机制 |
+|:------|:------|:------|
+| STORY-7-1-1 | 存在性同步检测 | `cap-pack status` 显示新增/缺失 |
+| STORY-7-1-2 | 版本变更同步检测 | `cap-pack status` 显示版本差异 |
+| STORY-7-1-3 | `cap-pack push` — 推送前治理门禁 + 推送到 GitHub | 同步：本地→远程 |
+| STORY-7-1-4 | `cap-pack sync` — 一键 pull + push | 全同步管道 |
 
-**交付标准**：`cap-pack convert --all --auto` 一键处理全部未打包 skill
-
-### Phase 3: 治理集成 + 增量同步 (3 Stories, ~6h)
+### Phase 2: 转换引擎 (4 Stories, ~6h)
 
 | Story | 内容 | 产出 |
-|:------|:------|:-----|
-| STORY-7-3-1 | 转换后自动 `scan + fix` | Phase ④ 治理闭环 |
-| STORY-7-3-2 | 增量检测（只处理未打包的 skill） | `--unpacked-only` 模式 |
-| STORY-7-3-3 | 转换结果报告 + 验证 | Phase ⑤ 报告输出 |
+|:------|:------|:------|
+| STORY-7-2-1 | SCAN 模块 + convert CLI 架子 | `cap-pack scan --unpacked-only` |
+| STORY-7-2-2 | ANALYZE — 主 Agent 驱动 skill 分类/分组 | convert 流程的 LLM 环节 |
+| STORY-7-2-3 | EXTRACT — 文件提取 + cap-pack.yaml 生成 | 单个 skill → cap-pack |
+| STORY-7-2-4 | GOVERN + REPORT — 治理验证 + 报告 | 全流程 end-to-end |
 
-**交付标准**：`cap-pack convert --unpacked-only` 增量同步 + 全自动治理
+### Phase 3: 批量与自定义 (3 Stories, ~5h)
+
+| Story | 内容 | 产出 |
+|:------|:------|:------|
+| STORY-7-3-1 | `--all` — 批量转换 + `--auto` 自动匹配 | 一键全量转换 |
+| STORY-7-3-2 | 自定义包创建（直接 `cap-pack init --pack my-custom`） | 非从 Hermes 提取 | 
+| STORY-7-3-3 | 一键推送改造（`cap-pack push --all` 经治理门禁同步到 GitHub） | 本地开发→官方发布 |
+
+### Phase 4: 经验积累架子 (2 Stories, ~4h)
+
+| Story | 内容 | 产出 |
+|:------|:------|:------|
+| STORY-7-4-1 | 经验记录格式 + `cap-pack experience mark` | 经验积累的基础设施 |
+| STORY-7-4-2 | 经验路由框架 | 后续 EPIC 接入点 |
 
 ---
 
-## 六、行业对比与差异化
+## 八、路线图全景
 
-| 对比维度 | SkillKit | Agent Skill Porter | **EPIC-007** |
-|:---------|:--------:|:------------------:|:------------:|
-| 核心方向 | 跨 Agent 安装/翻译 | 格式互转 | **Hermes → Cap-Pack 结构化转换** |
-| 输入 | 任意 Agent 格式 | 任意 Agent 格式 | **Hermes 原生 skill 目录** |
-| 输出 | 任意 Agent 格式 | 任意 Agent 格式 | **标准 Cap-Pack 目录** |
-| 分组能力 | ❌ 无 | ❌ 无 | ✅ **LLM 智能分组** |
-| 经验提取 | ❌ 无 | ❌ 无 | ✅ **Pitfall/决策树/对比 → EXPERIENCES/** |
-| 治理闭环 | ❌ 无 | ❌ 无 | ✅ **自动 scan + fix 验证** |
-| 批量转换 | ✅ `--all` | ✅ `--all` | ✅ `convert --all --auto` |
-| LLM 使用方式 | 用户自定 | 用户自定 | **内置 prompt 模板** |
+```
+EPIC-005 ─── 治理引擎 (scanner)
+    ↓
+EPIC-006 ─── 修复引擎 (FixRule)
+    ↓                          ─── 已有，已完成
+══════════════════════════════════════════════
+    ↓
+EPIC-007 ─── 本地 Cap-Pack 管理系统          ← 本 EPIC
+    ├── Phase 0: 本地工作副本 (pull/list)
+    ├── Phase 1: 同步管道 (status/push/sync)
+    ├── Phase 2: 转换引擎 (convert)
+    ├── Phase 3: 批量与自定义
+    └── Phase 4: 经验积累架子
+         ↓
+EPIC-008 ─── 经验路由与学习反馈回路（未来）
+    ├── 经验→改良技能包
+    └── 经验→记忆存档
+         ↓
+EPIC-009 ─── 多 Agent 治理引擎集群（未来）
+    ├── 治理引擎即服务
+    ├── Hermes 治理引擎 → OpenCode 治理引擎
+    └── 跨 Agent 质量统一管控
+```
 
 ---
 
-## 七、风险与缓解
+## 九、与行业对比
+
+| 维度 | SkillKit | Agent Skill Porter | **本 EPIC** |
+|:-----|:--------:|:------------------:|:-----------:|
+| 本地管理 | ✅ workspace sync | ❌ 无 | ✅ **~/.cap-pack/ + state.json** |
+| 远程同步 | ✅ marketplace | ❌ 无 | ✅ **GitHub 双向同步** |
+| 转换 | ✅ translate (格式) | ✅ sync (格式) | ✅ **Hermes→Cap-Pack 结构化** |
+| 治理门禁 | ❌ 无 | ❌ 无 | ✅ **L0-L4 scanner + FixRule** |
+| 经验积累 | ❌ 无 | ❌ 无 | ✅ **架子 + 路由框架** |
+| 主 Agent 驱动 | ❌ 独立工具 | ❌ 独立工具 | ✅ **主 Agent 做语义分析** |
+
+---
+
+## 十、风险与缓解
 
 | 风险 | 概率 | 影响 | 缓解 |
 |:-----|:----:|:----:|:------|
-| LLM 分类不准 | 🟡 中 | 🟡 中 | confidence < 60 自动进待确认池 |
-| 大量 skill 批量 LLM 调用成本 | 🟡 中 | 🟢 低 | 批量合并 prompt + 首次全量后续增量 |
-| SKILL.md 文件损坏 | 🟢 低 | 🔴 高 | 复制前校验 YAML frontmatter |
-| 转换过程中断 | 🟢 低 | 🟡 中 | 每步幂等 + 转换日志 + 可恢复 |
-| 与已有包 skill 重复 | 🟡 中 | 🟡 中 | suggest() 检测 + 转换前警告 |
-
----
-
-## 八、验证标准
-
-| 验证项 | 标准 |
-|:-------|:------|
-| 单 skill 转换成功率 | ≥ 95%（20 个 skill 测试集） |
-| 分类准确率（LLM） | ≥ 80%（人工复核） |
-| cap-pack.yaml schema 合规率 | 100% |
-| 批量 50 skill 转换时间 | ≤ 5 min |
-| 零手工 YAML 编辑 | 全部自动生成 |
-| 转换后 `cap-pack scan` 通过 | L0+L1 零错误 |
+| 同步时网络断开 | 🟡 中 | 🟡 中 | 幂等操作 + state.json 记录断点续传 |
+| 本地修改与远程冲突 | 🟢 低 | 🔴 高 | push 前 diff 对比 + 治理门禁拦截 + `--dry-run` 预览 |
+| 转换分类不准 | 🟡 中 | 🟡 中 | 主 Agent 验证 + 低 confidence 进待确认 |
+| 同步覆盖本地修改 | 🟢 低 | 🔴 高 | pull 前备份当前状态 + 冲突提示 |
+| 治理门禁太严格阻碍推送 | 🟡 中 | 🟡 中 | `--force` 跳过 + 记录警告到日志 |

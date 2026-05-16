@@ -261,10 +261,10 @@ entities:
       review_date: null
     EPIC-007:
       state: draft
-      title: Skill → Cap-Pack 转换引擎 — 从原生技能目录到标准化能力包
-      story_count: 14
+      title: 本地 Cap-Pack 管理系统 — 技能治理、同步与持续进化
+      story_count: 16
       completed_count: 0
-      spec_count: 4
+      spec_count: 5
       priority: P1
       qa_gate_date: null
       review_date: null
