@@ -244,8 +244,8 @@ entities:
     EPIC-005:
       title: Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配
       state: approved
-      spec_count: 2
-      story_count: 7
+      spec_count: 3
+      story_count: 11
       completed_count: 7
       priority: P1
       qa_gate_date: null
@@ -368,6 +368,14 @@ entities:
       - STORY-5-0-1
       - STORY-5-0-2
       - STORY-5-0-3
+    SPEC-5-2:
+      state: draft
+      epic: EPIC-005
+      stories:
+      - STORY-5-2-1
+      - STORY-5-2-2
+      - STORY-5-2-3
+      - STORY-5-2-4
   stories:
     STORY-1-1-1:
       state: draft
@@ -593,6 +601,22 @@ entities:
       state: draft
       epic: '?'
       spec: '?'
+    STORY-5-2-1:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-2-2:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-2-3:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-2-4:
+      state: draft
+      epic: '?'
+      spec: '?'
 sprints:
   sprint-1:
     title: 核心框架搭建
@@ -780,6 +804,24 @@ phases:
       requires:
       - Phase-2
       stories: []
+    - name: Phase-2
+      title: Hermes 深度集成 + 自动适配
+      acceptance_criteria:
+      - criteria: pre_flight.py 新增 governance gate
+        done: false
+      - criteria: SRA 推荐权重包含 SQS + 编排感知
+        done: false
+      - criteria: 适配引擎支持 dry-run → apply
+        done: false
+      - criteria: 每日 cron 扫描 + 飞书推送
+        done: false
+      requires:
+      - Phase-1
+      stories:
+      - STORY-5-2-1
+      - STORY-5-2-2
+      - STORY-5-2-3
+      - STORY-5-2-4
     completed_phases:
     - Phase-0
     - Phase-1

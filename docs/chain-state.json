@@ -9,19 +9,13 @@
   },
   "EPIC-005": {
     "epic": "EPIC-005",
-    "current_stage": "COMMIT",
+    "current_stage": "COMPLETED",
     "completed_stages": [
-      "DEV",
+      "QA",
       "SPEC",
-      "QA"
+      "DEV",
+      "COMMIT"
     ],
-    "gate_history": [
-      {
-        "stage": "DEV",
-        "passed": false,
-        "message": "测试失败: \nno tests ran in 0.00s\nERROR: file or directory not found: tests/\n\n",
-        "timestamp": "2026-05-16T15:52:10"
-      }
-    ]
+    "gate_history": []
   }
 }
