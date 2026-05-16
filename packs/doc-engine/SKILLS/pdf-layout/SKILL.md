@@ -1,10 +1,14 @@
 ---
 name: pdf-layout
-description: 专业 PDF 排版设计与生成技能。涵盖 reportlab 高级排版技巧、中文 PDF 生成、 WQY ZenHei 字体方案、Mermaid 图嵌入...
+description: 专业 PDF 排版设计与生成技能。涵盖 reportlab 高级排版技巧、中文 PDF 生成、 WQY ZenHei 字体方案、Mermaid
+  图嵌入...
 version: 2.0.0
 triggers:
-- pdf layout
 - pdf-layout
+- pdf
+- layout
+- reportlab
+- 专业
 author: 小喵
 license: MIT
 allowed-tools:
@@ -30,6 +34,7 @@ metadata:
     skill_type: doc-generation
     design_pattern: generator
 ---
+
 # 专业 PDF 排版设计技能（reportlab 高级）v2.0
 
 ## 🚨 语言检查（绝对优先！）

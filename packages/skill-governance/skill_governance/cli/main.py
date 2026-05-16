@@ -29,6 +29,7 @@ from skill_governance.fixer import (
     FixAction,
     FixReport,
     FixReporter,
+    FixRule,
     ensure_backups,
 )
 
@@ -470,13 +471,36 @@ def _find_packs_root() -> Path | None:
 def _setup_fix_dispatcher() -> FixDispatcher:
     """Create and populate a :class:`FixDispatcher` with available fix rules.
 
-    Concrete ``FixRule`` implementations are auto-discovered via
-    ``importlib`` or registered explicitly here.  When no rules are
-    registered the dispatcher returns an empty result list.
+    Auto-discovers concrete ``FixRule`` subclasses from the
+    ``skill_governance.fixer.rules`` package via ``importlib`` + ``inspect``,
+    instantiates each one, and registers it with the dispatcher.
     """
+    import importlib
+    import inspect
+    import pkgutil
+
     dispatcher = FixDispatcher()
-    # TODO: auto-discover concrete FixRule subclasses from
-    #       skill_governance.fixer.rules package (future stories).
+    rules_pkg = importlib.import_module("skill_governance.fixer.rules")
+
+    for importer, modname, ispkg in pkgutil.walk_packages(
+        rules_pkg.__path__, rules_pkg.__name__ + "."
+    ):
+        try:
+            mod = importlib.import_module(modname)
+        except Exception:
+            continue
+        for name, obj in inspect.getmembers(mod):
+            if (
+                inspect.isclass(obj)
+                and issubclass(obj, FixRule)
+                and obj is not FixRule
+            ):
+                try:
+                    instance = obj()
+                    dispatcher.register(instance)
+                except Exception as e:
+                    print(f"  ⚠️  Failed to register {name}: {e}")
+
     return dispatcher
 
 
