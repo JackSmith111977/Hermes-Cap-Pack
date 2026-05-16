@@ -1,6 +1,3 @@
-# 🎨 creative-design — 创意设计能力包
-# Schema: cap-pack-v2.schema.json
-
 name: creative-design
 version: 1.0.0
 type: capability-pack
@@ -39,6 +36,10 @@ skills:
   - svg
   - visualization
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: ascii-art
   name: ascii-art
   description: Generate ASCII art using pyfiglet (571 fonts), cowsay, and figlet-fonts.
@@ -50,6 +51,10 @@ skills:
   - terminal
   - typography
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: baoyu-comic
   name: baoyu-comic
   description: 'Knowledge comics (知识漫画): educational, biography, tutorial.'
@@ -61,6 +66,10 @@ skills:
   - visual
   - narrative
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: baoyu-infographic
   name: baoyu-infographic
   description: Generate professional infographics with 21 layout types and data visualization.
@@ -72,6 +81,10 @@ skills:
   - layout
   - design
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: claude-design
   name: claude-design
   description: Design one-off HTML artifacts (landing, deck, prototype).
@@ -83,6 +96,11 @@ skills:
   - prototype
   - artifact
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
+    - opencode
 - id: comfyui
   name: comfyui
   description: Generate images, video, and audio with ComfyUI — install, configure,
@@ -95,6 +113,10 @@ skills:
   - image-generation
   - workflow
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: concept-diagrams
   name: concept-diagrams
   description: Generate flat, minimal light/dark-aware SVG diagrams as single self-contained
@@ -107,6 +129,10 @@ skills:
   - concept
   - minimal
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: creative-ideation
   name: creative-ideation
   description: Generate project ideas through creative constraints. Use for brainstorming.
@@ -118,6 +144,10 @@ skills:
   - creativity
   - inspiration
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: design-md
   name: design-md
   description: Author/validate/export Google's DESIGN.md token spec files.
@@ -129,6 +159,10 @@ skills:
   - token
   - design-system
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: excalidraw
   name: excalidraw
   description: Create hand-drawn style diagrams using Excalidraw JSON format.
@@ -140,6 +174,10 @@ skills:
   - hand-drawn
   - whiteboard
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: humanizer
   name: humanizer
   description: 'Humanize text: strip AI-isms and add real voice.'
@@ -151,6 +189,10 @@ skills:
   - text
   - style
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: ideation
   name: ideation
   description: '[alias for creative-ideation] Generate project ideas through creative
@@ -161,6 +203,10 @@ skills:
   - ideation
   - brainstorming
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: image-generation
   name: image-generation
   description: Generate high-quality images using gpt-image-2, Stable Diffusion, or
@@ -173,6 +219,10 @@ skills:
   - stable-diffusion
   - dalle
   sqs_target: 85.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: image-prompt-guide
   name: image-prompt-guide
   description: Best practices for writing high-quality image generation prompts.
@@ -183,6 +233,10 @@ skills:
   - image-generation
   - guide
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: image-to-image-guide
   name: image-to-image-guide
   description: Complete guide for image-to-image generation with IP-Adapter and ControlNet.
@@ -194,6 +248,10 @@ skills:
   - ip-adapter
   - guide
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: manim-video
   name: manim-video
   description: Production pipeline for mathematical and technical animations with
@@ -206,6 +264,10 @@ skills:
   - math
   - video
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: meme-creation
   name: meme-creation
   description: Complete meme/梗图 creation workflow — AI image generation, static/animated
@@ -218,6 +280,10 @@ skills:
   - humor
   - social-media
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: p5js
   name: p5js
   description: Production pipeline for interactive and generative visual art with
@@ -230,6 +296,11 @@ skills:
   - creative-coding
   - interactive
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - claude
+    - opencode
 - id: pixel-art
   name: pixel-art
   description: Convert images into retro pixel art with hardware-accurate palettes.
@@ -241,6 +312,10 @@ skills:
   - image-processing
   - palette
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: popular-web-designs
   name: popular-web-designs
   description: 54 production-quality design systems extracted from real websites.
@@ -252,6 +327,11 @@ skills:
   - ui
   - design-system
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - claude
+    - opencode
 - id: pretext
   name: pretext
   description: Use when building creative browser demos with @chenglou/pretext.
@@ -263,6 +343,10 @@ skills:
   - demo
   - interactive
   sqs_target: 65.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: sketch
   name: sketch
   description: 'Throwaway HTML mockups: 2-3 design variants to compare.'
@@ -274,6 +358,10 @@ skills:
   - html
   - prototype
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: songwriting-and-ai-music
   name: songwriting-and-ai-music
   description: Songwriting craft and AI music generation prompts (Suno focused).
@@ -285,6 +373,10 @@ skills:
   - ai-music
   - suno
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: touchdesigner-mcp
   name: touchdesigner-mcp
   description: Control a running TouchDesigner instance via twozero MCP integration.
@@ -296,6 +388,10 @@ skills:
   - mcp
   - realtime
   sqs_target: 65.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: visual-aesthetics
   name: visual-aesthetics
   description: boku's visual aesthetics guide — criteria for beauty vs ugliness.
@@ -307,6 +403,10 @@ skills:
   - beauty
   - visual-judgment
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: ascii-video
   name: ascii-video
   description: Production pipeline for ASCII art video — any format.
@@ -318,6 +418,10 @@ skills:
   - animation
   - terminal
   sqs_target: 65.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 triggers:
 - 创意设计
 - SVG 图表

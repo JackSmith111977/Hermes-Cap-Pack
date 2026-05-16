@@ -1,6 +1,3 @@
-# 🔧 devops-monitor — 运维监控能力包
-# Schema: cap-pack-v2.schema.json
-
 name: devops-monitor
 version: 1.0.0
 type: capability-pack
@@ -38,6 +35,10 @@ skills:
   - devops
   - management
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: docker-terminal
   name: docker-terminal
   description: Execute commands in isolated Docker sandbox containers — secure, configurable
@@ -50,6 +51,10 @@ skills:
   - terminal
   - security
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: hermes-ops-tips
   name: hermes-ops-tips
   description: Hermes 运维与工具流最佳实践 — 手动升级、SRA 迁移、高清架构图生成等.
@@ -61,6 +66,10 @@ skills:
   - tips
   - upgrade
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: kanban-orchestrator
   name: kanban-orchestrator
   description: Decomposition playbook + specialist-roster conventions + task orchestration
@@ -73,6 +82,10 @@ skills:
   - workflow
   - task
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: kanban-worker
   name: kanban-worker
   description: Pitfalls, examples, and edge cases for Hermes Kanban worker execution.
@@ -84,6 +97,10 @@ skills:
   - execution
   - pitfall
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: linux-ops-guide
   name: linux-ops-guide
   description: Hermes 服务器（Ubuntu）日常运维指南 — systemd 服务管理、日志分析、端口排查、磁盘监控等.
@@ -96,6 +113,10 @@ skills:
   - server
   - devops
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: process-management
   name: process-management
   description: 长任务监控与后台进程管理最佳实践 — 8 种操作模式、notify_on_complete、watch_patterns.
@@ -107,6 +128,10 @@ skills:
   - background
   - task
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: project-startup-workflow
   name: project-startup-workflow
   description: 项目起步基础建设标准化工作流 — 从 0 到 CI 绿灯的 5 阶段顺序流程.
@@ -119,6 +144,10 @@ skills:
   - ci
   - setup
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: proxy-monitor
   name: proxy-monitor
   description: 代理节点健康监控与工业级部署流水线 — 活性/依赖性检查、熔断策略、安全部署.
@@ -131,6 +160,10 @@ skills:
   - deployment
   - security
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: webhook-subscriptions
   name: webhook-subscriptions
   description: Create and manage webhook subscriptions for event-driven workflows
@@ -143,6 +176,11 @@ skills:
   - event
   - notification
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - claude
+    - opencode
 triggers:
 - 运维
 - 监控
