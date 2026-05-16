@@ -1,10 +1,14 @@
 ---
 name: subagent-driven-development
-description: Use when executing implementation plans with independent tasks. Dispatches ...
+description: Use when executing implementation plans with independent tasks. Dispatches
+  ...
 version: 1.1.0
 triggers:
-- subagent driven development
 - subagent-driven-development
+- delegation
+- subagent
+- implementation
+- when
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT
 metadata:
@@ -20,6 +24,7 @@ metadata:
     - requesting-code-review
     - test-driven-development
 ---
+
 # Subagent-Driven Development
 
 ## Overview

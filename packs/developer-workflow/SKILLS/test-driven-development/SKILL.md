@@ -1,15 +1,19 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature or bugfix, before writing implementation ...
+description: Use when implementing any feature or bugfix, before writing implementation
+  ...
 version: 1.1.0
 triggers:
-- test driven development
 - test-driven-development
+- testing
+- tdd
+- development
+- when
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT
 depends_on:
-  - python-testing
-  - systematic-debugging
+- python-testing
+- systematic-debugging
 metadata:
   hermes:
     tags:
@@ -23,9 +27,10 @@ metadata:
     - writing-plans
     - subagent-driven-development
 see_also:
-  - subagent-driven-development
-  - generic-dev-workflow
+- subagent-driven-development
+- generic-dev-workflow
 ---
+
 # Test-Driven Development (TDD)
 
 ## Overview

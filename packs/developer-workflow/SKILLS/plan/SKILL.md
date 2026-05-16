@@ -1,15 +1,19 @@
 ---
 name: plan
-description: Plan mode for Hermes — inspect context, write a markdown plan into the acti...
+description: Plan mode for Hermes — inspect context, write a markdown plan into the
+  acti...
 version: 1.0.0
 triggers:
 - plan
-- plan
+- planning
+- plan-mode
+- implementation
+- mode
 author: Hermes Agent
 license: MIT
 depends_on:
-  - writing-plans
-  - spike
+- writing-plans
+- spike
 metadata:
   hermes:
     tags:
@@ -21,9 +25,10 @@ metadata:
     - writing-plans
     - subagent-driven-development
 see_also:
-  - test-driven-development
-  - subagent-driven-development
+- test-driven-development
+- subagent-driven-development
 ---
+
 # Plan Mode
 
 Use this skill when the user wants a plan instead of execution.

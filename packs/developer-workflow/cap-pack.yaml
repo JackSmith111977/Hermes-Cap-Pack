@@ -33,6 +33,10 @@ skills:
   - plan-mode
   - implementation
   - workflow
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: writing-plans
   path: SKILLS/writing-plans/SKILL.md
   version: 1.1.0
@@ -46,6 +50,11 @@ skills:
   - documentation
   files:
     references: SKILLS/writing-plans/references/ (1 files)
+  compatibility:
+    agent_types:
+    - openclaw
+    - claude
+    - opencode
 - id: spike
   path: SKILLS/spike/SKILL.md
   version: 1.0.0
@@ -61,6 +70,10 @@ skills:
   - planning
   - mvp
   - proof-of-concept
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: systematic-debugging
   path: SKILLS/systematic-debugging/SKILL.md
   version: 1.1.0
@@ -74,6 +87,10 @@ skills:
   - investigation
   files:
     references: SKILLS/systematic-debugging/references/ (1 files)
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: test-driven-development
   path: SKILLS/test-driven-development/SKILL.md
   version: 1.1.0
@@ -87,6 +104,10 @@ skills:
   - red-green-refactor
   files:
     references: SKILLS/test-driven-development/references/ (1 files)
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: subagent-driven-development
   path: SKILLS/subagent-driven-development/SKILL.md
   version: 1.1.0
@@ -100,6 +121,10 @@ skills:
   - parallel
   files:
     references: SKILLS/subagent-driven-development/references/ (1 files)
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: python-env-guide
   path: SKILLS/python-env-guide/SKILL.md
   version: 2.0.0
@@ -112,6 +137,10 @@ skills:
   - best-practices
   files:
     references: SKILLS/python-env-guide/references/ (2 files)
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: python-debugpy
   path: SKILLS/python-debugpy/SKILL.md
   version: 1.0.0
@@ -125,6 +154,10 @@ skills:
   - breakpoints
   - dap
   - post-mortem
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: node-inspect-debugger
   path: SKILLS/node-inspect-debugger/SKILL.md
   version: 1.0.0
@@ -137,6 +170,10 @@ skills:
   - cdp
   - breakpoints
   - ui-tui
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: patch-file-safety
   path: SKILLS/patch-file-safety/SKILL.md
   version: 1.2.0
@@ -146,6 +183,10 @@ skills:
   - file-edit
   - safety
   - code-modification
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: requesting-code-review
   path: SKILLS/requesting-code-review/SKILL.md
   version: 2.0.0
@@ -160,6 +201,10 @@ skills:
   - auto-fix
   files:
     references: SKILLS/requesting-code-review/references/ (1 files)
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: hermes-agent-skill-authoring
   path: SKILLS/hermes-agent-skill-authoring/SKILL.md
   version: 1.0.0
@@ -170,6 +215,10 @@ skills:
   - hermes-agent
   - conventions
   - skill-md
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: debugging-hermes-tui-commands
   path: SKILLS/debugging-hermes-tui-commands/SKILL.md
   version: 1.0.0
@@ -182,6 +231,10 @@ skills:
   - slash-commands
   - typescript
   - python
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: one-three-one-rule
   path: SKILLS/one-three-one-rule/SKILL.md
   version: 1.0.0
@@ -192,6 +245,10 @@ skills:
   - decision-making
   - proposals
   - trade-offs
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: sra-cli-usage
   path: SKILLS/sra-cli-usage/SKILL.md
   version: 1.0.0
@@ -200,6 +257,10 @@ skills:
   - sra
   - cli
   - security
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: writing-styles-guide
   path: SKILLS/writing-styles-guide/SKILL.md
   version: 1.0.0
@@ -214,6 +275,10 @@ skills:
     checklists: SKILLS/writing-styles-guide/checklists/ (0 files)
     references: SKILLS/writing-styles-guide/references/ (0 files)
     scripts: SKILLS/writing-styles-guide/scripts/ (0 files)
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 experiences:
 - id: dev-workflow-patterns
   path: EXPERIENCES/dev-workflow-patterns.md

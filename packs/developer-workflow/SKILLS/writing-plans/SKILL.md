@@ -1,10 +1,14 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task. Creates com...
+description: Use when you have a spec or requirements for a multi-step task. Creates
+  com...
 version: 1.1.0
 triggers:
-- writing plans
 - writing-plans
+- planning
+- design
+- implementation
+- when
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT
 metadata:
@@ -20,6 +24,7 @@ metadata:
     - test-driven-development
     - requesting-code-review
 ---
+
 # Writing Implementation Plans
 
 ## Overview

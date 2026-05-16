@@ -1,10 +1,14 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior. 4-phas...
+description: Use when encountering any bug, test failure, or unexpected behavior.
+  4-phas...
 version: 1.1.0
 triggers:
-- systematic debugging
 - systematic-debugging
+- debugging
+- troubleshooting
+- problem-solving
+- when
 author: Hermes Agent (adapted from obra/superpowers)
 license: MIT
 metadata:
@@ -20,6 +24,7 @@ metadata:
     - writing-plans
     - subagent-driven-development
 ---
+
 # Systematic Debugging
 
 ## Overview

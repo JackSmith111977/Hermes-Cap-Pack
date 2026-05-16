@@ -1,10 +1,14 @@
 ---
 name: requesting-code-review
-description: Pre-commit verification pipeline — static security scan, baseline-aware qua...
+description: Pre-commit verification pipeline — static security scan, baseline-aware
+  qua...
 version: 2.0.0
 triggers:
-- requesting code review
 - requesting-code-review
+- code-review
+- security
+- verification
+- pre-commit
 author: Hermes Agent (adapted from obra/superpowers + MorAlekss)
 license: MIT
 metadata:
@@ -22,6 +26,7 @@ metadata:
     - test-driven-development
     - github-code-review
 ---
+
 # Pre-Commit Code Verification
 
 Automated verification pipeline before code lands. Static scans, baseline-aware

@@ -26,6 +26,9 @@ Thumbs.db
 *.pem
 *.cert
 
+# Backup files
+*.bak
+
 # Temp
 tmp/
 temp/
