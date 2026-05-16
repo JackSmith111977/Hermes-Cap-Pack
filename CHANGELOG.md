@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.1] — 2026-05-16 🔧
+
+### Fixed
+- README 头部 blockquote 渲染修正（`\\` → 空格换行）
+- 项目身份表 CLI 入口 / Schema / 依赖信息纠正
+- 全篇 17 处 CLI 引用 `scripts.cli.main` → `skill_governance.cli.main`
+
+### Changed
+- 3 处 ASCII 架构图替换为 Mermaid UML（流程图可视化）
+- 版本号 1.0.0 → 1.0.1（patch, 文档修复）
+
 ## [1.0.0] — 2026-05-16 🎉
 
 ### Added
