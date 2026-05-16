@@ -244,9 +244,9 @@ entities:
     EPIC-006:
       title: Governance Fix Engine — 跨 Agent Cap-Pack 适配闭环
       state: draft
-      spec_count: 1
+      spec_count: 3
       story_count: 12
-      completed_count: 7
+      completed_count: 12
       priority: P1
       qa_gate_date: null
       review_date: null
@@ -260,6 +260,19 @@ entities:
       qa_gate_date: 2026-05-16
       review_date: null
   specs:
+    SPEC-6-2:
+      state: completed
+      epic: EPIC-006
+      stories:
+      - STORY-6-2-1
+      - STORY-6-2-2
+      - STORY-6-2-3
+    SPEC-6-3:
+      state: completed
+      epic: EPIC-006
+      stories:
+      - STORY-6-3-1
+      - STORY-6-3-2
     SPEC-6-1:
       state: completed
       epic: EPIC-006
@@ -684,6 +697,26 @@ entities:
       state: completed
       epic: EPIC-006
       spec: SPEC-6-1
+    STORY-6-2-1:
+      state: completed
+      epic: EPIC-006
+      spec: SPEC-6-2
+    STORY-6-2-2:
+      state: completed
+      epic: EPIC-006
+      spec: SPEC-6-2
+    STORY-6-2-3:
+      state: completed
+      epic: EPIC-006
+      spec: SPEC-6-2
+    STORY-6-3-1:
+      state: completed
+      epic: EPIC-006
+      spec: SPEC-6-3
+    STORY-6-3-2:
+      state: completed
+      epic: EPIC-006
+      spec: SPEC-6-3
     sprints:
   sprint-1:
     title: 核心框架搭建
