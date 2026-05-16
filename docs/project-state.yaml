@@ -1,7 +1,7 @@
 project:
   name: hermes-cap-pack
   version: 1.0.1
-  current_phase: completed
+  current_phase: epic-007-clarify
   overall_state: released
   created: 2026-05-12
   updated: '2026-05-16'
@@ -258,6 +258,15 @@ entities:
       completed_count: 15
       priority: P1
       qa_gate_date: 2026-05-16
+      review_date: null
+    EPIC-007:
+      state: draft
+      title: Skill → Cap-Pack 转换引擎 — 从原生技能目录到标准化能力包
+      story_count: 14
+      completed_count: 0
+      spec_count: 4
+      priority: P1
+      qa_gate_date: null
       review_date: null
   specs:
     SPEC-6-2:
