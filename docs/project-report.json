@@ -704,66 +704,153 @@
     {
       "id": "EPIC-006",
       "name": "Governance Fix Engine — 跨 Agent Cap-Pack 适配闭环",
-      "status": "draft",
+      "status": "implemented",
       "stories": [
         {
           "id": "STORY-6-0-1",
           "name": "FixRule 抽象层 + Dispatcher",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-0-2",
           "name": "CLI fix 子命令",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-0-3",
           "name": "dry_run/apply 报告格式 + 备份机制",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-1-1",
           "name": "F001: 生成缺失 SKILL.md",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-1-2",
           "name": "F007: 提取 triggers",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-1-3",
           "name": "H001+H002: 树簇归属+簇大小",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-1-4",
           "name": "F006: 启发式 classification + 测试套件",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-2-1",
           "name": "LLM 辅助修复框架 + F006 增强",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-2-2",
           "name": "E001 SRA 元数据 + E002 跨平台",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-2-3",
           "name": "E005 断裂链接检测与修复",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-3-1",
           "name": "README v2.0 AI 友好版重写",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-6-3-2",
           "name": "适配器指南 + 初始化流程 + CLI 速查",
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "EPIC-007",
+      "name": "本地 Cap-Pack 管理系统 — 技能治理、同步与持续进化",
+      "status": "draft",
+      "stories": [
+        {
+          "id": "STORY-7-0-1",
+          "name": "~/.cap-pack/ 初始化 + state.json",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-0-2",
+          "name": "cap-pack pull 从 GitHub 拉取",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-0-3",
+          "name": "cap-pack list + list --remote",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-1-1",
+          "name": "存在性同步检测",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-1-2",
+          "name": "版本变更同步检测",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-1-3",
+          "name": "cap-pack push 推送前治理门禁",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-1-4",
+          "name": "cap-pack sync 全同步管道",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-2-1",
+          "name": "SCAN 模块 + convert CLI 架子",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-2-2",
+          "name": "ANALYZE 主 Agent 驱动 skill 分类/分组",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-2-3",
+          "name": "EXTRACT 文件提取 + manifest 生成",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-2-4",
+          "name": "GOVERN + REPORT 治理验证全流程",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-3-1",
+          "name": "--all 批量转换 + --auto 自动匹配",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-3-2",
+          "name": "自定义包创建 cap-pack init --pack",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-3-3",
+          "name": "cap-pack push --all 一键推送",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-4-1",
+          "name": "经验记录格式 + experience mark",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-7-4-2",
+          "name": "经验路由框架",
           "status": "draft"
         }
       ]
