@@ -1,0 +1,696 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hermes-agent.local/schemas/cap-pack-v3.json",
+  "title": "Capability Pack v3 — Structured Capability Pack Manifest with Governance & Workflow",
+  "description": "Structured schema for Hermes Capability Pack manifest files (cap-pack.yaml). v3 extends v2 with L0-L4 compliance_levels governance and Layer 4 workflow orchestration declarations. 100% backward compatible with v2.",
+  "type": "object",
+
+  "allOf": [
+    {
+      "description": "v2 full backward compatibility — all v2 fields accepted as-is",
+      "$ref": "#/definitions/v2-base"
+    },
+    {
+      "description": "v3 extensions — compliance_levels and workflows added as optional top-level fields",
+      "properties": {
+        "compliance_levels": {
+          "type": "object",
+          "description": "L0-L4 compliance level assessment results for this cap-pack. Each level indicates conformance status per CAP-PACK-STANDARD v1.0.",
+          "properties": {
+            "L0": { "$ref": "#/definitions/level-status" },
+            "L1": { "$ref": "#/definitions/level-status" },
+            "L2": { "$ref": "#/definitions/level-status" },
+            "L3": { "$ref": "#/definitions/level-status" },
+            "L4": { "$ref": "#/definitions/level-status" }
+          },
+          "additionalProperties": false
+        },
+        "workflows": {
+          "type": "array",
+          "description": "Layer 4 workflow orchestration declarations. Defines DAG pipelines that compose atomic skills into complex multi-step workflows.",
+          "items": { "$ref": "#/definitions/workflow-definition" }
+        }
+      }
+    },
+    {
+      "description": "If L4 is declared as 'orchestrated', workflows must be present with at least one entry",
+      "if": {
+        "properties": {
+          "compliance_levels": {
+            "properties": {
+              "L4": {
+                "properties": {
+                  "status": { "const": "orchestrated" }
+                },
+                "required": ["status"]
+              }
+            },
+            "required": ["L4"]
+          }
+        },
+        "required": ["compliance_levels"]
+      },
+      "then": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "minItems": 1
+          }
+        },
+        "required": ["workflows"]
+      }
+    },
+    {
+      "description": "If workflow pattern is 'dag', each step must have depends_on",
+      "if": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "contains": {
+              "properties": {
+                "pattern": { "const": "dag" }
+              },
+              "required": ["pattern"]
+            }
+          }
+        },
+        "required": ["workflows"]
+      },
+      "then": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "items": {
+              "if": {
+                "properties": {
+                  "pattern": { "const": "dag" }
+                },
+                "required": ["pattern"]
+              },
+              "then": {
+                "properties": {
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["id", "skill", "depends_on"],
+                      "properties": {
+                        "id": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_-]+$" },
+                        "skill": { "type": "string", "description": "Skill ID reference from this pack's skills array." },
+                        "depends_on": {
+                          "type": "array",
+                          "items": { "type": "string" },
+                          "description": "IDs of steps that must complete before this one."
+                        },
+                        "condition": { "type": "string", "description": "Optional condition expression for conditional routing." },
+                        "timeout_seconds": { "type": "integer", "minimum": 1, "default": 300 },
+                        "retry_count": { "type": "integer", "minimum": 0, "default": 0 },
+                        "description": { "type": "string", "maxLength": 200 }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["id", "skill"],
+                      "properties": {
+                        "id": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_-]+$" },
+                        "skill": { "type": "string", "description": "Skill ID reference from this pack's skills array." },
+                        "depends_on": {
+                          "type": "array",
+                          "items": { "type": "string" }
+                        },
+                        "condition": { "type": "string" },
+                        "timeout_seconds": { "type": "integer", "minimum": 1, "default": 300 },
+                        "retry_count": { "type": "integer", "minimum": 0, "default": 0 },
+                        "description": { "type": "string", "maxLength": 200 }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "If workflow pattern is 'sequential', steps must form a linear chain (implied ordering by array position)",
+      "if": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "contains": {
+              "properties": {
+                "pattern": { "const": "sequential" }
+              },
+              "required": ["pattern"]
+            }
+          }
+        },
+        "required": ["workflows"]
+      },
+      "then": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "items": {
+              "if": {
+                "properties": {
+                  "pattern": { "const": "sequential" }
+                },
+                "required": ["pattern"]
+              },
+              "then": {
+                "properties": {
+                  "steps": { "type": "array", "minItems": 2 }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "If workflow pattern is 'parallel', steps should have no interdependencies",
+      "if": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "contains": {
+              "properties": {
+                "pattern": { "const": "parallel" }
+              },
+              "required": ["pattern"]
+            }
+          }
+        },
+        "required": ["workflows"]
+      },
+      "then": {
+        "properties": {
+          "workflows": {
+            "type": "array",
+            "items": {
+              "if": {
+                "properties": {
+                  "pattern": { "const": "parallel" }
+                },
+                "required": ["pattern"]
+              },
+              "then": {
+                "properties": {
+                  "steps": { "type": "array", "minItems": 2 }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+
+  "definitions": {
+    "v2-base": {
+      "type": "object",
+      "required": [
+        "name", "version", "type", "classification", "display_name",
+        "description", "compatibility"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{1,48}[a-z0-9]$",
+          "description": "Pack ID, lowercase with hyphens"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version MAJOR.MINOR.PATCH"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["capability-pack"],
+          "description": "Fixed value"
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["domain", "toolset", "skill", "infrastructure"],
+          "description": "Module classification dimension. 'infrastructure' for system-level packs like skill-quality."
+        },
+        "display_name": { "type": "string", "maxLength": 60 },
+        "description": { "type": "string", "maxLength": 500 },
+        "author": { "type": "string" },
+        "created": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "updated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "emoji": { "type": "string", "maxLength": 4 },
+        "category": { "type": "string" },
+        "domain": { "type": "string" },
+        "maintainer": { "type": "string" },
+
+        "compatibility": {
+          "type": "object",
+          "required": ["agent_types"],
+          "properties": {
+            "agent_types": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["hermes", "claude-code", "codex-cli", "opencode"] },
+              "minItems": 1
+            },
+            "hermes_version": {
+              "type": "object",
+              "properties": {
+                "min": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+                "max": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+              }
+            },
+            "requires_mcp": { "type": "boolean", "default": false },
+            "requires_network": { "type": "boolean", "default": false },
+            "requires_env": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+
+        "dependencies": {
+          "type": "object",
+          "properties": {
+            "cap_packs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+                },
+                "required": ["name", "version"]
+              }
+            },
+            "system_packages": { "type": "array", "items": { "type": "string" } },
+            "python_packages": { "type": "array", "items": { "type": "string" } },
+            "node_packages": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+
+        "skills": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "description"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+              "path": { "type": "string", "description": "Skill directory path (preferred)." },
+              "source": { "type": "string", "description": "v1 backward-compatible alias for path." },
+              "name": { "type": "string" },
+              "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+              "description": { "type": "string", "maxLength": 500 },
+              "tags": { "type": "array", "items": { "type": "string" } },
+              "cluster": { "type": "string" },
+              "sqs_target": { "type": "number", "minimum": 0, "maximum": 100 },
+              "experience_refs": { "type": "array", "items": { "type": "string" } },
+              "workflow": {
+                "type": "object",
+                "description": "Lightweight inline workflow declaration for sequential patterns (Layer 4).",
+                "properties": {
+                  "pattern": { "type": "string", "enum": ["sequential", "parallel", "conditional", "dag"] },
+                  "next": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "IDs of downstream skills in the chain."
+                  },
+                  "condition": { "type": "string", "description": "Condition expression for conditional routing." }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+
+        "experiences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+              "path": { "type": "string" },
+              "type": { "type": "string", "enum": ["pitfall", "decision-tree", "comparison", "lesson", "experience"], "default": "experience" },
+              "description": { "type": "string", "maxLength": 200 },
+              "skill_refs": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          }
+        },
+
+        "mcp_servers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+              "id": { "type": "string" },
+              "command": { "type": "string" },
+              "url": { "type": "string", "format": "uri" },
+              "transport": { "type": "string", "enum": ["stdio", "sse", "streamable-http"] },
+              "tools": { "type": "array", "items": { "type": "string" } },
+              "env": { "type": "object", "additionalProperties": { "type": "string" } }
+            },
+            "oneOf": [
+              { "required": ["command"] },
+              { "required": ["url"] }
+            ],
+            "additionalProperties": false
+          }
+        },
+
+        "integration": {
+          "type": "object",
+          "description": "External integration components — scripts, monitors, gates, audits that operate without modifying core Hermes files.",
+          "properties": {
+            "locate": {
+              "type": "object",
+              "description": "Environment detection script configuration.",
+              "properties": {
+                "script": { "type": "string" },
+                "required": { "type": "boolean", "default": true },
+                "auto_detect": {
+                  "type": "object",
+                  "properties": {
+                    "targets": {
+                      "type": "array",
+                      "items": { "type": "string", "enum": ["hermes_home", "source_type", "version", "tools", "skills_dirs", "profiles"] }
+                    },
+                    "fallback": { "type": "string" }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "required": ["script"],
+              "additionalProperties": false
+            },
+            "monitors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "script", "trigger"],
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+                  "script": { "type": "string" },
+                  "trigger": { "type": "string", "enum": ["inotify", "cron", "post_operation", "startup"] },
+                  "schedule": { "type": "string" },
+                  "description": { "type": "string", "maxLength": 200 },
+                  "alert_on": { "type": "string", "enum": ["change", "quality_drop", "dependency_break"] }
+                },
+                "additionalProperties": false
+              }
+            },
+            "gates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "script", "hook_point"],
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+                  "script": { "type": "string" },
+                  "hook_point": {
+                    "type": "string",
+                    "enum": ["pre_flight", "skill_create", "skill_edit", "skill_delete", "skill_install", "cron_audit"]
+                  },
+                  "blocking": { "type": "boolean", "default": false },
+                  "description": { "type": "string", "maxLength": 200 },
+                  "timeout_seconds": { "type": "integer", "minimum": 1, "default": 30 }
+                },
+                "additionalProperties": false
+              }
+            },
+            "audits": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "script", "schedule"],
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+                  "script": { "type": "string" },
+                  "schedule": { "type": "string" },
+                  "output_format": { "type": "string", "enum": ["json", "markdown", "feishu_card"] },
+                  "description": { "type": "string", "maxLength": 200 },
+                  "deliver_to": { "type": "string" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "behaviors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "rule", "enforcement"],
+                "properties": {
+                  "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+                  "rule": { "type": "string", "maxLength": 500 },
+                  "enforcement": { "type": "string", "enum": ["self_discipline", "skill_rule", "pre_flight_script", "memory"] },
+                  "trigger_condition": { "type": "string" },
+                  "description": { "type": "string", "maxLength": 200 }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "verification": {
+          "type": "object",
+          "properties": {
+            "health_check_script": { "type": "string" },
+            "sqs_targets": {
+              "type": "object",
+              "properties": {
+                "minimum": { "type": "number", "minimum": 0, "maximum": 100, "default": 50 },
+                "target": { "type": "number", "minimum": 0, "maximum": 100, "default": 70 }
+              },
+              "additionalProperties": false
+            },
+            "signatures": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "lifecycle": {
+          "type": "object",
+          "properties": {
+            "install": {
+              "type": "object",
+              "properties": {
+                "pre_install": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "install": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "post_install": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "verify": { "type": "array", "items": { "$ref": "#/definitions/hook" } }
+              },
+              "additionalProperties": false
+            },
+            "update": {
+              "type": "object",
+              "properties": {
+                "pre_update": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "update": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "post_update": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "migrate": { "type": "array", "items": { "$ref": "#/definitions/hook" } }
+              },
+              "additionalProperties": false
+            },
+            "uninstall": {
+              "type": "object",
+              "properties": {
+                "pre_uninstall": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "uninstall": { "type": "array", "items": { "$ref": "#/definitions/hook" } },
+                "rollback": { "type": "array", "items": { "$ref": "#/definitions/hook" } }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "config_defaults": {
+          "type": "object",
+          "additionalProperties": true
+        },
+
+        "config_schema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "enum": ["string", "number", "boolean", "array", "object"] },
+              "default": {},
+              "description": { "type": "string" }
+            },
+            "required": ["type", "description"],
+            "additionalProperties": false
+          }
+        },
+
+        "triggers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Trigger phrases for SRA skill discovery."
+        }
+      }
+    },
+
+    "level-status": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pass", "fail", "not_checked", "not_applicable",
+                   "orchestrated", "excellent", "healthy", "compliant", "non_compliant",
+                   "good", "needs_improvement", "single_skill", "partially_orchestrated"],
+          "description": "Compliance status for this level per CAP-PACK-STANDARD v1.0."
+        },
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Optional numerical score (e.g., SQS score for L1)."
+        },
+        "checks_passed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of checks that passed at this level."
+        },
+        "checks_total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of checks at this level."
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Human-readable summary of compliance findings."
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+
+    "workflow-definition": {
+      "type": "object",
+      "required": ["id", "pattern", "steps"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]+$",
+          "description": "Unique workflow identifier within this cap-pack."
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Human-readable description of what this workflow accomplishes."
+        },
+        "pattern": {
+          "type": "string",
+          "enum": ["sequential", "parallel", "conditional", "dag"],
+          "description": "Orchestration pattern type: sequential chain, parallel fan-out, conditional routing, or directed acyclic graph."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/workflow-step" }
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 600,
+          "description": "Overall workflow timeout."
+        },
+        "on_failure": {
+          "type": "string",
+          "enum": ["abort", "continue", "notify"],
+          "default": "abort",
+          "description": "Default failure handling strategy for this workflow."
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tags for workflow categorization."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "workflow-step": {
+      "type": "object",
+      "required": ["id", "skill"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_-]+$",
+          "description": "Unique step identifier within this workflow."
+        },
+        "skill": {
+          "type": "string",
+          "description": "Reference to a skill ID defined in this pack's skills array."
+        },
+        "depends_on": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "IDs of steps that must complete before this step executes. Empty or omitted for root steps."
+        },
+        "condition": {
+          "type": "string",
+          "description": "Condition expression (e.g., '${steps.qc.status} == pass') for conditional routing."
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 300,
+          "description": "Per-step timeout."
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0,
+          "description": "Number of retry attempts on failure."
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Step description."
+        },
+        "input_mapping": {
+          "type": "object",
+          "description": "Maps upstream step outputs to this step's inputs.",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "hook": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "enum": ["shell", "notify", "python"] },
+        "command": { "type": "string" },
+        "script": { "type": "string" },
+        "message": { "type": "string" },
+        "code": { "type": "string" },
+        "workdir": { "type": "string" },
+        "timeout": { "type": "integer", "minimum": 1, "default": 60 },
+        "condition": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

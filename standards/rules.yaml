@@ -1,0 +1,370 @@
+# cap-pack L0-L4 Machine-Checkable Rules
+# Source: CAP-PACK-STANDARD.md v1.0 (2026-05-16)
+# These rules are machine-checkable by the governance engine.
+# Each rule maps to a check function that can be executed programmatically.
+
+version: "1.0"
+standard_ref: "CAP-PACK-STANDARD.md v1.0"
+schema_ref: "cap-pack-v3.schema.json"
+description: >
+  L0-L4 compliance rule set for cap-pack governance.
+  Each layer contains machine-checkable rules with severity, check type, and thresholds.
+
+layers:
+
+  # ────────────────────────────────────────────────────────
+  # Layer 0: Compatibility (兼容层)
+  # Target: 100% compatible with Agent Skills Spec (Agentskills.io)
+  # ────────────────────────────────────────────────────────
+  - id: L0
+    name: Compatibility
+    description: "兼容层 — 100% compatible with Agent Skills Spec. Ensures cap-pack skills can be read by any Agent Skills Spec-compatible tool."
+    target: "L0 pass"
+    blocking_failure: true
+    rules:
+      - id: C001
+        description: "name field: 1-64 chars, lowercase+hyphens, matches SKILL directory name"
+        severity: blocking
+        check_type: regex_match
+        target_field: "name"
+        params:
+          pattern: "^[a-z][a-z0-9-]{0,62}[a-z0-9]$"
+          max_length: 64
+
+      - id: C002
+        description: "description field: 1-1024 chars, contains trigger words for SRA discovery"
+        severity: blocking
+        check_type: field_present
+        target_field: "description"
+        params:
+          min_length: 1
+          max_length: 1024
+
+      - id: C003
+        description: "Directory structure: only scripts/references/assets allowed as subdirectories"
+        severity: blocking
+        check_type: dir_structure
+        target_field: "skill_path"
+        params:
+          allowed_subdirs: ["scripts", "references", "assets"]
+          max_depth: 3
+
+      - id: C004
+        description: "SKILL.md line count < 500 (recommended by Agent Skills Spec §4.3)"
+        severity: warning
+        check_type: line_count
+        target_field: "skill_path/SKILL.md"
+        params:
+          max_lines: 500
+
+      - id: C005
+        description: "Progressive disclosure: three-level loading — metadata → instructions → resources"
+        severity: info
+        check_type: progressive_disclosure
+        target_field: "skill_path/SKILL.md"
+        params:
+          required_headings: ["name", "description"]
+          metadata_lines: 50
+          instructions_section_regex: "^#{1,2}\\s+.*(instruction|skill|usage|how to)"
+
+  # ────────────────────────────────────────────────────────
+  # Layer 1: Foundation (基础合规层)
+  # Target: Ensure skills meet minimum quality threshold for cap-pack inclusion
+  # ────────────────────────────────────────────────────────
+  - id: L1
+    name: Foundation
+    description: "基础合规层 — Minimum quality gateway. Prevents invalid/broken skills from entering the pack system."
+    target: "L1 pass"
+    blocking_failure: true
+    rules:
+      - id: F001
+        description: "SKILL.md must exist at the expected path for each skill in the pack"
+        severity: blocking
+        check_type: file_exists
+        target_field: "skills[].path"
+        params:
+          filename: "SKILL.md"
+          must_exist: true
+
+      - id: F002
+        description: "YAML frontmatter must contain name and description fields"
+        severity: blocking
+        check_type: frontmatter_fields
+        target_field: "skills[].path/SKILL.md"
+        params:
+          required_fields: ["name", "description"]
+          frontmatter_delimiter: "---"
+
+      - id: F003
+        description: "SQS (Skill Quality Score) total >= 60 — five-dimension quality assessment"
+        severity: blocking
+        check_type: sqs_minimum
+        target_field: "sqs_total"
+        params:
+          minimum: 60
+          max_score: 100
+          dimensions: ["structure", "content", "freshness", "relevance", "portability"]
+
+      - id: F004
+        description: "version field must be present and valid semver (MAJOR.MINOR.PATCH)"
+        severity: blocking
+        check_type: field_present
+        target_field: "version"
+        params:
+          pattern: "^\\d+\\.\\d+\\.\\d+$"
+          forbid_prefix: ["^", "~", ">", "<", "v"]
+
+      - id: F005
+        description: "tags field must have at least 2 entries for discoverability"
+        severity: warning
+        check_type: field_min_items
+        target_field: "tags"
+        params:
+          min_items: 2
+
+      - id: F006
+        description: "classification must be one of: domain, toolset, skill, infrastructure"
+        severity: blocking
+        check_type: field_value_in
+        target_field: "classification"
+        params:
+          allowed_values: ["domain", "toolset", "infrastructure"]
+
+      - id: F007
+        description: "triggers array must have at least 1 entry (for SRA discovery)"
+        severity: warning
+        check_type: field_min_items
+        target_field: "triggers"
+        params:
+          min_items: 1
+
+  # ────────────────────────────────────────────────────────
+  # Layer 2: Health & Organization (健康组织层)
+  # Target: Ensure skills are well-organized with cohesive clusters, low redundancy
+  # ────────────────────────────────────────────────────────
+  - id: L2
+    name: Health
+    description: "健康组织层 — Tree-based cluster membership, cluster size 3-15, cohesion <60%, atomicity <500 lines."
+    target: "L2 pass (Healthy)"
+    blocking_failure: false
+    rules:
+      - id: H001
+        description: "Tree-based cluster membership — every skill must belong to at least one cluster"
+        severity: warning
+        check_type: tree_membership
+        target_field: "skills[].cluster"
+        params:
+          require_cluster: true
+          max_unclustered_ratio: 0.0
+
+      - id: H002
+        description: "Cluster size must be between 3 and 15 skills per cluster (per arxiv 2601.04748)"
+        severity: warning
+        check_type: cluster_size
+        target_field: "clusters"
+        params:
+          min_size: 3
+          max_size: 15
+          size_metric: "skill_count"
+
+      - id: H003
+        description: "Intra-pack semantic overlap between skills must be < 60%"
+        severity: warning
+        check_type: overlap_ratio
+        target_field: "skills"
+        params:
+          max_overlap_ratio: 0.60
+          similarity_algorithm: "content_tfidf"
+          scope: "intra_pack"
+
+      - id: H004
+        description: "Atomicity — SKILL.md must be < 500 lines (single responsibility principle)"
+        severity: warning
+        check_type: line_count
+        target_field: "skills[].path/SKILL.md"
+        params:
+          max_lines: 500
+          scope: "per_skill"
+
+      - id: H005
+        description: "Atomicity — topic count per SKILL.md must be <= 3 distinct topics"
+        severity: warning
+        check_type: topic_count
+        target_field: "skills[].path/SKILL.md"
+        params:
+          max_topics: 3
+          extraction_method: "heading_analysis"
+
+      - id: H006
+        description: "Skills with orchestration must declare design_pattern in their workflow metadata"
+        severity: info
+        check_type: workflow_declared
+        target_field: "skills[].workflow"
+        params:
+          require_pattern: true
+          allowed_patterns: ["sequential", "parallel", "conditional", "dag"]
+
+      - id: H007
+        description: "Version spec — semver required and CHANGELOG should exist for tracking changes"
+        severity: warning
+        check_type: version_audit
+        target_field: "version"
+        params:
+          require_semver: true
+          changelog_path: "CHANGELOG.md"
+          require_changelog: false
+
+      - id: H008
+        description: "Low-score rate — less than 15% of skills in a pack may have SQS < 60"
+        severity: warning
+        check_type: low_score_rate
+        target_field: "skills"
+        params:
+          sqs_threshold: 60
+          max_low_score_ratio: 0.15
+          scope: "per_pack"
+
+  # ────────────────────────────────────────────────────────
+  # Layer 3: Ecosystem (生态层)
+  # Target: Ensure skills are discoverable, portable, and composable across the agent ecosystem
+  # ────────────────────────────────────────────────────────
+  - id: L3
+    name: Ecosystem
+    description: "生态层 — SRA discoverability, cross-platform compatibility, cross-pack no-redundancy, MCP integration."
+    target: "L3 pass"
+    blocking_failure: false
+    rules:
+      - id: E001
+        description: "SRA discoverability — SRA recommendation hit rate > 80% across 15 test queries"
+        severity: info
+        check_type: sra_discoverable
+        target_field: "skills"
+        params:
+          min_hit_rate: 0.80
+          test_queries_count: 15
+          test_query_tags: ["common_use_cases", "trigger_variations"]
+
+      - id: E002
+        description: "Cross-platform compatibility — at least 2 agent_types declared in compatibility section"
+        severity: info
+        check_type: compatibility_check
+        target_field: "compatibility.agent_types"
+        params:
+          min_agent_types: 2
+          allowed_agents: ["hermes", "claude-code", "codex-cli", "opencode"]
+          require_hermes: false
+
+      - id: E003
+        description: "Cross-pack non-redundancy — no > 60% skill content overlap between different packs"
+        severity: info
+        check_type: cross_pack_overlap
+        target_field: "skills"
+        params:
+          max_overlap_ratio: 0.60
+          similarity_algorithm: "content_tfidf"
+          scope: "cross_pack"
+
+      - id: E004
+        description: "At least 1 L2 Experience document (pitfall, decision-tree, comparison, or lesson) must exist"
+        severity: info
+        check_type: experience_exists
+        target_field: "experiences"
+        params:
+          min_experiences: 1
+          allowed_types: ["pitfall", "decision-tree", "comparison", "lesson", "experience"]
+
+      - id: E005
+        description: "SKILL.md contains no dead/broken links (internal or external)"
+        severity: info
+        check_type: link_validator
+        target_field: "skills[].path/SKILL.md"
+        params:
+          check_internal_links: true
+          check_external_links: true
+          max_fail_ratio: 0.0
+          timeout_seconds: 10
+
+  # ────────────────────────────────────────────────────────
+  # Layer 4: Workflow Orchestration (编排调度层)
+  # Target: Compose atomic skills into multi-step workflows via DAG pipelines
+  # ────────────────────────────────────────────────────────
+  - id: L4
+    name: Workflow Orchestration
+    description: "编排调度层 — DAG pipeline, sequential chain, conditional routing, parallel fan-out for composing atomic skills."
+    target: "L4 pass (Orchestrated)"
+    blocking_failure: false
+    rules:
+      - id: W001
+        description: "All skill references in workflow steps must resolve to existing skills defined in this pack"
+        severity: blocking
+        check_type: skills_referenced_exist
+        target_field: "workflows[].steps[].skill"
+        params:
+          reference_scope: "pack_skills"
+          require_all_resolved: true
+
+      - id: W002
+        description: "DAG must have no cyclic dependencies (graph acyclicity check)"
+        severity: blocking
+        check_type: dag_no_cycles
+        target_field: "workflows"
+        params:
+          graph_algorithm: "topological_sort"
+          detect_cycles: true
+          max_depth: 100
+
+      - id: W003
+        description: "DAG must be deadlock-free — all nodes reachable from at least one root node"
+        severity: warning
+        check_type: dag_deadlock_free
+        target_field: "workflows"
+        params:
+          require_single_root: false
+          reachability_check: true
+          unreachable_is_error: true
+
+      - id: W004
+        description: "Workflow pattern value must be one of: sequential, parallel, conditional, dag"
+        severity: blocking
+        check_type: pattern_valid
+        target_field: "workflows[].pattern"
+        params:
+          allowed_patterns: ["sequential", "parallel", "conditional", "dag"]
+
+      - id: W005
+        description: "Condition expressions (if present) must have valid syntax"
+        severity: warning
+        check_type: condition_syntax
+        target_field: "workflows[].steps[].condition"
+        params:
+          expression_language: "jmespath"
+          max_expression_length: 500
+          forbidden_patterns: ["eval(", "exec(", "__import__"]
+
+      - id: W006
+        description: "Sequential workflows must have at least 2 steps (a chain implies multiple steps)"
+        severity: warning
+        check_type: sequential_min_steps
+        target_field: "workflows"
+        params:
+          pattern: "sequential"
+          min_steps: 2
+
+      - id: W007
+        description: "Parallel workflows must not have step interdependencies (depends_on should be empty)"
+        severity: warning
+        check_type: parallel_no_deps
+        target_field: "workflows"
+        params:
+          pattern: "parallel"
+          forbid_depends_on: true
+
+      - id: W008
+        description: "Workflow IDs must be unique across the pack"
+        severity: blocking
+        check_type: unique_ids
+        target_field: "workflows"
+        params:
+          id_field: "id"
+          scope: "workflows"
+          case_sensitive: true

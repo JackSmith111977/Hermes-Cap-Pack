@@ -244,9 +244,9 @@ entities:
     EPIC-005:
       title: Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配
       state: approved
-      spec_count: 1
-      story_count: 4
-      completed_count: 0
+      spec_count: 2
+      story_count: 7
+      completed_count: 3
       priority: P1
       qa_gate_date: null
       review_date: null
@@ -361,6 +361,13 @@ entities:
       - STORY-4-6
       - STORY-4-7
       - STORY-4-8
+    SPEC-5-0:
+      state: completed
+      epic: EPIC-005
+      stories:
+      - STORY-5-0-1
+      - STORY-5-0-2
+      - STORY-5-0-3
   stories:
     STORY-1-1-1:
       state: draft
@@ -558,6 +565,18 @@ entities:
       state: completed
       epic: EPIC-004
       spec: SPEC-4-3
+    STORY-5-0-1:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-0-2:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-0-3:
+      state: draft
+      epic: '?'
+      spec: '?'
 sprints:
   sprint-1:
     title: 核心框架搭建
@@ -696,6 +715,57 @@ phases:
     - Phase-2
     - Phase-3
     - Phase-4
+  EPIC-005:
+    title: Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配
+    phases:
+    - name: Phase-0
+      title: 统一标准制定
+      acceptance_criteria:
+      - criteria: CAP-PACK-STANDARD.md 覆盖 L0-L4 全部四层
+        done: true
+      - criteria: 每层有明确的 machine-checkable 规则（JSON/YAML 格式）
+        done: true
+      - criteria: Layer 4 workflow 模式支持 sequential/parallel/conditional/dag
+        done: true
+      - criteria: 标准通过主人审阅批准
+        done: true
+      requires: []
+      stories:
+      - STORY-5-0-1
+      - STORY-5-0-2
+      - STORY-5-0-3
+    - name: Phase-1
+      title: 核心引擎 MVP
+      acceptance_criteria:
+      - criteria: CLI skill-governance scan <path> 按四层输出检测结果
+        done: false
+      - criteria: 每层有独立的 pass/fail + 分数
+        done: false
+      - criteria: --json 和 --html 输出格式
+        done: false
+      - criteria: watcher 可检测新 skill 并触发全链路检查
+        done: false
+      requires:
+      - Phase-0
+      stories:
+      - STORY-5-1-1
+      - STORY-5-1-2
+      - STORY-5-1-3
+      - STORY-5-1-4
+    - name: Phase-2
+      title: Hermes 深度集成 + 自动适配
+      acceptance_criteria: []
+      requires:
+      - Phase-1
+      stories: []
+    - name: Phase-3
+      title: 多 Agent 适配层
+      acceptance_criteria: []
+      requires:
+      - Phase-2
+      stories: []
+    completed_phases:
+    - Phase-0
 history:
 - date: 2026-05-14 19:30:00
   entity: system
