@@ -1,5 +1,70 @@
 # Changelog
 
+## [1.0.0] — 2026-05-16 🎉
+
+### Added
+- **EPIC-005: Skill 治理引擎** — 全生命周期质量门禁与 Cap-Pack 自动适配
+  - Phase 0: 统一标准框架 L0-L3 (Level 0: 兼容层 / Level 1: 强制层 / Level 2: 推荐层 / Level 3: 生态层)
+  - Phase 1: 核心引擎 MVP — Scanner + CLI scan/watcher/rules + CheckResult 模型
+  - Phase 2: Hermes 深度集成 — pre_flight gate + cron watcher + SRA 质量注入 + HTML 报告
+  - Phase 3: 多 Agent 适配层 — Hermes/OpenCode/Claude Code/OpenClaw 适配器
+  - **15 个 Stories · 41 个新文件 · ~2691 LOC**
+- **EPIC-006: Governance Fix Engine** — 自动修复 + 跨 Agent 适配闭环
+  - Phase 0: Fix 基础设施 — FixRule 抽象层 + FixDispatcher + CLI fix + .bak 备份
+  - Phase 1: 确定性修复 — F001 SKILL.md 生成 / F006 classification + F007 triggers / H001+H002 树簇
+  - Phase 2: LLM 辅助修复 — E001 SRA 元数据 / E002 跨平台兼容性 / E005 断裂链接
+  - Phase 3: 跨 Agent 文档 — README v2.0 (readme-for-ai) / ADAPTER_GUIDE / QUICKSTART
+  - **12 个 Stories · 全部 202 个测试通过**
+- **治理引擎修复包** (`packages/skill-governance/`): 正式 Python 包化
+  - `skill_governance/cli/` — CLI 入口 (scan/fix/watcher/rules)
+  - `skill_governance/fixer/` — FixRule + Dispatcher + LLM Assist
+  - `skill_governance/scanner/` — L0-L4 扫描器
+  - `skill_governance/adapter/` — 四目标适配器
+  - `skill_governance/watcher/` — Fingerprint 变更监控
+  - `skill_governance/reporter/` — HTML + JSON 报告
+  - `skill_governance/integration/` — pre_flight / cron / SRA 注入
+  - **61 个单元测试 (新增)**
+- **跨 Agent 文档三件套**: README.md (readme-for-ai 标准) + ADAPTER_GUIDE.md + QUICKSTART.md
+
+### Changed
+- README.md 全面升级 v2.0 — readme-for-ai 11 条标准 + 三列 CLI 参考表
+- 完整全量测试: 从 141 → **202 个测试**
+- 项目状态全面对齐: project-state.yaml + project-report.json + EPIC 文档同步
+
+### Fixed
+- 文档-代码对齐漂移 6 处（EPIC-006 状态/EPIC-005 计数/测试数/CHANGELOG/版本号）
+- schema 版本命名对齐 (v0.9.1schema → v1.0.0schema)
+
+## [0.9.1] — 2026-05-14
+
+### Added
+- **doc-engine 质量升级**: 三层改造 (L2 Experiences + 微技能降级) + 健康 KPI + SRA 验证
+- **合并工作流**: knowledge-base → learning-engine + BMAD 跨层合并 + 微技能降级文档化
+- **治理引用**: `references/governance-fix-strategies.md` — 扫描→修复闭环设计
+- **修复模式速查**: `references/fix-pattern-cookbook.md` — 7 种可复用代码模式
+
+### Changed
+- EPIC-005 统一标准框架完成（4 层级 + 可执行门禁）
+- CHI 基线锁定: doc-engine 0.6388 → 目标 ≥ 0.75
+
+## [0.8.0] — 2026-05-14
+
+### Added
+- **EPIC-004: 能力包质量升级** — 增量循环 · 三层改造 + 健康度 + 合并优化
+  - **12 个 Stories** 全面交付: 后置质量升级 + L2 Experiences + CHI 健康度 + 合并优化 + 门禁固化
+  - 三层改造 (L1 Skills → L2 Experiences → L3 Knowledge)
+  - doc-engine 健康诊断: 17 skills → 10 skills + 11 experiences
+  - 六维 KPI + CHI 综合健康指数
+  - 合并建议引擎 + BMAD 冗余检测
+- **外部集成架构** (External Integration Pattern): 五层纯外部方案
+- **多 Agent CLI 架构**: Adapter Registry + `--target hermes|opencode|auto`
+- **验证门禁模式** (Verification Gate Pattern): 安装后四层验证 + 自动回滚
+- **治理修复引擎架构** (Governance Fix Engine Architecture): 确定性+LLM 混合方案
+
+### Changed
+- CI 管道新增: chi-gate / validate-pack 增强 / pre-push 门禁强制
+- 项目结构: 18 个能力包已完成品质基线
+
 ## [0.7.1] — 2026-05-14
 
 ### Added

@@ -1,13 +1,15 @@
 # EPIC-005: Skill 治理引擎 — 技能全生命周期质量门禁与 Cap-Pack 自动适配
 
 > **epic_id**: `EPIC-005`
-> **status**: `approved`
+> **status**: `implemented`
 > **created**: 2026-05-16
 > **updated**: 2026-05-16
 > **owner**: boku (Emma)
 > **优先级**: P1 — 治理是 cap-pack 生态成熟的关键一环
 > **估算**: ~30h（4 Phases · ~15 Stories）
 > **前置条件**: EPIC-004 质量升级完成（CHI 门禁 + 质量基准已锁定）
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → SPEC-5-0/5-1/5-2/5-3 ✅ → IMPLEMENT ✅ → QA_GATE ✅ → COMMIT ✅`
+> **完成情况**: 15/15 Stories ✅ — Phase 0-3 全部交付
 
 ---
 

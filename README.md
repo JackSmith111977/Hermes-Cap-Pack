@@ -1,7 +1,7 @@
 # hermes-cap-pack
 
 > Agent 能力包标准化格式 + CLI 管理工具  
-> **版本**：`0.9.1` · **测试**：`141 ✅` · **许可**：MIT  
+> **版本**：`1.0.0` · **测试**：`202 ✅` · **许可**：MIT  
 > **能力包**：17 个 · **适配器**：4 个 · **CHI**：`67.92` 🟡  
 > **跨 Agent 就绪**：✅ Hermes · ✅ OpenCode · ✅ Claude · ✅ OpenClaw
 
@@ -13,7 +13,7 @@
 |:-----|:----|
 | **目的** | 将 AI Agent 的技能拆分为可移植的「能力包 (Capability Pack)」，实现跨 Agent 复用与质量治理 |
 | **CLI 入口** | `python -m scripts.cli.main`（或创建 alias `cap-pack`） |
-| **Schema 版本** | `schemas/cap-pack-v0.9.1schema.json` |
+| **Schema 版本** | `schemas/cap-pack-v1.0.0schema.json` |
 | **最小 Python** | ≥ 3.11 |
 | **唯一依赖** | `pyyaml>=6.0` |
 | **仓库** | `https://github.com/JackSmith111977/Hermes-Cap-Pack.git` |
@@ -383,7 +383,7 @@ python -m skill_governance.cli.main scan packs/doc-engine \
 ## 八、运行测试
 
 ```bash
-# 全量 141 个测试
+# 全量 202 个测试
 python -m pytest scripts/tests/ -q
 
 # 按类别
@@ -398,7 +398,7 @@ python -m pytest scripts/tests/test_parity.py -v            # 跨适配器一致
 **验证测试覆盖**：
 ```bash
 python -m pytest scripts/tests/ --collect-only -q | tail -5
-# 预期输出: 141 tests collected
+# 预期输出: 202 tests collected
 ```
 
 ---
@@ -410,7 +410,7 @@ hermes-cap-pack/
 ├── README.md               # ← 你现在看的（v2.0 AI 友好版）
 ├── CHANGELOG.md            # 版本日志
 ├── constraints.md          # 项目约束
-├── pyproject.toml          # Python 包元数据 (v0.9.1)
+├── pyproject.toml          # Python 包元数据 (v1.0.0)
 │
 ├── docs/                   # 设计文档
 │   ├── EPIC-*.md           # Epic 文档
@@ -463,7 +463,7 @@ hermes-cap-pack/
 │   │   ├── parser.py       # cap-pack.yaml 解析器
 │   │   ├── dependency.py   # 依赖检查
 │   │   └── verifier.py     # 安装验证
-│   ├── tests/              # 141 个测试
+│   ├── tests/              # 202 个测试
 │   └── ... (bump-version, validate-pack, health-check)
 │
 ├── reports/                # HTML 质量报告

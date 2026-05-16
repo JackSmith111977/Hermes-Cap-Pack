@@ -1,13 +1,15 @@
 # EPIC-006: Governance Fix Engine + 跨 Agent Cap-Pack 适配
 
 > **epic_id**: `EPIC-006`
-> **status**: `draft`
+> **status**: `implemented`
 > **created**: 2026-05-16
 > **updated**: 2026-05-16
 > **owner**: boku (Emma)
 > **优先级**: P1 — 治理引擎闭环 + 跨 Agent 标准
 > **估算**: ~18h（4 Phases · ~12 Stories）
 > **前置条件**: EPIC-005 治理引擎全部完成 ✅
+> **SDD 流程**: `CLARIFY ✅ → RESEARCH ✅ → SPEC-6-1/6-2/6-3 ✅ → IMPLEMENT ✅ → QA_GATE ✅ → COMMIT ✅`
+> **完成情况**: 12/12 Stories ✅ — Phase 0-3 全部交付
 
 ---
 

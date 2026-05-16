@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hermes Capability Pack — 项目全景 v0.9.1</title>
+<title>Hermes Capability Pack — 项目全景 v1.0.0</title>
 <style>
 :root {
   --bg: #0d1117;
@@ -193,7 +193,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
       <div class="sub">hermes-cap-pack · Agent 能力模块化与跨平台复用框架</div>
     </div>
     <div class="header-right">
-      <div class="version-badge">v0.9.1 · MIT</div>
+      <div class="version-badge">v1.0.0 · MIT</div>
       <div style="margin-top:8px; font-size:0.8rem; color:var(--dim);">github.com/JackSmith111977/Hermes-Cap-Pack</div>
     </div>
   </div>
@@ -202,9 +202,9 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 <!-- KPI Cards -->
 <div class="kpi-row">
   <div class="kpi-card ok">
-    <div class="value">141</div>
+    <div class="value">202</div>
     <div class="label">测试通过</div>
-    <div class="sub">141 total · 全绿 ✅</div>
+    <div class="sub">202 total · 全绿 ✅</div>
   </div>
     <div class="kpi-card purple">
     <div class="value">17</div>
@@ -214,7 +214,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
   <div class="kpi-card cyan">
     <div class="value">53</div>
     <div class="label">Stories</div>
-    <div class="sub">5 Epics · 16 Specs</div>
+    <div class="sub">6 Epics · 22 Specs · 82 Stories</div>
   </div>
   <div class="kpi-card">
     <div class="value">9</div>
@@ -225,7 +225,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 
 <!-- §1 合并注释 -->
 <section class="section">
-  <h2>⚡ 变更记录 <span class="tag">v0.9.1</span></h2>
+  <h2>⚡ 变更记录 <span class="tag">v1.0.0</span></h2>
   <div class="merge-note">
     <strong>📚 knowledge-base 模块 → 合并至 learning-engine</strong><br>
     核心知识技能（knowledge-precipitation, knowledge-routing, hermes-knowledge-base, llm-wiki）
@@ -539,16 +539,20 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 
 <!-- §7 Tests -->
 <section class="section">
-  <h2>🧪 测试 <span class="tag">141 ✅ 全绿</span></h2>
+  <h2>🧪 测试 <span class="tag">202 ✅ 全绿</span></h2>
   <div class="table-wrap">
     <table>
       <thead><tr><th>文件</th><th>测试数</th><th>通过</th></tr></thead>
       <tbody>
+        <tr><td>test_cli_fix.py</td><td>15</td><td><span class="badge badge-ok">15 ✅</span></td></tr>
+        <tr><td>test_fixer_base.py</td><td>12</td><td><span class="badge badge-ok">12 ✅</span></td></tr>
+        <tr><td>test_fixer_f001.py</td><td>10</td><td><span class="badge badge-ok">10 ✅</span></td></tr>
+        <tr><td>test_fixer_f006_f007.py</td><td>12</td><td><span class="badge badge-ok">12 ✅</span></td></tr>
+        <tr><td>test_fixer_h001_h002.py</td><td>12</td><td><span class="badge badge-ok">12 ✅</span></td></tr>
         <tr><td>test_cli_commands.py</td><td>35</td><td><span class="badge badge-ok">35 ✅</span></td></tr>
         <tr><td>test_hermes_adapter.py</td><td>34</td><td><span class="badge badge-ok">34 ✅</span></td></tr>
         <tr><td>test_epic002_tools.py</td><td>17</td><td><span class="badge badge-ok">17 ✅</span></td></tr>
         <tr><td>test_uca_parser.py</td><td>12</td><td><span class="badge badge-ok">12 ✅</span></td></tr>
-        <tr><td>test_uca_adapter.py</td><td>12</td><td><span class="badge badge-ok">12 ✅</span></td></tr>
         <tr><td>test_uca_dependency.py</td><td>8</td><td><span class="badge badge-ok">8 ✅</span></td></tr>
         <tr><td>test_uca_protocol.py</td><td>7</td><td><span class="badge badge-ok">7 ✅</span></td></tr>
         <tr><td>test_uca_verifier.py</td><td>6</td><td><span class="badge badge-ok">6 ✅</span></td></tr>
@@ -566,10 +570,10 @@ tr:hover td { background: rgba(88,166,255,0.04); }
     <table>
       <thead><tr><th>类型</th><th>数量</th><th>状态</th></tr></thead>
       <tbody>
-        <tr><td>Epics</td><td>5</td><td>3 approved · 1 implemented · 1 draft (EPIC-005 🆕)</td></tr>
-        <tr><td>Specs</td><td>16</td><td>4 approved · 2 qa_gate · 4 implemented · 4 draft · 1 review · 1 create</td></tr>
-        <tr><td>Stories</td><td>53</td><td>49 completed · 4 draft (EPIC-005 🆕)</td></tr>
-        <tr><td>Sprints</td><td>9</td><td>8 released · 1 current (Sprint 9 🆕)</td></tr>
+        <tr><td>Epics</td><td>6</td><td>2 implemented · 2 approved · 2 completed (全部完成 ✅)</td></tr>
+        <tr><td>Specs</td><td>22</td><td>14 completed · 5 approved · 3 implemented (全部完成 ✅)</td></tr>
+        <tr><td>Stories</td><td>82</td><td>82 completed ✅ (EPIC-005+006 全部 27 Stories 完成)</td></tr>
+        <tr><td>Sprints</td><td>9</td><td>9 released 🎉</td></tr>
       </tbody>
     </table>
   </div>
@@ -578,7 +582,7 @@ tr:hover td { background: rgba(88,166,255,0.04); }
 <!-- Footer -->
 <footer class="footer">
   <p>由 project-report.json 数据驱动生成 · 🤖 boku (Emma) · 2026-05-16</p>
-  <p style="font-size:0.75rem; margin-top:4px;">doc-alignment v3.3 + project-report-generator v1.0 — 文档对齐完成 · EPIC-005 🆕 · v0.9.1</p>
+  <p style="font-size:0.75rem; margin-top:4px;">doc-alignment v3.3 + project-report-generator v1.0 — 文档对齐完成 · EPIC-005+006 🆕 · v1.0.0</p>
 </footer>
 
 </div>

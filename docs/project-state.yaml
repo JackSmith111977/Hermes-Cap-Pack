@@ -1,10 +1,10 @@
 project:
   name: hermes-cap-pack
-  version: 0.9.1
-  current_phase: sprint-5
-  overall_state: review
+  version: 1.0.0
+  current_phase: completed
+  overall_state: released
   created: 2026-05-12
-  updated: '2026-05-15'
+  updated: '2026-05-16'
 workflow:
   chain:
     protocol: chain-state-json
@@ -243,7 +243,7 @@ entities:
       review_date: null
     EPIC-006:
       title: Governance Fix Engine — 跨 Agent Cap-Pack 适配闭环
-      state: draft
+      state: implemented
       spec_count: 3
       story_count: 12
       completed_count: 12
@@ -252,10 +252,10 @@ entities:
       review_date: null
     EPIC-005:
       title: Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配
-      state: approved
+      state: implemented
       spec_count: 4
       story_count: 15
-      completed_count: 14
+      completed_count: 15
       priority: P1
       qa_gate_date: 2026-05-16
       review_date: null
@@ -717,7 +717,7 @@ entities:
       state: completed
       epic: EPIC-006
       spec: SPEC-6-3
-    sprints:
+    sprints: null
   sprint-1:
     title: 核心框架搭建
     state: released

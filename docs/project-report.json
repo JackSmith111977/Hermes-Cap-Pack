@@ -3,7 +3,7 @@
     "icon": "📦",
     "name": "Hermes Capability Pack",
     "package": "hermes-cap-pack",
-    "version": "0.9.1",
+    "version": "1.0.0",
     "description": "Agent 能力模块化与跨平台复用框架 — 17 能力包 × ~145 技能的三层树状组织",
     "long_description": "hermes-cap-pack 是一个将 Hermes Agent 的扁平化技能体系拆分为标准化、可移植的「能力包」(Capability Pack) 的项目。包含能力包格式规范（cap-pack.yaml）、解析器、适配器（Hermes/OpenCode）、安装引擎、质量评分系统（SQS）、树状索引工具、生命周期审计工具。",
     "author": "boku (Emma/小玛)",
@@ -34,8 +34,8 @@
       },
       {
         "label": "测试",
-        "value": "141 ✅",
-        "sub": "全通过 · 9 个测试文件"
+        "value": "202 ✅",
+        "sub": "全通过 · 14 个测试文件 (local + pkg)"
       }
     ],
     "info_table": [
