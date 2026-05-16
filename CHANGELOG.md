@@ -15,6 +15,9 @@
   - Phase 2: LLM 辅助修复 — E001 SRA 元数据 / E002 跨平台兼容性 / E005 断裂链接
   - Phase 3: 跨 Agent 文档 — README v2.0 (readme-for-ai) / ADAPTER_GUIDE / QUICKSTART
   - **12 个 Stories · 全部 202 个测试通过**
+- **治理修复引擎 Bug 修复**: `_setup_fix_dispatcher()` 不注册 FixRule 的 TODO 已实现
+- **全项目治理修复 v1**: 对所有 17 个能力包执行 E001/E002/F001 自动修复，合计 **174 fixes** · 0 errors
+  - L3 Ecosystem Score: 全包 60% → 80% ↑20%
 - **治理引擎修复包** (`packages/skill-governance/`): 正式 Python 包化
   - `skill_governance/cli/` — CLI 入口 (scan/fix/watcher/rules)
   - `skill_governance/fixer/` — FixRule + Dispatcher + LLM Assist
