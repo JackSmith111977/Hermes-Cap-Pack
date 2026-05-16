@@ -700,6 +700,73 @@
       ]
     },
     {
+      "id": "EPIC-006",
+      "name": "Governance Fix Engine — 跨 Agent Cap-Pack 适配闭环",
+      "status": "draft",
+      "stories": [
+        {
+          "id": "STORY-6-0-1",
+          "name": "FixRule 抽象层 + Dispatcher",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-0-2",
+          "name": "CLI fix 子命令",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-0-3",
+          "name": "dry_run/apply 报告格式 + 备份机制",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-1-1",
+          "name": "F001: 生成缺失 SKILL.md",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-1-2",
+          "name": "F007: 提取 triggers",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-1-3",
+          "name": "H001+H002: 树簇归属+簇大小",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-1-4",
+          "name": "F006: 启发式 classification + 测试套件",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-2-1",
+          "name": "LLM 辅助修复框架 + F006 增强",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-2-2",
+          "name": "E001 SRA 元数据 + E002 跨平台",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-2-3",
+          "name": "E005 断裂链接检测与修复",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-3-1",
+          "name": "README v2.0 AI 友好版重写",
+          "status": "draft"
+        },
+        {
+          "id": "STORY-6-3-2",
+          "name": "适配器指南 + 初始化流程 + CLI 速查",
+          "status": "draft"
+        }
+      ]
+    },
+    {
       "id": "EPIC-005",
       "name": "Skill 治理引擎 — 统一标准 + 四层质量门禁 + 工作流编排 + 自动适配",
       "status": "approved",

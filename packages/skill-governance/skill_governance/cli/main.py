@@ -13,9 +13,6 @@ from rich.console import Console
 from rich.table import Table
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.panel import Panel
-from rich.syntax import Syntax
-from rich.layout import Layout
-from rich.columns import Columns
 
 from skill_governance.models.result import CheckResult, ScanReport, ScanResult
 from skill_governance.scanner.base import RuleLoader
@@ -26,6 +23,14 @@ from skill_governance.scanner.workflow_detector import WorkflowDetector
 from skill_governance.reporter.json_reporter import JSONReporter
 from skill_governance.reporter.html_reporter import HTMLReporter
 from skill_governance.watcher.fingerprint import FingerprintWatcher
+from skill_governance.fixer import (
+    FixDispatcher,
+    FixResult,
+    FixAction,
+    FixReport,
+    FixReporter,
+    ensure_backups,
+)
 
 
 app = typer.Typer(
@@ -440,6 +445,196 @@ def rules(
                 sev_style = "red" if r.severity == "blocking" else "yellow" if r.severity == "warning" else "dim"
                 console.print(f"  [{sev_style}]{r.id}[/{sev_style}] {r.description}")
             console.print()
+
+
+# ─── Fix helpers ──────────────────────────────────────────────────────────────
+
+
+def _find_packs_root() -> Path | None:
+    """Locate the ``packs/`` directory relative to the project root.
+
+    Walks up from the CLI script location looking for a ``packs/``
+    directory that contains ``cap-pack.yaml`` files.
+    """
+    cli_path = Path(__file__).resolve()
+    for parent in cli_path.parents:
+        candidate = parent / "packs"
+        if candidate.is_dir():
+            # Verify it looks like a packs directory
+            subdirs = [d for d in candidate.iterdir() if d.is_dir()]
+            if any((d / "cap-pack.yaml").exists() for d in subdirs):
+                return candidate
+    return None
+
+
+def _setup_fix_dispatcher() -> FixDispatcher:
+    """Create and populate a :class:`FixDispatcher` with available fix rules.
+
+    Concrete ``FixRule`` implementations are auto-discovered via
+    ``importlib`` or registered explicitly here.  When no rules are
+    registered the dispatcher returns an empty result list.
+    """
+    dispatcher = FixDispatcher()
+    # TODO: auto-discover concrete FixRule subclasses from
+    #       skill_governance.fixer.rules package (future stories).
+    return dispatcher
+
+
+def _print_fix_results(
+    all_results: dict[str, list[FixResult]],
+    dry_run: bool,
+) -> None:
+    """Print fix results for one or more packs using Rich formatting.
+
+    Delegates to :class:`FixReporter` for consistent output (STORY-6-0-3).
+    """
+    FixReporter(console=console).print_multi_pack_report(all_results, dry_run)
+
+
+# ─── CLI Commands ─────────────────────────────────────────────────────────────
+
+
+@app.command("fix")
+def fix(
+    pack_path: Optional[str] = typer.Argument(
+        None, help="Path to the cap-pack directory (containing cap-pack.yaml)"
+    ),
+    rules: Optional[str] = typer.Option(
+        None, "--rules", "-r",
+        help="Comma-separated rule IDs to dispatch (e.g. F001,F007)",
+    ),
+    dry_run: bool = typer.Option(
+        True, "--dry-run/--apply",
+        help="Show fix plan without applying (default: dry-run)",
+    ),
+    all_packs: bool = typer.Option(
+        False, "--all", "-a",
+        help="Process all packs in the project's packs/ directory",
+    ),
+    output: Optional[str] = typer.Option(
+        None, "--output", "-o",
+        help="Output file for fix report (JSON)",
+    ),
+) -> None:
+    """Scan and auto-fix compliance issues in cap-pack skills.
+
+    Reuses the same scan pipeline as the ``scan`` command, then routes
+    any failed checks to registered fix rules for automatic remediation.
+    """
+    # ── Validate arguments ────────────────────────────────────────────────
+    if not all_packs and not pack_path:
+        console.print("[red]Error:[/red] Provide a pack path or use --all to process all packs.")
+        raise typer.Exit(code=1)
+
+    # ── Resolve pack paths ────────────────────────────────────────────────
+    pack_paths: list[str] = []
+    if all_packs:
+        packs_root = _find_packs_root()
+        if not packs_root:
+            console.print("[red]Error:[/red] Cannot locate the packs/ directory. "
+                           "Run this command from within the project tree.")
+            raise typer.Exit(code=1)
+        for entry in sorted(packs_root.iterdir()):
+            if entry.is_dir() and (entry / "cap-pack.yaml").exists():
+                pack_paths.append(str(entry))
+        if not pack_paths:
+            console.print("[red]Error:[/red] No packs with cap-pack.yaml found.")
+            raise typer.Exit(code=1)
+        console.print(f"[dim]Found {len(pack_paths)} pack(s) to process[/dim]")
+    else:
+        pack_paths = [pack_path]  # type: ignore[assignment]
+
+    # ── Parse rules filter ────────────────────────────────────────────────
+    rules_filter: list[str] | None = None
+    if rules:
+        rules_filter = [r.strip() for r in rules.split(",") if r.strip()]
+        if not rules_filter:
+            console.print("[red]Error:[/red] No valid rule IDs in --rules value.")
+            raise typer.Exit(code=1)
+
+    # ── Setup dispatcher ──────────────────────────────────────────────────
+    dispatcher = _setup_fix_dispatcher()
+    if not dispatcher.registered_rules:
+        console.print("[yellow]Warning:[/yellow] No fix rules are registered yet. "
+                       "Results will be empty until fix rules are implemented.")
+
+    # ── Process each pack ─────────────────────────────────────────────────
+    all_results: dict[str, list[FixResult]] = {}
+
+    for pp in pack_paths:
+        pack_dir = Path(pp).resolve()
+        pack_name = pack_dir.name
+
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            console=console,
+        ) as progress:
+            task = progress.add_task(f"Scanning {pack_name}...", total=None)
+
+            if not pack_dir.exists():
+                console.print(f"[red]Error:[/red] Path does not exist: {pp}")
+                continue
+
+            # Load skills from cap-pack.yaml
+            skills = _load_skills_from_pack(str(pack_dir))
+
+            # Load workflows & clusters from cap-pack.yaml (same as scan)
+            pack_yaml = pack_dir / "cap-pack.yaml"
+            workflows: list[dict[str, Any]] = []
+            clusters: list[dict[str, Any]] = []
+            if pack_yaml.exists():
+                import yaml
+                with open(pack_yaml, "r", encoding="utf-8") as f:
+                    pack_data = yaml.safe_load(f)
+                workflows = pack_data.get("workflows", [])
+                clusters = pack_data.get("clusters", [])
+
+            progress.update(task, description=f"Running checks for {pack_name}...")
+
+            l0_data = {"skills": skills}
+            l1_data = {"skills": skills}
+            l2_data = {"skills": skills, "clusters": clusters}
+            l3_data = {"skills": skills, "pack_path": str(pack_dir)}
+            l4_data = {"workflows": workflows, "skills": skills}
+
+            report = _build_report(
+                target_path=str(pack_dir),
+                l0_data=l0_data,
+                l1_data=l1_data,
+                l2_data=l2_data,
+                l3_data=l3_data,
+                l4_data=l4_data,
+            )
+
+            progress.update(task, description=f"Dispatching fixes for {pack_name}...")
+
+            # ═══ Core: dispatch fix rules ═══════════════════════════════════
+            results = dispatcher.dispatch(
+                report=report.to_dict(),
+                rules_filter=rules_filter,
+                dry_run=dry_run,
+            )
+
+            all_results[str(pack_dir)] = results
+
+    # ═══ Backup before apply (ADR-6-2 / STORY-6-0-3) ════════════════════════
+    if not dry_run:
+        for pack_path, results in all_results.items():
+            if any(r.actions for r in results):
+                console.print(f"[dim]Creating backups for {Path(pack_path).name}...[/dim]")
+                ensure_backups(results, console=console)
+
+    # ── Output ────────────────────────────────────────────────────────────
+    _print_fix_results(all_results, dry_run=dry_run)
+
+    if output:
+        FixReporter.generate_multi_pack_json(
+            all_results=all_results,
+            dry_run=dry_run,
+            output_path=output,
+        )
+        console.print(f"[green]Fix report written to:[/green] {Path(output).resolve()}")
 
 
 def main() -> None:

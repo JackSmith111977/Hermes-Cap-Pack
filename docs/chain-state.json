@@ -18,5 +18,12 @@
     ],
     "phase": "Phase-3",
     "gate_history": []
+  },
+  "EPIC-006": {
+    "epic": "EPIC-006",
+    "current_stage": "DEV",
+    "completed_stages": [],
+    "phase": "Phase-0",
+    "gate_history": []
   }
 }
