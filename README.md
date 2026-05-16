@@ -10,8 +10,8 @@
 
 ## 一、项目身份
 
-| | 属性 | 值 |
-|:-----|:----|
+| 属性 | 值 |
+|------|-----|
 | **目的** | 将 AI Agent 的技能拆分为可移植的「能力包 (Capability Pack)」，实现跨 Agent 复用与质量治理 |
 | **CLI 入口** | `python -m skill_governance.cli.main`（或创建 alias `cap-pack`） |
 | **Schema 版本** | `schemas/cap-pack-v3.schema.json` |
