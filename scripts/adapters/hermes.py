@@ -23,12 +23,20 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
+# Ensure skill-governance package is importable
+_SG_PACKAGE = _PROJECT_ROOT / "packages" / "skill-governance"
+if str(_SG_PACKAGE) not in sys.path:
+    sys.path.insert(0, str(_SG_PACKAGE))
+
 from scripts.uca.protocol import (
     AgentAdapter,
     CapPack,
     CapPackMCP,
     AdapterResult,
 )
+
+from skill_governance.adapter.base import SkillGovernanceAdapter, AdapterConfig
+from skill_governance.adapter.cap_pack_adapter import CapPackAdapter
 
 # ── 路径常量 ──────────────────────────────────────────
 
@@ -167,7 +175,7 @@ class SnapshotManager:
 # ── HermesAdapter ────────────────────────────────────
 
 
-class HermesAdapter:
+class HermesAdapter(SkillGovernanceAdapter):
     """Hermes Agent 适配器
 
     将能力包安装到 Hermes 环境：
@@ -175,6 +183,17 @@ class HermesAdapter:
     - MCP → ~/.hermes/config.yaml mcp_servers
     - 追踪 → ~/.hermes/installed_packs.json
     """
+
+    def __init__(self, config: AdapterConfig | None = None) -> None:
+        """初始化 Hermes 适配器
+
+        Args:
+            config: 适配器配置。默认 agent_type='hermes', dry_run=True
+        """
+        self._config = config or AdapterConfig(
+            agent_type="hermes",
+            dry_run=True,
+        )
 
     # AgentAdapter Protocol 属性
     @property
@@ -733,3 +752,131 @@ class HermesAdapter:
                             result.warnings.append(f"MCP 服务未配置: {missing_mcp}")
 
         return result
+
+    # ── Governance Adapter Methods (STORY-5-3-1) ─────────────────────
+
+    def scan(self, path: str) -> dict[str, Any]:
+        """Run L0-L4 compliance scan on the skill or pack at *path*.
+
+        Delegates to :class:`CapPackAdapter` for L0/L1 checks and
+        returns a summary dict.
+
+        Args:
+            path: Path to a skill directory or cap-pack directory.
+
+        Returns:
+            Dict with keys ``target_path``, ``compliance_ok``, ``layers``,
+            and ``message``.
+        """
+        sp = Path(path).resolve()
+        if not sp.exists():
+            return {
+                "target_path": path,
+                "compliance_ok": False,
+                "message": f"Path does not exist: {path}",
+            }
+
+        cpa = CapPackAdapter()
+        result = cpa.scan(path)
+
+        return {
+            "target_path": str(sp),
+            "compliance_ok": result.compliance_ok,
+            "message": result.message,
+            "layers": {
+                "L0": {"passed": result.compliance_ok},
+                "L1": {"passed": result.compliance_ok},
+            },
+        }
+
+    def suggest(self, path: str) -> list[dict[str, Any]]:
+        """Suggest target cap-pack packages for the skill at *path*.
+
+        Delegates to :class:`CapPackAdapter` for tag-based matching.
+
+        Args:
+            path: Path to the skill directory.
+
+        Returns:
+            List of suggestion dicts with ``pack_name``, ``pack_path``,
+            ``score``, and ``reasons``.
+        """
+        cpa = CapPackAdapter()
+        suggest_result = cpa.suggest(path)
+
+        return [
+            {
+                "pack_name": s.pack_name,
+                "pack_path": s.pack_path,
+                "score": s.score,
+                "reasons": s.reasons,
+            }
+            for s in suggest_result.suggestions
+        ]
+
+    def dry_run(self, path: str) -> str:
+        """Preview what :meth:`apply` would do without writing any files.
+
+        Args:
+            path: Path to the skill directory.
+
+        Returns:
+            Human-readable description of proposed changes.
+        """
+        sp = Path(path).resolve()
+        if not sp.exists():
+            return f"Error: path does not exist: {path}"
+
+        cpa = CapPackAdapter()
+        result = cpa.dry_run(path)
+
+        lines = [
+            f"[DRY RUN] Hermes adapter — skill: {sp.name}",
+            f"  Path:          {sp}",
+            f"  Compliance:    {'✅ Pass' if result.compliance_ok else '❌ Fail'}",
+            f"  Message:       {result.message}",
+        ]
+
+        for s in result.suggestions:
+            lines.append(f"  Suggested pack: {s.pack_name} (score {s.score:.2f})")
+            for r in s.reasons:
+                lines.append(f"    - {r}")
+
+        if not result.suggestions:
+            lines.append("  No matching pack found; no changes would be made.")
+
+        lines.append("  [no files modified — dry run]")
+        return "\n".join(lines)
+
+    def apply(self, path: str) -> bool:
+        """Execute the adaptation: add skill to the best-matching pack.
+
+        Args:
+            path: Path to the skill directory.
+
+        Returns:
+            ``True`` if the skill was added to a pack successfully.
+        """
+        sp = Path(path).resolve()
+        if not sp.exists():
+            return False
+
+        auto_cfm = getattr(self, "_config", AdapterConfig(agent_type="hermes")).auto_confirm
+        cpa = CapPackAdapter()
+        result = cpa.apply(str(sp), confirm=not auto_cfm)
+        return result.applied
+
+    def get_agent_info(self) -> dict[str, Any]:
+        """Return metadata about the Hermes agent environment.
+
+        Returns:
+            Dict with keys ``name``, ``available``, ``version``,
+            ``config_path``, ``skills_path``.
+        """
+        return {
+            "name": "hermes",
+            "available": HERMES_HOME.exists() and HERMES_CONFIG.exists(),
+            "version": "0.9.1",  # Matches hermes-cap-pack version
+            "config_path": str(HERMES_CONFIG),
+            "skills_path": str(HERMES_SKILLS),
+        }

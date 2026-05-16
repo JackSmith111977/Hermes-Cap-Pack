@@ -705,24 +705,74 @@
       "status": "approved",
       "stories": [
         {
+          "id": "STORY-5-0-1",
+          "name": "制定四层统一标准 — CAP-PACK-STANDARD.md",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-0-2",
+          "name": "创建 machine-checkable 规则集 (v3 schema + rules.yaml)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-0-3",
+          "name": "Workflow 编排模式定义 (sequential/parallel/conditional/dag)",
+          "status": "completed"
+        },
+        {
           "id": "STORY-5-1-1",
           "name": "L1 基础检测器 + L2 健康检测器",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-5-1-2",
           "name": "L3 生态检测器 + L4 编排检测器",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-5-1-3",
           "name": "CLI 工具 + JSON/HTML 报告",
-          "status": "draft"
+          "status": "completed"
         },
         {
           "id": "STORY-5-1-4",
           "name": "新增 Skill Watcher (cron + fingerprint)",
-          "status": "draft"
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-2-1",
+          "name": "pre_flight gate 集成 (治理门禁)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-2-2",
+          "name": "SRA 质量注入 + 编排感知推荐 (权重因子)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-2-3",
+          "name": "自动适配改造引擎 (scan/suggest/dry_run/apply)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-2-4",
+          "name": "cron 定时扫描 + 飞书推送",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-3-1",
+          "name": "适配器抽象层 + OpenCode 适配器 (Phase 3)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-3-2",
+          "name": "MCP Server 治理能力暴露 (Phase 3)",
+          "status": "completed"
+        },
+        {
+          "id": "STORY-5-3-3",
+          "name": "OpenClaw / Claude Code 适配器 (Phase 3)",
+          "status": "completed"
         }
       ]
     }
@@ -840,9 +890,9 @@
     {
       "sprint": "Sprint 9 (current)",
       "date": "2026-05-16",
-      "summary": "EPIC-005 Phase 0: 统一标准制定 + 行业调研 + SPEC-5-1 草案 — 4 个 Story",
+      "summary": "EPIC-005 Phase 0-3: 全部 14 个 Story 完成 — 标准 + 引擎 + Hermes 集成 + 多 Agent 适配层",
       "tests_added": 0,
-      "stories_completed": 0
+      "stories_completed": 14
     }
   ],
   "footer": "由 project-report.json 驱动生成 — 🤖 boku (Emma) · v0.9.1 (2026-05-16 对齐)"

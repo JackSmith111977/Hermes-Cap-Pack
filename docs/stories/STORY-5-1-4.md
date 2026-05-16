@@ -1,7 +1,7 @@
 # Story: Skill Watcher (fingerprint + cron)
 
 > **story_id**: `STORY-5-1-4`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-1

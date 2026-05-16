@@ -1,7 +1,7 @@
 # Story: CLI 工具 + JSON/HTML 报告
 
 > **story_id**: `STORY-5-1-3`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-1

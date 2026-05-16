@@ -1,7 +1,7 @@
 # Story: 原子性 + 树状 + 工作流检测器
 
 > **story_id**: `STORY-5-1-1`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-1

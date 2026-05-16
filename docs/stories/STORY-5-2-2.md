@@ -1,7 +1,7 @@
 # Story: SRA 质量注入 + 编排感知推荐
 
 > **story_id**: `STORY-5-2-2`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-2

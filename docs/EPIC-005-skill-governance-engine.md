@@ -6,7 +6,7 @@
 > **updated**: 2026-05-16
 > **owner**: boku (Emma)
 > **优先级**: P1 — 治理是 cap-pack 生态成熟的关键一环
-> **估算**: ~24h（3 Phases · ~10 Stories）
+> **估算**: ~30h（4 Phases · ~15 Stories）
 > **前置条件**: EPIC-004 质量升级完成（CHI 门禁 + 质量基准已锁定）
 
 ---
@@ -107,7 +107,7 @@
 - [x] `--json` 和 `--html` 输出格式
 - [x] watcher 可检测新 skill 并触发全链路检查
 
-### Phase 2 — Hermes 深度集成 + 自动适配（4 Stories · ~10h）
+### Phase 2 — Hermes 深度集成 + 自动适配（4 Stories · ~10h）✅
 
 | Story | 内容 | 估算 | 产出物 |
 |:------|:-----|:----:|:-------|
@@ -116,13 +116,28 @@
 | STORY-5-2-3 | **自动适配改造引擎（dry-run → 确认 → 执行）** | 4h | `adapter/cap-pack-adapter.py` |
 | STORY-5-2-4 | **cron 定时扫描 + 报告推送** | 2h | cron 注册 + 飞书消息推送 |
 
-### Phase 3 — 多 Agent 适配层（3 Stories · ~6h）
+**Phase 2 验收标准：**
+- [x] pre_flight.py 新增 governance gate，对变更 skill 自动扫描 L0+L1
+- [x] SRA 推荐权重包含 SQS 质量分 + 编排感知因子
+- [x] 自动适配引擎支持 scan/suggest/dry_run/apply 四步流程
+- [x] 每日 cron 扫描 + 飞书推送合规报告
+- [x] 以上全部通过 SDD→DEV→QA→COMMIT 完整链式验证
+
+### Phase 3 — 多 Agent 适配层（3 Stories · ~6h）✅ 已完成
 
 | Story | 内容 | 估算 | 产出物 |
 |:------|:-----|:----:|:-------|
 | STORY-5-3-1 | **适配器抽象层 + OpenCode 适配器** | 2h | `adapter/base.py`, `adapter/opencode_adapter.py` |
 | STORY-5-3-2 | **MCP Server 暴露治理 + 编排能力** | 2h | `mcp/skill-governance-server.py` |
 | STORY-5-3-3 | **OpenClaw / Claude Code 适配器** | 2h | `adapter/openclaw_adapter.py`, `adapter/claude_adapter.py` |
+
+**Phase 3 验收标准：**
+- [x] `adapter/base.py` 定义 SkillGovernanceAdapter 抽象基类（6 个抽象方法）
+- [x] OpenCode/OpenClaw/Claude 三个适配器全部继承基类并实现全部方法
+- [x] HermesAdapter 重构为继承 SkillGovernanceAdapter（向后兼容）
+- [x] MCP Server 暴露 5 个 tools + 3 个 resources
+- [x] 全部 141 测试通过
+- [x] 以上全部通过联合工作流 SPEC→DEV→QA→COMMIT
 
 ---
 

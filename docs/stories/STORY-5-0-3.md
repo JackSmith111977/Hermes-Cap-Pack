@@ -1,7 +1,7 @@
 # Story: Workflow 编排模式定义
 
 > **story_id**: `STORY-5-0-3`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-0

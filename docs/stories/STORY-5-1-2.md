@@ -1,7 +1,7 @@
 # Story: Cap-Pack 合规检查器
 
 > **story_id**: `STORY-5-1-2`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-1

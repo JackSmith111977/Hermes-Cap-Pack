@@ -1,7 +1,7 @@
 # Story: 制定四层统一标准
 
 > **story_id**: `STORY-5-0-1`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-0

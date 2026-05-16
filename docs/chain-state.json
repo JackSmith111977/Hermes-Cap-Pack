@@ -11,11 +11,12 @@
     "epic": "EPIC-005",
     "current_stage": "COMPLETED",
     "completed_stages": [
-      "QA",
       "SPEC",
-      "DEV",
-      "COMMIT"
+      "COMMIT",
+      "QA",
+      "DEV"
     ],
+    "phase": "Phase-3",
     "gate_history": []
   }
 }

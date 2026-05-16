@@ -1,7 +1,7 @@
 # 🔌 SPEC-5-2: Hermes 深度集成 + 自动适配 — Phase 2
 
 > **spec_id**: `SPEC-5-2`
-> **status**: `draft`
+> **status**: `completed`
 > **epic**: `EPIC-005`
 > **phase**: `Phase-2`
 > **created**: 2026-05-16

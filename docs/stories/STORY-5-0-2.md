@@ -1,7 +1,7 @@
 # Story: machine-checkable 规则集
 
 > **story_id**: `STORY-5-0-2`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-0

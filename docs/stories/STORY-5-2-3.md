@@ -1,7 +1,7 @@
 # Story: 自动适配改造引擎
 
 > **story_id**: `STORY-5-2-3`
-> **status**: `draft`
+> **status**: `completed`
 > **priority**: P1
 > **epic**: EPIC-005
 > **spec_ref**: SPEC-5-2
