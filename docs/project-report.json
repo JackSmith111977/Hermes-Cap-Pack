@@ -3,18 +3,20 @@
     "icon": "📦",
     "name": "Hermes Capability Pack",
     "package": "hermes-cap-pack",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Agent 能力模块化与跨平台复用框架 — 17 能力包 × ~145 技能的三层树状组织",
     "long_description": "hermes-cap-pack 是一个将 Hermes Agent 的扁平化技能体系拆分为标准化、可移植的「能力包」(Capability Pack) 的项目。包含能力包格式规范（cap-pack.yaml）、解析器、适配器（Hermes/OpenCode）、安装引擎、质量评分系统（SQS）、树状索引工具、生命周期审计工具。",
     "author": "boku (Emma/小玛)",
     "repo": "github.com/JackSmith111977/Hermes-Cap-Pack",
     "license": "MIT",
-    "python": "≥ 3.10",
+    "python": "≥ 3.11",
     "dependencies": [
-      "pyyaml",
+      "pyyaml>=6.0",
+      "typer",
+      "rich",
       "jsonschema"
     ],
-    "entry_cli": "python3 scripts/install-pack.py",
+    "entry_cli": "python -m skill_governance.cli.main (alias: cap-pack)",
     "daemon_port": "",
     "overview_cards": [
       {
@@ -49,7 +51,7 @@
       },
       {
         "attr": "入口",
-        "value": "<code>python -m scripts.cli.main</code>"
+        "value": "<code>python -m skill_governance.cli.main</code>"
       },
       {
         "attr": "覆盖",
@@ -845,9 +847,9 @@
     }
   ],
   "tests": {
-    "passing": 141,
-    "total": 141,
-    "duration_seconds": 8.2,
+    "passing": 202,
+    "total": 202,
+    "duration_seconds": 0.67,
     "coverage_pct": null,
     "files": [
       {
