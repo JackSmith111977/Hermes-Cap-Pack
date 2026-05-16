@@ -13,10 +13,10 @@
 | | 属性 | 值 |
 |:-----|:----|
 | **目的** | 将 AI Agent 的技能拆分为可移植的「能力包 (Capability Pack)」，实现跨 Agent 复用与质量治理 |
-| **CLI 入口** | `python -m scripts.cli.main`（或创建 alias `cap-pack`） |
-| **Schema 版本** | `schemas/cap-pack-v1.0.0schema.json` |
+| **CLI 入口** | `python -m skill_governance.cli.main`（或创建 alias `cap-pack`） |
+| **Schema 版本** | `schemas/cap-pack-v3.schema.json` |
 | **最小 Python** | ≥ 3.11 |
-| **唯一依赖** | `pyyaml>=6.0` |
+| **依赖** | `pyyaml>=6.0` (核心) · `typer rich jsonschema` (治理引擎) |
 | **仓库** | `https://github.com/JackSmith111977/Hermes-Cap-Pack.git` |
 | **作者** | boku (Emma) |
 
@@ -25,8 +25,8 @@
 python3 --version
 # 预期输出: Python 3.11.x 或以上
 
-python -m scripts.cli.main --help
-# 预期输出: 显示 cap-pack CLI 帮助信息
+python -m skill_governance.cli.main --help
+# 预期输出: 显示 skill-governance CLI 帮助信息
 ```
 
 ---
@@ -51,18 +51,18 @@ git clone https://github.com/JackSmith111977/Hermes-Cap-Pack.git
 cd Hermes-Cap-Pack
 
 # 2. 安装 Python 依赖
-pip install pyyaml>=6.0
+pip install pyyaml>=6.0 typer rich
 
 # 3. 验证
-python -m scripts.cli.main --help
+python -m skill_governance.cli.main --help
 
 # 4. （可选）创建 alias
-alias cap-pack='python -m scripts.cli.main'
+alias cap-pack='python -m skill_governance.cli.main'
 ```
 
 **验证安装成功**：
 ```bash
-python -m scripts.cli.main list
+python -m skill_governance.cli.main list
 # 预期输出: 📭 (无已安装的能力包)
 ```
 
@@ -78,84 +78,89 @@ MCP 工具配置封装为一个标准化目录结构。一个能力包可以在 
 
 ### 架构总览
 
-```
-┌────────────────────────────────────┐
-│     Agent A 原生技能库              │
-│  (Hermes Agent 已有 351+ 技能)     │
-└───────────────┬────────────────────┘
-                │ 技能提取 → 标准化打包
-                ▼
-┌────────────────────────────────────┐
-│      Cap-Pack 标准化层              │
-│  ┌──────────┐┌──────────┐┌───────┐ │
-│  │PackParser││Dependency││Verifier│ │
-│  │(YAML解析) ││(依赖检查) ││(验证)  │ │
-│  └──────────┘└──────────┘└───────┘ │
-│  ┌──────────────────────────────┐  │
-│  │   AgentAdapter Protocol 层    │  │
-│  │ ┌──────┐┌────────┐┌───────┐  │  │
-│  │ │Hermes││OpenCode││Claude │  │  │
-│  │ │Adapt ││Adapter ││Adapter│  │  │
-│  │ └──────┘└────────┘└───────┘  │  │
-│  │ ┌────────┐                    │  │
-│  │ │OpenClaw│ ← 相同 Protocol    │  │
-│  │ │Adapter │   各适配器格式转换   │  │
-│  │ └────────┘                    │  │
-│  └──────────────────────────────┘  │
-└───────────────┬────────────────────┘
-                │ 安装 → 格式转换 → 注入
-                ▼
-┌────────────────────────────────────┐
-│     Agent B 原生技能库              │
-│  (OpenCode/Claude/OpenClaw 各格式)  │
-└────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph AgentA["Agent A 原生技能库"]
+        A1[Hermes 351+ 技能]
+    end
 
-┌────────────────────────────────────┐
-│     skill-governance 治理引擎       │
-│  ┌──────┐┌──────┐┌──────┐┌─────┐  │
-│  │L0兼容 ││L1基础││L2健康││L3+L4│  │
-│  │性检查 ││结构查││原子性││生态/ │  │
-│  │      ││     ││检查 ││工作流│  │
-│  └──────┘└──────┘└──────┘└─────┘  │
-│  MCP Server: scan/suggest/apply    │
-└────────────────────────────────────┘
+    subgraph CapPack["Cap-Pack 标准化层"]
+        direction TB
+        CP1[PackParser<br/>YAML 解析]
+        CP2[Dependency<br/>依赖检查]
+        CP3[Verifier<br/>安装验证]
+        CP4[Adapter Protocol<br/>适配器接口]
+        CP5[HermesAdapter]
+        CP6[OpenCodeAdapter]
+        CP7[ClaudeAdapter]
+        CP8[OpenClawAdapter]
+    end
+
+    subgraph AgentB["Agent B 原生技能库"]
+        B1[OpenCode / Claude / OpenClaw]
+    end
+
+    subgraph Gov["skill-governance 治理引擎"]
+        direction LR
+        G1[L0 兼容性]
+        G2[L1 结构]
+        G3[L2 原子性]
+        G4[L3+L4 生态/工作流]
+    end
+
+    AgentA -->|技能提取 → 标准化打包| CapPack
+    CapPack -->|安装 → 格式转换 → 注入| AgentB
+    CapPack -.->|扫描/修复| Gov
 ```
 
 ### 核心流程
 
-```
-原始技能 (SKILL.md)     Cap-Pack 目录         目标 Agent
-     │                       │                     │
-     ▼                       ▼                     ▼
-┌─────────┐         ┌──────────────┐      ┌──────────────┐
-│ Hermes  │─提取→    │ packs/doc-   │─安装→│ Hermes:      │
-│ 351+    │          │ engine/      │      │ ~/.hermes/   │
-│ 技能    │          │ ├ cap-pack.  │      │   skills/    │
-│         │          │ │ yaml       │      │              │
-└─────────┘          │ ├ SKILLS/    │─安装→│ OpenCode:    │
-                     │ ├ EXPERIENCI │      │ ~/.config/   │
-Agent 原生 ←─────────│ │ ES/        │      │   opencode/  │
- 复用已有能力         │ ├ MCP/       │─安装→│ Claude:      │
-                     │ └ SCRIPTS/   │      │ ~/.claude/   │
-                     └──────────────┘      │   skills/    │
-                                           └──────────────┘
+```mermaid
+flowchart LR
+    subgraph Src["原始技能 (SKILL.md)"]
+        H1[Hermes 351+ 技能]
+    end
+
+    subgraph Pack["Cap-Pack 目录"]
+        P1[packs/doc-engine/]
+        P2[├── cap-pack.yaml]
+        P3[├── SKILLS/]
+        P4[├── EXPERIENCES/]
+        P5[├── MCP/]
+        P6[└── SCRIPTS/]
+    end
+
+    subgraph Dst["目标 Agent"]
+        D1[Hermes<br/>~/.hermes/skills/]
+        D2[OpenCode<br/>~/.config/opencode/]
+        D3[Claude<br/>~/.claude/skills/]
+    end
+
+    Src -->|提取| Pack
+    Pack -->|安装| D1
+    Pack -->|安装| D2
+    Pack -->|安装| D3
+    Dst -.->|Agent 原生<br/>复用已有能力| Src
 ```
 
 ### 治理循环
 
-```
-scan ──→ 发现 L0-L4 问题 ──→ suggest ──→ 推荐修复方案
-  ↑                                      │
-  │                                      ▼
-  └──── verify ←──── apply ←─── dry_run (预览)
+```mermaid
+flowchart LR
+    A[scan<br/>发现 L0-L4 问题] --> B[suggest<br/>推荐修复方案]
+    B --> C[dry_run<br/>预览修复]
+    C --> D[apply<br/>执行修复]
+    D --> E[verify<br/>重新扫描验证]
+    E -.->|仍有问题| A
+    E -->|全部通过| F[✅ 合规]
 ```
 
 **验证核心概念**：
 ```bash
-python -m scripts.cli.main list
+python -m skill_governance.cli.main list
 # 预期输出: 📭 (无已安装的能力包) 或列出已安装包
 
-python -m scripts.cli.main status
+python -m skill_governance.cli.main status
 # 预期输出: 📊 能力包状态概览 (含包数量、质量评分等)
 ```
 
@@ -262,7 +267,7 @@ cap-pack status
 ls -d packs/*/
 # 预期输出: 17 个能力包目录
 
-python -m scripts.cli.main search doc
+python -m skill_governance.cli.main search doc
 # 预期输出: 📦 doc-engine (2.0.0) — 文档引擎能力包
 ```
 
@@ -486,7 +491,7 @@ ls scripts/adapters/
 
 | 问题 | 排查步骤 | 恢复命令 |
 |:-----|:---------|:---------|
-| `cap-pack: command not found` | 未创建 alias，或 Python 环境未激活 | `alias cap-pack='python -m scripts.cli.main'` |
+| `cap-pack: command not found` | 未创建 alias，或 Python 环境未激活 | `alias cap-pack='python -m skill_governance.cli.main'` |
 | pip install 失败 | 检查 Python 版本 ≥ 3.11，或使用 conda | `python3 --version && pip install pyyaml>=6.0` |
 | 安装后 skill 不生效 | Hermes 需要重启才能识别新 skill | `systemctl --user restart hermes-gateway` |
 | 升级后版本不对 | 检查 `installed_packs.json` 是否更新 | `cap-pack list` 确认版本号 |
@@ -550,7 +555,7 @@ tags:
 EOF
 
 # 4. 验证包格式
-python -m scripts.cli.main inspect packs/my-pack
+python -m skill_governance.cli.main inspect packs/my-pack
 # 预期输出: 包名、版本、skills 列表
 
 # 5. 治理扫描
