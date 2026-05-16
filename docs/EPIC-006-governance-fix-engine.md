@@ -148,7 +148,7 @@ EPIC-006
 
 ## 🚀 快速开始 (5 分钟)
 # 1. 安装一个包
-python3 -m scripts.cli.main install packs/doc-engine/
+cap-pack install packs/doc-engine/
 
 # 2. 检查合规
 skill-governance scan packs/doc-engine/

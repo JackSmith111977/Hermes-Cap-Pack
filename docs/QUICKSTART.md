@@ -61,7 +61,7 @@ python3 -c "import yaml; print(f'pyyaml: {yaml.__version__}')"
 
 **创建 CLI alias**：
 ```bash
-alias cap-pack='python -m scripts.cli.main'
+alias cap-pack='python -m skill_governance.cli.main'
 
 # 验证 CLI 可用
 cap-pack --help
@@ -278,11 +278,10 @@ PACKS_TO_INSTALL=(
 )
 for pack in "${PACKS_TO_INSTALL[@]}"; do
     echo "📦 安装 $pack ..."
-    python -m scripts.cli.main install "$pack" --dry-run
-done
+    python -m skill_governance.cli.main install "$pack" --dry-run
 
-# Step 5: 验证
-python -m scripts.cli.main status
+**查看已安装能力包状态**：
+cap-pack status
 echo "✅ 初始化完成！"
 ```
 
@@ -309,4 +308,4 @@ echo "✅ 初始化完成！"
 | Step 3 | `cap-pack search` 无结果 | 确认在项目根目录运行，或 `packs/` 目录存在 |
 | Step 4 | 安装失败：适配器不可用 | 确认目标 Agent 环境已安装（`is_available` 返回 True） |
 | Step 5 | `verify` 不通过 | 检查安装路径和文件权限，参考 `ADAPTER_GUIDE.md` 故障排查 |
-| 任何步骤 | 命令找不到 | 执行 `alias cap-pack='python -m scripts.cli.main'` |
+| 任何步骤 | 命令找不到 | 执行 `alias cap-pack='python -m skill_governance.cli.main'` |
