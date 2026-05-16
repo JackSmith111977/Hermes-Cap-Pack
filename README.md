@@ -170,20 +170,26 @@ python -m skill_governance.cli.main status
 
 ### 完整命令速查（三列参考表）
 
+> **提示**：以下命令均使用 `cap-pack` 别名（完整入口：`python -m skill_governance.cli.main`）。  
+> 未安装 alias 时请替换为 `python -m skill_governance.cli.main`。
+
 | 命令 | 作用 | 关键参数 |
 |:-----|:-----|:---------|
-| `install <dir>` | 安装能力包到目标 Agent | `--dry-run`, `--target hermes\|opencode\|auto` |
-| `remove <name>` | 卸载已安装的能力包 | `--target hermes\|opencode` |
-| `verify <name>` | 验证安装完整性 | `--target hermes\|opencode` |
-| `list` | 列出已安装包 | `--target hermes\|opencode` |
-| `inspect <dir>` | 查看包内容（不安装） | — |
-| `upgrade <name>` | 升级已安装的包 | `--all`, `--dry-run` |
-| `status` | 全局状态概览 | — |
-| `search <term>` | 搜索可用包 | — |
-| `skill add <p> <src>` | 向包添加 skill | — |
-| `skill remove <p> <id>` | 从包移除 skill | `--dry-run` |
-| `skill list <p>` | 列出包内 skill | — |
-| `skill update <p> <id> [src]` | 更新包内 skill | — |
+| `cap-pack install <dir>` | 安装能力包到目标 Agent | `--dry-run`, `--target hermes\|opencode\|auto` |
+| `cap-pack remove <name>` | 卸载已安装的能力包 | `--target hermes\|opencode` |
+| `cap-pack verify <name>` | 验证安装完整性 | `--target hermes\|opencode` |
+| `cap-pack list` | 列出已安装包 | `--target hermes\|opencode` |
+| `cap-pack inspect <dir>` | 查看包内容（不安装） | — |
+| `cap-pack upgrade <name>` | 升级已安装的包 | `--all`, `--dry-run` |
+| `cap-pack status` | 全局状态概览 | — |
+| `cap-pack search <term>` | 搜索可用包 | — |
+| `cap-pack scan <dir>` | L0-L4 合规扫描 | `--format json` |
+| `cap-pack fix <dir>` | 自动修复已知合规问题 | `--dry-run` |
+| `cap-pack rules` | 查看治理规则列表 | — |
+| `cap-pack skill add <p> <src>` | 向包添加 skill | — |
+| `cap-pack skill remove <p> <id>` | 从包移除 skill | `--dry-run` |
+| `cap-pack skill list <p>` | 列出包内 skill | — |
+| `cap-pack skill update <p> <id> [src]` | 更新包内 skill | — |
 
 ### 典型使用场景
 
@@ -346,14 +352,14 @@ python3 -c "from scripts.adapters.opencode import OpenCodeAdapter; \
 
 ```bash
 # 扫描能力包（L0-L4 全量检查）
-python -m skill_governance.cli.main scan packs/doc-engine
+cap-pack scan packs/doc-engine
 # 预期输出: L0 ✅ L1 ✅ L2 ✅ L3 ✅ L4 ✅
 
 # JSON 格式输出（AI 友好）
-python -m skill_governance.cli.main scan packs/doc-engine --format json
+cap-pack scan packs/doc-engine --format json
 
 # 自动修复已知问题
-python -m skill_governance.cli.main fix packs/doc-engine
+cap-pack fix packs/doc-engine
 # 预期输出: 已修复 N 个问题
 
 # 启动 MCP Server（供 Agent 调用）
@@ -361,7 +367,7 @@ python -m skill_governance.mcp.skill_governance_server
 # 预期输出: MCP server started on stdio
 
 # 查看治理规则列表
-python -m skill_governance.cli.main rules
+cap-pack rules
 # 预期输出: 各层级规则清单
 ```
 
@@ -377,8 +383,7 @@ python -m skill_governance.cli.main rules
 
 **验证治理引擎**：
 ```bash
-python -m skill_governance.cli.main scan packs/doc-engine \
-  --format json 2>/dev/null | python3 -c \
+cap-pack scan packs/doc-engine --format json 2>/dev/null | python3 -c \
   "import sys,json; d=json.load(sys.stdin); \
   print('Layers:', list(d.get('layers',{}).keys()))"
 # 预期输出: Layers: ['L0', 'L1', 'L2', 'L3', 'L4']
