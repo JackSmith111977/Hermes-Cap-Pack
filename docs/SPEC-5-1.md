@@ -1,10 +1,10 @@
 # SPEC-5-1: Skill 治理引擎核心 — 原子性/树状/工作流/合规检测器 + CLI
 
 > **spec_id**: `SPEC-5-1`
-> **status**: `draft`
+> **status**: `completed`
 > **epic**: `EPIC-005`
 > **created**: 2026-05-16
-> **updated**: 2026-05-16
+> **updated**: 2026-05-16 (Phase 0 标准就绪后对齐更新)
 > **owner**: boku (Emma)
 > **优先级**: P1
 > **估算**: ~10h（4 Stories）
@@ -26,11 +26,11 @@
 
 ### 不包含 (Out of Scope)
 
-- ❌ pre_flight gate 集成（Phase 1）
-- ❌ SRA 质量注入（Phase 1）
-- ❌ 自动适配改造引擎（Phase 1）
-- ❌ 多 Agent 适配器（Phase 2）
-- ❌ MCP Server（Phase 2）
+- ❌ pre_flight gate 集成（Phase 2）
+- ❌ SRA 质量注入（Phase 2）
+- ❌ 自动适配改造引擎（Phase 2）
+- ❌ 多 Agent 适配器（Phase 3）
+- ❌ MCP Server（Phase 3）
 
 ---
 
@@ -45,20 +45,22 @@ packages/skill-governance/
 │   └── main.py                 ← typer CLI 入口
 ├── scanner/
 │   ├── __init__.py
-│   ├── atomicity.py            ← 原子性扫描器
-│   ├── tree_validator.py       ← 树状结构检查器
-│   ├── workflow_detector.py    ← 工作流编排检测器
-│   └── compliance.py           ← Cap-Pack 合规检查器
+│   ├── base.py                 ← 规则驱动基础类（从 rules.yaml 加载规则）
+│   ├── atomicity.py            ← 原子性扫描器（L2 H004-H005）
+│   ├── tree_validator.py       ← 树状结构检查器（L2 H001-H003）
+│   ├── workflow_detector.py    ← 工作流编排检测器（L4 W001-W005）
+│   └── compliance.py           ← Cap-Pack 合规检查器（L1 F001-F007 + L3 E001-E005）
 ├── watcher/
 │   ├── __init__.py
 │   └── fingerprint.py          ← 快照 + 新增检测
 ├── reporter/
 │   ├── __init__.py
-│   ├── json_reporter.py        ← JSON 输出
-│   └── html_reporter.py        ← HTML 报告
+│   ├── json_reporter.py        ← JSON 输出（按 L0-L4 分层）
+│   └── html_reporter.py        ← HTML 报告（按 L0-L4 分层）
 ├── models/
 │   ├── __init__.py
-│   └── result.py               ← 检测结果数据模型
+│   ├── result.py               ← 检测结果数据模型
+│   └── rules.py                ← 规则数据模型（对应 rules.yaml 结构）
 ├── tests/
 │   ├── test_atomicity.py
 │   ├── test_tree_validator.py
@@ -136,25 +138,28 @@ def check_tree_membership(skill_name: str, tree_index: dict) -> CheckResult:
 ```python
 def check_workflow_orchestration(path: str) -> CheckResult:
     """
-    检查 SKILL.md 中是否有以下编排声明：
-    - frontmatter: design_pattern: pipeline|chain|dag|workflow
-    - frontmatter: depends_on → 依赖声明
-    - body 中是否有步骤式编排（Step 1 ... Step 2 ...）
-    - lifecycle hooks 声明
+    对照 standards/rules.yaml 的 L4(W) 规则 + standards/workflow-patterns.md 检测：
+    - W001: workflow 中引用的 skill 是否存在
+    - W002: DAG 无循环依赖（Kahn 算法）
+    - W003: DAG 无死锁（BFS 可达性）
+    - W004: pattern 值合法（sequential/parallel/conditional/dag）
+    - W005: 条件表达式语法正确
+    检测源：skill frontmatter 的 workflow 字段 + cap-pack.yaml 的 workflows 块
     """
 ```
 
 #### Cap-Pack 合规检查器
 
 ```python
-def check_cap_pack_compliance(skill_name: str, cap_pack_dir: str) -> CheckResult:
+def check_cap_pack_compliance(skill_name: str, cap_pack_dir: str) -> dict:
     """
-    对照 cap-pack-v2.schema.json 检查：
-    1. 是否可映射到某个 cap-pack 包的领域？
-    2. SQS 评分 ≥ 60?
-    3. version 字段是否存在？
-    4. tags 是否匹配包分类？
-    5. 与同包其他 skill 的内容重叠度 < 60%?
+    对照 Phase 0 标准体系检查：
+    1. L1 Foundation: 加载 standards/rules.yaml 的 L1 规则并逐条执行
+       - SKILL.md 存在性, frontmatter, SQS ≥ 60, version, tags, classification
+    2. L3 Ecosystem: 加载 standards/rules.yaml 的 L3 规则
+       - SRA 可发现性(调用 sqs-sync.py), 跨包重叠(调用 merge-suggest.py)
+    3. v3 Schema 验证: 引用 schemas/cap-pack-v3.schema.json
+    4. 输出: 按 L0-L4 分层的 CheckResult 列表
     """
 ```
 
@@ -271,9 +276,12 @@ class FingerprintWatcher:
 
 | 现有工具 | 关系 | 集成方式 |
 |:---------|:-----|:---------|
-| SQS (`skill-quality-score.py`) | **输入源** | CLI 内部调用 | 
+| SQS (`skill-quality-score.py`) | **输入源** | CLI 内部调用 |
 | skill-tree-index.py | **输入源** | 读取 JSON 输出 |
-| cap-pack v2 schema | **标准** | 导入 schema 做合规检查 |
+| CAP-PACK-STANDARD.md v1.0 | **标准源** | 合规规则的规范来源 |
+| standards/rules.yaml | **规则源** | 检测器从 YAML 加载规则，不硬编码 |
+| schemas/cap-pack-v3.schema.json | **合规 schema** | v3 验证（含 compliance_levels + workflows）|
+| standards/workflow-patterns.md | **编排定义** | 工作流检测器的规范来源 |
 | validate-pack.py | **参考** | 复用部分验证逻辑 |
 
 ---

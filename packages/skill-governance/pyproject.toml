@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "skill-governance"
+version = "0.1.0"
+description = "L0-L4 compliance governance engine for cap-pack skills — rule loading, scanning, reporting, and file fingerprinting"
+readme = "README.md"
+authors = [
+    { name = "boku (Emma)" },
+]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Quality Assurance",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["hermes", "agent", "capability-pack", "governance", "compliance", "quality"]
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/JackSmith111977/Hermes-Cap-Pack"
+Repository = "https://github.com/JackSmith111977/Hermes-Cap-Pack.git"
+
+[project.scripts]
+skill-governance = "skill_governance.cli.main:app"
+sg-scan = "skill_governance.cli.main:scan"
+sg-watcher = "skill_governance.cli.main:watcher"
+sg-rules = "skill_governance.cli.main:rules"
+
+[tool.version]
+version = "0.1.0"

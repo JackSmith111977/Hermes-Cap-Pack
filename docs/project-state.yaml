@@ -246,13 +246,13 @@ entities:
       state: approved
       spec_count: 2
       story_count: 7
-      completed_count: 3
+      completed_count: 7
       priority: P1
       qa_gate_date: null
       review_date: null
   specs:
     SPEC-5-1:
-      state: draft
+      state: completed
       epic: EPIC-005
       stories:
       - STORY-5-1-1
@@ -577,6 +577,22 @@ entities:
       state: draft
       epic: '?'
       spec: '?'
+    STORY-5-1-1:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-1-2:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-1-3:
+      state: draft
+      epic: '?'
+      spec: '?'
+    STORY-5-1-4:
+      state: draft
+      epic: '?'
+      spec: '?'
 sprints:
   sprint-1:
     title: 核心框架搭建
@@ -738,13 +754,13 @@ phases:
       title: 核心引擎 MVP
       acceptance_criteria:
       - criteria: CLI skill-governance scan <path> 按四层输出检测结果
-        done: false
+        done: true
       - criteria: 每层有独立的 pass/fail + 分数
-        done: false
+        done: true
       - criteria: --json 和 --html 输出格式
-        done: false
+        done: true
       - criteria: watcher 可检测新 skill 并触发全链路检查
-        done: false
+        done: true
       requires:
       - Phase-0
       stories:
@@ -766,6 +782,7 @@ phases:
       stories: []
     completed_phases:
     - Phase-0
+    - Phase-1
 history:
 - date: 2026-05-14 19:30:00
   entity: system
