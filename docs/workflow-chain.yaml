@@ -1,62 +1,93 @@
-# Workflow Chain Protocol v2.0
-# 统一状态机：SDD → DEV → QA → COMMIT 自动链式衔接
-# 由 scripts/workflow-chain.py 实际执行
-# 本文件为人类可读的配置声明，与 workflow-chain.py 同步
+# Workflow Chain Protocol v1.0
+# 定义 SDD → DEV → QA → COMMIT 四段链式衔接
+# 每个 transition 有 gate 检查，通过后才能进入下一阶段
 
 name: workflow-chain
-version: 2.0.0
+version: 1.0.0
 description: >
-  工作流链衔接协议 v2.0 — 统一状态机管理 SDD→DEV→QA→COMMIT。
-  v2.0 改进：
-  1. 自动注册 — 无需手动创建 chain-state.json
-  2. 泛化门禁 — 自动检测项目类型，选择合适 gate
-  3. skill 提示 — advance 后自动输出 skill_view() 指令
-  4. 独立脚本 — scripts/workflow-chain.py 取代旧 chain-state.py + chain-gate.py
+  工作流链衔接协议，连接 SDD（Spec管理）、DEV（通用开发）、QA（质量门禁）
+  三个阶段。每个 transition 强制 gate 检查，防止跳过。
 
 stages:
   - id: SPEC
     title: Spec 完成
-    description: 需求→Spec→Story 批准
+    description: SDD 工作流完成，Spec/Story 已批准
     entry_skill: sdd-workflow
+    exit_gate:
+      script: scripts/chain-gate.py check_spec
+      description: 检查当前 Story 是否为 approved/completed 状态
     next: DEV
 
   - id: DEV
     title: 开发实施
-    description: 7 步开发流程 (TDD)
+    description: 通用开发工作流，7 步标准流程
     entry_skill: generic-dev-workflow
+    exit_gate:
+      script: scripts/chain-gate.py check_dev
+      description: 检查测试全部通过 + self-review 通过
     next: QA
 
   - id: QA
     title: 质量门禁
-    description: L0-L4 分层门禁
+    description: 通用 QA 工作流，L0-L4 分层门禁
     entry_skill: generic-qa-workflow
+    exit_gate:
+      script: scripts/chain-gate.py check_qa
+      description: 按变更类型检查对应 L0-Lx 门禁全部通过
     next: COMMIT
 
   - id: COMMIT
     title: 提交对齐
-    description: 文档对齐 + 提交
-    entry_skill: commit-quality-check
-    next: null  # 最终阶段
+    description: 文档对齐 + 提交 + 项目状态同步
+    entry_skill: generic-dev-workflow
+    exit_gate: null  # 最终阶段
+    next: null
 
 gates:
-  SPEC:
-    description: "检查 EPIC Stories 是否完整"
-    check: "project-state.yaml epics[].completed_count == story_count"
+  check_spec:
+    steps:
+      - command: >
+          python3 scripts/spec-state.py status <story_id>
+          2>/dev/null | grep -E "(approved|completed|archived)"
+        expected_exit: 0
+        fail_message: "Spec/Story 未批准，禁止进入开发阶段"
+    description: "检查 Story 必须为 approved/completed 状态"
   
-  DEV:
-    description: "检查测试是否全部通过"
-    check: "pytest tests/ -q 全绿"
+  check_dev:
+    steps:
+      - command: "python3 -m pytest tests/ -q --tb=short 2>&1 | tail -3"
+        expected_exit: 0
+        fail_message: "测试失败，禁止进入 QA 阶段"
+      - command: >
+          grep -q "✅ 全部通过\|PASS\|pass" 
+          <(echo "self-review 需手动确认")
+        expected_exit: 0
+        fail_message: "self-review 未通过"
+    description: "检查测试全绿 + self-review 通过"
   
-  QA:
-    description: "检查项目状态一致性"
-    check: "project-state.py verify"
-  
-  COMMIT:
-    description: "检查是否有未提交变更"
-    check: "git status --short"
+  check_qa:
+    steps:
+      - command: "python3 scripts/ci-check-cross-refs.py 2>&1"
+        expected_exit: 0
+        fail_message: "交叉引用检查失败"
+      - command: "python3 scripts/project-state.py verify 2>&1"
+        expected_exit: 0
+        fail_message: "项目状态不一致"
+    description: "按变更类型检查 L0-Lx 门禁"
 
-# 使用方式:
-#   python3 scripts/workflow-chain.py init EPIC-005     # 初始化
-#   python3 scripts/workflow-chain.py advance EPIC-005   # 推进
-#   python3 scripts/workflow-chain.py status EPIC-005    # 查看
-#   python3 scripts/workflow-chain.py list               # 列表
+# 链式衔接信令：SDD IMPLEMENT 完成时自动触发 DEV 入口
+hooks:
+  post_sdd_complete:
+    action: load_skill
+    target: generic-dev-workflow
+    message: "SDD 阶段完成，自动进入开发阶段。请加载 generic-dev-workflow 按 7 步流程实施。"
+  
+  post_dev_complete:
+    action: load_skill
+    target: generic-qa-workflow
+    message: "开发完成，自动进入 QA 阶段。请加载 generic-qa-workflow 运行 L0-Lx 门禁。"
+  
+  post_qa_complete:
+    action: load_skill
+    target: generic-dev-workflow
+    message: "QA 通过，进入提交阶段。请执行 doc-alignment + commit-quality-check。"
