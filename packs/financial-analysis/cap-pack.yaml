@@ -1,6 +1,3 @@
-# 📊 financial-analysis — 金融数据分析能力包
-# Schema: cap-pack-v2.schema.json
-
 name: financial-analysis
 version: 1.0.0
 type: capability-pack
@@ -40,6 +37,10 @@ skills:
   - akshare
   - report
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 experiences:
 - id: data-fetch-pitfalls
   name: 金融数据获取陷阱
