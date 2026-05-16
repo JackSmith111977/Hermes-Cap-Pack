@@ -6,9 +6,31 @@ author: BadTechBandit
 license: MIT
 metadata:
   hermes:
-    tags: [design, html, prototype, ux, ui, creative, artifact, deck, motion, design-system]
-    related_skills: [design-md, popular-web-designs, excalidraw, architecture-diagram, web-ui-ux-design]
+    tags:
+    - design
+    - html
+    - prototype
+    - ux
+    - ui
+    - creative
+    - artifact
+    - deck
+    - motion
+    - design-system
+    related_skills:
+    - design-md
+    - popular-web-designs
+    - excalidraw
+    - architecture-diagram
+    - web-ui-ux-design
+triggers:
+- claude-design
+- design
+- html
+- prototype
+- one-off
 ---
+
 
 # Claude Design for CLI/API Agents
 

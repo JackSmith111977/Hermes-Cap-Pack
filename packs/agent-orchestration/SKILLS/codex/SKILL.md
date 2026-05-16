@@ -4,7 +4,10 @@ description: Delegate coding tasks to OpenAI Codex CLI agent. Use for building f
 version: 1.0.0
 triggers:
 - codex
-- codex
+- coding-agent
+- openai
+- delegate
+- coding
 author: Hermes Agent
 license: MIT
 metadata:
@@ -19,6 +22,7 @@ metadata:
     - claude-code
     - hermes-agent
 ---
+
 # Codex CLI
 
 Delegate coding tasks to [Codex](https://github.com/openai/codex) via the Hermes terminal. Codex is OpenAI's autonomous coding agent CLI.

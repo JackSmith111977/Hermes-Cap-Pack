@@ -1,19 +1,24 @@
 ---
 name: manim-video
-description: Production pipeline for mathematical and technical animations using Manim C...
+description: Production pipeline for mathematical and technical animations using Manim
+  C...
 version: 1.0.0
 triggers:
-- manim video
 - manim-video
+- manim
+- animation
+- math
+- production
 metadata:
   hermes:
     tags: []
 depends_on:
-  - ascii-video
+- ascii-video
 see_also:
-  - p5js
-  - sketch
+- p5js
+- sketch
 ---
+
 # Manim Video Production Pipeline
 
 ## Creative Standard

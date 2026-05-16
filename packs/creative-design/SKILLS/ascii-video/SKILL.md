@@ -2,18 +2,22 @@
 name: ascii-video
 description: Production pipeline for ASCII art video — any format. Converts video/audio/...
 triggers:
-- ascii video
 - ascii-video
+- ascii
+- video
+- animation
+- production
 metadata:
   hermes:
     tags: []
 depends_on:
-  - ascii-art
+- ascii-art
 see_also:
-  - manim-video
-  - sketch
-  - p5js
+- manim-video
+- sketch
+- p5js
 ---
+
 # ASCII Video Production Pipeline
 
 ## Creative Standard

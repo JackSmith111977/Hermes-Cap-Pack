@@ -6,9 +6,30 @@ author: Hermes Agent
 license: MIT
 metadata:
   hermes:
-    tags: [design, design-system, tokens, ui, accessibility, wcag, tailwind, dtcg, google]
-    related_skills: ["popular-web-designs", "claude-design", "excalidraw", "architecture-diagram", "web-ui-ux-design"]
+    tags:
+    - design
+    - design-system
+    - tokens
+    - ui
+    - accessibility
+    - wcag
+    - tailwind
+    - dtcg
+    - google
+    related_skills:
+    - popular-web-designs
+    - claude-design
+    - excalidraw
+    - architecture-diagram
+    - web-ui-ux-design
+triggers:
+- design-md
+- specification
+- token
+- author
+- validate
 ---
+
 
 # DESIGN.md Skill
 

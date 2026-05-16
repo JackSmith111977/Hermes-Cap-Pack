@@ -1,10 +1,14 @@
 ---
 name: pixel-art
-description: Convert images into retro pixel art with hardware-accurate palettes (NES, G...
+description: Convert images into retro pixel art with hardware-accurate palettes (NES,
+  G...
 version: 2.0.0
 triggers:
-- pixel art
 - pixel-art
+- retro
+- image-processing
+- convert
+- images
 author: dodo-reach
 license: MIT
 metadata:
@@ -21,8 +25,10 @@ metadata:
     - video
     category: creative
     credits:
-    - Hardware palettes and animation loops ported from Synero/pixel-art-studio (MIT) — https://github.com/Synero/pixel-art-studio
+    - Hardware palettes and animation loops ported from Synero/pixel-art-studio (MIT)
+      — https://github.com/Synero/pixel-art-studio
 ---
+
 # Pixel Art
 
 Convert any image into retro pixel art, then optionally animate it into a short

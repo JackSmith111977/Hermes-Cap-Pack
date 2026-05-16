@@ -3,8 +3,11 @@ name: architecture-diagram
 description: Generate dark-themed SVG diagrams of software systems and cloud infrastruct...
 version: 1.0.0
 triggers:
-- architecture diagram
 - architecture-diagram
+- diagram
+- architecture
+- svg
+- dark-themed
 author: Cocoon AI (hello@cocoon-ai.com), ported by Hermes Agent
 license: MIT
 dependencies: []
@@ -22,6 +25,7 @@ metadata:
     - concept-diagrams
     - excalidraw
 ---
+
 # Architecture Diagram Skill
 
 Generate professional, dark-themed technical architecture diagrams as standalone HTML files with inline SVG graphics. No external tools, no API keys, no rendering libraries — just write the HTML file and open it in a browser.

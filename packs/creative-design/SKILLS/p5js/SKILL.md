@@ -1,10 +1,14 @@
 ---
 name: p5js
-description: Production pipeline for interactive and generative visual art using p5.js. ...
+description: Production pipeline for interactive and generative visual art using p5.js.
+  ...
 version: 1.0.0
 triggers:
 - p5js
-- p5js
+- generative-art
+- creative-coding
+- production
+- pipeline
 metadata:
   hermes:
     tags:
@@ -22,11 +26,12 @@ metadata:
     - manim-video
     - excalidraw
 depends_on:
-  - sketch
+- sketch
 see_also:
-  - manim-video
-  - claude-design
+- manim-video
+- claude-design
 ---
+
 # p5.js Production Pipeline
 
 ## Creative Standard

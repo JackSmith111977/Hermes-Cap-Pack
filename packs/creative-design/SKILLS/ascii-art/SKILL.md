@@ -1,14 +1,18 @@
 ---
 name: ascii-art
-description: Generate ASCII art using pyfiglet (571 fonts), cowsay, boxes, toilet, image...
+description: Generate ASCII art using pyfiglet (571 fonts), cowsay, boxes, toilet,
+  image...
 version: 4.0.0
 triggers:
-- ascii art
 - ascii-art
+- ascii
+- art
+- terminal
+- pyfiglet
 author: 0xbyt4, Hermes Agent
 license: MIT
 depends_on:
-  - sketch
+- sketch
 dependencies: []
 metadata:
   hermes:
@@ -26,9 +30,10 @@ metadata:
     related_skills:
     - excalidraw
 see_also:
-  - ascii-video
-  - concept-diagrams
+- ascii-video
+- concept-diagrams
 ---
+
 # ASCII Art Skill
 
 Multiple tools for different ASCII art needs. All tools are local CLI programs or free REST APIs — no API keys required.

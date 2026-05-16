@@ -30,6 +30,10 @@ skills:
   - cli
   - gateway
   - development
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: claude-code
   name: claude-code
   description: Delegate coding tasks to Claude Code (Anthropic's CLI agent). Use for
@@ -45,6 +49,11 @@ skills:
   - Refactoring
   - PTY
   - Automation
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
+    - claude
 - id: codex
   name: codex
   description: Delegate coding tasks to OpenAI Codex CLI agent. Use for building features,
@@ -58,6 +67,10 @@ skills:
   - OpenAI
   - Code-Review
   - Refactoring
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: opencode
   name: opencode
   description: 'OpenCode CLI Agent — platform architecture, skill system, MCP configuration,
@@ -73,6 +86,10 @@ skills:
   - Skills
   - MCP
   - Config
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: blackbox
   name: blackbox
   description: Delegate coding tasks to Blackbox AI CLI agent. Multi-model agent with
@@ -85,6 +102,10 @@ skills:
   - Multi-Agent
   - Judge
   - Multi-Model
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: honcho
   name: honcho
   description: Configure and use Honcho memory with Hermes — cross-session user modeling,
@@ -100,6 +121,10 @@ skills:
   - Dialectic
   - User-Modeling
   - Session-Summary
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: hermes-message-injection
   name: hermes-message-injection
   description: 向 Hermes Agent 的消息管道注入外部服务上下文（如 SRA 技能推荐）。每次用户消息自动拦截 → 调外部服务 → 将结果作为前缀注入到消息前。涵盖
@@ -113,6 +138,10 @@ skills:
   - context-injection
   - pipeline
   - hook
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: bmad-party-mode-orchestration
   name: bmad-party-mode-orchestration
   description: BMAD 多智能体编排指南。详解如何使用 Party Mode 并行 Spawn Subagent、动态路由上下文、以及进行上下文压缩。适用于需要多视角分析、复杂问题研讨或模拟专家会议的场景。
@@ -123,6 +152,10 @@ skills:
   - multi-agent
   - orchestration
   - party-mode
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 mcp_servers: []
 triggers:
 - agent 编排
