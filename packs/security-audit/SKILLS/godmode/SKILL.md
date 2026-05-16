@@ -1,10 +1,14 @@
 ---
 name: godmode
-description: Jailbreak API-served LLMs using G0DM0D3 techniques — Parseltongue input obf...
+description: Jailbreak API-served LLMs using G0DM0D3 techniques — Parseltongue input
+  obf...
 version: 1.0.0
 triggers:
 - godmode
-- godmode
+- red-teaming
+- jailbreak
+- security
+- api-served
 author: Hermes Agent + Teknium
 license: MIT
 metadata:
@@ -22,6 +26,7 @@ metadata:
     related_skills:
     - obliteratus
 ---
+
 # G0DM0D3 Jailbreaking Skill
 
 Bypass safety filters on API-served LLMs using techniques from [G0DM0D3](https://github.com/elder-plinius/G0DM0D3) and [L1B3RT4S](https://github.com/elder-plinius/L1B3RT4S). Three attack modes plus Hermes-native configuration for persistent jailbreaking.

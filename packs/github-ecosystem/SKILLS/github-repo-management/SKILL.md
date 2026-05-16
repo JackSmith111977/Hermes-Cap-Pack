@@ -1,10 +1,14 @@
 ---
 name: github-repo-management
-description: Clone, create, fork, configure, and manage GitHub repositories. Manage remo...
+description: Clone, create, fork, configure, and manage GitHub repositories. Manage
+  remo...
 version: 1.1.0
 triggers:
-- github repo management
 - github-repo-management
+- github
+- repo
+- management
+- clone
 author: Hermes Agent
 license: MIT
 metadata:
@@ -21,6 +25,7 @@ metadata:
     - github-pr-workflow
     - github-issues
 ---
+
 # GitHub Repository Management
 
 Create, clone, fork, configure, and manage GitHub repositories. Each section shows `gh` first, then the `git` + `curl` fallback.

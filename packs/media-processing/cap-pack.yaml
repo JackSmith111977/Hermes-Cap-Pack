@@ -1,6 +1,3 @@
-# 🎵 media-processing — 音视频媒体处理能力包
-# Schema: cap-pack-v2.schema.json
-
 name: media-processing
 version: 1.0.0
 type: capability-pack
@@ -38,6 +35,10 @@ skills:
   - search
   - api
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: heartmula
   name: heartmula
   description: 本地音乐生成 — HeartMuLa 开源模型 (3B/7B)，条件歌词+标签生成完整歌曲。
@@ -50,6 +51,10 @@ skills:
   - heartmula
   - audio
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: songsee
   name: songsee
   description: 音频频谱可视化 — 支持 mel/chroma/MFCC/HPSS/tempogram 等多面板可视化。
@@ -62,6 +67,10 @@ skills:
   - music
   - analysis
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: spotify
   name: spotify
   description: Spotify 播放集成 — 搜索、播放、队列、歌单管理、设备控制。7 个内置工具。
@@ -74,6 +83,10 @@ skills:
   - playlists
   - media
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: youtube-content
   name: youtube-content
   description: YouTube 字幕提取与内容转换 — 章节摘要、博客文章、社交媒体帖子等多格式输出。
@@ -86,6 +99,10 @@ skills:
   - content
   - summary
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 experiences:
 - id: gif-search-pitfalls
   name: GIF 搜索陷阱

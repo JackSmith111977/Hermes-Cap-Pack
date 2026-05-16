@@ -1,10 +1,14 @@
 ---
 name: github-issues
-description: Create, manage, triage, and close GitHub issues. Search existing issues, ad...
+description: Create, manage, triage, and close GitHub issues. Search existing issues,
+  ad...
 version: 1.1.0
 triggers:
-- github issues
 - github-issues
+- github
+- issues
+- triage
+- manage
 author: Hermes Agent
 license: MIT
 metadata:
@@ -19,6 +23,7 @@ metadata:
     - github-auth
     - github-pr-workflow
 ---
+
 # GitHub Issues Management
 
 Create, search, triage, and manage GitHub issues. Each section shows `gh` first, then the `curl` fallback.

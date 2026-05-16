@@ -1,10 +1,14 @@
 ---
 name: himalaya
-description: CLI to manage emails via IMAP/SMTP. Use himalaya to list, read, write, repl...
+description: CLI to manage emails via IMAP/SMTP. Use himalaya to list, read, write,
+  repl...
 version: 1.0.0
 triggers:
 - himalaya
-- himalaya
+- email
+- imap
+- smtp
+- cli
 author: community
 license: MIT
 metadata:
@@ -20,6 +24,7 @@ prerequisites:
   commands:
   - himalaya
 ---
+
 # Himalaya Email CLI
 
 Himalaya is a CLI email client that lets you manage emails from the terminal using IMAP, SMTP, Notmuch, or Sendmail backends.

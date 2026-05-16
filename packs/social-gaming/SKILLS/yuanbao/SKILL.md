@@ -1,10 +1,14 @@
 ---
 name: yuanbao
-description: Yuanbao (元宝) group interaction — @mention users, query group info and members
+description: Yuanbao (元宝) group interaction — @mention users, query group info and
+  members
 version: 1.0.0
 triggers:
 - yuanbao
-- yuanbao
+- social
+- group
+- 元宝
+- interaction
 metadata:
   hermes:
     tags:
@@ -18,6 +22,7 @@ metadata:
     - 艾特
     related_skills: []
 ---
+
 # Yuanbao Group Interaction
 
 ## CRITICAL: How Messaging Works

@@ -1,15 +1,19 @@
 ---
 name: songsee
-description: Generate spectrograms and audio feature visualizations (mel, chroma, MFCC, ...
+description: Generate spectrograms and audio feature visualizations (mel, chroma,
+  MFCC, ...
 version: 1.0.0
 triggers:
 - songsee
-- songsee
+- audio
+- spectrogram
+- visualization
+- spectrograms
 author: community
 license: MIT
 depends_on:
-  - youtube-content
-  - spotify
+- youtube-content
+- spotify
 metadata:
   hermes:
     tags:
@@ -23,9 +27,10 @@ prerequisites:
   commands:
   - songsee
 see_also:
-  - gif-search
-  - songwriting-and-ai-music
+- gif-search
+- songwriting-and-ai-music
 ---
+
 # songsee
 
 Generate spectrograms and multi-panel audio feature visualizations from audio files.

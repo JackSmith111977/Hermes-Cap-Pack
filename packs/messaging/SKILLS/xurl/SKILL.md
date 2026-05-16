@@ -1,10 +1,14 @@
 ---
 name: xurl
-description: Interact with X/Twitter via xurl, the official X API CLI. Use for posting, ...
+description: Interact with X/Twitter via xurl, the official X API CLI. Use for posting,
+  ...
 version: 1.1.0
 triggers:
 - xurl
-- xurl
+- x
+- twitter
+- social-media
+- interact
 author: xdevplatform + openclaw + Hermes Agent
 license: MIT
 platforms:
@@ -24,6 +28,7 @@ metadata:
     homepage: https://github.com/xdevplatform/xurl
     upstream_skill: https://github.com/openclaw/openclaw/blob/main/skills/xurl/SKILL.md
 ---
+
 # xurl — X (Twitter) API via the Official CLI
 
 `xurl` is the X developer platform's official CLI for the X API. It supports shortcut commands for common actions AND raw curl-style access to any v2 endpoint. All commands return JSON to stdout.

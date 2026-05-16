@@ -1,10 +1,14 @@
 ---
 name: codebase-inspection
-description: Inspect and analyze codebases using pygount for LOC counting, language brea...
+description: Inspect and analyze codebases using pygount for LOC counting, language
+  brea...
 version: 1.0.0
 triggers:
-- codebase inspection
 - codebase-inspection
+- codebase
+- inspection
+- analysis
+- inspect
 author: Hermes Agent
 license: MIT
 metadata:
@@ -22,6 +26,7 @@ prerequisites:
   commands:
   - pygount
 ---
+
 # Codebase Inspection with pygount
 
 Analyze repositories for lines of code, language breakdown, file counts, and code-vs-comment ratios using `pygount`.

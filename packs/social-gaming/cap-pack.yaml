@@ -1,6 +1,3 @@
-# 🎮 social-gaming — 社交娱乐能力包
-# Schema: cap-pack-v2.schema.json
-
 name: social-gaming
 version: 1.0.0
 type: capability-pack
@@ -40,6 +37,10 @@ skills:
   - modded
   - neoforge
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: pokemon-player
   name: pokemon-player
   description: Pokemon 自动游戏 — headless PyBoy 模拟器、视觉导航、策略战斗、自动存档。
@@ -52,6 +53,10 @@ skills:
   - pyboy
   - gameplay
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: bangumi-recommender
   name: bangumi-recommender
   description: 番剧推荐 — Bangumi API 新番表/排行榜/搜索，最新 ACG 资讯。
@@ -63,6 +68,10 @@ skills:
   - recommendation
   - entertainment
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: yuanbao
   name: yuanbao
   description: 元宝群聊互动 — @ 艾特用户、私信发送、群信息与成员查询。
@@ -75,6 +84,10 @@ skills:
   - mention
   - messaging
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 experiences:
 - id: minecraft-server-tips
   name: Minecraft 服务器搭建经验

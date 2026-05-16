@@ -1,18 +1,23 @@
 ---
 name: youtube-content
-description: Fetch YouTube video transcripts and transform them into structured content ...
+description: Fetch YouTube video transcripts and transform them into structured content
+  ...
 triggers:
-- youtube content
 - youtube-content
+- youtube
+- transcript
+- video
+- fetch
 metadata:
   hermes:
     tags: []
 depends_on:
-  - spotify
+- spotify
 see_also:
-  - songsee
-  - gif-search
+- songsee
+- gif-search
 ---
+
 # YouTube Content Tool
 
 Extract transcripts from YouTube videos and convert them into useful formats.

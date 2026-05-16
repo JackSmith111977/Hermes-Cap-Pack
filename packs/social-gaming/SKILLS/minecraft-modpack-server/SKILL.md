@@ -1,9 +1,13 @@
 ---
 name: minecraft-modpack-server
-description: Set up a modded Minecraft server from a CurseForge/Modrinth server pack zip...
+description: Set up a modded Minecraft server from a CurseForge/Modrinth server pack
+  zip...
 triggers:
-- minecraft modpack server
 - minecraft-modpack-server
+- minecraft
+- gaming
+- server
+- set
 tags:
 - minecraft
 - gaming
@@ -15,8 +19,9 @@ metadata:
   hermes:
     tags: []
 depends_on:
-  - pokemon-player
+- pokemon-player
 ---
+
 # Minecraft Modpack Server Setup
 
 ## When to use

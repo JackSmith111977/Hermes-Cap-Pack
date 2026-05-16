@@ -1,21 +1,33 @@
 ---
 name: 1password
-description: Set up and use 1Password CLI (op). Use when installing the CLI, enabling desktop app integration, signing in, and reading/injecting secrets for commands.
+description: Set up and use 1Password CLI (op). Use when installing the CLI, enabling
+  desktop app integration, signing in, and reading/injecting secrets for commands.
 version: 1.0.0
 author: arceus77-7, enhanced by Hermes Agent
 license: MIT
 metadata:
   hermes:
-    tags: [security, secrets, 1password, op, cli]
+    tags:
+    - security
+    - secrets
+    - 1password
+    - op
+    - cli
     category: security
 setup:
-  help: "Create a service account at https://my.1password.com → Settings → Service Accounts"
+  help: Create a service account at https://my.1password.com → Settings → Service
+    Accounts
   collect_secrets:
-    - env_var: OP_SERVICE_ACCOUNT_TOKEN
-      prompt: "1Password Service Account Token"
-      provider_url: "https://developer.1password.com/docs/service-accounts/"
-      secret: true
+  - env_var: OP_SERVICE_ACCOUNT_TOKEN
+    prompt: 1Password Service Account Token
+    provider_url: https://developer.1password.com/docs/service-accounts/
+    secret: true
+triggers:
+- 1password
+- set
+- up
 ---
+
 
 # 1Password CLI
 

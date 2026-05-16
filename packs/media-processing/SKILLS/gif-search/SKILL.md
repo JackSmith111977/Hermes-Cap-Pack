@@ -1,14 +1,18 @@
 ---
 name: gif-search
-description: Search and download GIFs from Tenor using curl. No dependencies beyond curl...
+description: Search and download GIFs from Tenor using curl. No dependencies beyond
+  curl...
 version: 1.1.0
 triggers:
-- gif search
 - gif-search
+- gif
+- tenor
+- media
+- search
 author: Hermes Agent
 license: MIT
 depends_on:
-  - youtube-content
+- youtube-content
 prerequisites:
   env_vars:
   - TENOR_API_KEY
@@ -24,9 +28,10 @@ metadata:
     - Tenor
     - API
 see_also:
-  - spotify
-  - songsee
+- spotify
+- songsee
 ---
+
 # GIF Search (Tenor API)
 
 Search and download GIFs directly via the Tenor API using curl. No extra tools needed.

@@ -1,8 +1,3 @@
-# 🧠 learning-engine — 研究与学习引擎能力包
-# Schema: cap-pack-v2.schema.json
-# ℹ️ v1.0.1 — 合并 knowledge-base（原独立包），详见 SPEC-1-1
-# ⚡ knowledge-base 已合并至此包 — 详见 docs/SPEC-1-1.md 合并注释
-
 name: learning-engine
 version: 1.0.0
 type: capability-pack
@@ -41,6 +36,10 @@ skills:
   - report
   - methodology
   sqs_target: 85.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: arxiv
   name: arxiv
   description: Search and retrieve academic papers from arXiv using their API. Supports
@@ -53,6 +52,10 @@ skills:
   - papers
   - academic
   sqs_target: 65.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: blogwatcher
   name: blogwatcher
   description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher
@@ -65,6 +68,10 @@ skills:
   - blog
   - monitoring
   sqs_target: 65.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: hermes-knowledge-base
   name: hermes-knowledge-base
   description: Hermes 知识库构建方案——基于 Karpathy LLM Wiki + GBrain 的集成设计。涵盖知识库架构、知识沉淀策略、跨会话持久化、知识质量度量。
@@ -76,6 +83,10 @@ skills:
   - knowledge-management
   - karpathy
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: llm-wiki
   name: llm-wiki
   description: Karpathy's LLM Wiki — build and maintain a persistent, incrementally
@@ -89,6 +100,10 @@ skills:
   - llm-wiki
   - karpathy
   sqs_target: 65.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: ai-trends
   name: ai-trends
   description: AI前沿技术趋势追踪 — 开源模型、AI Agent、LLM新特性、ML论文动态。定期更新，保持对AI领域最新进展的了解。
@@ -100,6 +115,10 @@ skills:
   - trends
   - tracking
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: polymarket
   name: polymarket
   description: Query Polymarket prediction market data — search markets, get market
@@ -111,6 +130,10 @@ skills:
   - prediction-markets
   - data
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: learning
   name: learning
   description: 当你需要从零开始学习一个新主题、研究新技术、了解陌生领域时使用此 skill。涵盖：联网上下文补充引擎、过滤高质量来源、结构化阅读笔记、反刍理解验证。
@@ -122,6 +145,10 @@ skills:
   - research
   - methodology
   sqs_target: 85.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: knowledge-precipitation
   name: knowledge-precipitation
   description: 三层知识库(L1 Skills/L2 Experiences/L3 Brain)的使用维护指南——知识沉淀后的索引、调用、维护流程
@@ -133,6 +160,10 @@ skills:
   - knowledge-base
   - indexing
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: knowledge-routing
   name: knowledge-routing
   description: Multi-dimensional knowledge routing — decide where to store new knowledge
@@ -145,6 +176,10 @@ skills:
   - classification
   - knowledge-management
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: capability-pack-design
   name: capability-pack-design
   description: Agent 能力模块化与跨平台复用方法论。涵盖能力包(Capability Pack)格式设计、模块分割决策、生成方法、维护策略与版本管理。
@@ -156,6 +191,10 @@ skills:
   - design-pattern
   - modularization
   sqs_target: 85.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 triggers:
 - 学习引擎
 - 调研

@@ -2,16 +2,23 @@
 name: feishu-card-merge-streaming
 description: Feishu 平台进度消息与 LLM 回复合并为单卡片的流式输出方案。涵盖问题诊断、架构分析、代码修改、测试验证全流程。
 tags:
-  - feishu
-  - streaming
-  - card
-  - progress-merge
+- feishu
+- streaming
+- card
+- progress-merge
 depends_on:
-  - feishu
-  - feishu-send-file
+- feishu
+- feishu-send-file
 see_also:
-  - feishu-batch-send
+- feishu-batch-send
+triggers:
+- feishu-card-merge-streaming
+- feishu
+- streaming
+- card
+- 平台进度消息与
 ---
+
 
 # Feishu 卡片流式输出方案（含进度合并回滚记录）
 

@@ -1,15 +1,19 @@
 ---
 name: arxiv
-description: Search and retrieve academic papers from arXiv using their free REST API. N...
+description: Search and retrieve academic papers from arXiv using their free REST
+  API. N...
 version: 1.0.0
 triggers:
 - arxiv
-- arxiv
+- research
+- papers
+- search
+- retrieve
 author: Hermes Agent
 license: MIT
 depends_on:
-  - llm-wiki
-  - deep-research
+- llm-wiki
+- deep-research
 metadata:
   hermes:
     tags:
@@ -22,9 +26,10 @@ metadata:
     related_skills:
     - ocr-and-documents
 see_also:
-  - blogwatcher
-  - ai-trends
+- blogwatcher
+- ai-trends
 ---
+
 # arXiv Research
 
 Search and retrieve academic papers from arXiv via their free REST API. No API key, no dependencies — just curl.

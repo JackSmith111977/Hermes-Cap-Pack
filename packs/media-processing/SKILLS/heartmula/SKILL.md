@@ -1,10 +1,14 @@
 ---
 name: heartmula
-description: Set up and run HeartMuLa, the open-source music generation model family (Su...
+description: Set up and run HeartMuLa, the open-source music generation model family
+  (Su...
 version: 1.0.0
 triggers:
 - heartmula
-- heartmula
+- music
+- generation
+- ai
+- set
 metadata:
   hermes:
     tags:
@@ -19,6 +23,7 @@ metadata:
     related_skills:
     - audiocraft
 ---
+
 # HeartMuLa - Open-Source Music Generation
 
 ## Overview

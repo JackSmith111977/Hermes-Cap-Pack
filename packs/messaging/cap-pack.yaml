@@ -1,6 +1,3 @@
-# 💬 messaging — 消息平台能力包
-# Schema: cap-pack-v2.schema.json
-
 name: messaging
 version: 1.0.0
 type: capability-pack
@@ -38,6 +35,10 @@ skills:
   - messaging
   - bot
   sqs_target: 85.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: feishu-send-file
   name: feishu-send-file
   description: 飞书发送文件的正确流程 — 上传→获 file_key→发送 file 消息.
@@ -49,6 +50,10 @@ skills:
   - upload
   - messaging
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: feishu-batch-send
   name: feishu-batch-send
   description: 飞书批量发送文件/图片技能 — 支持一次发送多个文件到同一个或多个聊天.
@@ -61,6 +66,10 @@ skills:
   - image
   - messaging
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: feishu-card-merge-streaming
   name: feishu-card-merge-streaming
   description: 飞书平台进度消息与 LLM 回复合并为单卡片的流式输出方案.
@@ -72,6 +81,10 @@ skills:
   - streaming
   - merge
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: smart-broadcast
   name: smart-broadcast
   description: Hermes 智能播报引擎 v2.0 管理指南 — 状态检查、数据源配置、静默管理、故障排查.
@@ -83,6 +96,10 @@ skills:
   - cron
   - messaging
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: agentmail
   name: agentmail
   description: Give the agent its own dedicated email inbox via AgentMail for sending,
@@ -94,6 +111,10 @@ skills:
   - agentmail
   - communication
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: himalaya
   name: himalaya
   description: CLI to manage emails via IMAP/SMTP — list, read, send, search, and
@@ -106,6 +127,10 @@ skills:
   - smtp
   - cli
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: xurl
   name: xurl
   description: Interact with X/Twitter via xurl, the official X API CLI — post tweets,
@@ -118,6 +143,10 @@ skills:
   - social-media
   - api
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 triggers:
 - 消息平台
 - 飞书

@@ -1,13 +1,3 @@
-# 🏗️ 能力包清单 — quality-assurance
-## 包信息
-## Skill 列表
-## 依赖
-# depends_on 保留用于跨包引用
-# skill-creator 和 pre_flight 是 Hermes 内部 skill 非独立 pack
-## 配置
-## 安装
-## 经验
-
 name: quality-assurance
 version: 1.0.0
 classification: toolset
@@ -36,6 +26,10 @@ skills:
   - quality
   - scoring
   - audit
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: skill-lifecycle-audit
   name: 生命周期审计
   description: Skill 生命周期审计与退役管理
@@ -46,6 +40,10 @@ skills:
   - audit
   - deprecate
   - revive
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: skill-tree-index
   name: 树状索引
   description: 18 包 → ~70 簇 → ~200 技能三层索引生成器
@@ -55,6 +53,10 @@ skills:
   - tree-index
   - hierarchy
   - consolidation
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 depends_on: {}
 config:
   sqs_database: ~/.hermes/data/skill-quality.db

@@ -1,10 +1,14 @@
 ---
 name: github-code-review
-description: Review code changes by analyzing git diffs, leaving inline comments on PRs,...
+description: Review code changes by analyzing git diffs, leaving inline comments on
+  PRs,...
 version: 1.1.0
 triggers:
-- github code review
 - github-code-review
+- github
+- code-review
+- pr
+- review
 author: Hermes Agent
 license: MIT
 metadata:
@@ -19,6 +23,7 @@ metadata:
     - github-auth
     - github-pr-workflow
 ---
+
 # GitHub Code Review
 
 Perform code reviews on local changes before pushing, or review open PRs on GitHub. Most of this skill uses plain `git` — the `gh`/`curl` split only matters for PR-level interactions.

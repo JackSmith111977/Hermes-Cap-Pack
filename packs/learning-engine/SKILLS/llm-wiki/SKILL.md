@@ -3,8 +3,11 @@ name: llm-wiki
 description: Karpathy's LLM Wiki — build and maintain a persistent, interlinked markdown...
 version: 2.0.0
 triggers:
-- llm wiki
 - llm-wiki
+- knowledge-base
+- wiki
+- karpathy
+- llm
 author: Hermes Agent
 license: MIT
 metadata:
@@ -22,12 +25,13 @@ metadata:
     - arxiv
     - agentic-research-ideas
 depends_on:
-  - deep-research
-  - blogwatcher
+- deep-research
+- blogwatcher
 see_also:
-  - arxiv
-  - hermes-knowledge-base
+- arxiv
+- hermes-knowledge-base
 ---
+
 # Karpathy's LLM Wiki
 
 Build and maintain a persistent, compounding knowledge base as interlinked markdown files.

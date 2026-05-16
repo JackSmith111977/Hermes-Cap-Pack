@@ -1,14 +1,18 @@
 ---
 name: blogwatcher
-description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher-cli tool...
+description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher-cli
+  tool...
 version: 2.0.0
 triggers:
 - blogwatcher
-- blogwatcher
+- research
+- rss
+- blog
+- monitor
 author: JulienTant (fork of Hyaxia/blogwatcher)
 license: MIT
 depends_on:
-  - llm-wiki
+- llm-wiki
 metadata:
   hermes:
     tags:
@@ -21,9 +25,10 @@ prerequisites:
   commands:
   - blogwatcher-cli
 see_also:
-  - arxiv
-  - ai-trends
+- arxiv
+- ai-trends
 ---
+
 # Blogwatcher
 
 Track blog and RSS/Atom feed updates with the `blogwatcher-cli` tool. Supports automatic feed discovery, HTML scraping fallback, OPML import, and read/unread article management.

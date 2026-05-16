@@ -1,6 +1,3 @@
-# 🐙 github-ecosystem — GitHub 生态能力包
-# Schema: cap-pack-v2.schema.json
-
 name: github-ecosystem
 version: 1.0.0
 type: capability-pack
@@ -40,6 +37,10 @@ skills:
   - analysis
   - loc
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: git-advanced-ops
   name: git-advanced-ops
   description: Advanced Git and GitHub operations — interactive rebase, stash management,
@@ -53,6 +54,10 @@ skills:
   - stash
   - proxy
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: github-auth
   name: github-auth
   description: Set up GitHub authentication for the agent using git (Unix username/token),
@@ -66,6 +71,10 @@ skills:
   - ssh
   - cli
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: github-code-review
   name: github-code-review
   description: Review code changes by analyzing git diffs, leaving inline PR comments,
@@ -78,6 +87,10 @@ skills:
   - pr
   - quality
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: github-deploy-upload
   name: github-deploy-upload
   description: Securely push local deployment directories to GitHub repos via cron
@@ -91,6 +104,10 @@ skills:
   - cron
   - security
   sqs_target: 70.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: github-issues
   name: github-issues
   description: Create, manage, triage, and close GitHub issues with labels, milestones,
@@ -103,6 +120,10 @@ skills:
   - triage
   - management
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: github-pr-workflow
   name: github-pr-workflow
   description: Full pull request lifecycle — create branches, commit changes, push,
@@ -115,6 +136,10 @@ skills:
   - pull-request
   - workflow
   sqs_target: 85.0
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
 - id: github-project-ops
   name: github-project-ops
   description: Complete GitHub project maintenance — repo management, branch protection,
@@ -128,6 +153,10 @@ skills:
   - maintenance
   - ci
   sqs_target: 80.0
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 - id: github-repo-management
   name: github-repo-management
   description: Clone, create, fork, configure, and manage GitHub repositories — settings,
@@ -140,6 +169,10 @@ skills:
   - management
   - configuration
   sqs_target: 75.0
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 triggers:
 - GitHub
 - 仓库管理

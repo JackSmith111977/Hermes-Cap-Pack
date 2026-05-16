@@ -26,6 +26,10 @@ skills:
   - introspection
   - skill-type-research
   - design-pattern-inversion
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: architecture-trilemma
   name: architecture-trilemma
   description: 运行时(Runtime) vs 技能(Skill) vs 工具(Tool) — 三种Agent扩展机制的架构决策模式。当你需要在系统中设计一个新的组件时，先判断它属于三者中的哪一种，再决定它的集成方式、文档格式和安装流程。
@@ -39,6 +43,10 @@ skills:
   - skill
   - tool
   - methodology
+  compatibility:
+    agent_types:
+    - claude
+    - openclaw
 - id: design-philosophy-migration
   name: design-philosophy-migration
   description: 跨项目设计哲学重构方法论。从研究目标项目的设计哲学 → 提炼可复用模式 → 应用到自己的项目中。当需要从优秀项目中学习设计模式、并同构到自己的项目时使用此
@@ -52,6 +60,11 @@ skills:
   - refactoring
   - methodology
   - design-pattern-pipeline
+  compatibility:
+    agent_types:
+    - openclaw
+    - claude
+    - opencode
 - id: skill-creator
   name: skill-creator
   description: 创建、优化、评估 Skill 的完整工作流。支持从实战任务中提取知识、从学习笔记转化 Skill。内置 5 种设计模式，9 阶段创作流程（含快速更新通道），引用依赖检查，以及
@@ -67,6 +80,11 @@ skills:
   - quality-gate
   - skill-lifecycle
   - design-pattern-pipeline
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
+    - claude
 - id: skill-to-pypi
   name: skill-to-pypi
   description: 将 Hermes 内部组件（skill/脚本/工具）打包为独立的 Python 开源项目。涵盖项目结构初始化、模块化重构、pyproject.toml/setup.py
@@ -82,6 +100,11 @@ skills:
   - ci-cd
   - design-pattern-pipeline
   - skill-type-workflow
+  compatibility:
+    agent_types:
+    - openclaw
+    - opencode
+    - claude
 - id: hermes-ops-tips
   name: hermes-ops-tips
   description: Hermes 运维与工具流最佳实践。包含 Hermes 手动升级流程、SRA 迁移与独立工具管理、高清架构图生成 (SVG + cairosvg)、Memory
@@ -97,6 +120,10 @@ skills:
   - statusline
   - memory-management
   - gateway
+  compatibility:
+    agent_types:
+    - opencode
+    - openclaw
 triggers:
 - 元认知
 - 自我审查

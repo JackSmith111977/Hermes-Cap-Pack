@@ -1,16 +1,30 @@
 ---
 name: sherlock
-description: OSINT username search across 400+ social networks. Hunt down social media accounts by username.
+description: OSINT username search across 400+ social networks. Hunt down social media
+  accounts by username.
 version: 1.0.0
 author: unmodeled-tyler
 license: MIT
 metadata:
   hermes:
-    tags: [osint, security, username, social-media, reconnaissance]
+    tags:
+    - osint
+    - security
+    - username
+    - social-media
+    - reconnaissance
     category: security
 prerequisites:
-  commands: [sherlock]
+  commands:
+  - sherlock
+triggers:
+- sherlock
+- osint
+- username
+- search
+- across
 ---
+
 
 # Sherlock OSINT Username Search
 

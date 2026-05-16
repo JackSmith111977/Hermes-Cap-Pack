@@ -1,9 +1,13 @@
 ---
 name: pokemon-player
-description: Play Pokemon games autonomously via headless emulation. Starts a game serve...
+description: Play Pokemon games autonomously via headless emulation. Starts a game
+  serve...
 triggers:
-- pokemon player
 - pokemon-player
+- gaming
+- pokemon
+- emulator
+- play
 tags:
 - gaming
 - pokemon
@@ -15,8 +19,9 @@ metadata:
   hermes:
     tags: []
 depends_on:
-  - minecraft-modpack-server
+- minecraft-modpack-server
 ---
+
 # Pokemon Player
 
 Play Pokemon games via headless emulation using the `pokemon-agent` package.

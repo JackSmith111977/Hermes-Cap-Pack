@@ -1,10 +1,14 @@
 ---
 name: github-pr-workflow
-description: Full pull request lifecycle — create branches, commit changes, open PRs, mo...
+description: Full pull request lifecycle — create branches, commit changes, open PRs,
+  mo...
 version: 1.1.0
 triggers:
-- github pr workflow
 - github-pr-workflow
+- github
+- pr
+- pull-request
+- pull
 author: Hermes Agent
 license: MIT
 metadata:
@@ -20,6 +24,7 @@ metadata:
     - github-auth
     - github-code-review
 ---
+
 # GitHub Pull Request Workflow
 
 Complete guide for managing the PR lifecycle. Each section shows the `gh` way first, then the `git` + `curl` fallback for machines without `gh`.
